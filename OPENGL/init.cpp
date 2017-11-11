@@ -36,6 +36,13 @@ void GLapp::startup() {
     torchObj.initModel("Torch.obj","vs.txt","fs.txt");
     torchObj.initTexture("TorchO.ktx");
     torchObj.getUniLocation();
+    torchObj.position.y = 1.6f;
+    torchObj.rotation.y = 180.0f;
+    
+    room = modelObject();
+    room.initModel("room.obj","vs.txt","fs.txt");
+    room.initTexture("roomCol.ktx");
+    room.getUniLocation();
 
     
     // Framebuffer operations
@@ -44,4 +51,4 @@ void GLapp::startup() {
 //    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    }
+}

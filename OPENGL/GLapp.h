@@ -51,6 +51,7 @@ private:
     int             windowHeight = 480;
     modelObject     torchObj;
     modelObject     pac;
+    modelObject     room;
     float           aspect;
     glm::mat4       proj_matrix;
     bool            keyStatus[1024] = {false};
@@ -62,12 +63,7 @@ private:
     double lastX = 0, lastY = 0;
     GLfloat yaw=0, pitch=0;
     glm::vec3 cameraFront = glm::vec3(0.0f,0.0f,1.0f);
-    
-    glm::vec3 objectPos = glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 objectRot = glm::vec3(0.0f,180.0f,0.0f);
-    glm::vec3 objectScale = glm::vec3(1.0f,1.0f,1.0f);
-    
-    glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,0.0f);    
+    glm::vec3 cameraPos = glm::vec3(0.0f,1.6f,0.0f);    
     
 
 public:

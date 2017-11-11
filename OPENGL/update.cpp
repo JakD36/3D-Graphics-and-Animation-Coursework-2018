@@ -10,41 +10,41 @@
 
 void GLapp::update(double currentTime) {
     if(keyStatus[GLFW_KEY_S] == true){
-        objectPos.y-=0.05f;
+        torchObj.position.y-=0.05f;
     }
     if(keyStatus[GLFW_KEY_W] == true){
-        objectPos.y+=0.05f;
+        torchObj.position.y+=0.05f;
     }
     if(keyStatus[GLFW_KEY_A] == true){
-        objectPos.x-=0.05f;
+        torchObj.position.x-=0.05f;
     }
     if(keyStatus[GLFW_KEY_D] == true){
-        objectPos.x+=0.05f;
+        torchObj.position.x+=0.05f;
     }
     if(keyStatus[GLFW_KEY_LEFT] == true){
-        objectRot.y+=1.0f;
+        torchObj.rotation+=1.0f;
     }
     if(keyStatus[GLFW_KEY_RIGHT] == true){
-        objectRot.y-=1.0f;
-        cout<<objectRot.y<<endl;
+        torchObj.rotation.y-=1.0f;
+        cout<<torchObj.rotation.y<<endl;
     }
     if(keyStatus[GLFW_KEY_UP] == true){
-        objectRot.x+=0.05f;
+        torchObj.rotation.x+=0.05f;
     }
     if(keyStatus[GLFW_KEY_DOWN] == true){
-        objectRot.x-=0.05f;
+        torchObj.rotation.x-=0.05f;
     }
     if(keyStatus[GLFW_KEY_I] == true){
-        objectPos.z-=0.05f;
+        torchObj.position.z-=0.05f;
     }
     if(keyStatus[GLFW_KEY_K] == true){
-        objectPos.z+=0.05f;
+        torchObj.position.z+=0.05f;
     }
     if(keyStatus[GLFW_KEY_Q] == true){
-        objectScale.x -= 0.05f; objectScale.y -= 0.05f; objectScale.z-=0.05f;
+        torchObj.scale.x -= 0.05f; torchObj.scale.y -= 0.05f; torchObj.scale.z-=0.05f;
     }
     if(keyStatus[GLFW_KEY_E] == true){
-        objectScale.x += 0.05f; objectScale.y += 0.05f; objectScale.z += 0.05f;
+        torchObj.scale.x += 0.05f; torchObj.scale.y += 0.05f; torchObj.scale.z += 0.05f;
     }
     if(keyStatus[GLFW_KEY_1] == true){
         cameraPos.x += 0.05f;
@@ -53,10 +53,10 @@ void GLapp::update(double currentTime) {
         cameraPos.x -= 0.05f;
     }
     if(keyStatus[GLFW_KEY_3] == true){
-        cameraPos.y += 0.5f;
+        cameraPos.z += 0.5f;
     }
     if(keyStatus[GLFW_KEY_4] == true){
-        cameraPos.y -= 0.5f;
+        cameraPos.z -= 0.5f;
     }
     
 }

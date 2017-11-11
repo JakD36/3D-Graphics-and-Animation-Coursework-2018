@@ -19,27 +19,11 @@ void GLapp::render(double currentTime) {
     glm::mat4 viewMatrix = glm::lookAt(cameraPos, // eye
                                        cameraPos+cameraFront, // centre
                                        glm::vec3(0.0f, 1.0f, 0.0f));// up
-    
-    // For each model Object
-    glUseProgram(torchObj.program);
-    glBindVertexArray(torchObj.vao);
-    glUniformMatrix4fv(torchObj.proj_location, 1, GL_FALSE, &proj_matrix[0][0]);
-    // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, torchObj.texture[0]);
-    glUniform1i(torchObj.tex_location, 0);
 
-    // Concatenate matrices
-    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), objectPos);
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(objectRot.z), glm::vec3(0.0f, 0.0f, 1.0f));
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(objectRot.y), glm::vec3(0.0f, 1.0f, 0.0f));
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(objectRot.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    modelMatrix = glm::scale(modelMatrix, objectScale);
-    glm::mat4 mv_matrix = viewMatrix * modelMatrix;
+    // Render each object
+    torchObj.render(proj_matrix,viewMatrix);
+    room.render(proj_matrix,viewMatrix);
     
-    glUniformMatrix4fv(torchObj.mv_location, 1, GL_FALSE, &mv_matrix[0][0]);
-    glDrawArrays(GL_TRIANGLES, 0, torchObj.out_vertices.size());
-
 //    glUseProgram(pac.program);
 //    glBindVertexArray(pac.vao);
 //    glUniformMatrix4fv(pac.proj_location, 1, GL_FALSE, &proj_matrix[0][0]);

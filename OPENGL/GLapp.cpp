@@ -115,17 +115,17 @@ void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
     front.z = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(front);
     
-    objectRot.y = yaw; objectRot.x = pitch;
+    torchObj.rotation.y = yaw; torchObj.rotation.x = pitch;
     float sphereRadius = 0.2; float yawOffset = 30; float pitchOffset = 40;
-    objectPos.x = cameraPos.x + sphereRadius*sin(glm::radians(yaw+yawOffset))* cos(glm::radians(pitch+pitchOffset));
-    objectPos.y = cameraPos.y + (sphereRadius*sin(glm::radians(-(pitch+pitchOffset))));
-    objectPos.z = cameraPos.z + sphereRadius * cos(glm::radians(yaw+yawOffset)) * cos(glm::radians(pitch+pitchOffset));
+    torchObj.position.x = cameraPos.x + sphereRadius*sin(glm::radians(yaw+yawOffset))* cos(glm::radians(pitch+pitchOffset));
+    torchObj.position.y = cameraPos.y + (sphereRadius*sin(glm::radians(-(pitch+pitchOffset))));
+    torchObj.position.z = cameraPos.z + sphereRadius * cos(glm::radians(yaw+yawOffset)) * cos(glm::radians(pitch+pitchOffset));
     
-    objectRot.x = -pitch;
-    objectRot.y = 180+yaw;
+    torchObj.rotation.x = -pitch;
+    torchObj.rotation.y = 180+yaw;
     
-    cout<<"Yaw>>\t"<<objectRot.y<<"\t"<<"Pitch>>\t"<<objectRot.x<<"\t"<<"roll\t"<<objectRot.z<<endl;
-    cout<<"x>>\t"<<objectPos.x<<"\t"<<"y>>\t"<<objectPos.y<<"\t"<<"z\t"<<objectPos.z<<endl;
+//    cout<<"Yaw>>\t"<<objectRot.y<<"\t"<<"Pitch>>\t"<<objectRot.x<<"\t"<<"roll\t"<<objectRot.z<<endl;
+//    cout<<"x>>\t"<<objectPos.x<<"\t"<<"y>>\t"<<objectPos.y<<"\t"<<"z\t"<<objectPos.z<<endl;
 }
 
 void GLapp::classonMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
