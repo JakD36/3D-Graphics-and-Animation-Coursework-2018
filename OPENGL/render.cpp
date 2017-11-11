@@ -13,29 +13,24 @@ void GLapp::render(double currentTime) {
     
     glViewport(0, 0, windowWidth*2, windowHeight*2); // PICTURE WAS RESTRICTED TO BOTTOM LEFT CORNER, MULTIPLYING BY 2 SEEMED TO FIX THE ISSUE BUT I HAVE NO IDEA WHAT WENT WRONG
     glClearBufferfv(GL_COLOR, 0, silver);
-    
     static const GLfloat one = 1.0f;
     glClearBufferfv(GL_DEPTH, 0, &one);
     
+    glm::mat4 viewMatrix = glm::lookAt(cameraPos, // eye
+                                       cameraPos+cameraFront, // centre
+                                       glm::vec3(0.0f, 1.0f, 0.0f));// up
+    
+    // For each model Object
     glUseProgram(torchObj.program);
     glBindVertexArray(torchObj.vao);
     glUniformMatrix4fv(torchObj.proj_location, 1, GL_FALSE, &proj_matrix[0][0]);
-    
     // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, torchObj.texture[0]);
     glUniform1i(torchObj.tex_location, 0);
 
-    
-    glm::mat4 viewMatrix = glm::lookAt(cameraPos, // eye
-                                       cameraPos+cameraFront, // centre
-                                       glm::vec3(0.0f, 1.0f, 0.0f));// up
-//    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(2.0f,2.0f,2.0f), // eye
-//                                       glm::vec3(0.0f,0.0f,0.0f), // centre
-//                                       glm::vec3(0.0f, 1.0f, 0.0f));// up
-
-    // Two lines handle rotation and displacement
-    glm::mat4 /*modelMatrix = glm::translate(glm::mat4(1.0f), cameraPos);*/modelMatrix = glm::translate(glm::mat4(1.0f), objectPos);
+    // Concatenate matrices
+    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), objectPos);
     modelMatrix = glm::rotate(modelMatrix, glm::radians(objectRot.z), glm::vec3(0.0f, 0.0f, 1.0f));
     modelMatrix = glm::rotate(modelMatrix, glm::radians(objectRot.y), glm::vec3(0.0f, 1.0f, 0.0f));
     modelMatrix = glm::rotate(modelMatrix, glm::radians(objectRot.x), glm::vec3(1.0f, 0.0f, 0.0f));

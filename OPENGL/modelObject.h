@@ -30,7 +30,7 @@ public:
     std::vector < glm::vec2 > out_uvs;
     std::vector < glm::vec3 > out_normals;
     GLuint          texture[1];            // texture name
-    GLuint         program;
+    GLuint          program;
     GLuint          vao;
     GLuint          buffer[2];
     GLint           mv_location;
@@ -43,11 +43,12 @@ public:
     GLuint        lightColor_location;
     
     modelObject();
-    void init(string,string,string);
-    bool load(string);
+    void initModel(string,string,string); // initialise the modelObject with model and its shaders
+    void initTexture(string); // provide texture for model
+    void getUniLocation(); // get the uniform locations for model
+    bool load(string); // load and parse .obj file
     void checkErrorShader(GLuint shader);
     string readShader(string fileName);
-    
 };
 
 #endif /* modelObject_h */

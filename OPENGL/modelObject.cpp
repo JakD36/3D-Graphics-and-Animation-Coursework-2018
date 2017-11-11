@@ -10,11 +10,11 @@
 modelObject::modelObject(){
 
 }
-void modelObject::init(string pathName,string vsPath,string fsPath){
+void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
     program = glCreateProgram();
     
-    string vs_text = readShader("vs.txt");
+    string vs_text = readShader(vsPath);
     const char * vs_source = vs_text.c_str();
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vs, 1, &vs_source, NULL);
@@ -22,7 +22,7 @@ void modelObject::init(string pathName,string vsPath,string fsPath){
     checkErrorShader(vs);
     glAttachShader(program, vs);
     
-    string fs_text = readShader("fs.txt");
+    string fs_text = readShader(fsPath);
     const char * fs_source = fs_text.c_str();
     GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fs, 1, &fs_source, NULL);
@@ -33,11 +33,9 @@ void modelObject::init(string pathName,string vsPath,string fsPath){
     glGenVertexArrays(1,&vao);
     glBindVertexArray(vao);
     glGenBuffers(2,buffer);
-    load("Torch.obj");
-    
-    //nTriangles = 2* out_vertices.size()*sizeof(glm::vec3);
-    cout<<"Final size of vectors after import >> "<<out_vertices.size()<<"\t"<<out_uvs.size()<<"\t"<<out_normals.size()<<endl;
     glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+    load(objPath);
+    cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
     glBufferData(GL_ARRAY_BUFFER,
                  out_vertices.size()*sizeof(glm::vec3),
                  &out_vertices[0],
@@ -47,12 +45,55 @@ void modelObject::init(string pathName,string vsPath,string fsPath){
     
     glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
     glBufferData(GL_ARRAY_BUFFER,
-                 out_vertices.size()*sizeof(glm::vec3),
-                 &out_vertices[0],
+                 out_uvs.size()*sizeof(glm::vec2),
+                 &out_uvs[0],
                  GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    
+    glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
+    glLinkProgram(program);
+    glUseProgram(program);
 
+}
+
+void modelObject::initTexture(string texPath){
+    glGenTextures(1, texture);
+    gli::texture tex = gli::load(texPath);
+    if(tex.empty()){
+        cout<<"Unable to load file "+texPath <<endl;
+    }
+    gli::gl texGL(gli::gl::PROFILE_GL33);
+    gli::gl::format const texFormat = texGL.translate(tex.format(), tex.swizzles());
+    //load and create a texture
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glm::tvec3<GLsizei> const texExtent(tex.extent());
+    GLsizei const texFaceTotal = static_cast<GLsizei>(tex.layers()*tex.faces());
+    glTexStorage2D(GL_TEXTURE_2D,static_cast<GLint>(tex.levels()),texFormat.Internal,texExtent.x,texExtent.y);
+    for(std::size_t Layer = 0;Layer<tex.layers();++Layer){
+        for(std::size_t Face = 0;Face<tex.faces();++Face){
+            for(std::size_t Level = 0; Level<tex.levels();++Level){
+                glTexSubImage2D(GL_TEXTURE_2D,static_cast<GLint>(Level),0,0,texExtent.x,texExtent.y,texFormat.External,texFormat.Type,tex.data(Layer,Face,Level));
+            }
+        }
+    }
+    
+    // This only works for 2D Textures...
+    // Set the texture wrapping parameters (next lecture)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+    // Set texture filtering parameters (next lecture)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    // Generate mipmaps (next lecture)
+    glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+void modelObject::getUniLocation(){
+    mv_location = glGetUniformLocation(program, "mv_matrix");
+    proj_location = glGetUniformLocation(program, "proj_matrix");
+    tex_location = glGetUniformLocation(program, "tex");
 }
 
 bool modelObject::load(string name){
