@@ -204,4 +204,6 @@ dependencies: /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/main.cpp \
   /usr/local/include/gli/./core/save_kmg.inl \
   /usr/local/include/gli/./core/flip.hpp \
   /usr/local/include/gli/./core/flip.inl \
-  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObject.h
+  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObject.h \
+  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObjectInst.h \
+  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObjectSingle.h

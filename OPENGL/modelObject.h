@@ -25,9 +25,8 @@ using namespace std;
 #include "OBJParser.h"
 
 class modelObject{
-private:
-    
-public:
+protected
+    :
     std::vector < glm::vec3 > out_vertices;
     std::vector < glm::vec2 > out_uvs;
     std::vector < glm::vec3 > out_normals;
@@ -39,14 +38,11 @@ public:
     GLint           proj_location;
     GLint           tex_location;
     
-    glm::vec3 position  = glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 rotation  = glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 scale     = glm::vec3(1.0f,1.0f,1.0f);
-    
     // extra variables for this example
     GLuint        matColor_location;
     GLuint        lightColor_location;
     
+public:
     modelObject();
     void initModel(string,string,string); // initialise the modelObject with model and its shaders
     void initTexture(string); // provide texture for model
@@ -54,7 +50,7 @@ public:
     bool load(string); // load and parse .obj file
     void checkErrorShader(GLuint shader);
     string readShader(string fileName);
-    void virtual render(glm::mat4&,glm::mat4&);
+    virtual void render(glm::mat4&,glm::mat4&) const =0;
 };
 
 #endif /* modelObject_h */

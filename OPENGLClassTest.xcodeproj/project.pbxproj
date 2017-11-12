@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		044D2B6A1FB79CEC00837463 /* room.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B681FB79CC800837463 /* room.obj */; };
 		044D2B6B1FB79CEC00837463 /* roomCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B691FB79CC900837463 /* roomCol.ktx */; };
+		044D2B721FB7BA7B00837463 /* modelObjectInst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */; };
+		044D2B761FB7BECD00837463 /* modelObjectSingle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */; };
 		046EA0C61FB652D20003CA3D /* TorchO.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046EA0C51FB652CB0003CA3D /* TorchO.ktx */; };
 		048AF4171F7BD79200FD68AA /* GLapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4111F7BD79200FD68AA /* GLapp.cpp */; };
 		048AF41A1F7BD79200FD68AA /* readShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4161F7BD79200FD68AA /* readShader.cpp */; };
@@ -78,6 +80,10 @@
 		042419B91F6C8363002C2D67 /* OPENGLClassTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OPENGLClassTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		044D2B681FB79CC800837463 /* room.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = room.obj; sourceTree = "<group>"; };
 		044D2B691FB79CC900837463 /* roomCol.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = roomCol.ktx; sourceTree = "<group>"; };
+		044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modelObjectInst.cpp; sourceTree = "<group>"; };
+		044D2B711FB7BA7B00837463 /* modelObjectInst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelObjectInst.h; sourceTree = "<group>"; };
+		044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modelObjectSingle.cpp; sourceTree = "<group>"; };
+		044D2B771FB7BEDE00837463 /* modelObjectSingle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modelObjectSingle.h; sourceTree = "<group>"; };
 		046EA0C51FB652CB0003CA3D /* TorchO.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = TorchO.ktx; sourceTree = "<group>"; };
 		048AF4111F7BD79200FD68AA /* GLapp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLapp.cpp; sourceTree = "<group>"; };
 		048AF4131F7BD79200FD68AA /* GLapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLapp.h; sourceTree = "<group>"; };
@@ -139,6 +145,10 @@
 		042419BB1F6C8363002C2D67 /* OPENGL */ = {
 			isa = PBXGroup;
 			children = (
+				044D2B711FB7BA7B00837463 /* modelObjectInst.h */,
+				044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */,
+				044D2B771FB7BEDE00837463 /* modelObjectSingle.h */,
+				044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */,
 				04DEFF171FB3DF7F009D70FC /* modelObject.h */,
 				04DEFF141FB3DF6D009D70FC /* modelObject.cpp */,
 				048AF41B1F7BD7F700FD68AA /* main.cpp */,
@@ -248,8 +258,10 @@
 			files = (
 				04DEFF161FB3DF6D009D70FC /* modelObject.cpp in Sources */,
 				04A81E301FA3A0A600886611 /* init.cpp in Sources */,
+				044D2B721FB7BA7B00837463 /* modelObjectInst.cpp in Sources */,
 				048AF4171F7BD79200FD68AA /* GLapp.cpp in Sources */,
 				048AF41A1F7BD79200FD68AA /* readShader.cpp in Sources */,
+				044D2B761FB7BECD00837463 /* modelObjectSingle.cpp in Sources */,
 				04A81E321FA3A0E800886611 /* render.cpp in Sources */,
 				048AF41C1F7BD7F700FD68AA /* main.cpp in Sources */,
 				04A81E2E1FA3A06200886611 /* update.cpp in Sources */,

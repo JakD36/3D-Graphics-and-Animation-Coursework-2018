@@ -92,7 +92,6 @@ void GLapp::classonMouseButtonCallback(GLFWwindow* window, int button, int actio
     
 }
 void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
-    cout<<"\n"<<endl;
     
     int mouseX = static_cast<int>(x);
     int mouseY = static_cast<int>(y);

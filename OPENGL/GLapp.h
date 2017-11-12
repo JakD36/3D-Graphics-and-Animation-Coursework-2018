@@ -22,8 +22,9 @@ using namespace std;
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
 #include <gli/gli.hpp>
-//#include "OBJParser.h"
 #include "modelObject.h"
+#include "modelObjectInst.h"
+#include "modelObjectSingle.h"
 
 void errorCallbackGLFW(int error, const char* description);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -46,17 +47,23 @@ static void APIENTRY openGLDebugCallback(GLenum source,
 class GLapp{
 private:
     
-    GLFWwindow*     window;
-    int             windowWidth = 640;
-    int             windowHeight = 480;
-    modelObject     torchObj;
-    modelObject     pac;
-    modelObject     room;
-    float           aspect;
-    glm::mat4       proj_matrix;
-    bool            keyStatus[1024] = {false};
-    unsigned int    nTriangles = 0;
-    bool running = true;
+    GLFWwindow*             window;
+    int                     windowWidth = 640;
+    int                     windowHeight = 480;
+    float                   aspect;
+    glm::mat4               proj_matrix;
+    bool                    keyStatus[1024] = {false};
+    unsigned int            nTriangles = 0;
+    bool                    running = true;
+
+    modelObjectSingle       torchObj;
+    modelObjectInst         pac;
+    modelObjectSingle       room;
+    
+    vector<modelObject*> Objs;
+    
+
+    
     
     // Camera Variables
     int mouseX, mouseY;

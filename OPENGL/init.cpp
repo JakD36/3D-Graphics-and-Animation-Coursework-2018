@@ -32,18 +32,48 @@ void GLapp::startup() {
     proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
 
     
-    torchObj = modelObject();
+    torchObj = modelObjectSingle();
     torchObj.initModel("Torch.obj","vs.txt","fs.txt");
     torchObj.initTexture("TorchO.ktx");
     torchObj.getUniLocation();
     torchObj.position.y = 1.6f;
     torchObj.rotation.y = 180.0f;
     
-    room = modelObject();
+    room = modelObjectSingle();
     room.initModel("room.obj","vs.txt","fs.txt");
     room.initTexture("roomCol.ktx");
     room.getUniLocation();
 
+    pac = modelObjectInst();
+    pac.initModel("room.obj","vs.txt","fs.txt");
+    pac.initTexture("roomCol.ktx");
+    pac.getUniLocation();
+    
+    pac.position.push_back(glm::vec3(10.0f,0.0f,0.0f));
+    pac.position.push_back(glm::vec3(-10.0f,0.0f,0.0f));
+    pac.position.push_back(glm::vec3(0.0f,10.0f,0.0f));
+    pac.position.push_back(glm::vec3(0.0f,-10.0f,0.0f));
+    pac.position.push_back(glm::vec3(0.0f,0.0f,10.0f));
+    pac.position.push_back(glm::vec3(0.0f,0.0f,-10.0f));
+    
+    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    
+    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+
+    
+    Objs.push_back(&torchObj);
+    Objs.push_back(&room);
+    Objs.push_back(&pac);
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
