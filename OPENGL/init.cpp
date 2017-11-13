@@ -25,6 +25,8 @@ void GLapp::hintsGLFW() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
+GLfloat lightStruct::ka = 0.1;
+glm::vec3 lightStruct::ia = glm::vec3(0.0f,0.6f,0.2f);
 
 void GLapp::startup() {
     // Calculate proj_matrix for the first time.
@@ -33,52 +35,59 @@ void GLapp::startup() {
 
     
     torchObj = modelObjectSingle();
-    torchObj.initModel("Torch.obj","vs.txt","fs.txt");
-    torchObj.initTexture("TorchO.ktx");
+    torchObj.initModel("newTorch.obj","vs.glsl","fs.glsl");
+    torchObj.initTexture("newTorchCol.ktx");
     torchObj.getUniLocation();
     torchObj.position.y = 1.6f;
-    torchObj.rotation.y = 180.0f;
+    torchObj.rotation = glm::vec3(0.0f,-90.0f,0.0f);
+//    torchObj.rotation.y = -90.0f;
     
     room = modelObjectSingle();
-    room.initModel("room.obj","vs.txt","fs.txt");
+    room.initModel("room.obj","vs.glsl","fs.glsl");
     room.initTexture("roomCol.ktx");
     room.getUniLocation();
+    
+    light.kd = 5.0;
+    light.id = glm::vec3(1.0f,1.0f,1.0f);
+    light.is = glm::vec3(1.0f,1.0f,1.0f);
+    light.ks = 0.1;
+    light.shininess = 32.0f;
 
-    pac = modelObjectInst();
-    pac.initModel("room.obj","vs.txt","fs.txt");
-    pac.initTexture("roomCol.ktx");
-    pac.getUniLocation();
-    
-    pac.position.push_back(glm::vec3(10.0f,0.0f,0.0f));
-    pac.position.push_back(glm::vec3(-10.0f,0.0f,0.0f));
-    pac.position.push_back(glm::vec3(0.0f,10.0f,0.0f));
-    pac.position.push_back(glm::vec3(0.0f,-10.0f,0.0f));
-    pac.position.push_back(glm::vec3(0.0f,0.0f,10.0f));
-    pac.position.push_back(glm::vec3(0.0f,0.0f,-10.0f));
-    
-    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    
-    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+//    pac = modelObjectInst();
+//    pac.initModel("room.obj","vs.txt","fs.txt");
+//    pac.initTexture("roomCol.ktx");
+//    pac.getUniLocation();
+//
+//    pac.position.push_back(glm::vec3(10.0f,0.0f,0.0f));
+//    pac.position.push_back(glm::vec3(-10.0f,0.0f,0.0f));
+//    pac.position.push_back(glm::vec3(0.0f,10.0f,0.0f));
+//    pac.position.push_back(glm::vec3(0.0f,-10.0f,0.0f));
+//    pac.position.push_back(glm::vec3(0.0f,0.0f,10.0f));
+//    pac.position.push_back(glm::vec3(0.0f,0.0f,-10.0f));
+//
+//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//
+//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
 
     
     Objs.push_back(&torchObj);
     Objs.push_back(&room);
-    Objs.push_back(&pac);
+//    Objs.push_back(&pac);
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
-//    glCullFace(GL_BACK);
-//    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 }

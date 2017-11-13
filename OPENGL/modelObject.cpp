@@ -32,7 +32,7 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
     glGenVertexArrays(1,&vao);
     glBindVertexArray(vao);
-    glGenBuffers(2,buffer);
+    glGenBuffers(3,buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
     load(objPath);
     cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
@@ -51,6 +51,16 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[2]);
+    glBufferData(GL_ARRAY_BUFFER,
+                 out_normals.size()*sizeof(glm::vec3),
+                 &out_normals[0],
+                 GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(2, 3 , GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(2);
+    
     glLinkProgram(program);
     glUseProgram(program);
 
@@ -94,30 +104,10 @@ void modelObject::getUniLocation(){
     mv_location = glGetUniformLocation(program, "mv_matrix");
     proj_location = glGetUniformLocation(program, "proj_matrix");
     tex_location = glGetUniformLocation(program, "tex");
+    lightColor_location = glGetUniformLocation(program,"ia");
+    lightColor_location = glGetUniformLocation(program,"ka");
 }
 
-//void modelObject::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix){
-//    // For each model Object
-//    glUseProgram(program);
-//    glBindVertexArray(vao);
-//    glUniformMatrix4fv(proj_location, 1, GL_FALSE, &proj_matrix[0][0]);
-//    // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, texture[0]);
-//    glUniform1i(tex_location, 0);
-//    
-//    // Concatenate matrices
-//    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), position);
-//    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-//    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-//    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-//    modelMatrix = glm::scale(modelMatrix, scale);
-//    glm::mat4 mv_matrix = viewMatrix * modelMatrix;
-//    
-//    glUniformMatrix4fv(mv_location, 1, GL_FALSE, &mv_matrix[0][0]);
-//    glDrawArrays(GL_TRIANGLES, 0, out_vertices.size());
-//
-//}
 
 bool modelObject::load(string name){
     // Variables

@@ -120,8 +120,8 @@ void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
     torchObj.position.y = cameraPos.y + (sphereRadius*sin(glm::radians(-(pitch+pitchOffset))));
     torchObj.position.z = cameraPos.z + sphereRadius * cos(glm::radians(yaw+yawOffset)) * cos(glm::radians(pitch+pitchOffset));
     
-    torchObj.rotation.x = -pitch;
-    torchObj.rotation.y = 180+yaw;
+    torchObj.rotation.x = pitch;
+    torchObj.rotation.y = yaw;
     
 //    cout<<"Yaw>>\t"<<objectRot.y<<"\t"<<"Pitch>>\t"<<objectRot.x<<"\t"<<"roll\t"<<objectRot.z<<endl;
 //    cout<<"x>>\t"<<objectPos.x<<"\t"<<"y>>\t"<<objectPos.y<<"\t"<<"z\t"<<objectPos.z<<endl;

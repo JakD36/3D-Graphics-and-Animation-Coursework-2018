@@ -11,6 +11,10 @@
 		044D2B6B1FB79CEC00837463 /* roomCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B691FB79CC900837463 /* roomCol.ktx */; };
 		044D2B721FB7BA7B00837463 /* modelObjectInst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */; };
 		044D2B761FB7BECD00837463 /* modelObjectSingle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */; };
+		044D2B7A1FB8CBAF00837463 /* fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B791FB8CB7A00837463 /* fs.glsl */; };
+		044D2B7B1FB8CBAF00837463 /* vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B781FB8CB7A00837463 /* vs.glsl */; };
+		044D467F1FB9140B00381099 /* newTorch.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D467E1FB9140100381099 /* newTorch.obj */; };
+		044D46801FB9140B00381099 /* NewTorchCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D467D1FB9140100381099 /* NewTorchCol.ktx */; };
 		046EA0C61FB652D20003CA3D /* TorchO.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046EA0C51FB652CB0003CA3D /* TorchO.ktx */; };
 		048AF4171F7BD79200FD68AA /* GLapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4111F7BD79200FD68AA /* GLapp.cpp */; };
 		048AF41A1F7BD79200FD68AA /* readShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4161F7BD79200FD68AA /* readShader.cpp */; };
@@ -25,7 +29,6 @@
 		04A81E321FA3A0E800886611 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E311FA3A0E800886611 /* render.cpp */; };
 		04CE34B21FABC545009D551C /* cube.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE349F1FABBF5F009D551C /* cube.mtl */; };
 		04CE34B31FABC545009D551C /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A01FABBF5F009D551C /* cube.obj */; };
-		04CE34B41FABC545009D551C /* fs.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A31FABBF5F009D551C /* fs.txt */; };
 		04CE34B51FABC545009D551C /* Torch.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34AE1FABC417009D551C /* Torch.obj */; };
 		04CE34B61FABC545009D551C /* Pacmannblend.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A41FABBF5F009D551C /* Pacmannblend.mtl */; };
 		04CE34B71FABC545009D551C /* Pacmannblend.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A51FABBF5F009D551C /* Pacmannblend.obj */; };
@@ -34,7 +37,6 @@
 		04CE34BA1FABC545009D551C /* Torch.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A81FABBF5F009D551C /* Torch.blend */; };
 		04CE34BB1FABC545009D551C /* Torch.blend1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A91FABBF5F009D551C /* Torch.blend1 */; };
 		04CE34BC1FABC545009D551C /* Torch.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34AA1FABBF5F009D551C /* Torch.mtl */; };
-		04CE34BD1FABC545009D551C /* vs.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34AB1FABBF5F009D551C /* vs.txt */; };
 		04DEFF161FB3DF6D009D70FC /* modelObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DEFF141FB3DF6D009D70FC /* modelObject.cpp */; };
 /* End PBXBuildFile section */
 
@@ -56,12 +58,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				044D467F1FB9140B00381099 /* newTorch.obj in CopyFiles */,
+				044D46801FB9140B00381099 /* NewTorchCol.ktx in CopyFiles */,
+				044D2B7A1FB8CBAF00837463 /* fs.glsl in CopyFiles */,
+				044D2B7B1FB8CBAF00837463 /* vs.glsl in CopyFiles */,
 				044D2B6A1FB79CEC00837463 /* room.obj in CopyFiles */,
 				044D2B6B1FB79CEC00837463 /* roomCol.ktx in CopyFiles */,
 				046EA0C61FB652D20003CA3D /* TorchO.ktx in CopyFiles */,
 				04CE34B21FABC545009D551C /* cube.mtl in CopyFiles */,
 				04CE34B31FABC545009D551C /* cube.obj in CopyFiles */,
-				04CE34B41FABC545009D551C /* fs.txt in CopyFiles */,
 				04CE34B51FABC545009D551C /* Torch.obj in CopyFiles */,
 				04CE34B61FABC545009D551C /* Pacmannblend.mtl in CopyFiles */,
 				04CE34B71FABC545009D551C /* Pacmannblend.obj in CopyFiles */,
@@ -70,7 +75,6 @@
 				04CE34BA1FABC545009D551C /* Torch.blend in CopyFiles */,
 				04CE34BB1FABC545009D551C /* Torch.blend1 in CopyFiles */,
 				04CE34BC1FABC545009D551C /* Torch.mtl in CopyFiles */,
-				04CE34BD1FABC545009D551C /* vs.txt in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +88,10 @@
 		044D2B711FB7BA7B00837463 /* modelObjectInst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelObjectInst.h; sourceTree = "<group>"; };
 		044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modelObjectSingle.cpp; sourceTree = "<group>"; };
 		044D2B771FB7BEDE00837463 /* modelObjectSingle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modelObjectSingle.h; sourceTree = "<group>"; };
+		044D2B781FB8CB7A00837463 /* vs.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vs.glsl; sourceTree = "<group>"; };
+		044D2B791FB8CB7A00837463 /* fs.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fs.glsl; sourceTree = "<group>"; };
+		044D467D1FB9140100381099 /* NewTorchCol.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewTorchCol.ktx; sourceTree = "<group>"; };
+		044D467E1FB9140100381099 /* newTorch.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = newTorch.obj; sourceTree = "<group>"; };
 		046EA0C51FB652CB0003CA3D /* TorchO.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = TorchO.ktx; sourceTree = "<group>"; };
 		048AF4111F7BD79200FD68AA /* GLapp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLapp.cpp; sourceTree = "<group>"; };
 		048AF4131F7BD79200FD68AA /* GLapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLapp.h; sourceTree = "<group>"; };
@@ -97,7 +105,6 @@
 		04A81E311FA3A0E800886611 /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
 		04CE349F1FABBF5F009D551C /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		04CE34A01FABBF5F009D551C /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
-		04CE34A31FABBF5F009D551C /* fs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fs.txt; sourceTree = "<group>"; };
 		04CE34A41FABBF5F009D551C /* Pacmannblend.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pacmannblend.mtl; sourceTree = "<group>"; };
 		04CE34A51FABBF5F009D551C /* Pacmannblend.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pacmannblend.obj; sourceTree = "<group>"; };
 		04CE34A61FABBF5F009D551C /* tetromino.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tetromino.mtl; sourceTree = "<group>"; };
@@ -105,7 +112,6 @@
 		04CE34A81FABBF5F009D551C /* Torch.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = Torch.blend; sourceTree = "<group>"; };
 		04CE34A91FABBF5F009D551C /* Torch.blend1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Torch.blend1; sourceTree = "<group>"; };
 		04CE34AA1FABBF5F009D551C /* Torch.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Torch.mtl; sourceTree = "<group>"; };
-		04CE34AB1FABBF5F009D551C /* vs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vs.txt; sourceTree = "<group>"; };
 		04CE34AE1FABC417009D551C /* Torch.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Torch.obj; sourceTree = "<group>"; };
 		04DEFF141FB3DF6D009D70FC /* modelObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modelObject.cpp; sourceTree = "<group>"; };
 		04DEFF171FB3DF7F009D70FC /* modelObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modelObject.h; sourceTree = "<group>"; };
@@ -166,12 +172,15 @@
 		04CE349E1FABBF5F009D551C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				044D467E1FB9140100381099 /* newTorch.obj */,
+				044D467D1FB9140100381099 /* NewTorchCol.ktx */,
+				044D2B791FB8CB7A00837463 /* fs.glsl */,
+				044D2B781FB8CB7A00837463 /* vs.glsl */,
 				044D2B681FB79CC800837463 /* room.obj */,
 				044D2B691FB79CC900837463 /* roomCol.ktx */,
 				046EA0C51FB652CB0003CA3D /* TorchO.ktx */,
 				04CE349F1FABBF5F009D551C /* cube.mtl */,
 				04CE34A01FABBF5F009D551C /* cube.obj */,
-				04CE34A31FABBF5F009D551C /* fs.txt */,
 				04CE34AE1FABC417009D551C /* Torch.obj */,
 				04CE34A41FABBF5F009D551C /* Pacmannblend.mtl */,
 				04CE34A51FABBF5F009D551C /* Pacmannblend.obj */,
@@ -180,7 +189,6 @@
 				04CE34A81FABBF5F009D551C /* Torch.blend */,
 				04CE34A91FABBF5F009D551C /* Torch.blend1 */,
 				04CE34AA1FABBF5F009D551C /* Torch.mtl */,
-				04CE34AB1FABBF5F009D551C /* vs.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

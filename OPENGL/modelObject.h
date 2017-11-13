@@ -24,16 +24,27 @@ using namespace std;
 #include <GLM/gtx/transform.hpp>
 #include "OBJParser.h"
 
+struct lightStruct{
+public:
+    static glm::vec3 ia;
+    static GLfloat ka;
+    glm::vec3 id;
+    GLfloat kd;
+    glm::vec3 is;
+    GLfloat ks;
+    GLfloat shininess;
+};
+
+
 class modelObject{
-protected
-    :
+protected:
     std::vector < glm::vec3 > out_vertices;
     std::vector < glm::vec2 > out_uvs;
     std::vector < glm::vec3 > out_normals;
     GLuint          texture[1];            // texture name
     GLuint          program;
     GLuint          vao;
-    GLuint          buffer[2];
+    GLuint          buffer[3];
     GLint           mv_location;
     GLint           proj_location;
     GLint           tex_location;
@@ -50,7 +61,7 @@ public:
     bool load(string); // load and parse .obj file
     void checkErrorShader(GLuint shader);
     string readShader(string fileName);
-    virtual void render(glm::mat4&,glm::mat4&) const =0;
+    virtual void render(glm::mat4&,glm::mat4&, lightStruct&, glm::vec3&) const =0;
 };
 
 #endif /* modelObject_h */

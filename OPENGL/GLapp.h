@@ -43,7 +43,6 @@ static void APIENTRY openGLDebugCallback(GLenum source,
                                          const GLvoid* userParam);
 
 
-
 class GLapp{
 private:
     
@@ -62,7 +61,7 @@ private:
     
     vector<modelObject*> Objs;
     
-
+    lightStruct light;
     
     
     // Camera Variables

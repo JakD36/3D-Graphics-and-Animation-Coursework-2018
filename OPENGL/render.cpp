@@ -22,6 +22,6 @@ void GLapp::render(double currentTime) {
 
     // Render each object
     for(int n = 0;n<Objs.size();n++){
-        Objs[n]->render(proj_matrix,viewMatrix);
+        Objs[n]->render(proj_matrix,viewMatrix,light,cameraPos);
     }
 }

@@ -18,7 +18,7 @@ public:
     vector<glm::vec3> rotation;
     vector<glm::vec3> scale;
     
-    virtual void render(glm::mat4&,glm::mat4&) const;
+    virtual void render(glm::mat4&,glm::mat4&, lightStruct&, glm::vec3&) const;
 };
 
 
