@@ -104,8 +104,6 @@ void modelObject::getUniLocation(){
     mv_location = glGetUniformLocation(program, "mv_matrix");
     proj_location = glGetUniformLocation(program, "proj_matrix");
     tex_location = glGetUniformLocation(program, "tex");
-    lightColor_location = glGetUniformLocation(program,"ia");
-    lightColor_location = glGetUniformLocation(program,"ka");
 }
 
 

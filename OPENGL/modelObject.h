@@ -24,15 +24,16 @@ using namespace std;
 #include <GLM/gtx/transform.hpp>
 #include "OBJParser.h"
 
+enum lightType {point,spot};
+
 struct lightStruct{
 public:
+    lightType type; // 0 is point light, 1 is spotlight
     static glm::vec3 ia;
-    static GLfloat ka;
+    glm::vec3 position;
+    glm::vec3 direction;
     glm::vec3 id;
-    GLfloat kd;
     glm::vec3 is;
-    GLfloat ks;
-    GLfloat shininess;
 };
 
 
@@ -45,15 +46,18 @@ protected:
     GLuint          program;
     GLuint          vao;
     GLuint          buffer[3];
+    
     GLint           mv_location;
+    GLint           modelLocation;
     GLint           proj_location;
     GLint           tex_location;
     
-    // extra variables for this example
-    GLuint        matColor_location;
-    GLuint        lightColor_location;
-    
 public:
+    GLfloat ka;
+    GLfloat kd;
+    GLfloat ks;
+    GLfloat shininess;
+    
     modelObject();
     void initModel(string,string,string); // initialise the modelObject with model and its shaders
     void initTexture(string); // provide texture for model
@@ -61,7 +65,7 @@ public:
     bool load(string); // load and parse .obj file
     void checkErrorShader(GLuint shader);
     string readShader(string fileName);
-    virtual void render(glm::mat4&,glm::mat4&, lightStruct&, glm::vec3&) const =0;
+    virtual void render(glm::mat4&,glm::mat4&, lightStruct[], glm::vec3&) const =0;
 };
 
 #endif /* modelObject_h */

@@ -17,7 +17,7 @@ public:
     glm::vec3 rotation  = glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 scale     = glm::vec3(1.0f,1.0f,1.0f);
 
-    virtual void render(glm::mat4&,glm::mat4&,lightStruct&,glm::vec3&) const;
+    virtual void render(glm::mat4&,glm::mat4&,lightStruct[],glm::vec3&) const;
 };
 
 #endif /* modelObjectSingle_h */

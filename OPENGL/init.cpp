@@ -25,7 +25,7 @@ void GLapp::hintsGLFW() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-GLfloat lightStruct::ka = 0.1;
+
 glm::vec3 lightStruct::ia = glm::vec3(0.0f,0.6f,0.2f);
 
 void GLapp::startup() {
@@ -40,18 +40,35 @@ void GLapp::startup() {
     torchObj.getUniLocation();
     torchObj.position.y = 1.6f;
     torchObj.rotation = glm::vec3(0.0f,-90.0f,0.0f);
-//    torchObj.rotation.y = -90.0f;
+    torchObj.ka = 0.1f;
+    torchObj.kd = 1.0f;
+    torchObj.ks = 0.1f;
+    torchObj.shininess = 32.0f;
     
     room = modelObjectSingle();
     room.initModel("room.obj","vs.glsl","fs.glsl");
     room.initTexture("roomCol.ktx");
     room.getUniLocation();
+    room.ka = 0.1;
+    room.kd = 5.0;
+    room.ks = 0.1;
+    room.shininess = 32.0f;
     
-    light.kd = 5.0;
-    light.id = glm::vec3(1.0f,1.0f,1.0f);
-    light.is = glm::vec3(1.0f,1.0f,1.0f);
-    light.ks = 0.1;
-    light.shininess = 32.0f;
+    lights[0].type = lightType::point;
+    lights[0].position = glm::vec3(0.0f,2.0f,0.0f);
+    lights[0].id = glm::vec3(0.0f,0.1f,0.0f);
+    lights[0].is = glm::vec3(0.0f,0.1f,0.0f);
+    
+    lights[1].type = lightType::point;
+    lights[1].position = glm::vec3(2.0f,0.5f,2.0f);
+    lights[1].id = glm::vec3(0.5f,0.0f,0.0f);
+    lights[1].is = glm::vec3(0.5f,0.0f,0.0f);
+    
+    lights[2].type = lightType::spot;
+    lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
+    lights[2].direction = cameraFront;
+    lights[2].id = glm::vec3(2.0f,2.0f,2.0f);
+    lights[2].is = glm::vec3(1.0f,1.0f,1.0f);    
 
 //    pac = modelObjectInst();
 //    pac.initModel("room.obj","vs.txt","fs.txt");

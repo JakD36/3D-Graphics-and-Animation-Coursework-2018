@@ -8,7 +8,7 @@
 
 #include "modelObjectSingle.h"
 
-void modelObjectSingle::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct& light,glm::vec3& camera) const{
+void modelObjectSingle::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera) const{
     // For each model Object
     glUseProgram(program);
     glBindVertexArray(vao);
@@ -19,20 +19,36 @@ void modelObjectSingle::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lig
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glUniform1i(tex_location, 0);
     
-    glUniform4f(glGetUniformLocation(program,"viewMatrix"),camera.x,camera.y,camera.z,1.0);
-    glUniform4f(glGetUniformLocation(program, "ia"), light.ia.r, light.ia.g, light.ia.b, 1.0);
-    glUniform1f(glGetUniformLocation(program, "ka"), light.ka);
-    
-    glUniform1f(glGetUniformLocation(program, "kd"), light.kd);
-    glUniform4f(glGetUniformLocation(program, "is"), light.is.r, light.is.g, light.is.b, 1.0);
-    glUniform1f(glGetUniformLocation(program, "ks"), light.ks);
-    glUniform1f(glGetUniformLocation(program, "shininess"), light.shininess);
-    glUniform4f(glGetUniformLocation(program,"light.lightPosition"),0.0f,2.0f,0.0f,1.0f);
-    glUniform4f(glGetUniformLocation(program,"light.id"),1.0f,1.0f,1.0f,1.0f);
-    
+    glUniform4f(glGetUniformLocation(program,"viewPosition"),camera.x,camera.y,camera.z,1.0f);
+    glUniform4f(glGetUniformLocation(program, "ia"), lightStruct::ia.r, lightStruct::ia.g, lightStruct::ia.b, 1.0f);
+    glUniform1f(glGetUniformLocation(program, "ka"), ka);
+    glUniform1f(glGetUniformLocation(program, "kd"), kd);
+    glUniform1f(glGetUniformLocation(program, "ks"), ks);
+    glUniform1f(glGetUniformLocation(program, "shininess"), shininess);
     glUniform1f(glGetUniformLocation(program,"lightConstant"),0.25f);
     glUniform1f(glGetUniformLocation(program,"lightLinear"),0.7f);
     glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);
+    
+    for(int n = 0;n<3;n++){
+        glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].type").c_str()),lights[n].type);
+        glUniform4f(glGetUniformLocation(program,
+                                         ("lights["+to_string(n)+"].lightPosition").c_str()),
+                    lights[n].position.x,lights[n].position.y,lights[n].position.z,1.0f);
+        
+        glUniform4f(glGetUniformLocation(program,
+                                         ("lights["+to_string(n)+"].direction").c_str()),
+                    lights[n].direction.x,lights[n].direction.y,lights[n].direction.z,0.0f);
+        glUniform4f(glGetUniformLocation(program,("lights["+to_string(n)+"].id").c_str()),lights[n].id.r,lights[n].id.g,lights[n].id.b,1.0f);
+        glUniform1f(glGetUniformLocation(program, ("lights["+to_string(n)+"].lightSpotCutOff").c_str()), glm::cos(glm::radians(15.0f)));
+        glUniform1f(glGetUniformLocation(program, ("lights["+to_string(n)+"].lightSpotOuterCutOff").c_str()), glm::cos(glm::radians(20.0f)));
+        
+        glUniform4f(glGetUniformLocation(program,("lights["+to_string(n)+"].is").c_str()),lights[n].is.r,lights[n].is.g,lights[n].is.b,1.0f);
+    }
+//    glUniform4f(glGetUniformLocation(program,
+//                                     "lights.lightPosition"),
+//                lights[0].position.x,lights[0].position.y,lights[0].position.z,1.0f);
+//    glUniform4f(glGetUniformLocation(program,"lights.id"),1.0f,1.0f,1.0f,1.0f);
+//    glUniform4f(glGetUniformLocation(program,"lights.is"),lights[0].is.r,lights[0].is.g,lights[0].is.b,1.0f);
     
     
     // Concatenate matrices

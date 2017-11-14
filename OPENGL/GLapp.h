@@ -56,11 +56,11 @@ private:
     bool                    running = true;
 
     modelObjectSingle       torchObj;
-    modelObjectInst         pac;
+    //modelObjectInst         pac;
     modelObjectSingle       room;
     
     vector<modelObject*> Objs;
-    
+    lightStruct lights[3];
     lightStruct light;
     
     

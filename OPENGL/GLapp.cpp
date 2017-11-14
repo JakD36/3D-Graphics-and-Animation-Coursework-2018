@@ -122,6 +122,7 @@ void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
     
     torchObj.rotation.x = pitch;
     torchObj.rotation.y = yaw;
+    lights[2].direction = cameraFront;
     
 //    cout<<"Yaw>>\t"<<objectRot.y<<"\t"<<"Pitch>>\t"<<objectRot.x<<"\t"<<"roll\t"<<objectRot.z<<endl;
 //    cout<<"x>>\t"<<objectPos.x<<"\t"<<"y>>\t"<<objectPos.y<<"\t"<<"z\t"<<objectPos.z<<endl;

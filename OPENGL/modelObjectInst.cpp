@@ -8,7 +8,7 @@
 
 #include "modelObjectInst.h"
 
-void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct& light,glm::vec3& camera) const{
+void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera) const{
     // For each model Object
     glUseProgram(program);
     glBindVertexArray(vao);

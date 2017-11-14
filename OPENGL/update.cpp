@@ -58,5 +58,6 @@ void GLapp::update(double currentTime) {
     if(keyStatus[GLFW_KEY_4] == true){
         cameraPos.z -= 0.5f;
     }
-    
+    lights[2].position = cameraPos+cameraFront;
+//    lights[2].direction = cameraFront;
 }
