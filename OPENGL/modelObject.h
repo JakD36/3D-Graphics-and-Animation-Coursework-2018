@@ -25,15 +25,16 @@ using namespace std;
 #include "OBJParser.h"
 
 enum lightType {point,spot};
+const int LIGHTSN = 3;
 
 struct lightStruct{
 public:
-    lightType type; // 0 is point light, 1 is spotlight
+    lightType type = lightType::point; // 0 is point light, 1 is spotlight
     static glm::vec3 ia;
-    glm::vec3 position;
-    glm::vec3 direction;
-    glm::vec3 id;
-    glm::vec3 is;
+    glm::vec3 position = glm::vec3(1.0f,1.0f,1.0f);;
+    glm::vec3 direction = glm::vec3(0.0f,0.0f,0.0f);;
+    glm::vec3 id = glm::vec3(3.0f,3.0f,3.0f);
+    glm::vec3 is = glm::vec3(3.0f,3.0f,3.0f);
 };
 
 
@@ -53,9 +54,9 @@ protected:
     GLint           tex_location;
     
 public:
-    GLfloat ka;
-    GLfloat kd;
-    GLfloat ks;
+    glm::vec3 ka;
+    glm::vec3 kd;
+    glm::vec3 ks;
     GLfloat shininess;
     
     modelObject();
@@ -65,6 +66,8 @@ public:
     bool load(string); // load and parse .obj file
     void checkErrorShader(GLuint shader);
     string readShader(string fileName);
+    bool loadMat(string);
+    void setupRender(glm::mat4&, lightStruct[], glm::vec3&);
     virtual void render(glm::mat4&,glm::mat4&, lightStruct[], glm::vec3&) const =0;
 };
 

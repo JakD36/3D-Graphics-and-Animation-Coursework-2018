@@ -106,6 +106,76 @@ void modelObject::getUniLocation(){
     tex_location = glGetUniformLocation(program, "tex");
 }
 
+bool modelObject::loadMat(string name){
+    FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
+    int result;         // for taking output of fscanf function
+    char line[256];
+    pfile = fopen(name.c_str(),"r"); // open the file with read access
+    
+    if(pfile == NULL){ // if the file doesnt open when using fopen
+        cout<<"Could not find file >> "<<name<<endl; // print error and name of file that failed to open
+        return false; // exit function as it has failed
+    }
+    else{
+        do{ // if file does open loop through each line of the file while EOF has not been reached
+            result = fscanf(pfile,"%s",line); // %s refers to keep scanning until first whitespace
+            // we can then compare the first section of text to the different headers for each line
+            if(strcmp(line,"Ka") == 0){
+                fscanf(pfile,"%f %f %f\n",&ka.r,&ka.g,&ka.b);
+                // line will be in format of %f %f %f\n ie three floats seperated by spaces
+            }
+            else if(strcmp(line,"Kd") == 0){
+                fscanf(pfile,"%f %f %f\n",&kd.r,&kd.g,&kd.b);
+            }
+            else if(strcmp(line,"Ks") == 0){
+                fscanf(pfile,"%f %f %f\n",&ks.r,&ks.g,&ks.b);
+            }
+            else if(strcmp(line,"Ni") == 0){
+                fscanf(pfile,"%f\n",&shininess);
+            }
+        } while (result != EOF);
+        return true;
+    }
+}
+
+void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::vec3& camera){
+    // For each model Object
+    glUseProgram(program);
+    glBindVertexArray(vao);
+    glUniformMatrix4fv(proj_location, 1, GL_FALSE, &proj_matrix[0][0]);
+    // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glUniform1i(tex_location, 0);
+    
+    glUniform4f(glGetUniformLocation(program,"viewPosition"),camera.x,camera.y,camera.z,1.0f);
+    glUniform4f(glGetUniformLocation(program, "ia"), lightStruct::ia.r, lightStruct::ia.g, lightStruct::ia.b, 1.0f);
+    glUniform3f(glGetUniformLocation(program, "ka"), ka.r,ka.g,ka.b);
+    glUniform3f(glGetUniformLocation(program, "kd"), kd.r,kd.g,kd.b);
+    glUniform3f(glGetUniformLocation(program, "ks"), ks.r,ks.g,ks.b);
+    glUniform1f(glGetUniformLocation(program, "shininess"), shininess);
+    glUniform1f(glGetUniformLocation(program,"lightConstant"),0.25f);
+    glUniform1f(glGetUniformLocation(program,"lightLinear"),0.7f);
+    glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);
+    
+    for(int n = 0;n<LIGHTSN;n++){
+        glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].type").c_str()),lights[n].type);
+        glUniform4f(glGetUniformLocation(program,
+                                         ("lights["+to_string(n)+"].lightPosition").c_str()),
+                    lights[n].position.x,lights[n].position.y,lights[n].position.z,1.0f);
+        
+        glUniform4f(glGetUniformLocation(program,
+                                         ("lights["+to_string(n)+"].direction").c_str()),
+                    lights[n].direction.x,lights[n].direction.y,lights[n].direction.z,0.0f);
+        glUniform4f(glGetUniformLocation(program,("lights["+to_string(n)+"].id").c_str()),lights[n].id.r,lights[n].id.g,lights[n].id.b,1.0f);
+        glUniform1f(glGetUniformLocation(program, ("lights["+to_string(n)+"].lightSpotCutOff").c_str()), glm::cos(glm::radians(15.0f)));
+        glUniform1f(glGetUniformLocation(program, ("lights["+to_string(n)+"].lightSpotOuterCutOff").c_str()), glm::cos(glm::radians(20.0f)));
+        
+        glUniform4f(glGetUniformLocation(program,("lights["+to_string(n)+"].is").c_str()),lights[n].is.r,lights[n].is.g,lights[n].is.b,1.0f);
+    }
+}
+
 
 bool modelObject::load(string name){
     // Variables

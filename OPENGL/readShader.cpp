@@ -42,7 +42,6 @@ void GLapp::checkErrorShader(GLuint shader) {
     }
 }
 
-
 string modelObject::readShader(string fileName) {
     fstream file;
     string output ="";

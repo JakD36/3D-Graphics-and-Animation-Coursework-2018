@@ -26,38 +26,31 @@ void GLapp::hintsGLFW() {
 }
 
 
-glm::vec3 lightStruct::ia = glm::vec3(0.0f,0.6f,0.2f);
+glm::vec3 lightStruct::ia = glm::vec3(0.0f,1.0f,0.2f);
 
 void GLapp::startup() {
     // Calculate proj_matrix for the first time.
     aspect = (float)windowWidth / (float)windowHeight; // ARE THESE BEING CONVERTED TO FLOATS?
     proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
 
-    
     torchObj = modelObjectSingle();
     torchObj.initModel("newTorch.obj","vs.glsl","fs.glsl");
     torchObj.initTexture("newTorchCol.ktx");
+    torchObj.loadMat("newTorch.mtl");
     torchObj.getUniLocation();
     torchObj.position.y = 1.6f;
     torchObj.rotation = glm::vec3(0.0f,-90.0f,0.0f);
-    torchObj.ka = 0.1f;
-    torchObj.kd = 1.0f;
-    torchObj.ks = 0.1f;
-    torchObj.shininess = 32.0f;
     
     room = modelObjectSingle();
     room.initModel("room.obj","vs.glsl","fs.glsl");
     room.initTexture("roomCol.ktx");
+    room.loadMat("room.mtl");
     room.getUniLocation();
-    room.ka = 0.1;
-    room.kd = 5.0;
-    room.ks = 0.1;
-    room.shininess = 32.0f;
     
     lights[0].type = lightType::point;
     lights[0].position = glm::vec3(0.0f,2.0f,0.0f);
-    lights[0].id = glm::vec3(0.0f,0.1f,0.0f);
-    lights[0].is = glm::vec3(0.0f,0.1f,0.0f);
+    lights[0].id = glm::vec3(1.0f,1.0f,1.0f);
+    lights[0].is = glm::vec3(1.0f,1.0f,1.0f);
     
     lights[1].type = lightType::point;
     lights[1].position = glm::vec3(2.0f,0.5f,2.0f);
@@ -67,39 +60,11 @@ void GLapp::startup() {
     lights[2].type = lightType::spot;
     lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
     lights[2].direction = cameraFront;
-    lights[2].id = glm::vec3(2.0f,2.0f,2.0f);
-    lights[2].is = glm::vec3(1.0f,1.0f,1.0f);    
-
-//    pac = modelObjectInst();
-//    pac.initModel("room.obj","vs.txt","fs.txt");
-//    pac.initTexture("roomCol.ktx");
-//    pac.getUniLocation();
-//
-//    pac.position.push_back(glm::vec3(10.0f,0.0f,0.0f));
-//    pac.position.push_back(glm::vec3(-10.0f,0.0f,0.0f));
-//    pac.position.push_back(glm::vec3(0.0f,10.0f,0.0f));
-//    pac.position.push_back(glm::vec3(0.0f,-10.0f,0.0f));
-//    pac.position.push_back(glm::vec3(0.0f,0.0f,10.0f));
-//    pac.position.push_back(glm::vec3(0.0f,0.0f,-10.0f));
-//
-//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//    pac.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//
-//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-//    pac.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
-
-    
+    lights[2].id = glm::vec3(5.0f,5.0f,5.0f);
+    lights[2].is = glm::vec3(1.0f,1.0f,1.0f);
+        
     Objs.push_back(&torchObj);
     Objs.push_back(&room);
-//    Objs.push_back(&pac);
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
@@ -107,4 +72,88 @@ void GLapp::startup() {
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    glGenFramebuffers(1,&framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
+    glGenTextures(1,&framebufferTexture);
+    
+    glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+    
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,windowWidth,windowHeight,0,GL_RGB,GL_UNSIGNED_BYTE,0);
+    
+    // filtering needed - future lecture
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    
+    // Depth buffer texture    - Need to attach depth too otherwise depth testing will not be performed.
+    glGenRenderbuffers(1, &depthbuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, depthbuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowWidth, windowHeight);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthbuffer);
+    
+    displayVertices.push_back(glm::vec2(-1.0f, 1.0f));
+    displayVertices.push_back(glm::vec2(-1.0f,-1.0f));
+    displayVertices.push_back(glm::vec2( 1.0f,-1.0f));
+    displayVertices.push_back(glm::vec2(-1.0f, 1.0f));
+    displayVertices.push_back(glm::vec2( 1.0f,-1.0f));
+    displayVertices.push_back(glm::vec2( 1.0f, 1.0f));
+    
+    displayUvs.push_back(glm::vec2(0.0f, 1.0f));
+    displayUvs.push_back(glm::vec2(0.0f, 0.0f));
+    displayUvs.push_back(glm::vec2(1.0f, 0.0f));
+    displayUvs.push_back(glm::vec2(0.0f, 1.0f));
+    displayUvs.push_back(glm::vec2(1.0f, 0.0f));
+    displayUvs.push_back(glm::vec2(1.0f, 1.0f));
+    
+    glGenBuffers(2,displayBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, displayBuffer[0]);
+    glBufferData(GL_ARRAY_BUFFER,
+                 displayVertices.size()*sizeof(glm::vec2),
+                 &displayVertices[0],
+                 GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, displayBuffer[1]);
+    glBufferData(GL_ARRAY_BUFFER,
+                 displayUvs.size()*sizeof(glm::vec2),
+                 &displayUvs[0],
+                 GL_STATIC_DRAW);
+
+    
+    glGenVertexArrays(1,&displayVao);
+    glBindVertexArray(displayVao);
+    glVertexAttribPointer(0, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(1);
+    
+    //load shaders
+    displayProgram = glCreateProgram();
+    
+    string dvs_text = readShader("vs_display.glsl");
+    const char* dvs_source = dvs_text.c_str();
+    GLuint dvs = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(dvs, 1, &dvs_source, NULL);
+    glCompileShader(dvs);
+    checkErrorShader(dvs);
+    glAttachShader(displayProgram, dvs);
+    
+    string dfs_text = readShader("fs_display.glsl");
+    const char* dfs_source = dfs_text.c_str();
+    GLuint dfs = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(dfs, 1, &dfs_source, NULL);
+    glCompileShader(dfs);
+    checkErrorShader(dfs);
+    glAttachShader(displayProgram, dfs);
+    
+    glLinkProgram(displayProgram);
+    glUseProgram(displayProgram);
+
+    
 }

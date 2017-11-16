@@ -60,9 +60,19 @@ private:
     modelObjectSingle       room;
     
     vector<modelObject*> Objs;
-    lightStruct lights[3];
+    lightStruct lights[LIGHTSN];
     lightStruct light;
     
+    // framebuffer
+    GLuint            framebuffer;
+    GLuint            framebufferTexture;
+    GLuint            depthbuffer;
+    GLuint            displayVao;
+    GLuint            displayBuffer[2];
+    std::vector < glm::vec2 > displayVertices;
+    std::vector < glm::vec2 > displayUvs;
+    GLuint            displayProgram;
+
     
     // Camera Variables
     int mouseX, mouseY;
