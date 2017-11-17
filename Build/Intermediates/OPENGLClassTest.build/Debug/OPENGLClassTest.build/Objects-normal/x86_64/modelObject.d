@@ -203,5 +203,4 @@ dependencies: \
   /usr/local/include/GLM/gtx/transform.hpp \
   /usr/local/include/glm/gtx/../gtc/matrix_transform.hpp \
   /usr/local/include/glm/gtc/matrix_transform.inl \
-  /usr/local/include/glm/gtx/transform.inl \
-  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/OBJParser.h
+  /usr/local/include/glm/gtx/transform.inl

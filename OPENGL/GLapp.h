@@ -54,14 +54,24 @@ private:
     bool                    keyStatus[1024] = {false};
     unsigned int            nTriangles = 0;
     bool                    running = true;
+    
+    float sphereRadius = 0.4; float yawOffset = 30; float pitchOffset = 20;
 
     modelObjectSingle       torchObj;
     //modelObjectInst         pac;
-    modelObjectSingle       room;
+    modelObjectSingle       front;
+    modelObjectInst         planks;
+    modelObjectSingle       floor;
+    modelObjectInst         wall;
+    modelObjectSingle       back;
+    modelObjectSingle       roof;
+    modelObjectInst         beam;
+    modelObjectSingle       bulb;
+    
+    
     
     vector<modelObject*> Objs;
     lightStruct lights[LIGHTSN];
-    lightStruct light;
     
     // framebuffer
     GLuint            framebuffer;
@@ -72,7 +82,16 @@ private:
     std::vector < glm::vec2 > displayVertices;
     std::vector < glm::vec2 > displayUvs;
     GLuint            displayProgram;
-
+    bool LMBClicked = false;
+    
+    
+    double          prevTime = 0;
+    float lightRadius = 0.25f;
+    float lightYaw = 0.0f;
+    float lightPitch = 0.0f;
+    double          v = 0;
+    
+    
     
     // Camera Variables
     int mouseX, mouseY;
@@ -105,6 +124,8 @@ public:
     void setAspect(float);
     void setProjMatrix(glm::mat4);
     
+    glm::vec3 posOnSphere(float radius,float yaw,float pitch);
+    
     void classerrorCallbackGLFW(int error, const char* description);
     void classkeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     void classonResizeCallback(GLFWwindow* window, int w, int h);
@@ -112,6 +133,9 @@ public:
     void classonMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
     void classonMouseMoveCallback(GLFWwindow* window, double x, double y);
     void classonMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
+    
+    void printVec3(glm::vec3,string,string,string);
+    
 };
 
 

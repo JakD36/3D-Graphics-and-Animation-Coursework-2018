@@ -33,23 +33,199 @@ void GLapp::startup() {
     aspect = (float)windowWidth / (float)windowHeight; // ARE THESE BEING CONVERTED TO FLOATS?
     proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
 
+    // Initialise Objects
+    // Instantiate Object
+    // initModel
+    // initTexture
+    // loadMat
+    // sort any other variables that need set
+    
+    // Torch
     torchObj = modelObjectSingle();
     torchObj.initModel("newTorch.obj","vs.glsl","fs.glsl");
     torchObj.initTexture("newTorchCol.ktx");
     torchObj.loadMat("newTorch.mtl");
-    torchObj.getUniLocation();
-    torchObj.position.y = 1.6f;
-    torchObj.rotation = glm::vec3(0.0f,-90.0f,0.0f);
+    torchObj.position = cameraPos + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
     
-    room = modelObjectSingle();
-    room.initModel("room.obj","vs.glsl","fs.glsl");
-    room.initTexture("roomCol.ktx");
-    room.loadMat("room.mtl");
-    room.getUniLocation();
+    // Room
     
+    // Front of room
+    front = modelObjectSingle();
+    front.initModel("front.obj","vs.glsl","fs.glsl");
+    front.initTexture("front.ktx");
+    front.loadMat("front.mtl");
+    
+    
+    // Back wall
+    back = modelObjectSingle();
+    back.initModel("back.obj", "vs.glsl", "fs.glsl");
+    back.initTexture("back.ktx");
+    back.loadMat("back.mtl");
+    back.rotation.y = 180.0f;
+    back.position = glm::vec3(0.0f,2.0f,3.0f);
+    
+    // Roof
+    roof = modelObjectSingle();
+    roof.initModel("roof.obj", "vs.glsl", "fs.glsl");
+    roof.initTexture("roof.ktx");
+    roof.loadMat("roof.mtl");
+    roof.position.y = 2.5f;
+    
+    beam = modelObjectInst();
+    beam.initModel("beam.obj", "vs.glsl", "fs.glsl");
+    beam.initTexture("beam.ktx");
+    beam.loadMat("beam.mtl");
+    
+    beam.position.push_back(glm::vec3(0.0f,2.61f,0.0f));
+    beam.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    beam.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    beam.position.push_back(glm::vec3(0.0f,2.61f,-1.5f));
+    beam.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    beam.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    beam.position.push_back(glm::vec3(0.0f,2.61f,1.5f));
+    beam.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    beam.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank
+    planks = modelObjectInst();
+    planks.initModel("plank.obj", "vs.glsl", "fs.glsl");
+    planks.initTexture("plank.ktx");
+    planks.loadMat("plank.mtl");
+    
+    // Plank 1
+    planks.position.push_back(glm::vec3(2.2f,1.5f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,5.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 2
+    planks.position.push_back(glm::vec3(2.0f,1.3f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,10.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 3
+    planks.position.push_back(glm::vec3(1.65f,1.6f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,2.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 4
+    planks.position.push_back(glm::vec3(1.4f,1.5f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,-5.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 5
+    planks.position.push_back(glm::vec3(1.1f,1.3f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,1.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 6
+    planks.position.push_back(glm::vec3(0.8f,1.55f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,-12.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 7
+    planks.position.push_back(glm::vec3(0.5f,1.55f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,-1.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 8
+    planks.position.push_back(glm::vec3(0.1f,1.55f,-3.0f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,6.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 9
+    planks.position.push_back(glm::vec3(0.6f,1.7f,-2.85f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,80.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 10
+    planks.position.push_back(glm::vec3(1.0f,1.15f,-2.85f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,110.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 11
+    planks.position.push_back(glm::vec3(1.8f,1.65f,-2.85f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,60.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 12
+    planks.position.push_back(glm::vec3(-1.4f,1.85f,-3.2f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,85.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 13
+    planks.position.push_back(glm::vec3(-1.4f,1.55f,-3.2f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,95.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 14
+    planks.position.push_back(glm::vec3(-1.4f,1.2f,-3.2f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,90.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 15
+    planks.position.push_back(glm::vec3(-1.4f,0.85f,-3.2f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,80.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 16
+    planks.position.push_back(glm::vec3(-1.4f,0.5f,-3.2f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,100.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Plank 17
+    planks.position.push_back(glm::vec3(-1.4f,0.2f,-3.2f));
+    planks.rotation.push_back(glm::vec3(90.0f,0.0f,95.0f));
+    planks.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Floor
+    floor = modelObjectSingle();
+    floor.initModel("floor.obj", "vs.glsl", "fs.glsl");
+    floor.initTexture("floor.ktx");
+    floor.loadMat("floor.mtl");
+    
+    // Wall
+    wall = modelObjectInst();
+    wall.initModel("wall.obj", "vs.glsl", "fs.glsl");
+    wall.initTexture("wall.ktx");
+    wall.loadMat("wall.mtl");
+    
+    // Wall 1
+    wall.position.push_back(glm::vec3(3.0f,1.25f,0.0f));
+    wall.rotation.push_back(glm::vec3(0.0f,180.0f,0.0f));
+    wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    // Wall 2
+    wall.position.push_back(glm::vec3(-3.0f,1.25f,0.0f));
+    wall.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+    wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    
+    //Lightbulb
+    bulb = modelObjectSingle();
+    bulb.initModel("bulb.obj", "vs_light.glsl", "fs_light.glsl");
+    bulb.initTexture("bulb.ktx");
+    bulb.loadMat("bulb.mtl");
+    
+    
+    //Add objects to vector Objs to be rendered!
+    
+    Objs.push_back(&torchObj);
+    Objs.push_back(&front);
+    Objs.push_back(&wall);
+    Objs.push_back(&roof);
+    Objs.push_back(&floor);
+    Objs.push_back(&back);
+    Objs.push_back(&planks);
+    Objs.push_back(&beam);
+    Objs.push_back(&bulb);
+    
+    
+    // Add lights to scene, number of lights determined by const int LIGHTSN
     lights[0].type = lightType::point;
+    lights[0].position = glm::vec3(0.0f,2.25f,0.0f) + posOnSphere(lightRadius, lightYaw, lightPitch);
     lights[0].position = glm::vec3(0.0f,2.0f,0.0f);
-    lights[0].id = glm::vec3(1.0f,1.0f,1.0f);
+    lights[0].id = glm::vec3(5.0f,5.0f,5.0f);
     lights[0].is = glm::vec3(1.0f,1.0f,1.0f);
     
     lights[1].type = lightType::point;
@@ -60,11 +236,11 @@ void GLapp::startup() {
     lights[2].type = lightType::spot;
     lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
     lights[2].direction = cameraFront;
-    lights[2].id = glm::vec3(5.0f,5.0f,5.0f);
+    lights[2].id = glm::vec3(10.0f,10.0f,10.0f);
     lights[2].is = glm::vec3(1.0f,1.0f,1.0f);
-        
-    Objs.push_back(&torchObj);
-    Objs.push_back(&room);
+    
+    
+    
     
     // Framebuffer operations
     glFrontFace(GL_CCW);

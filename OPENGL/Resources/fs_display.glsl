@@ -9,5 +9,5 @@ void main()
 {
     color = texture(screenTexture,TexCoords);
     float average = (color.r + color.g + color.b) /3.0;
-    color = vec4(average, average, average, 1.0);
+    //color = vec4(average, average, average, 1.0);
 }

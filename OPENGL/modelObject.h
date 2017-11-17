@@ -22,13 +22,14 @@ using namespace std;
 #include <GLM/glm.hpp>
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
-#include "OBJParser.h"
+
 
 enum lightType {point,spot};
 const int LIGHTSN = 3;
 
 struct lightStruct{
 public:
+    bool lightOn = true;
     lightType type = lightType::point; // 0 is point light, 1 is spotlight
     static glm::vec3 ia;
     glm::vec3 position = glm::vec3(1.0f,1.0f,1.0f);;
@@ -36,7 +37,6 @@ public:
     glm::vec3 id = glm::vec3(3.0f,3.0f,3.0f);
     glm::vec3 is = glm::vec3(3.0f,3.0f,3.0f);
 };
-
 
 class modelObject{
 protected:
@@ -62,7 +62,6 @@ public:
     modelObject();
     void initModel(string,string,string); // initialise the modelObject with model and its shaders
     void initTexture(string); // provide texture for model
-    void getUniLocation(); // get the uniform locations for model
     bool load(string); // load and parse .obj file
     void checkErrorShader(GLuint shader);
     string readShader(string fileName);

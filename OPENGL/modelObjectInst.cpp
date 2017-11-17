@@ -8,6 +8,8 @@
 
 #include "modelObjectInst.h"
 
+
+
 void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera) const{
     
     for(int i = 0;i<position.size();i++) {        

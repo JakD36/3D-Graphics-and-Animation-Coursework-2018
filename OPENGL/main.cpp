@@ -14,7 +14,6 @@ using namespace std;
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
-#include "ObjParser.h"
 #include "GLapp.h"
 
 // VARIABLES
@@ -32,6 +31,13 @@ int main()
     return 0;
 }
 
+glm::vec3 posOnSphere(float radius,float yaw,float pitch){
+    glm::vec3 pos;
+    pos.x = radius*sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    pos.y = radius*sin(glm::radians(pitch));
+    pos.z = radius*cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    return pos;
+}
 
 void onResizeCallback(GLFWwindow* window, int w, int h) {
     myApp->classonResizeCallback(window,w,h);

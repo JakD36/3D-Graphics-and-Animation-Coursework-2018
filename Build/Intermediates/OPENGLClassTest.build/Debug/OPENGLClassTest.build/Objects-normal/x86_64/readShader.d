@@ -204,6 +204,5 @@ dependencies: /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/readShader.cpp \
   /usr/local/include/gli/./core/flip.hpp \
   /usr/local/include/gli/./core/flip.inl \
   /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObject.h \
-  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/OBJParser.h \
   /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObjectInst.h \
   /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/modelObjectSingle.h

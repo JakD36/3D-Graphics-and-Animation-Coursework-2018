@@ -100,12 +100,6 @@ void modelObject::initTexture(string texPath){
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void modelObject::getUniLocation(){
-    mv_location = glGetUniformLocation(program, "mv_matrix");
-    proj_location = glGetUniformLocation(program, "proj_matrix");
-    tex_location = glGetUniformLocation(program, "tex");
-}
-
 bool modelObject::loadMat(string name){
     FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
@@ -142,13 +136,12 @@ void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::
     // For each model Object
     glUseProgram(program);
     glBindVertexArray(vao);
-    glUniformMatrix4fv(proj_location, 1, GL_FALSE, &proj_matrix[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(program,"proj_matrix"), 1, GL_FALSE, &proj_matrix[0][0]);
     // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture[0]);
-    glUniform1i(tex_location, 0);
-    
+    glUniform1i(glGetUniformLocation(program,"tex"), 0);
     glUniform4f(glGetUniformLocation(program,"viewPosition"),camera.x,camera.y,camera.z,1.0f);
     glUniform4f(glGetUniformLocation(program, "ia"), lightStruct::ia.r, lightStruct::ia.g, lightStruct::ia.b, 1.0f);
     glUniform3f(glGetUniformLocation(program, "ka"), ka.r,ka.g,ka.b);
@@ -160,6 +153,7 @@ void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::
     glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);
     
     for(int n = 0;n<LIGHTSN;n++){
+        glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].on").c_str()),lights[n].lightOn);
         glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].type").c_str()),lights[n].type);
         glUniform4f(glGetUniformLocation(program,
                                          ("lights["+to_string(n)+"].lightPosition").c_str()),

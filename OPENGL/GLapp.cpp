@@ -89,6 +89,11 @@ void GLapp::classonKeyCallback(GLFWwindow* window, int key, int scancode, int ac
 }
 
 void GLapp::classonMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    if(button == GLFW_MOUSE_BUTTON_LEFT){
+        if(action == GLFW_PRESS){
+            LMBClicked = true;
+        }
+    }
     
 }
 void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
@@ -108,26 +113,34 @@ void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
     // check for pitch out of bounds otherwise screen gets flipped
     if (pitch > 89.0f) pitch = 89.0f; if (pitch < -89.0f) pitch = -89.0f;
     
-    glm::vec3 front;
-    front.x = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = -sin(glm::radians(pitch));
-    front.z = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(front);
     
-    torchObj.rotation.y = yaw; torchObj.rotation.x = pitch;
-    float sphereRadius = 0.2; float yawOffset = 30; float pitchOffset = 40;
-    torchObj.position.x = cameraPos.x + sphereRadius*sin(glm::radians(yaw+yawOffset))* cos(glm::radians(pitch+pitchOffset));
-    torchObj.position.y = cameraPos.y + (sphereRadius*sin(glm::radians(-(pitch+pitchOffset))));
-    torchObj.position.z = cameraPos.z + sphereRadius * cos(glm::radians(yaw+yawOffset)) * cos(glm::radians(pitch+pitchOffset));
+    cameraFront = glm::normalize(posOnSphere(1, yaw, -pitch));
+    
+    
+    torchObj.position = cameraPos + posOnSphere(sphereRadius,yaw+yawOffset,-(pitch+pitchOffset));
+
     
     torchObj.rotation.x = pitch;
     torchObj.rotation.y = yaw;
     lights[2].direction = cameraFront;
     
-//    cout<<"Yaw>>\t"<<objectRot.y<<"\t"<<"Pitch>>\t"<<objectRot.x<<"\t"<<"roll\t"<<objectRot.z<<endl;
-//    cout<<"x>>\t"<<objectPos.x<<"\t"<<"y>>\t"<<objectPos.y<<"\t"<<"z\t"<<objectPos.z<<endl;
+
 }
 
 void GLapp::classonMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
     int yoffsetInt = static_cast<int>(yoffset);
 }
+
+glm::vec3 GLapp::posOnSphere(float radius,float yaw,float pitch){
+    glm::vec3 pos;
+    pos.x = radius*sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    pos.y = radius*sin(glm::radians(pitch));
+    pos.z = radius*cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    return pos;
+}
+
+void GLapp::printVec3(glm::vec3 vec3,string str1,string str2,string str3){
+    cout<<str1<<" >> "<<vec3.x<<"\t"<<str2<<" >> "<<vec3.y<<"\t"<<str3<<" >> "<<vec3.z<<endl;
+}
+
+

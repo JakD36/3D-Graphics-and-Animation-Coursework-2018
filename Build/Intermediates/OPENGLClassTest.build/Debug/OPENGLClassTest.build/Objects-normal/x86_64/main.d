@@ -95,7 +95,6 @@ dependencies: /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/main.cpp \
   /usr/local/include/GLM/gtx/../gtc/constants.inl \
   /usr/local/include/GLM/gtx/../gtc/matrix_transform.inl \
   /usr/local/include/GLM/gtx/transform.inl \
-  /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/ObjParser.h \
   /Users/Jack/Desktop/OPENGL\ Class\ Test/OPENGL/GLapp.h \
   /usr/local/include/gli/gli.hpp /usr/local/include/gli/format.hpp \
   /usr/local/include/gli/type.hpp /usr/local/include/glm/gtc/vec1.hpp \

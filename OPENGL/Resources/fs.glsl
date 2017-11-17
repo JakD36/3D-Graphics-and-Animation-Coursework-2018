@@ -12,6 +12,7 @@ uniform sampler2D tex;
 uniform mat4 model_matrix;
 
 struct lightStruc{
+    int on;
     int type;
     vec4 lightPosition;
     vec4 direction;
@@ -52,33 +53,36 @@ void main(void)
         // Initialise the diffuse and specular vec3 for this light
         vec3 diffuse;
         vec3 specular;
-        
-        // Diffuse
-        vec4 lightDir = normalize(lights[n].lightPosition - fs_in.fragPos);
-        float diff = max(dot(normalize(fs_in.normals),lightDir),0.0);
-        // Specular
-        vec4 viewDir = normalize(viewPosition - fs_in.fragPos);
-        vec4 reflectDir = reflect(-lightDir,normalize(fs_in.normals));
-        float spec = pow(max(dot(viewDir,reflectDir),0.0),shininess);
-        
-        if(lights[n].type == 0){ // if point light
-            diffuse = diff * lights[n].id.rgb * kd.rgb;
-            specular = ks.rgb * lights[n].is.rgb * spec;
-        }
-        
-        else if(lights[n].type == 1){ // if spotlight
-            //Spotlight
-            float theta = dot(lightDir, normalize(-lights[n].direction));
-            float epsilon = (lights[n].lightSpotCutOff - lights[n].lightSpotOuterCutOff);
-            float intensity = clamp((theta - lights[n].lightSpotOuterCutOff) / epsilon, 0.0, 1.0);
+        if(lights[n].on == 1){
+            // Diffuse
+            vec4 lightDir = normalize(lights[n].lightPosition - fs_in.fragPos);
+            float diff = max(dot(normalize(fs_in.normals),lightDir),0.0);
+            // Specular
+            vec4 viewDir = normalize(viewPosition - fs_in.fragPos);
+            vec4 reflectDir = reflect(-lightDir,normalize(fs_in.normals));
+            float spec = pow(max(dot(viewDir,reflectDir),0.0),shininess);
             
-            if(theta > lights[n].lightSpotOuterCutOff){ // calculate light ...
+            if(lights[n].type == 0){ // if point light
                 diffuse = diff * lights[n].id.rgb * kd.rgb;
                 specular = ks.rgb * lights[n].is.rgb * spec;
-                diffuse *= intensity;
-                specular *= intensity;
             }
             
+            else if(lights[n].type == 1){ // if spotlight
+                //Spotlight
+                float theta = dot(lightDir, normalize(-lights[n].direction));
+                float epsilon = (lights[n].lightSpotCutOff - lights[n].lightSpotOuterCutOff);
+                float intensity = clamp((theta - lights[n].lightSpotOuterCutOff) / epsilon, 0.0, 1.0);
+                
+                if(theta > lights[n].lightSpotOuterCutOff){ // calculate light ...
+                    diffuse = diff * lights[n].id.rgb * kd.rgb;
+                    specular = ks.rgb * lights[n].is.rgb * spec;
+                    diffuse *= intensity;
+                    specular *= intensity;
+                }
+            }
+        }else{
+            diffuse = vec3(0,0,0);
+            specular = vec3(0,0,0);
         }
         // Attenuation
         float distance = length(lights[n].lightPosition - fs_in.fragPos);
