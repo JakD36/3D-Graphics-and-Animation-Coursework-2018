@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "042419B81F6C8363002C2D67"
-               BuildableName = "OPENGLClassTest"
-               BlueprintName = "OPENGLClassTest"
-               ReferencedContainer = "container:OPENGLClassTest.xcodeproj">
+               BuildableName = "3D Graphics and Animation Coursework"
+               BlueprintName = "3D Graphics and Animation Coursework"
+               ReferencedContainer = "container:3D Graphics and Animation Coursework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "042419B81F6C8363002C2D67"
-            BuildableName = "OPENGLClassTest"
-            BlueprintName = "OPENGLClassTest"
-            ReferencedContainer = "container:OPENGLClassTest.xcodeproj">
+            BuildableName = "3D Graphics and Animation Coursework"
+            BlueprintName = "3D Graphics and Animation Coursework"
+            ReferencedContainer = "container:3D Graphics and Animation Coursework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -59,9 +59,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "042419B81F6C8363002C2D67"
-            BuildableName = "OPENGLClassTest"
-            BlueprintName = "OPENGLClassTest"
-            ReferencedContainer = "container:OPENGLClassTest.xcodeproj">
+            BuildableName = "3D Graphics and Animation Coursework"
+            BlueprintName = "3D Graphics and Animation Coursework"
+            ReferencedContainer = "container:3D Graphics and Animation Coursework.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "042419B81F6C8363002C2D67"
-            BuildableName = "OPENGLClassTest"
-            BlueprintName = "OPENGLClassTest"
-            ReferencedContainer = "container:OPENGLClassTest.xcodeproj">
+            BuildableName = "3D Graphics and Animation Coursework"
+            BlueprintName = "3D Graphics and Animation Coursework"
+            ReferencedContainer = "container:3D Graphics and Animation Coursework.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -29,6 +29,9 @@ void GLapp::hintsGLFW() {
 glm::vec3 lightStruct::ia = glm::vec3(0.0f,1.0f,0.2f);
 
 void GLapp::startup() {
+    
+    
+    
     // Calculate proj_matrix for the first time.
     aspect = (float)windowWidth / (float)windowHeight; // ARE THESE BEING CONVERTED TO FLOATS?
     proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
@@ -39,12 +42,13 @@ void GLapp::startup() {
     // initTexture
     // loadMat
     // sort any other variables that need set
-    
+    double startTime = glfwGetTime();
     // Torch
     torchObj = modelObjectSingle();
     torchObj.initModel("newTorch.obj","vs.glsl","fs.glsl");
     torchObj.initTexture("newTorchCol.ktx");
     torchObj.loadMat("newTorch.mtl");
+    
     torchObj.position = cameraPos + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
     
     // Room
@@ -197,9 +201,10 @@ void GLapp::startup() {
     wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
     
     // Wall 2
-    wall.position.push_back(glm::vec3(-3.0f,1.25f,0.0f));
-    wall.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-    wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    wall.add(glm::vec3(-3.0f,1.25f,0.0f));
+//    wall.position.push_back(glm::vec3(-3.0f,1.25f,0.0f));
+//    wall.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
+//    wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
     
     //Lightbulb
     bulb = modelObjectSingle();
@@ -207,6 +212,24 @@ void GLapp::startup() {
     bulb.initTexture("bulb.ktx");
     bulb.loadMat("bulb.mtl");
     
+    wire = modelObjectSingle();
+    wire.initModel("wire.obj", "vs.glsl", "fs.glsl");
+    wire.initTexture("wire.ktx");
+    wire.loadMat("wire.mtl");
+    
+    table = modelObjectSingle();
+    table.initModel("table.obj", "vs.glsl", "fs.glsl");
+    table.initTexture("table.ktx");
+    table.loadMat("table.mtl");
+    table.position = glm::vec3(1.8f,1.0f,1.8f);
+    table.rotation.y = 45;
+    
+    lamp = modelObjectSingle();
+    lamp.initModel("lamp.obj", "vs.glsl", "fs.glsl");
+    lamp.initTexture("lamp.ktx");
+    lamp.loadMat("lamp.mtl");
+    lamp.position = glm::vec3(2.4f,1.025f,1.6f);
+    lamp.rotation.y = 120;
     
     //Add objects to vector Objs to be rendered!
     
@@ -219,6 +242,9 @@ void GLapp::startup() {
     Objs.push_back(&planks);
     Objs.push_back(&beam);
     Objs.push_back(&bulb);
+    Objs.push_back(&wire);
+    Objs.push_back(&table);
+    Objs.push_back(&lamp);
     
     
     // Add lights to scene, number of lights determined by const int LIGHTSN
@@ -226,21 +252,28 @@ void GLapp::startup() {
     lights[0].position = glm::vec3(0.0f,2.25f,0.0f) + posOnSphere(lightRadius, lightYaw, lightPitch);
     lights[0].position = glm::vec3(0.0f,2.0f,0.0f);
     lights[0].id = glm::vec3(5.0f,5.0f,5.0f);
-    lights[0].is = glm::vec3(1.0f,1.0f,1.0f);
+    lights[0].is = glm::vec3(5.0f,5.0f,5.0f);
     
     lights[1].type = lightType::point;
-    lights[1].position = glm::vec3(2.0f,0.5f,2.0f);
-    lights[1].id = glm::vec3(0.5f,0.0f,0.0f);
+    lights[1].position = glm::vec3(-1.7f,1.5f,-2.8f);
+    lights[1].id = glm::vec3(1.5f,0.0f,0.0f);
     lights[1].is = glm::vec3(0.5f,0.0f,0.0f);
     
     lights[2].type = lightType::spot;
     lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
     lights[2].direction = cameraFront;
-    lights[2].id = glm::vec3(10.0f,10.0f,10.0f);
-    lights[2].is = glm::vec3(1.0f,1.0f,1.0f);
+    lights[2].id = glm::vec3(7.0f,7.0f,7.0f);
+    lights[2].is = glm::vec3(5.0f,5.0f,5.0f);
     
     
+    lights[3].type = lightType::spot;
+    lights[3].position = lamp.position +glm::vec3(0.0f,0.5f,0.0f);
+    lights[3].direction = glm::vec3(-0.5f,-0.3f,0.3f);
+    lights[3].id = glm::vec3(5.0f,5.0f,5.0f);
+    lights[3].is = glm::vec3(1.0f,1.0f,1.0f);
     
+    
+    cout<<"Time to load "<<glfwGetTime()-startTime<<endl;;
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
@@ -249,12 +282,6 @@ void GLapp::startup() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
-    
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
 
     glGenFramebuffers(1,&framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
@@ -330,6 +357,4 @@ void GLapp::startup() {
     
     glLinkProgram(displayProgram);
     glUseProgram(displayProgram);
-
-    
 }

@@ -13,10 +13,10 @@ void GLapp::render(double currentTime) {
 glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,framebufferTexture,0);
 
-    glm::vec4 silver = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f );
+    glm::vec4 black = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f );
     
     glViewport(0, 0, windowWidth, windowHeight); // PICTURE WAS RESTRICTED TO BOTTOM LEFT CORNER, MULTIPLYING BY 2 SEEMED TO FIX THE ISSUE BUT I HAVE NO IDEA WHAT WENT WRONG
-    glClearBufferfv(GL_COLOR, 0, &silver[0]);
+    glClearBufferfv(GL_COLOR, 0, &black[0]);
     static const GLfloat one = 1.0f;
     
     glEnable(GL_DEPTH_TEST);

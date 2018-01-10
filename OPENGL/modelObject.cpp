@@ -34,6 +34,8 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     glBindVertexArray(vao);
     glGenBuffers(3,buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+    
+    
     load(objPath);
     cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
     glBufferData(GL_ARRAY_BUFFER,

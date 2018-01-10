@@ -25,7 +25,7 @@ using namespace std;
 
 
 enum lightType {point,spot};
-const int LIGHTSN = 3;
+const int LIGHTSN = 4;
 
 struct lightStruct{
 public:

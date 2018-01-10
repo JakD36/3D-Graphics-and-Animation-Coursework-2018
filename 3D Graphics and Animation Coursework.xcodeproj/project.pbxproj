@@ -33,6 +33,15 @@
 		049EAAC81FBF019E009288AA /* bulb.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAC31FBF0192009288AA /* bulb.obj */; };
 		049EAACB1FBF05B6009288AA /* vs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAC91FBF04E6009288AA /* vs_light.glsl */; };
 		049EAACC1FBF05B6009288AA /* fs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACA1FBF04F8009288AA /* fs_light.glsl */; };
+		049EAAD01FBF4895009288AA /* wire.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACD1FBF488C009288AA /* wire.ktx */; };
+		049EAAD11FBF4895009288AA /* wire.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACE1FBF488C009288AA /* wire.mtl */; };
+		049EAAD21FBF4895009288AA /* wire.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACF1FBF488C009288AA /* wire.obj */; };
+		049EAAD61FBF8643009288AA /* table.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD31FBF8623009288AA /* table.ktx */; };
+		049EAAD71FBF8643009288AA /* table.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD51FBF8623009288AA /* table.mtl */; };
+		049EAAD81FBF8643009288AA /* table.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD41FBF8623009288AA /* table.obj */; };
+		049EAADC1FBF8D04009288AA /* lamp.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAADA1FBF8CF8009288AA /* lamp.ktx */; };
+		049EAADD1FBF8D04009288AA /* lamp.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAADB1FBF8CF8009288AA /* lamp.mtl */; };
+		049EAADE1FBF8D04009288AA /* lamp.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD91FBF8CF8009288AA /* lamp.obj */; };
 		04A81E2E1FA3A06200886611 /* update.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E2D1FA3A06200886611 /* update.cpp */; };
 		04A81E301FA3A0A600886611 /* init.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E2F1FA3A0A600886611 /* init.cpp */; };
 		04A81E321FA3A0E800886611 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E311FA3A0E800886611 /* render.cpp */; };
@@ -89,6 +98,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				049EAADC1FBF8D04009288AA /* lamp.ktx in CopyFiles */,
+				049EAADD1FBF8D04009288AA /* lamp.mtl in CopyFiles */,
+				049EAADE1FBF8D04009288AA /* lamp.obj in CopyFiles */,
+				049EAAD61FBF8643009288AA /* table.ktx in CopyFiles */,
+				049EAAD71FBF8643009288AA /* table.mtl in CopyFiles */,
+				049EAAD81FBF8643009288AA /* table.obj in CopyFiles */,
+				049EAAD01FBF4895009288AA /* wire.ktx in CopyFiles */,
+				049EAAD11FBF4895009288AA /* wire.mtl in CopyFiles */,
+				049EAAD21FBF4895009288AA /* wire.obj in CopyFiles */,
 				049EAACB1FBF05B6009288AA /* vs_light.glsl in CopyFiles */,
 				049EAACC1FBF05B6009288AA /* fs_light.glsl in CopyFiles */,
 				049EAAC61FBF019E009288AA /* bulb.ktx in CopyFiles */,
@@ -143,7 +161,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		042419B91F6C8363002C2D67 /* OPENGLClassTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OPENGLClassTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		042419B91F6C8363002C2D67 /* 3D Graphics and Animation Coursework */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "3D Graphics and Animation Coursework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		044D2B681FB79CC800837463 /* room.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = room.obj; sourceTree = "<group>"; };
 		044D2B691FB79CC900837463 /* roomCol.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = roomCol.ktx; sourceTree = "<group>"; };
 		044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modelObjectInst.cpp; sourceTree = "<group>"; };
@@ -171,6 +189,15 @@
 		049EAAC51FBF0192009288AA /* bulb.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = bulb.ktx; path = room/bulb.ktx; sourceTree = "<group>"; };
 		049EAAC91FBF04E6009288AA /* vs_light.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vs_light.glsl; sourceTree = "<group>"; };
 		049EAACA1FBF04F8009288AA /* fs_light.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fs_light.glsl; sourceTree = "<group>"; };
+		049EAACD1FBF488C009288AA /* wire.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = wire.ktx; path = room/wire.ktx; sourceTree = "<group>"; };
+		049EAACE1FBF488C009288AA /* wire.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wire.mtl; path = room/wire.mtl; sourceTree = "<group>"; };
+		049EAACF1FBF488C009288AA /* wire.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wire.obj; path = room/wire.obj; sourceTree = "<group>"; };
+		049EAAD31FBF8623009288AA /* table.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = table.ktx; path = room/table.ktx; sourceTree = "<group>"; };
+		049EAAD41FBF8623009288AA /* table.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = table.obj; path = room/table.obj; sourceTree = "<group>"; };
+		049EAAD51FBF8623009288AA /* table.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = table.mtl; path = room/table.mtl; sourceTree = "<group>"; };
+		049EAAD91FBF8CF8009288AA /* lamp.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lamp.obj; path = room/lamp.obj; sourceTree = "<group>"; };
+		049EAADA1FBF8CF8009288AA /* lamp.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = lamp.ktx; path = room/lamp.ktx; sourceTree = "<group>"; };
+		049EAADB1FBF8CF8009288AA /* lamp.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lamp.mtl; path = room/lamp.mtl; sourceTree = "<group>"; };
 		04A81E2D1FA3A06200886611 /* update.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = update.cpp; sourceTree = "<group>"; };
 		04A81E2F1FA3A0A600886611 /* init.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = init.cpp; sourceTree = "<group>"; };
 		04A81E311FA3A0E800886611 /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
@@ -236,7 +263,7 @@
 		042419BA1F6C8363002C2D67 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				042419B91F6C8363002C2D67 /* OPENGLClassTest */,
+				042419B91F6C8363002C2D67 /* 3D Graphics and Animation Coursework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,6 +294,15 @@
 			children = (
 				049EAAC91FBF04E6009288AA /* vs_light.glsl */,
 				049EAACA1FBF04F8009288AA /* fs_light.glsl */,
+				049EAACD1FBF488C009288AA /* wire.ktx */,
+				049EAADA1FBF8CF8009288AA /* lamp.ktx */,
+				049EAADB1FBF8CF8009288AA /* lamp.mtl */,
+				049EAAD91FBF8CF8009288AA /* lamp.obj */,
+				049EAAD31FBF8623009288AA /* table.ktx */,
+				049EAAD51FBF8623009288AA /* table.mtl */,
+				049EAAD41FBF8623009288AA /* table.obj */,
+				049EAACE1FBF488C009288AA /* wire.mtl */,
+				049EAACF1FBF488C009288AA /* wire.obj */,
 				04DF9E3E1FBDE3EA00648BE3 /* plank.mtl */,
 				049EAAC51FBF0192009288AA /* bulb.ktx */,
 				049EAAC41FBF0192009288AA /* bulb.mtl */,
@@ -330,9 +366,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		042419B81F6C8363002C2D67 /* OPENGLClassTest */ = {
+		042419B81F6C8363002C2D67 /* 3D Graphics and Animation Coursework */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 042419C01F6C8363002C2D67 /* Build configuration list for PBXNativeTarget "OPENGLClassTest" */;
+			buildConfigurationList = 042419C01F6C8363002C2D67 /* Build configuration list for PBXNativeTarget "3D Graphics and Animation Coursework" */;
 			buildPhases = (
 				042419B51F6C8363002C2D67 /* Sources */,
 				042419B61F6C8363002C2D67 /* Frameworks */,
@@ -343,9 +379,9 @@
 			);
 			dependencies = (
 			);
-			name = OPENGLClassTest;
+			name = "3D Graphics and Animation Coursework";
 			productName = OPENGL;
-			productReference = 042419B91F6C8363002C2D67 /* OPENGLClassTest */;
+			productReference = 042419B91F6C8363002C2D67 /* 3D Graphics and Animation Coursework */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -366,7 +402,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 042419B41F6C8363002C2D67 /* Build configuration list for PBXProject "OPENGLClassTest" */;
+			buildConfigurationList = 042419B41F6C8363002C2D67 /* Build configuration list for PBXProject "3D Graphics and Animation Coursework" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -378,7 +414,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				042419B81F6C8363002C2D67 /* OPENGLClassTest */,
+				042419B81F6C8363002C2D67 /* 3D Graphics and Animation Coursework */,
 			);
 		};
 /* End PBXProject section */
@@ -531,7 +567,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		042419B41F6C8363002C2D67 /* Build configuration list for PBXProject "OPENGLClassTest" */ = {
+		042419B41F6C8363002C2D67 /* Build configuration list for PBXProject "3D Graphics and Animation Coursework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				042419BE1F6C8363002C2D67 /* Debug */,
@@ -540,7 +576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		042419C01F6C8363002C2D67 /* Build configuration list for PBXNativeTarget "OPENGLClassTest" */ = {
+		042419C01F6C8363002C2D67 /* Build configuration list for PBXNativeTarget "3D Graphics and Animation Coursework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				042419C11F6C8363002C2D67 /* Debug */,

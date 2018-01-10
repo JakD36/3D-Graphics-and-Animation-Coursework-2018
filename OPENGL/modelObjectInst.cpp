@@ -8,7 +8,11 @@
 
 #include "modelObjectInst.h"
 
-
+void modelObjectInst::add(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale){
+    this->position.push_back(position);
+    this->rotation.push_back(rotation);
+    this->scale.push_back(scale);
+}
 
 void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera) const{
     
@@ -23,5 +27,6 @@ void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, light
         glUniformMatrix4fv(glGetUniformLocation(program,"viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
         glDrawArrays(GL_TRIANGLES, 0, out_vertices.size());
     }
+    
 
 }

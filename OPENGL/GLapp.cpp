@@ -94,6 +94,11 @@ void GLapp::classonMouseButtonCallback(GLFWwindow* window, int button, int actio
             LMBClicked = true;
         }
     }
+    if(button == GLFW_MOUSE_BUTTON_RIGHT){
+        if(action == GLFW_PRESS){
+            RMBClicked = true;
+        }
+    }
     
 }
 void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
@@ -114,17 +119,27 @@ void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
     if (pitch > 89.0f) pitch = 89.0f; if (pitch < -89.0f) pitch = -89.0f;
     
     
-    cameraFront = glm::normalize(posOnSphere(1, yaw, -pitch));
+    cameraFront = glm::normalize(posOnSphere(1, yaw, pitch)); // negative the pitch if you want to invert cam in y
     
     
-    torchObj.position = cameraPos + posOnSphere(sphereRadius,yaw+yawOffset,-(pitch+pitchOffset));
+    torchObj.position = cameraPos + posOnSphere(sphereRadius, yaw+yawOffset, -pitch - pitchOffset);
 
     
-    torchObj.rotation.x = pitch;
+    torchObj.rotation.x = pitch; // Torch seems to be backwards so has to have its pitch rotated the other way
     torchObj.rotation.y = yaw;
     lights[2].direction = cameraFront;
     
-
+    cout<<"x mouse\t"<<mouseX<<endl;
+    cout<<"y mouse\t"<<mouseY<<endl;
+    
+    cout<<"xoffset\t"<<xoffset<<endl;
+    cout<<"yoffset\t"<<yoffset<<endl;
+    
+    cout<<"Yaw\t"<<yaw<<endl;
+    cout<<"Pitch\t"<<pitch<<endl;
+    cout<<"\n\n";
+    
+    
 }
 
 void GLapp::classonMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
@@ -133,9 +148,10 @@ void GLapp::classonMouseWheelCallback(GLFWwindow* window, double xoffset, double
 
 glm::vec3 GLapp::posOnSphere(float radius,float yaw,float pitch){
     glm::vec3 pos;
-    pos.x = radius*sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    pos.y = radius*sin(glm::radians(pitch));
-    pos.z = radius*cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    pos.x = radius* sin( glm::radians(yaw) ) * cos(glm::radians(pitch) );
+    pos.y = radius* sin( glm::radians(pitch) );
+    pos.z = radius* cos( glm::radians(yaw) ) * cos(glm::radians(pitch) );
+    
     return pos;
 }
 

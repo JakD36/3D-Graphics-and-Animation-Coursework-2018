@@ -67,7 +67,9 @@ private:
     modelObjectSingle       roof;
     modelObjectInst         beam;
     modelObjectSingle       bulb;
-    
+    modelObjectSingle       wire;
+    modelObjectSingle       table;
+    modelObjectSingle       lamp;
     
     
     vector<modelObject*> Objs;
@@ -83,12 +85,13 @@ private:
     std::vector < glm::vec2 > displayUvs;
     GLuint            displayProgram;
     bool LMBClicked = false;
+    bool RMBClicked = false;
     
     
     double          prevTime = 0;
     float lightRadius = 0.25f;
     float lightYaw = 0.0f;
-    float lightPitch = 0.0f;
+    float lightPitch = -20.0f;
     double          v = 0;
     
     

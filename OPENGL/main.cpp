@@ -1,7 +1,3 @@
-// 01_Pipeline_Interaction
-// Version up to lab 1.3.
-
-
 #include <iostream>
 #include <string>
 #include <fstream>
