@@ -45,9 +45,9 @@ void GLapp::startup() {
     double startTime = glfwGetTime();
     // Torch
     torchObj = modelObjectSingle();
-    torchObj.initModel("newTorch.obj","vs.glsl","fs.glsl");
-    torchObj.initTexture("newTorchCol.ktx");
-    torchObj.loadMat("newTorch.mtl");
+    torchObj.initModel("Resources/newTorch.obj","Shaders/vs.glsl","Shaders/fs.glsl");
+    torchObj.initTexture("Resources/newTorchCol.ktx");
+    torchObj.loadMat("Resources/newTorch.mtl");
     
     torchObj.position = cameraPos + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
     
@@ -55,30 +55,30 @@ void GLapp::startup() {
     
     // Front of room
     front = modelObjectSingle();
-    front.initModel("front.obj","vs.glsl","fs.glsl");
-    front.initTexture("front.ktx");
-    front.loadMat("front.mtl");
+    front.initModel("Resources/front.obj","Shaders/vs.glsl","Shaders/fs.glsl");
+    front.initTexture("Resources/front.ktx");
+    front.loadMat("Resources/front.mtl");
     
     
     // Back wall
     back = modelObjectSingle();
-    back.initModel("back.obj", "vs.glsl", "fs.glsl");
-    back.initTexture("back.ktx");
-    back.loadMat("back.mtl");
+    back.initModel("Resources/back.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    back.initTexture("Resources/back.ktx");
+    back.loadMat("Resources/back.mtl");
     back.rotation.y = 180.0f;
     back.position = glm::vec3(0.0f,2.0f,3.0f);
     
     // Roof
     roof = modelObjectSingle();
-    roof.initModel("roof.obj", "vs.glsl", "fs.glsl");
-    roof.initTexture("roof.ktx");
-    roof.loadMat("roof.mtl");
+    roof.initModel("Resources/roof.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    roof.initTexture("Resources/roof.ktx");
+    roof.loadMat("Resources/roof.mtl");
     roof.position.y = 2.5f;
     
     beam = modelObjectInst();
-    beam.initModel("beam.obj", "vs.glsl", "fs.glsl");
-    beam.initTexture("beam.ktx");
-    beam.loadMat("beam.mtl");
+    beam.initModel("Resources/beam.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    beam.initTexture("Resources/beam.ktx");
+    beam.loadMat("Resources/beam.mtl");
     
     beam.position.push_back(glm::vec3(0.0f,2.61f,0.0f));
     beam.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
@@ -94,9 +94,9 @@ void GLapp::startup() {
     
     // Plank
     planks = modelObjectInst();
-    planks.initModel("plank.obj", "vs.glsl", "fs.glsl");
-    planks.initTexture("plank.ktx");
-    planks.loadMat("plank.mtl");
+    planks.initModel("Resources/plank.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    planks.initTexture("Resources/plank.ktx");
+    planks.loadMat("Resources/plank.mtl");
     
     // Plank 1
     planks.position.push_back(glm::vec3(2.2f,1.5f,-3.0f));
@@ -185,15 +185,15 @@ void GLapp::startup() {
     
     // Floor
     floor = modelObjectSingle();
-    floor.initModel("floor.obj", "vs.glsl", "fs.glsl");
-    floor.initTexture("floor.ktx");
-    floor.loadMat("floor.mtl");
+    floor.initModel("Resources/floor.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    floor.initTexture("Resources/floor.ktx");
+    floor.loadMat("Resources/floor.mtl");
     
     // Wall
     wall = modelObjectInst();
-    wall.initModel("wall.obj", "vs.glsl", "fs.glsl");
-    wall.initTexture("wall.ktx");
-    wall.loadMat("wall.mtl");
+    wall.initModel("Resources/wall.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    wall.initTexture("Resources/wall.ktx");
+    wall.loadMat("Resources/wall.mtl");
     
     // Wall 1
     wall.position.push_back(glm::vec3(3.0f,1.25f,0.0f));
@@ -208,26 +208,26 @@ void GLapp::startup() {
     
     //Lightbulb
     bulb = modelObjectSingle();
-    bulb.initModel("bulb.obj", "vs_light.glsl", "fs_light.glsl");
-    bulb.initTexture("bulb.ktx");
-    bulb.loadMat("bulb.mtl");
+    bulb.initModel("Resources/bulb.obj", "Shaders/vs_light.glsl", "Shaders/fs_light.glsl");
+    bulb.initTexture("Resources/bulb.ktx");
+    bulb.loadMat("Resources/bulb.mtl");
     
     wire = modelObjectSingle();
-    wire.initModel("wire.obj", "vs.glsl", "fs.glsl");
-    wire.initTexture("wire.ktx");
-    wire.loadMat("wire.mtl");
+    wire.initModel("Resources/wire.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    wire.initTexture("Resources/wire.ktx");
+    wire.loadMat("Resources/wire.mtl");
     
     table = modelObjectSingle();
-    table.initModel("table.obj", "vs.glsl", "fs.glsl");
-    table.initTexture("table.ktx");
-    table.loadMat("table.mtl");
+    table.initModel("Resources/table.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    table.initTexture("Resources/table.ktx");
+    table.loadMat("Resources/table.mtl");
     table.position = glm::vec3(1.8f,1.0f,1.8f);
     table.rotation.y = 45;
     
     lamp = modelObjectSingle();
-    lamp.initModel("lamp.obj", "vs.glsl", "fs.glsl");
-    lamp.initTexture("lamp.ktx");
-    lamp.loadMat("lamp.mtl");
+    lamp.initModel("Resources/lamp.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    lamp.initTexture("Resources/lamp.ktx");
+    lamp.loadMat("Resources/lamp.mtl");
     lamp.position = glm::vec3(2.4f,1.025f,1.6f);
     lamp.rotation.y = 120;
     
@@ -339,7 +339,7 @@ void GLapp::startup() {
     //load shaders
     displayProgram = glCreateProgram();
     
-    string dvs_text = readShader("vs_display.glsl");
+    string dvs_text = readShader("Shaders/vs_display.glsl");
     const char* dvs_source = dvs_text.c_str();
     GLuint dvs = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(dvs, 1, &dvs_source, NULL);
@@ -347,7 +347,7 @@ void GLapp::startup() {
     checkErrorShader(dvs);
     glAttachShader(displayProgram, dvs);
     
-    string dfs_text = readShader("fs_display.glsl");
+    string dfs_text = readShader("Shaders/fs_display.glsl");
     const char* dfs_source = dfs_text.c_str();
     GLuint dfs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(dfs, 1, &dfs_source, NULL);

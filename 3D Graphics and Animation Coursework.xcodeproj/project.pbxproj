@@ -7,154 +7,137 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		044D2B6A1FB79CEC00837463 /* room.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B681FB79CC800837463 /* room.obj */; };
-		044D2B6B1FB79CEC00837463 /* roomCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B691FB79CC900837463 /* roomCol.ktx */; };
 		044D2B721FB7BA7B00837463 /* modelObjectInst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */; };
 		044D2B761FB7BECD00837463 /* modelObjectSingle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */; };
-		044D2B7A1FB8CBAF00837463 /* fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B791FB8CB7A00837463 /* fs.glsl */; };
-		044D2B7B1FB8CBAF00837463 /* vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D2B781FB8CB7A00837463 /* vs.glsl */; };
-		044D467F1FB9140B00381099 /* newTorch.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D467E1FB9140100381099 /* newTorch.obj */; };
-		044D46801FB9140B00381099 /* NewTorchCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D467D1FB9140100381099 /* NewTorchCol.ktx */; };
-		046470C51FBBD98C00125994 /* room.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046470C41FBBD97900125994 /* room.mtl */; };
-		046470C71FBBE7A900125994 /* newTorch.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046470C61FBBE5A800125994 /* newTorch.mtl */; };
-		046470CA1FBC7EF500125994 /* vs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046470C81FBC789D00125994 /* vs_display.glsl */; };
-		046470CB1FBC7EF500125994 /* fs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046470C91FBC794000125994 /* fs_display.glsl */; };
-		046EA0C61FB652D20003CA3D /* TorchO.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 046EA0C51FB652CB0003CA3D /* TorchO.ktx */; };
 		048AF4171F7BD79200FD68AA /* GLapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4111F7BD79200FD68AA /* GLapp.cpp */; };
 		048AF41A1F7BD79200FD68AA /* readShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF4161F7BD79200FD68AA /* readShader.cpp */; };
 		048AF41C1F7BD7F700FD68AA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AF41B1F7BD7F700FD68AA /* main.cpp */; };
-		04972FAC1F72A47700BAC6A4 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04972FAA1F72A47700BAC6A4 /* libGLEW.2.1.0.dylib */; };
 		04972FAF1F72A47E00BAC6A4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04972FAE1F72A47E00BAC6A4 /* OpenGL.framework */; };
-		04972FB51F72AC3A00BAC6A4 /* libGLEW.2.1.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04972FAA1F72A47700BAC6A4 /* libGLEW.2.1.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		04972FB71F72ACAB00BAC6A4 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04972FB61F72ACAB00BAC6A4 /* libglfw.3.3.dylib */; };
-		04972FB81F72ACB800BAC6A4 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04972FB61F72ACAB00BAC6A4 /* libglfw.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		049EAAC61FBF019E009288AA /* bulb.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAC51FBF0192009288AA /* bulb.ktx */; };
-		049EAAC71FBF019E009288AA /* bulb.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAC41FBF0192009288AA /* bulb.mtl */; };
-		049EAAC81FBF019E009288AA /* bulb.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAC31FBF0192009288AA /* bulb.obj */; };
-		049EAACB1FBF05B6009288AA /* vs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAC91FBF04E6009288AA /* vs_light.glsl */; };
-		049EAACC1FBF05B6009288AA /* fs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACA1FBF04F8009288AA /* fs_light.glsl */; };
-		049EAAD01FBF4895009288AA /* wire.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACD1FBF488C009288AA /* wire.ktx */; };
-		049EAAD11FBF4895009288AA /* wire.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACE1FBF488C009288AA /* wire.mtl */; };
-		049EAAD21FBF4895009288AA /* wire.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAACF1FBF488C009288AA /* wire.obj */; };
-		049EAAD61FBF8643009288AA /* table.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD31FBF8623009288AA /* table.ktx */; };
-		049EAAD71FBF8643009288AA /* table.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD51FBF8623009288AA /* table.mtl */; };
-		049EAAD81FBF8643009288AA /* table.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD41FBF8623009288AA /* table.obj */; };
-		049EAADC1FBF8D04009288AA /* lamp.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAADA1FBF8CF8009288AA /* lamp.ktx */; };
-		049EAADD1FBF8D04009288AA /* lamp.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAADB1FBF8CF8009288AA /* lamp.mtl */; };
-		049EAADE1FBF8D04009288AA /* lamp.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EAAD91FBF8CF8009288AA /* lamp.obj */; };
 		04A81E2E1FA3A06200886611 /* update.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E2D1FA3A06200886611 /* update.cpp */; };
 		04A81E301FA3A0A600886611 /* init.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E2F1FA3A0A600886611 /* init.cpp */; };
 		04A81E321FA3A0E800886611 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A81E311FA3A0E800886611 /* render.cpp */; };
-		04CE34B21FABC545009D551C /* cube.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE349F1FABBF5F009D551C /* cube.mtl */; };
-		04CE34B31FABC545009D551C /* cube.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A01FABBF5F009D551C /* cube.obj */; };
-		04CE34B51FABC545009D551C /* Torch.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34AE1FABC417009D551C /* Torch.obj */; };
-		04CE34B61FABC545009D551C /* Pacmannblend.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A41FABBF5F009D551C /* Pacmannblend.mtl */; };
-		04CE34B71FABC545009D551C /* Pacmannblend.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A51FABBF5F009D551C /* Pacmannblend.obj */; };
-		04CE34B81FABC545009D551C /* tetromino.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A61FABBF5F009D551C /* tetromino.mtl */; };
-		04CE34B91FABC545009D551C /* tetromino.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A71FABBF5F009D551C /* tetromino.obj */; };
-		04CE34BA1FABC545009D551C /* Torch.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A81FABBF5F009D551C /* Torch.blend */; };
-		04CE34BB1FABC545009D551C /* Torch.blend1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34A91FABBF5F009D551C /* Torch.blend1 */; };
-		04CE34BC1FABC545009D551C /* Torch.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04CE34AA1FABBF5F009D551C /* Torch.mtl */; };
+		04BB913A201792EC004D9C49 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */; };
+		04BB913B201792EC004D9C49 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */; };
+		04BB913C201792FB004D9C49 /* libGLEW.2.1.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		04BB913D201792FB004D9C49 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		04BB916F20179450004D9C49 /* back.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9167201793FA004D9C49 /* back.ktx */; };
+		04BB917020179450004D9C49 /* back.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB916E201793FB004D9C49 /* back.mtl */; };
+		04BB917120179450004D9C49 /* back.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9168201793FB004D9C49 /* back.obj */; };
+		04BB917220179450004D9C49 /* back.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB914C201793F9004D9C49 /* back.png */; };
+		04BB917320179450004D9C49 /* Beam.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9162201793FA004D9C49 /* Beam.ktx */; };
+		04BB917420179450004D9C49 /* beam.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9164201793FA004D9C49 /* beam.mtl */; };
+		04BB917520179450004D9C49 /* beam.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9157201793F9004D9C49 /* beam.obj */; };
+		04BB917620179450004D9C49 /* Beam.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9151201793F9004D9C49 /* Beam.png */; };
+		04BB917720179450004D9C49 /* bulb.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9165201793FA004D9C49 /* bulb.blend */; };
+		04BB917820179450004D9C49 /* bulb.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB914A201793F9004D9C49 /* bulb.ktx */; };
+		04BB917920179450004D9C49 /* bulb.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB916C201793FB004D9C49 /* bulb.mtl */; };
+		04BB917A20179450004D9C49 /* bulb.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9163201793FA004D9C49 /* bulb.obj */; };
+		04BB917B20179450004D9C49 /* bulb.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB915E201793FA004D9C49 /* bulb.png */; };
+		04BB917C20179450004D9C49 /* floor.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB915F201793FA004D9C49 /* floor.ktx */; };
+		04BB917D20179450004D9C49 /* floor.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9160201793FA004D9C49 /* floor.mtl */; };
+		04BB917E20179450004D9C49 /* floor.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB915B201793FA004D9C49 /* floor.obj */; };
+		04BB917F20179450004D9C49 /* floor.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB916D201793FB004D9C49 /* floor.png */; };
+		04BB918020179450004D9C49 /* front.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9149201793F9004D9C49 /* front.ktx */; };
+		04BB918120179450004D9C49 /* front.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9155201793F9004D9C49 /* front.mtl */; };
+		04BB918220179450004D9C49 /* front.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9159201793FA004D9C49 /* front.obj */; };
+		04BB918320179450004D9C49 /* front.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB914F201793F9004D9C49 /* front.png */; };
+		04BB918420179450004D9C49 /* newTorch.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB914B201793F9004D9C49 /* newTorch.blend */; };
+		04BB918520179450004D9C49 /* newTorch.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9154201793F9004D9C49 /* newTorch.mtl */; };
+		04BB918620179450004D9C49 /* newTorch.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9150201793F9004D9C49 /* newTorch.obj */; };
+		04BB918720179450004D9C49 /* NewTorchCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB916B201793FB004D9C49 /* NewTorchCol.ktx */; };
+		04BB918820179450004D9C49 /* NewTorchCol.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9161201793FA004D9C49 /* NewTorchCol.png */; };
+		04BB918920179450004D9C49 /* plank.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9169201793FB004D9C49 /* plank.ktx */; };
+		04BB918A20179450004D9C49 /* plank.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9156201793F9004D9C49 /* plank.mtl */; };
+		04BB918B20179450004D9C49 /* plank.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9166201793FA004D9C49 /* plank.obj */; };
+		04BB918C20179450004D9C49 /* plank.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB914D201793F9004D9C49 /* plank.png */; };
+		04BB918D20179450004D9C49 /* roof.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9153201793F9004D9C49 /* roof.ktx */; };
+		04BB918E20179450004D9C49 /* roof.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9158201793F9004D9C49 /* roof.mtl */; };
+		04BB918F20179450004D9C49 /* roof.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB915A201793FA004D9C49 /* roof.obj */; };
+		04BB919020179450004D9C49 /* roof.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB914E201793F9004D9C49 /* roof.png */; };
+		04BB919120179450004D9C49 /* wall.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB915C201793FA004D9C49 /* wall.ktx */; };
+		04BB919220179450004D9C49 /* wall.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9152201793F9004D9C49 /* wall.mtl */; };
+		04BB919320179450004D9C49 /* wall.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB915D201793FA004D9C49 /* wall.obj */; };
+		04BB919420179450004D9C49 /* wall.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB916A201793FB004D9C49 /* wall.png */; };
+		04BB91952017945B004D9C49 /* fs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9146201793EC004D9C49 /* fs_display.glsl */; };
+		04BB91962017945B004D9C49 /* fs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9143201793EC004D9C49 /* fs_light.glsl */; };
+		04BB91972017945B004D9C49 /* fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9144201793EC004D9C49 /* fs.glsl */; };
+		04BB91982017945B004D9C49 /* vs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9147201793EC004D9C49 /* vs_display.glsl */; };
+		04BB91992017945B004D9C49 /* vs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9145201793EC004D9C49 /* vs_light.glsl */; };
+		04BB919A2017945B004D9C49 /* vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9148201793EC004D9C49 /* vs.glsl */; };
 		04DEFF161FB3DF6D009D70FC /* modelObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DEFF141FB3DF6D009D70FC /* modelObject.cpp */; };
-		04DF9E381FBDD6DC00648BE3 /* front.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E351FBDD6D400648BE3 /* front.mtl */; };
-		04DF9E391FBDD6DC00648BE3 /* front.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E371FBDD6D400648BE3 /* front.obj */; };
-		04DF9E3A1FBDD6DC00648BE3 /* front.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E361FBDD6D400648BE3 /* front.png */; };
-		04DF9E3C1FBDD76900648BE3 /* front.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E3B1FBDD75400648BE3 /* front.ktx */; };
-		04DF9E401FBDE44200648BE3 /* plank.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E3E1FBDE3EA00648BE3 /* plank.mtl */; };
-		04DF9E411FBDE44200648BE3 /* plank.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E3D1FBDE3EA00648BE3 /* plank.obj */; };
-		04DF9E421FBDE44200648BE3 /* plank.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E3F1FBDE42900648BE3 /* plank.ktx */; };
-		04DF9E521FBDEFBF00648BE3 /* back.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E4E1FBDEFB500648BE3 /* back.ktx */; };
-		04DF9E531FBDEFBF00648BE3 /* back.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E501FBDEFB500648BE3 /* back.mtl */; };
-		04DF9E541FBDEFBF00648BE3 /* back.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E441FBDEFB400648BE3 /* back.obj */; };
-		04DF9E551FBDEFBF00648BE3 /* Beam.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E451FBDEFB400648BE3 /* Beam.ktx */; };
-		04DF9E561FBDEFBF00648BE3 /* beam.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E431FBDEFB400648BE3 /* beam.mtl */; };
-		04DF9E571FBDEFBF00648BE3 /* beam.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E4A1FBDEFB400648BE3 /* beam.obj */; };
-		04DF9E581FBDEFBF00648BE3 /* floor.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E4F1FBDEFB500648BE3 /* floor.ktx */; };
-		04DF9E591FBDEFBF00648BE3 /* floor.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E4B1FBDEFB400648BE3 /* floor.mtl */; };
-		04DF9E5A1FBDEFBF00648BE3 /* floor.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E471FBDEFB400648BE3 /* floor.obj */; };
-		04DF9E5B1FBDEFBF00648BE3 /* roof.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E4C1FBDEFB500648BE3 /* roof.ktx */; };
-		04DF9E5C1FBDEFBF00648BE3 /* roof.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E4D1FBDEFB500648BE3 /* roof.mtl */; };
-		04DF9E5D1FBDEFBF00648BE3 /* roof.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E491FBDEFB400648BE3 /* roof.obj */; };
-		04DF9E5E1FBDEFBF00648BE3 /* wall.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E511FBDEFB500648BE3 /* wall.ktx */; };
-		04DF9E5F1FBDEFBF00648BE3 /* wall.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E461FBDEFB400648BE3 /* wall.mtl */; };
-		04DF9E601FBDEFBF00648BE3 /* wall.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04DF9E481FBDEFB400648BE3 /* wall.obj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		042419B71F6C8363002C2D67 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = usr/share/man/man1;
+			buildActionMask = 12;
+			dstPath = Frameworks;
 			dstSubfolderSpec = 10;
 			files = (
-				04972FB81F72ACB800BAC6A4 /* libglfw.3.3.dylib in CopyFiles */,
-				04972FB51F72AC3A00BAC6A4 /* libGLEW.2.1.0.dylib in CopyFiles */,
+				04BB913C201792FB004D9C49 /* libGLEW.2.1.0.dylib in CopyFiles */,
+				04BB913D201792FB004D9C49 /* libglfw.3.3.dylib in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04BB913E2017931B004D9C49 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Shaders;
+			dstSubfolderSpec = 7;
+			files = (
+				04BB91952017945B004D9C49 /* fs_display.glsl in CopyFiles */,
+				04BB91962017945B004D9C49 /* fs_light.glsl in CopyFiles */,
+				04BB91972017945B004D9C49 /* fs.glsl in CopyFiles */,
+				04BB91982017945B004D9C49 /* vs_display.glsl in CopyFiles */,
+				04BB91992017945B004D9C49 /* vs_light.glsl in CopyFiles */,
+				04BB919A2017945B004D9C49 /* vs.glsl in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		04CE34B01FABC4FC009D551C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
+			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
-				049EAADC1FBF8D04009288AA /* lamp.ktx in CopyFiles */,
-				049EAADD1FBF8D04009288AA /* lamp.mtl in CopyFiles */,
-				049EAADE1FBF8D04009288AA /* lamp.obj in CopyFiles */,
-				049EAAD61FBF8643009288AA /* table.ktx in CopyFiles */,
-				049EAAD71FBF8643009288AA /* table.mtl in CopyFiles */,
-				049EAAD81FBF8643009288AA /* table.obj in CopyFiles */,
-				049EAAD01FBF4895009288AA /* wire.ktx in CopyFiles */,
-				049EAAD11FBF4895009288AA /* wire.mtl in CopyFiles */,
-				049EAAD21FBF4895009288AA /* wire.obj in CopyFiles */,
-				049EAACB1FBF05B6009288AA /* vs_light.glsl in CopyFiles */,
-				049EAACC1FBF05B6009288AA /* fs_light.glsl in CopyFiles */,
-				049EAAC61FBF019E009288AA /* bulb.ktx in CopyFiles */,
-				049EAAC71FBF019E009288AA /* bulb.mtl in CopyFiles */,
-				049EAAC81FBF019E009288AA /* bulb.obj in CopyFiles */,
-				04DF9E521FBDEFBF00648BE3 /* back.ktx in CopyFiles */,
-				04DF9E531FBDEFBF00648BE3 /* back.mtl in CopyFiles */,
-				04DF9E541FBDEFBF00648BE3 /* back.obj in CopyFiles */,
-				04DF9E551FBDEFBF00648BE3 /* Beam.ktx in CopyFiles */,
-				04DF9E561FBDEFBF00648BE3 /* beam.mtl in CopyFiles */,
-				04DF9E571FBDEFBF00648BE3 /* beam.obj in CopyFiles */,
-				04DF9E581FBDEFBF00648BE3 /* floor.ktx in CopyFiles */,
-				04DF9E591FBDEFBF00648BE3 /* floor.mtl in CopyFiles */,
-				04DF9E5A1FBDEFBF00648BE3 /* floor.obj in CopyFiles */,
-				04DF9E5B1FBDEFBF00648BE3 /* roof.ktx in CopyFiles */,
-				04DF9E5C1FBDEFBF00648BE3 /* roof.mtl in CopyFiles */,
-				04DF9E5D1FBDEFBF00648BE3 /* roof.obj in CopyFiles */,
-				04DF9E5E1FBDEFBF00648BE3 /* wall.ktx in CopyFiles */,
-				04DF9E5F1FBDEFBF00648BE3 /* wall.mtl in CopyFiles */,
-				04DF9E601FBDEFBF00648BE3 /* wall.obj in CopyFiles */,
-				04DF9E401FBDE44200648BE3 /* plank.mtl in CopyFiles */,
-				04DF9E411FBDE44200648BE3 /* plank.obj in CopyFiles */,
-				04DF9E421FBDE44200648BE3 /* plank.ktx in CopyFiles */,
-				04DF9E3C1FBDD76900648BE3 /* front.ktx in CopyFiles */,
-				04DF9E381FBDD6DC00648BE3 /* front.mtl in CopyFiles */,
-				04DF9E391FBDD6DC00648BE3 /* front.obj in CopyFiles */,
-				04DF9E3A1FBDD6DC00648BE3 /* front.png in CopyFiles */,
-				046470CA1FBC7EF500125994 /* vs_display.glsl in CopyFiles */,
-				046470CB1FBC7EF500125994 /* fs_display.glsl in CopyFiles */,
-				046470C71FBBE7A900125994 /* newTorch.mtl in CopyFiles */,
-				046470C51FBBD98C00125994 /* room.mtl in CopyFiles */,
-				044D467F1FB9140B00381099 /* newTorch.obj in CopyFiles */,
-				044D46801FB9140B00381099 /* NewTorchCol.ktx in CopyFiles */,
-				044D2B7A1FB8CBAF00837463 /* fs.glsl in CopyFiles */,
-				044D2B7B1FB8CBAF00837463 /* vs.glsl in CopyFiles */,
-				044D2B6A1FB79CEC00837463 /* room.obj in CopyFiles */,
-				044D2B6B1FB79CEC00837463 /* roomCol.ktx in CopyFiles */,
-				046EA0C61FB652D20003CA3D /* TorchO.ktx in CopyFiles */,
-				04CE34B21FABC545009D551C /* cube.mtl in CopyFiles */,
-				04CE34B31FABC545009D551C /* cube.obj in CopyFiles */,
-				04CE34B51FABC545009D551C /* Torch.obj in CopyFiles */,
-				04CE34B61FABC545009D551C /* Pacmannblend.mtl in CopyFiles */,
-				04CE34B71FABC545009D551C /* Pacmannblend.obj in CopyFiles */,
-				04CE34B81FABC545009D551C /* tetromino.mtl in CopyFiles */,
-				04CE34B91FABC545009D551C /* tetromino.obj in CopyFiles */,
-				04CE34BA1FABC545009D551C /* Torch.blend in CopyFiles */,
-				04CE34BB1FABC545009D551C /* Torch.blend1 in CopyFiles */,
-				04CE34BC1FABC545009D551C /* Torch.mtl in CopyFiles */,
+				04BB916F20179450004D9C49 /* back.ktx in CopyFiles */,
+				04BB917020179450004D9C49 /* back.mtl in CopyFiles */,
+				04BB917120179450004D9C49 /* back.obj in CopyFiles */,
+				04BB917220179450004D9C49 /* back.png in CopyFiles */,
+				04BB917320179450004D9C49 /* Beam.ktx in CopyFiles */,
+				04BB917420179450004D9C49 /* beam.mtl in CopyFiles */,
+				04BB917520179450004D9C49 /* beam.obj in CopyFiles */,
+				04BB917620179450004D9C49 /* Beam.png in CopyFiles */,
+				04BB917720179450004D9C49 /* bulb.blend in CopyFiles */,
+				04BB917820179450004D9C49 /* bulb.ktx in CopyFiles */,
+				04BB917920179450004D9C49 /* bulb.mtl in CopyFiles */,
+				04BB917A20179450004D9C49 /* bulb.obj in CopyFiles */,
+				04BB917B20179450004D9C49 /* bulb.png in CopyFiles */,
+				04BB917C20179450004D9C49 /* floor.ktx in CopyFiles */,
+				04BB917D20179450004D9C49 /* floor.mtl in CopyFiles */,
+				04BB917E20179450004D9C49 /* floor.obj in CopyFiles */,
+				04BB917F20179450004D9C49 /* floor.png in CopyFiles */,
+				04BB918020179450004D9C49 /* front.ktx in CopyFiles */,
+				04BB918120179450004D9C49 /* front.mtl in CopyFiles */,
+				04BB918220179450004D9C49 /* front.obj in CopyFiles */,
+				04BB918320179450004D9C49 /* front.png in CopyFiles */,
+				04BB918420179450004D9C49 /* newTorch.blend in CopyFiles */,
+				04BB918520179450004D9C49 /* newTorch.mtl in CopyFiles */,
+				04BB918620179450004D9C49 /* newTorch.obj in CopyFiles */,
+				04BB918720179450004D9C49 /* NewTorchCol.ktx in CopyFiles */,
+				04BB918820179450004D9C49 /* NewTorchCol.png in CopyFiles */,
+				04BB918920179450004D9C49 /* plank.ktx in CopyFiles */,
+				04BB918A20179450004D9C49 /* plank.mtl in CopyFiles */,
+				04BB918B20179450004D9C49 /* plank.obj in CopyFiles */,
+				04BB918C20179450004D9C49 /* plank.png in CopyFiles */,
+				04BB918D20179450004D9C49 /* roof.ktx in CopyFiles */,
+				04BB918E20179450004D9C49 /* roof.mtl in CopyFiles */,
+				04BB918F20179450004D9C49 /* roof.obj in CopyFiles */,
+				04BB919020179450004D9C49 /* roof.png in CopyFiles */,
+				04BB919120179450004D9C49 /* wall.ktx in CopyFiles */,
+				04BB919220179450004D9C49 /* wall.mtl in CopyFiles */,
+				04BB919320179450004D9C49 /* wall.obj in CopyFiles */,
+				04BB919420179450004D9C49 /* wall.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,79 +145,66 @@
 
 /* Begin PBXFileReference section */
 		042419B91F6C8363002C2D67 /* 3D Graphics and Animation Coursework */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "3D Graphics and Animation Coursework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		044D2B681FB79CC800837463 /* room.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = room.obj; sourceTree = "<group>"; };
-		044D2B691FB79CC900837463 /* roomCol.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = roomCol.ktx; sourceTree = "<group>"; };
 		044D2B701FB7BA7B00837463 /* modelObjectInst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modelObjectInst.cpp; sourceTree = "<group>"; };
 		044D2B711FB7BA7B00837463 /* modelObjectInst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelObjectInst.h; sourceTree = "<group>"; };
 		044D2B741FB7BECD00837463 /* modelObjectSingle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modelObjectSingle.cpp; sourceTree = "<group>"; };
 		044D2B771FB7BEDE00837463 /* modelObjectSingle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modelObjectSingle.h; sourceTree = "<group>"; };
-		044D2B781FB8CB7A00837463 /* vs.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vs.glsl; sourceTree = "<group>"; };
-		044D2B791FB8CB7A00837463 /* fs.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fs.glsl; sourceTree = "<group>"; };
-		044D467D1FB9140100381099 /* NewTorchCol.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewTorchCol.ktx; sourceTree = "<group>"; };
-		044D467E1FB9140100381099 /* newTorch.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = newTorch.obj; sourceTree = "<group>"; };
-		046470C41FBBD97900125994 /* room.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = room.mtl; sourceTree = "<group>"; };
-		046470C61FBBE5A800125994 /* newTorch.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = newTorch.mtl; sourceTree = "<group>"; };
-		046470C81FBC789D00125994 /* vs_display.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vs_display.glsl; sourceTree = "<group>"; };
-		046470C91FBC794000125994 /* fs_display.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fs_display.glsl; sourceTree = "<group>"; };
-		046EA0C51FB652CB0003CA3D /* TorchO.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = TorchO.ktx; sourceTree = "<group>"; };
 		048AF4111F7BD79200FD68AA /* GLapp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLapp.cpp; sourceTree = "<group>"; };
 		048AF4131F7BD79200FD68AA /* GLapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLapp.h; sourceTree = "<group>"; };
 		048AF4161F7BD79200FD68AA /* readShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = readShader.cpp; sourceTree = "<group>"; };
 		048AF41B1F7BD7F700FD68AA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		04972FAA1F72A47700BAC6A4 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		04972FAE1F72A47E00BAC6A4 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		04972FB61F72ACAB00BAC6A4 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../usr/local/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
-		049EAAC31FBF0192009288AA /* bulb.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bulb.obj; path = room/bulb.obj; sourceTree = "<group>"; };
-		049EAAC41FBF0192009288AA /* bulb.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bulb.mtl; path = room/bulb.mtl; sourceTree = "<group>"; };
-		049EAAC51FBF0192009288AA /* bulb.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = bulb.ktx; path = room/bulb.ktx; sourceTree = "<group>"; };
-		049EAAC91FBF04E6009288AA /* vs_light.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vs_light.glsl; sourceTree = "<group>"; };
-		049EAACA1FBF04F8009288AA /* fs_light.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fs_light.glsl; sourceTree = "<group>"; };
-		049EAACD1FBF488C009288AA /* wire.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = wire.ktx; path = room/wire.ktx; sourceTree = "<group>"; };
-		049EAACE1FBF488C009288AA /* wire.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wire.mtl; path = room/wire.mtl; sourceTree = "<group>"; };
-		049EAACF1FBF488C009288AA /* wire.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wire.obj; path = room/wire.obj; sourceTree = "<group>"; };
-		049EAAD31FBF8623009288AA /* table.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = table.ktx; path = room/table.ktx; sourceTree = "<group>"; };
-		049EAAD41FBF8623009288AA /* table.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = table.obj; path = room/table.obj; sourceTree = "<group>"; };
-		049EAAD51FBF8623009288AA /* table.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = table.mtl; path = room/table.mtl; sourceTree = "<group>"; };
-		049EAAD91FBF8CF8009288AA /* lamp.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lamp.obj; path = room/lamp.obj; sourceTree = "<group>"; };
-		049EAADA1FBF8CF8009288AA /* lamp.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = lamp.ktx; path = room/lamp.ktx; sourceTree = "<group>"; };
-		049EAADB1FBF8CF8009288AA /* lamp.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lamp.mtl; path = room/lamp.mtl; sourceTree = "<group>"; };
 		04A81E2D1FA3A06200886611 /* update.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = update.cpp; sourceTree = "<group>"; };
 		04A81E2F1FA3A0A600886611 /* init.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = init.cpp; sourceTree = "<group>"; };
 		04A81E311FA3A0E800886611 /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
-		04CE349F1FABBF5F009D551C /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
-		04CE34A01FABBF5F009D551C /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
-		04CE34A41FABBF5F009D551C /* Pacmannblend.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pacmannblend.mtl; sourceTree = "<group>"; };
-		04CE34A51FABBF5F009D551C /* Pacmannblend.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pacmannblend.obj; sourceTree = "<group>"; };
-		04CE34A61FABBF5F009D551C /* tetromino.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tetromino.mtl; sourceTree = "<group>"; };
-		04CE34A71FABBF5F009D551C /* tetromino.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tetromino.obj; sourceTree = "<group>"; };
-		04CE34A81FABBF5F009D551C /* Torch.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = Torch.blend; sourceTree = "<group>"; };
-		04CE34A91FABBF5F009D551C /* Torch.blend1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Torch.blend1; sourceTree = "<group>"; };
-		04CE34AA1FABBF5F009D551C /* Torch.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Torch.mtl; sourceTree = "<group>"; };
-		04CE34AE1FABC417009D551C /* Torch.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Torch.obj; sourceTree = "<group>"; };
+		04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
+		04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../../../usr/local/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		04BB9143201793EC004D9C49 /* fs_light.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fs_light.glsl; sourceTree = "<group>"; };
+		04BB9144201793EC004D9C49 /* fs.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fs.glsl; sourceTree = "<group>"; };
+		04BB9145201793EC004D9C49 /* vs_light.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vs_light.glsl; sourceTree = "<group>"; };
+		04BB9146201793EC004D9C49 /* fs_display.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fs_display.glsl; sourceTree = "<group>"; };
+		04BB9147201793EC004D9C49 /* vs_display.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vs_display.glsl; sourceTree = "<group>"; };
+		04BB9148201793EC004D9C49 /* vs.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vs.glsl; sourceTree = "<group>"; };
+		04BB9149201793F9004D9C49 /* front.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = front.ktx; sourceTree = "<group>"; };
+		04BB914A201793F9004D9C49 /* bulb.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = bulb.ktx; sourceTree = "<group>"; };
+		04BB914B201793F9004D9C49 /* newTorch.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = newTorch.blend; sourceTree = "<group>"; };
+		04BB914C201793F9004D9C49 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		04BB914D201793F9004D9C49 /* plank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plank.png; sourceTree = "<group>"; };
+		04BB914E201793F9004D9C49 /* roof.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = roof.png; sourceTree = "<group>"; };
+		04BB914F201793F9004D9C49 /* front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = front.png; sourceTree = "<group>"; };
+		04BB9150201793F9004D9C49 /* newTorch.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = newTorch.obj; sourceTree = "<group>"; };
+		04BB9151201793F9004D9C49 /* Beam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Beam.png; sourceTree = "<group>"; };
+		04BB9152201793F9004D9C49 /* wall.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wall.mtl; sourceTree = "<group>"; };
+		04BB9153201793F9004D9C49 /* roof.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = roof.ktx; sourceTree = "<group>"; };
+		04BB9154201793F9004D9C49 /* newTorch.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = newTorch.mtl; sourceTree = "<group>"; };
+		04BB9155201793F9004D9C49 /* front.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = front.mtl; sourceTree = "<group>"; };
+		04BB9156201793F9004D9C49 /* plank.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plank.mtl; sourceTree = "<group>"; };
+		04BB9157201793F9004D9C49 /* beam.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beam.obj; sourceTree = "<group>"; };
+		04BB9158201793F9004D9C49 /* roof.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = roof.mtl; sourceTree = "<group>"; };
+		04BB9159201793FA004D9C49 /* front.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = front.obj; sourceTree = "<group>"; };
+		04BB915A201793FA004D9C49 /* roof.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = roof.obj; sourceTree = "<group>"; };
+		04BB915B201793FA004D9C49 /* floor.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = floor.obj; sourceTree = "<group>"; };
+		04BB915C201793FA004D9C49 /* wall.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = wall.ktx; sourceTree = "<group>"; };
+		04BB915D201793FA004D9C49 /* wall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wall.obj; sourceTree = "<group>"; };
+		04BB915E201793FA004D9C49 /* bulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bulb.png; sourceTree = "<group>"; };
+		04BB915F201793FA004D9C49 /* floor.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = floor.ktx; sourceTree = "<group>"; };
+		04BB9160201793FA004D9C49 /* floor.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = floor.mtl; sourceTree = "<group>"; };
+		04BB9161201793FA004D9C49 /* NewTorchCol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewTorchCol.png; sourceTree = "<group>"; };
+		04BB9162201793FA004D9C49 /* Beam.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Beam.ktx; sourceTree = "<group>"; };
+		04BB9163201793FA004D9C49 /* bulb.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bulb.obj; sourceTree = "<group>"; };
+		04BB9164201793FA004D9C49 /* beam.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beam.mtl; sourceTree = "<group>"; };
+		04BB9165201793FA004D9C49 /* bulb.blend */ = {isa = PBXFileReference; lastKnownFileType = file; path = bulb.blend; sourceTree = "<group>"; };
+		04BB9166201793FA004D9C49 /* plank.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plank.obj; sourceTree = "<group>"; };
+		04BB9167201793FA004D9C49 /* back.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = back.ktx; sourceTree = "<group>"; };
+		04BB9168201793FB004D9C49 /* back.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = back.obj; sourceTree = "<group>"; };
+		04BB9169201793FB004D9C49 /* plank.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = plank.ktx; sourceTree = "<group>"; };
+		04BB916A201793FB004D9C49 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
+		04BB916B201793FB004D9C49 /* NewTorchCol.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; path = NewTorchCol.ktx; sourceTree = "<group>"; };
+		04BB916C201793FB004D9C49 /* bulb.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bulb.mtl; sourceTree = "<group>"; };
+		04BB916D201793FB004D9C49 /* floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor.png; sourceTree = "<group>"; };
+		04BB916E201793FB004D9C49 /* back.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = back.mtl; sourceTree = "<group>"; };
 		04DEFF141FB3DF6D009D70FC /* modelObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modelObject.cpp; sourceTree = "<group>"; };
 		04DEFF171FB3DF7F009D70FC /* modelObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = modelObject.h; sourceTree = "<group>"; };
-		04DF9E351FBDD6D400648BE3 /* front.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.mtl; path = room/front.mtl; sourceTree = "<group>"; };
-		04DF9E361FBDD6D400648BE3 /* front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = front.png; path = room/front.png; sourceTree = "<group>"; };
-		04DF9E371FBDD6D400648BE3 /* front.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = front.obj; path = room/front.obj; sourceTree = "<group>"; };
-		04DF9E3B1FBDD75400648BE3 /* front.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = front.ktx; path = room/front.ktx; sourceTree = "<group>"; };
-		04DF9E3D1FBDE3EA00648BE3 /* plank.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plank.obj; path = room/plank.obj; sourceTree = "<group>"; };
-		04DF9E3E1FBDE3EA00648BE3 /* plank.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plank.mtl; path = room/plank.mtl; sourceTree = "<group>"; };
-		04DF9E3F1FBDE42900648BE3 /* plank.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = plank.ktx; path = room/plank.ktx; sourceTree = "<group>"; };
-		04DF9E431FBDEFB400648BE3 /* beam.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = beam.mtl; path = room/beam.mtl; sourceTree = "<group>"; };
-		04DF9E441FBDEFB400648BE3 /* back.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = back.obj; path = room/back.obj; sourceTree = "<group>"; };
-		04DF9E451FBDEFB400648BE3 /* Beam.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = Beam.ktx; path = room/Beam.ktx; sourceTree = "<group>"; };
-		04DF9E461FBDEFB400648BE3 /* wall.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wall.mtl; path = room/wall.mtl; sourceTree = "<group>"; };
-		04DF9E471FBDEFB400648BE3 /* floor.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = floor.obj; path = room/floor.obj; sourceTree = "<group>"; };
-		04DF9E481FBDEFB400648BE3 /* wall.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = wall.obj; path = room/wall.obj; sourceTree = "<group>"; };
-		04DF9E491FBDEFB400648BE3 /* roof.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = roof.obj; path = room/roof.obj; sourceTree = "<group>"; };
-		04DF9E4A1FBDEFB400648BE3 /* beam.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = beam.obj; path = room/beam.obj; sourceTree = "<group>"; };
-		04DF9E4B1FBDEFB400648BE3 /* floor.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = floor.mtl; path = room/floor.mtl; sourceTree = "<group>"; };
-		04DF9E4C1FBDEFB500648BE3 /* roof.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = roof.ktx; path = room/roof.ktx; sourceTree = "<group>"; };
-		04DF9E4D1FBDEFB500648BE3 /* roof.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = roof.mtl; path = room/roof.mtl; sourceTree = "<group>"; };
-		04DF9E4E1FBDEFB500648BE3 /* back.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = back.ktx; path = room/back.ktx; sourceTree = "<group>"; };
-		04DF9E4F1FBDEFB500648BE3 /* floor.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = floor.ktx; path = room/floor.ktx; sourceTree = "<group>"; };
-		04DF9E501FBDEFB500648BE3 /* back.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = back.mtl; path = room/back.mtl; sourceTree = "<group>"; };
-		04DF9E511FBDEFB500648BE3 /* wall.ktx */ = {isa = PBXFileReference; lastKnownFileType = file; name = wall.ktx; path = room/wall.ktx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,9 +212,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04972FB71F72ACAB00BAC6A4 /* libglfw.3.3.dylib in Frameworks */,
+				04BB913A201792EC004D9C49 /* libGLEW.2.1.0.dylib in Frameworks */,
+				04BB913B201792EC004D9C49 /* libglfw.3.3.dylib in Frameworks */,
 				04972FAF1F72A47E00BAC6A4 /* OpenGL.framework in Frameworks */,
-				04972FAC1F72A47700BAC6A4 /* libGLEW.2.1.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,71 +254,66 @@
 				04A81E2D1FA3A06200886611 /* update.cpp */,
 				04A81E311FA3A0E800886611 /* render.cpp */,
 				048AF4161F7BD79200FD68AA /* readShader.cpp */,
-				04CE349E1FABBF5F009D551C /* Resources */,
+				04BB91422017938F004D9C49 /* Resources */,
+				04BB914120179381004D9C49 /* Shaders */,
 			);
 			path = OPENGL;
 			sourceTree = "<group>";
 		};
-		04CE349E1FABBF5F009D551C /* Resources */ = {
+		04BB914120179381004D9C49 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				049EAAC91FBF04E6009288AA /* vs_light.glsl */,
-				049EAACA1FBF04F8009288AA /* fs_light.glsl */,
-				049EAACD1FBF488C009288AA /* wire.ktx */,
-				049EAADA1FBF8CF8009288AA /* lamp.ktx */,
-				049EAADB1FBF8CF8009288AA /* lamp.mtl */,
-				049EAAD91FBF8CF8009288AA /* lamp.obj */,
-				049EAAD31FBF8623009288AA /* table.ktx */,
-				049EAAD51FBF8623009288AA /* table.mtl */,
-				049EAAD41FBF8623009288AA /* table.obj */,
-				049EAACE1FBF488C009288AA /* wire.mtl */,
-				049EAACF1FBF488C009288AA /* wire.obj */,
-				04DF9E3E1FBDE3EA00648BE3 /* plank.mtl */,
-				049EAAC51FBF0192009288AA /* bulb.ktx */,
-				049EAAC41FBF0192009288AA /* bulb.mtl */,
-				049EAAC31FBF0192009288AA /* bulb.obj */,
-				04DF9E4E1FBDEFB500648BE3 /* back.ktx */,
-				04DF9E501FBDEFB500648BE3 /* back.mtl */,
-				04DF9E441FBDEFB400648BE3 /* back.obj */,
-				04DF9E451FBDEFB400648BE3 /* Beam.ktx */,
-				04DF9E431FBDEFB400648BE3 /* beam.mtl */,
-				04DF9E4A1FBDEFB400648BE3 /* beam.obj */,
-				04DF9E4F1FBDEFB500648BE3 /* floor.ktx */,
-				04DF9E4B1FBDEFB400648BE3 /* floor.mtl */,
-				04DF9E471FBDEFB400648BE3 /* floor.obj */,
-				04DF9E4C1FBDEFB500648BE3 /* roof.ktx */,
-				04DF9E4D1FBDEFB500648BE3 /* roof.mtl */,
-				04DF9E491FBDEFB400648BE3 /* roof.obj */,
-				04DF9E511FBDEFB500648BE3 /* wall.ktx */,
-				04DF9E461FBDEFB400648BE3 /* wall.mtl */,
-				04DF9E481FBDEFB400648BE3 /* wall.obj */,
-				04DF9E3D1FBDE3EA00648BE3 /* plank.obj */,
-				04DF9E3F1FBDE42900648BE3 /* plank.ktx */,
-				044D467E1FB9140100381099 /* newTorch.obj */,
-				04DF9E3B1FBDD75400648BE3 /* front.ktx */,
-				04DF9E351FBDD6D400648BE3 /* front.mtl */,
-				04DF9E371FBDD6D400648BE3 /* front.obj */,
-				04DF9E361FBDD6D400648BE3 /* front.png */,
-				046470C61FBBE5A800125994 /* newTorch.mtl */,
-				046470C41FBBD97900125994 /* room.mtl */,
-				044D467D1FB9140100381099 /* NewTorchCol.ktx */,
-				046470C81FBC789D00125994 /* vs_display.glsl */,
-				046470C91FBC794000125994 /* fs_display.glsl */,
-				044D2B791FB8CB7A00837463 /* fs.glsl */,
-				044D2B781FB8CB7A00837463 /* vs.glsl */,
-				044D2B681FB79CC800837463 /* room.obj */,
-				044D2B691FB79CC900837463 /* roomCol.ktx */,
-				046EA0C51FB652CB0003CA3D /* TorchO.ktx */,
-				04CE349F1FABBF5F009D551C /* cube.mtl */,
-				04CE34A01FABBF5F009D551C /* cube.obj */,
-				04CE34AE1FABC417009D551C /* Torch.obj */,
-				04CE34A41FABBF5F009D551C /* Pacmannblend.mtl */,
-				04CE34A51FABBF5F009D551C /* Pacmannblend.obj */,
-				04CE34A61FABBF5F009D551C /* tetromino.mtl */,
-				04CE34A71FABBF5F009D551C /* tetromino.obj */,
-				04CE34A81FABBF5F009D551C /* Torch.blend */,
-				04CE34A91FABBF5F009D551C /* Torch.blend1 */,
-				04CE34AA1FABBF5F009D551C /* Torch.mtl */,
+				04BB9146201793EC004D9C49 /* fs_display.glsl */,
+				04BB9143201793EC004D9C49 /* fs_light.glsl */,
+				04BB9144201793EC004D9C49 /* fs.glsl */,
+				04BB9147201793EC004D9C49 /* vs_display.glsl */,
+				04BB9145201793EC004D9C49 /* vs_light.glsl */,
+				04BB9148201793EC004D9C49 /* vs.glsl */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		04BB91422017938F004D9C49 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				04BB9167201793FA004D9C49 /* back.ktx */,
+				04BB916E201793FB004D9C49 /* back.mtl */,
+				04BB9168201793FB004D9C49 /* back.obj */,
+				04BB914C201793F9004D9C49 /* back.png */,
+				04BB9162201793FA004D9C49 /* Beam.ktx */,
+				04BB9164201793FA004D9C49 /* beam.mtl */,
+				04BB9157201793F9004D9C49 /* beam.obj */,
+				04BB9151201793F9004D9C49 /* Beam.png */,
+				04BB9165201793FA004D9C49 /* bulb.blend */,
+				04BB914A201793F9004D9C49 /* bulb.ktx */,
+				04BB916C201793FB004D9C49 /* bulb.mtl */,
+				04BB9163201793FA004D9C49 /* bulb.obj */,
+				04BB915E201793FA004D9C49 /* bulb.png */,
+				04BB915F201793FA004D9C49 /* floor.ktx */,
+				04BB9160201793FA004D9C49 /* floor.mtl */,
+				04BB915B201793FA004D9C49 /* floor.obj */,
+				04BB916D201793FB004D9C49 /* floor.png */,
+				04BB9149201793F9004D9C49 /* front.ktx */,
+				04BB9155201793F9004D9C49 /* front.mtl */,
+				04BB9159201793FA004D9C49 /* front.obj */,
+				04BB914F201793F9004D9C49 /* front.png */,
+				04BB914B201793F9004D9C49 /* newTorch.blend */,
+				04BB9154201793F9004D9C49 /* newTorch.mtl */,
+				04BB9150201793F9004D9C49 /* newTorch.obj */,
+				04BB916B201793FB004D9C49 /* NewTorchCol.ktx */,
+				04BB9161201793FA004D9C49 /* NewTorchCol.png */,
+				04BB9169201793FB004D9C49 /* plank.ktx */,
+				04BB9156201793F9004D9C49 /* plank.mtl */,
+				04BB9166201793FA004D9C49 /* plank.obj */,
+				04BB914D201793F9004D9C49 /* plank.png */,
+				04BB9153201793F9004D9C49 /* roof.ktx */,
+				04BB9158201793F9004D9C49 /* roof.mtl */,
+				04BB915A201793FA004D9C49 /* roof.obj */,
+				04BB914E201793F9004D9C49 /* roof.png */,
+				04BB915C201793FA004D9C49 /* wall.ktx */,
+				04BB9152201793F9004D9C49 /* wall.mtl */,
+				04BB915D201793FA004D9C49 /* wall.obj */,
+				04BB916A201793FB004D9C49 /* wall.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -356,9 +321,9 @@
 		04FB007E1F70913B0044343E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				04972FB61F72ACAB00BAC6A4 /* libglfw.3.3.dylib */,
+				04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */,
+				04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */,
 				04972FAE1F72A47E00BAC6A4 /* OpenGL.framework */,
-				04972FAA1F72A47700BAC6A4 /* libGLEW.2.1.0.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -374,6 +339,7 @@
 				042419B61F6C8363002C2D67 /* Frameworks */,
 				042419B71F6C8363002C2D67 /* CopyFiles */,
 				04CE34B01FABC4FC009D551C /* CopyFiles */,
+				04BB913E2017931B004D9C49 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -472,6 +438,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks/,
+					/usr/local/lib/,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -486,6 +456,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include/;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -526,6 +498,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks/,
+					/usr/local/lib/,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -534,6 +510,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include/;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;

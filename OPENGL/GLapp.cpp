@@ -122,23 +122,12 @@ void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
     cameraFront = glm::normalize(posOnSphere(1, yaw, pitch)); // negative the pitch if you want to invert cam in y
     
     
-    torchObj.position = cameraPos + posOnSphere(sphereRadius, yaw+yawOffset, -pitch - pitchOffset);
+    torchObj.position = cameraPos + posOnSphere(sphereRadius, yaw+yawOffset, pitch - pitchOffset);
 
     
-    torchObj.rotation.x = pitch; // Torch seems to be backwards so has to have its pitch rotated the other way
+    torchObj.rotation.x = -pitch; // Torch seems to be backwards so has to have its pitch rotated the other way
     torchObj.rotation.y = yaw;
     lights[2].direction = cameraFront;
-    
-    cout<<"x mouse\t"<<mouseX<<endl;
-    cout<<"y mouse\t"<<mouseY<<endl;
-    
-    cout<<"xoffset\t"<<xoffset<<endl;
-    cout<<"yoffset\t"<<yoffset<<endl;
-    
-    cout<<"Yaw\t"<<yaw<<endl;
-    cout<<"Pitch\t"<<pitch<<endl;
-    cout<<"\n\n";
-    
     
 }
 
