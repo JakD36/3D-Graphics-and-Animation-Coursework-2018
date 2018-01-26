@@ -7,13 +7,16 @@
 //
 
 #include "modelObject.h"
-modelObject::modelObject(){
 
+modelObject::modelObject(){
+    // Does nothing
 }
+
 void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
-    program = glCreateProgram();
+    program = glCreateProgram();                    // Create the program, for this model, to attach the shaders to
     
+    // Load, compile and attach the provided to the program
     string vs_text = readShader(vsPath);
     const char * vs_source = vs_text.c_str();
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -32,28 +35,29 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
     glGenVertexArrays(1,&vao);
     glBindVertexArray(vao);
+    
     glGenBuffers(3,buffer);
+    // Generate the buffer to store the vertices, uvs and normals
     glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
     
-    
-    load(objPath);
+    load(objPath); // Get the vertices, uvs and normals from the .obj files
     cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
-    glBufferData(GL_ARRAY_BUFFER,
-                 out_vertices.size()*sizeof(glm::vec3),
-                 &out_vertices[0],
+    glBufferData(GL_ARRAY_BUFFER,                       // store the vertices in the first part of the buffer
+                 out_vertices.size()*sizeof(glm::vec3), // vertices size * size of vec3 tells us how much space in the buffer to allocate
+                 &out_vertices[0],                      // Where to start in the vertices vector
                  GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(0);
-    
+    // Do the same for uvs
     glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
     glBufferData(GL_ARRAY_BUFFER,
-                 out_uvs.size()*sizeof(glm::vec2),
+                 out_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates
                  &out_uvs[0],
                  GL_STATIC_DRAW);
     
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
-    
+    // Same again for normals
     glBindBuffer(GL_ARRAY_BUFFER, buffer[2]);
     glBufferData(GL_ARRAY_BUFFER,
                  out_normals.size()*sizeof(glm::vec3),
@@ -67,6 +71,12 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     glUseProgram(program);
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// The following comes from the labs in F21GA 3D Graphics and Animation
 
 void modelObject::initTexture(string texPath){
     glGenTextures(1, texture);
@@ -102,6 +112,11 @@ void modelObject::initTexture(string texPath){
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 bool modelObject::loadMat(string name){
     FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
@@ -134,12 +149,15 @@ bool modelObject::loadMat(string name){
     }
 }
 
+
 void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::vec3& camera){
     // For each model Object
     glUseProgram(program);
     glBindVertexArray(vao);
     glUniformMatrix4fv(glGetUniformLocation(program,"proj_matrix"), 1, GL_FALSE, &proj_matrix[0][0]);
     // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
+    
+    // Assign the values to each of the appropriate uniforms so that they can be accessed by the shaders
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture[0]);
@@ -150,10 +168,12 @@ void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::
     glUniform3f(glGetUniformLocation(program, "kd"), kd.r,kd.g,kd.b);
     glUniform3f(glGetUniformLocation(program, "ks"), ks.r,ks.g,ks.b);
     glUniform1f(glGetUniformLocation(program, "shininess"), shininess);
-    glUniform1f(glGetUniformLocation(program,"lightConstant"),0.25f);
-    glUniform1f(glGetUniformLocation(program,"lightLinear"),0.7f);
-    glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);
+    glUniform1f(glGetUniformLocation(program,"lightConstant"),0.25f);       // Constant used for attenuation
+    glUniform1f(glGetUniformLocation(program,"lightLinear"),0.7f);          // Constant used for attenuation
+    glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);       // Constant used for attenuation
+
     
+    // Loop through each of the lights and provide the necessary information to the shader
     for(int n = 0;n<LIGHTSN;n++){
         glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].on").c_str()),lights[n].lightOn);
         glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].type").c_str()),lights[n].type);

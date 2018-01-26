@@ -9,26 +9,26 @@
 #include "GLapp.h"
 
 GLapp::GLapp(){
-    if (!glfwInit()) {                            // Checking for GLFW
+    if (!glfwInit()) {                                  // Checking for GLFW
         cout << "Could not initialise GLFW...";
     }
-    glfwSetErrorCallback(errorCallbackGLFW);    // Setup a function to catch and display all GLFW errors.
-    hintsGLFW();                                // Setup glfw with various hints.
+    glfwSetErrorCallback(errorCallbackGLFW);            // Setup a function to catch and display all GLFW errors.
+    hintsGLFW();                                        // Setup glfw with various hints.
     // Start a window using GLFW
     string title = "My OpenGL Application";
     window = glfwCreateWindow(windowWidth, windowHeight, title.c_str(), NULL, NULL);
-    if (!window) {                                // Window or OpenGL context creation failed
+    if (!window) {                                      // Window or OpenGL context creation failed
         cout << "Could not initialise GLFW...";
         endProgram();
         //return 0;
     }
     
-    glfwMakeContextCurrent(window);                // making the OpenGL context current
+    glfwMakeContextCurrent(window);                     // making the OpenGL context current
     
     // Start GLEW (note: always initialise GLEW after creating your window context.)
-    glewExperimental = GL_TRUE;                    // hack: catching them all - forcing newest debug callback (glDebugMessageCallback)
+    glewExperimental = GL_TRUE;                         // hack: catching them all - forcing newest debug callback (glDebugMessageCallback)
     GLenum errGLEW = glewInit();
-    if (GLEW_OK != errGLEW) {                    // Problems starting GLEW?
+    if (GLEW_OK != errGLEW) {                           // Problems starting GLEW?
         cout << "Could not initialise GLEW...";
         endProgram();
     }
@@ -44,12 +44,19 @@ GLapp::GLapp(){
 //    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Set mouse cursor.
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
     
-    glfwGetCursorPos(window, &lastX, &lastY);
-    setupRender();                                // setup some render variables.
-    startup();                                    // Setup all necessary information for startup (aka. load texture, shaders, models, etc).
+    
+    
+    glfwGetCursorPos(window, &lastX, &lastY);        // Need to call this to get the position of the cursor upon starting the application, as we cannot assume its position, otherwise we get weird jumps in the camera
+    
+    setupRender();
+    startup();              // load textures, models,lights, shaders, all of this is done in this method in the init.cpp file
+    // End of constructor
 }
 
-void GLapp::run(){
+
+
+
+void GLapp::run(){ // Our game loop
     do {                                        // run until the window is closed
         double currentTime = glfwGetTime();     // retrieve timelapse
         glfwPollEvents();                       // poll callbacks I believe
@@ -64,6 +71,10 @@ void GLapp::run(){
     
     endProgram();            // Close and clean everything up...
 }
+
+
+
+
 
 void GLapp::endProgram() {
     glfwMakeContextCurrent(window);             // destroys window handler
@@ -101,34 +112,35 @@ void GLapp::classonMouseButtonCallback(GLFWwindow* window, int button, int actio
     }
     
 }
-void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) {
+void GLapp::classonMouseMoveCallback(GLFWwindow* window, double x, double y) { // Where we will handle moving the camera and objects based on the mouse
     
-    int mouseX = static_cast<int>(x);
+    // This is the code for a look around (FPS like) camera
+    int mouseX = static_cast<int>(x); // Get the new mouse position
     int mouseY = static_cast<int>(y);
     
-    GLfloat xoffset = mouseX - lastX;
+    GLfloat xoffset = mouseX - lastX; // get the change in the mouse position in x and y
     GLfloat yoffset = lastY - mouseY; // Reversed
-    lastX = mouseX; lastY = mouseY;
+    lastX = mouseX; lastY = mouseY;   // we can now set the old mouse position to the new one for the next frame
     
     GLfloat sensitivity = 0.05;
-    xoffset *= sensitivity; yoffset *= sensitivity;
+    xoffset *= sensitivity; yoffset *= sensitivity; // We can reduce the speed of the movement by multiplying by the fraction sensitivity, increasing this fraction will speed up movement
     
-    yaw += xoffset; pitch += yoffset;
+    yaw += xoffset; pitch += yoffset;               // add the modified offset to the yaw or pitch angles to get the new angle
     
     // check for pitch out of bounds otherwise screen gets flipped
     if (pitch > 89.0f) pitch = 89.0f; if (pitch < -89.0f) pitch = -89.0f;
     
     
-    cameraFront = glm::normalize(posOnSphere(1, yaw, pitch)); // negative the pitch if you want to invert cam in y
+    cameraFront = glm::normalize(posOnSphere(1, yaw, pitch)); // so here we use pos on sphere to get the direction the camera is facing
+    // and normalise the resulting vector so we just have the unit vector
     
     
-    torchObj.position = cameraPos + posOnSphere(sphereRadius, yaw+yawOffset, pitch - pitchOffset);
+    torchObj.position = cameraPos + posOnSphere(sphereRadius, yaw+yawOffset, pitch - pitchOffset); // our torchs position is based off the camera position
 
     
-    torchObj.rotation.x = -pitch; // Torch seems to be backwards so has to have its pitch rotated the other way
+    torchObj.rotation.x = -pitch;       // Torch seems to be backwards in its model so has to have its pitch rotated the other way
     torchObj.rotation.y = yaw;
-    lights[2].direction = cameraFront;
-    
+    lights[2].direction = cameraFront; // the light from the torch just goes where we are looking
 }
 
 void GLapp::classonMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
@@ -145,6 +157,7 @@ glm::vec3 GLapp::posOnSphere(float radius,float yaw,float pitch){
 }
 
 void GLapp::printVec3(glm::vec3 vec3,string str1,string str2,string str3){
+    // Handy for debugging to find out what different vec3s are
     cout<<str1<<" >> "<<vec3.x<<"\t"<<str2<<" >> "<<vec3.y<<"\t"<<str3<<" >> "<<vec3.z<<endl;
 }
 

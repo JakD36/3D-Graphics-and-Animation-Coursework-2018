@@ -13,21 +13,23 @@ using namespace std;
 #include "GLapp.h"
 
 // VARIABLES
-GLapp* myApp;
-
-// Functions
+GLapp* myApp; // Pointer to GLapp that will be stored on the heap.
 
 int main()
 {
-    myApp = new GLapp();
-    myApp->run();
+    myApp = new GLapp(); // Instantiate the GLapp object to be stored on the heap
+    myApp->run(); // Run method contains the main, poll, update, render loop
     
-    delete(myApp);
-    myApp = NULL;
+    // Once the Game loop has stopped, control steps back into the main function here
+    
+    delete(myApp);  // removes the GLapp object from the heap.
+    myApp = NULL;   // The pointer myApp is still pointing to the heap where the object used to be, this is a dangling pointer
+                    // So assigning it NULL, saves any problems.
     return 0;
 }
 
 
+// Callbacks have to be static functions it seems, so a workaround I found was to use a the callback to call a method of the GLapp.
 void onResizeCallback(GLFWwindow* window, int w, int h) {
     myApp->classonResizeCallback(window,w,h);
 }
@@ -48,6 +50,12 @@ void onMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
     myApp->classonMouseWheelCallback(window,xoffset,yoffset);
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+// Taken from F21GA 3D Graphics and Animation Labs
 
 void debugGL() {
     //Output some debugging information
@@ -117,3 +125,7 @@ static void APIENTRY openGLDebugCallback(GLenum source,
 void errorCallbackGLFW(int error, const char* description) {
     cout << "Error GLFW: " << description << "\n";
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////

@@ -9,24 +9,32 @@
 #include "GLapp.h"
 #include "modelObject.h"
 
+
 string GLapp::readShader(string fileName) {
     fstream file;
-    string output ="";
-    string wholeCode ="";
-    file.open(fileName);
-    if(!file){
+    string output ="";          // String we will read each individual line of the shader too
+    string wholeCode ="";       // We can append each line to this string so that the entire shader can be output,
+    file.open(fileName);        // Open the provided shader file
+    if(!file){                  // Check if the file opened
         cout<<"Could not find file >> "<<fileName<<endl;
     }
-    else{
+    else{                       // If it did, the read each line and append it to the final string that will be returned
         while (getline(file, output)) {
             wholeCode.append(output + "\n");
             //cout << output << endl;
         }
     }
-    file.close();
+    file.close();               // Once finished reading the shader close the file
     
-    return wholeCode;
+    return wholeCode;           // Output the code
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+// Taken from F21GA 3D Graphics and Animation Labs
 
 void GLapp::checkErrorShader(GLuint shader) {
     // Get log lenght
@@ -41,6 +49,10 @@ void GLapp::checkErrorShader(GLuint shader) {
         cout << errorLog.data();
     }
 }
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
 
 string modelObject::readShader(string fileName) {
     fstream file;
@@ -60,6 +72,15 @@ string modelObject::readShader(string fileName) {
     
     return wholeCode;
 }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+// Taken from F21GA 3D Graphics and Animation Labs
+
 
 void modelObject::checkErrorShader(GLuint shader) {
     // Get log lenght

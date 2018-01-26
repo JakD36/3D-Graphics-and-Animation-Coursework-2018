@@ -11,8 +11,6 @@
 
 void GLapp::setupRender() {
     glfwSwapInterval(1);    // Ony render when synced (V SYNC)
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_SAMPLES, 0);
     glfwWindowHint(GLFW_STEREO, GL_FALSE);
 }
@@ -21,19 +19,19 @@ void GLapp::hintsGLFW() {
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);            // Create context in debug mode - for debug message callback
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.2
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1 );
+    
+    // Following two lines are required for running on mac
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
 
-glm::vec3 lightStruct::ia = glm::vec3(0.0f,1.0f,0.2f);
+glm::vec3 lightStruct::ia = glm::vec3(0.0f,1.0f,0.2f); // we assign the static variable for the light struct out with the any functions
 
 void GLapp::startup() {
     
-    
-    
     // Calculate proj_matrix for the first time.
-    aspect = (float)windowWidth / (float)windowHeight; // ARE THESE BEING CONVERTED TO FLOATS?
+    aspect = (float)windowWidth / (float)windowHeight;
     proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
 
     // Initialise Objects
@@ -42,7 +40,10 @@ void GLapp::startup() {
     // initTexture
     // loadMat
     // sort any other variables that need set
-    double startTime = glfwGetTime();
+    double startTime = glfwGetTime(); // So we can see how long it takes for all models to load
+    
+    // So for a single object that is not to be instanced, we call its constructor, we initialise its model, texture and load its material.
+    // we can also provide a position if we so wish
     // Torch
     torchObj = modelObjectSingle();
     torchObj.initModel("Resources/newTorch.obj","Shaders/vs.glsl","Shaders/fs.glsl");
@@ -75,6 +76,9 @@ void GLapp::startup() {
     roof.loadMat("Resources/roof.mtl");
     roof.position.y = 2.5f;
     
+    
+    // For models to be instanced its a little different, we still use its constructor, init model, texture and load the material
+    // but for the position, rotations and scale we need to push back each to create a new instance of the item
     beam = modelObjectInst();
     beam.initModel("Resources/beam.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
     beam.initTexture("Resources/beam.ktx");
@@ -201,10 +205,8 @@ void GLapp::startup() {
     wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
     
     // Wall 2
-    wall.add(glm::vec3(-3.0f,1.25f,0.0f));
-//    wall.position.push_back(glm::vec3(-3.0f,1.25f,0.0f));
-//    wall.rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
-//    wall.scale.push_back(glm::vec3(1.0f,1.0f,1.0f));
+    wall.add(glm::vec3(-3.0f,1.25f,0.0f));              // add is a method for the inst model object, that takes the position, but sets rotation and scale to 0 to speed up the pushing of new objects in vector
+
     
     //Lightbulb
     bulb = modelObjectSingle();
@@ -232,6 +234,7 @@ void GLapp::startup() {
     lamp.rotation.y = 120;
     
     //Add objects to vector Objs to be rendered!
+    // This is the most important part, this allows us to just loop through that vector and render each one.
     
     Objs.push_back(&torchObj);
     Objs.push_back(&front);
@@ -248,24 +251,26 @@ void GLapp::startup() {
     
     
     // Add lights to scene, number of lights determined by const int LIGHTSN
-    lights[0].type = lightType::point;
-    lights[0].position = glm::vec3(0.0f,2.25f,0.0f) + posOnSphere(lightRadius, lightYaw, lightPitch);
+    // The ceiling light
+    lights[0].type = lightType::point; // So we have an enum for point and spot lights that lets us know which light we are dealing with
     lights[0].position = glm::vec3(0.0f,2.0f,0.0f);
     lights[0].id = glm::vec3(5.0f,5.0f,5.0f);
     lights[0].is = glm::vec3(5.0f,5.0f,5.0f);
     
+    // red light by the door
     lights[1].type = lightType::point;
     lights[1].position = glm::vec3(-1.7f,1.5f,-2.8f);
     lights[1].id = glm::vec3(1.5f,0.0f,0.0f);
     lights[1].is = glm::vec3(0.5f,0.0f,0.0f);
     
+    // torch light
     lights[2].type = lightType::spot;
     lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
-    lights[2].direction = cameraFront;
+    lights[2].direction = cameraFront; // its facing the same direction of the player
     lights[2].id = glm::vec3(7.0f,7.0f,7.0f);
     lights[2].is = glm::vec3(5.0f,5.0f,5.0f);
     
-    
+    // the lamp light
     lights[3].type = lightType::spot;
     lights[3].position = lamp.position +glm::vec3(0.0f,0.5f,0.0f);
     lights[3].direction = glm::vec3(-0.5f,-0.3f,0.3f);
@@ -273,15 +278,19 @@ void GLapp::startup() {
     lights[3].is = glm::vec3(1.0f,1.0f,1.0f);
     
     
-    cout<<"Time to load "<<glfwGetTime()-startTime<<endl;;
+    
+    cout<<"Time to load "<<glfwGetTime()-startTime<<endl;   // Just a nice thing to know
+    
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);    // These lines prevent faces facing away from the camera from being rendered
+    glEnable(GL_CULL_FACE); // These lines prevent faces facing away from the camera from being rendered
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
+    
+    //Setup the framebuffer using the following code taken from the the lecture notes and code
 
     glGenFramebuffers(1,&framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);

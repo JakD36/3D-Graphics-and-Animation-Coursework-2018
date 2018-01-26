@@ -26,6 +26,7 @@ using namespace std;
 #include "modelObjectInst.h"
 #include "modelObjectSingle.h"
 
+// Our prototypes for functions used throughout the program, mainly the callbacks to handle user input
 void errorCallbackGLFW(int error, const char* description);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void onResizeCallback(GLFWwindow* window, int w, int h);
@@ -45,20 +46,23 @@ static void APIENTRY openGLDebugCallback(GLenum source,
 
 class GLapp{
 private:
+    // Our private variables
+    GLFWwindow*             window;                     // Window the app will be displayed in
+    int                     windowWidth = 640;          // width of the window
+    int                     windowHeight = 480;         // height of the window
+    float                   aspect;                     // aspect ratio = width/height for exaple 4:3 or 16:9
+    glm::mat4               proj_matrix;                // Will be used in handling perspective into the scene?
+    bool                    keyStatus[1024] = {false};  // Stores if the keys have been presed or not
+    bool                    running = true;             // is the app running yes or no
     
-    GLFWwindow*             window;
-    int                     windowWidth = 640;
-    int                     windowHeight = 480;
-    float                   aspect;
-    glm::mat4               proj_matrix;
-    bool                    keyStatus[1024] = {false};
-    unsigned int            nTriangles = 0;
-    bool                    running = true;
-    
-    float sphereRadius = 0.4; float yawOffset = 30; float pitchOffset = 20;
+    // This specifically is for the torch, attached to the player.
+    float sphereRadius = 0.4;                           // Its sitting 0.4 m away from the camera
+    float yawOffset = 30;                               // Its offset from the camera by the 30 degrees in the yaw
+    float pitchOffset = 20;                             // Its offset from the camera by the 20 degrees in the pitch
 
+    
+    // Objects to be added into the system
     modelObjectSingle       torchObj;
-    //modelObjectInst         pac;
     modelObjectSingle       front;
     modelObjectInst         planks;
     modelObjectSingle       floor;
@@ -72,10 +76,12 @@ private:
     modelObjectSingle       lamp;
     
     
-    vector<modelObject*> Objs;
-    lightStruct lights[LIGHTSN];
+    vector<modelObject*> Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the
+                                // scene by adding to this vector of objects no matter if its a modelObject single or instanced.
+                                // This is polymorphism
+    lightStruct lights[LIGHTSN];// Creates our array of lightStructs to store details on all the lights in the scene.
     
-    // framebuffer
+    // framebuffer variables, these all handle the framebuffer
     GLuint            framebuffer;
     GLuint            framebufferTexture;
     GLuint            depthbuffer;
@@ -84,24 +90,26 @@ private:
     std::vector < glm::vec2 > displayVertices;
     std::vector < glm::vec2 > displayUvs;
     GLuint            displayProgram;
-    bool LMBClicked = false;
-    bool RMBClicked = false;
     
     
-    double          prevTime = 0;
-    float lightRadius = 0.25f;
-    float lightYaw = 0.0f;
-    float lightPitch = -20.0f;
-    double          v = 0;
+    bool LMBClicked = false;            // Is the left mouse button clicked
+    bool RMBClicked = false;            // Is the right mouse button clicked
+    double          prevTime = 0;       // time at the previous frame
+    
+    // These are the details for the swinging light above the player, it is a pendulum
+    float lightRadius = 0.25f;          // The radius at which the light swings
+    float lightYaw = 0.0f;              // instantiate its yaw and give its initial yaw as 0
+    float lightPitch = -20.0f;          // instantiate its pitch and give its initial pitch of -20 so that it can start with a 0 velocity and still move
+    double          v = 0;              // instantiate the lights velocity and start it with 0, this way it starts moving as gravity starts pulling it down
     
     
     
     // Camera Variables
-    int mouseX, mouseY;
-    double lastX = 0, lastY = 0;
-    GLfloat yaw=0, pitch=0;
-    glm::vec3 cameraFront = glm::vec3(0.0f,0.0f,1.0f);
-    glm::vec3 cameraPos = glm::vec3(0.0f,1.6f,0.0f);    
+    int mouseX, mouseY;                 // Position of mouse on screen in x and y axis
+    double lastX = 0, lastY = 0;        // position of mouse on screen in x and y for the last frame
+    GLfloat yaw=0, pitch=0;             // the yaw and pitch angles to be calculated from the change in mouse position
+    glm::vec3 cameraFront = glm::vec3(0.0f,0.0f,1.0f);  // the direction the camera is facing
+    glm::vec3 cameraPos = glm::vec3(0.0f,1.6f,0.0f);    // The cameras position in the world space
     
 
 public:
@@ -110,25 +118,20 @@ public:
     GLapp();
     ~GLapp();
     
-    void run();
-    string readShader(string fileName);
+    void run();                             // Handles running the game loop
+    string readShader(string fileName);     // Reads the GLSL shaders so they can be compiled and attached to the programs for each model
     
-    void endProgram();
-    void setupRender();
-    void startup();
-    void update(double currentTime);
-    void render(double currentTime);
+    void endProgram();                      // cleans up and closes OpenGL
+    void setupRender();                     // along with hintsGLFW sets up some window hints for running openGL
+    void startup();                         // loads models, textures, material properties. sets up the lights and the framebuffer texture to render to
+    void update(double currentTime);        // handles updating objects based on the inputs from the user, or from interaction from other objects
+    void render(double currentTime);        // loops through all the objects to be rendered on screen, then does a second pass through the framebuffer to render to screen with optional screen effect
     void hintsGLFW();
     void checkErrorShader(GLuint shader);
     
-    void setKeyStatus(int key);
-    void setWindowWidth(int w);
-    void setWindowHeight(int w);
-    void setAspect(float);
-    void setProjMatrix(glm::mat4);
+    glm::vec3 posOnSphere(float radius,float yaw,float pitch); // Calculates the cartesian coordinates ie x,y,z from the spherical coordinates or radius, yaw and pitch
     
-    glm::vec3 posOnSphere(float radius,float yaw,float pitch);
-    
+    // My workarounds for callbacks to work with the app as a class, these are just called by the actual callbacks when the user interacts with the system.
     void classerrorCallbackGLFW(int error, const char* description);
     void classkeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     void classonResizeCallback(GLFWwindow* window, int w, int h);
@@ -137,6 +140,7 @@ public:
     void classonMouseMoveCallback(GLFWwindow* window, double x, double y);
     void classonMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
     
+    // Simply prints out a vector with each of the strings below before the corresponding value in the vec3
     void printVec3(glm::vec3,string,string,string);
     
 };

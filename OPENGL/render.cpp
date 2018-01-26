@@ -10,12 +10,13 @@
 
 void GLapp::render(double currentTime) {
     
-glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
+    // So now to render to the framebuffer texture instead of screen
+    glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,framebufferTexture,0);
 
-    glm::vec4 black = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f );
+    glm::vec4 black = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
     
-    glViewport(0, 0, windowWidth, windowHeight); // PICTURE WAS RESTRICTED TO BOTTOM LEFT CORNER, MULTIPLYING BY 2 SEEMED TO FIX THE ISSUE BUT I HAVE NO IDEA WHAT WENT WRONG
+    glViewport(0, 0, windowWidth, windowHeight); // Convert all our projected coordinates to screen coordinates for the texture
     glClearBufferfv(GL_COLOR, 0, &black[0]);
     static const GLfloat one = 1.0f;
     
@@ -25,11 +26,15 @@ glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     
-    glm::mat4 viewMatrix = glm::lookAt(cameraPos, // eye
-                                       cameraPos+cameraFront, // centre
-                                       glm::vec3(0.0f, 1.0f, 0.0f));// up
+    
+    // To create our camera, we use the lookAt function generate the viewMatrix
+    // It takes 3 inputs, the position of the camera, the point in space it is facing and which direction is up, so its orientated properly
+    glm::mat4 viewMatrix = glm::lookAt(cameraPos,                       // eye
+                                       cameraPos+cameraFront,           // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
+                                       glm::vec3(0.0f, 1.0f, 0.0f));    // up
     
     // Render each object
+    // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
     for(int n = 0;n<Objs.size();n++){
         Objs[n]->setupRender(proj_matrix,lights,cameraPos);
         Objs[n]->render(proj_matrix,viewMatrix,lights,cameraPos);
