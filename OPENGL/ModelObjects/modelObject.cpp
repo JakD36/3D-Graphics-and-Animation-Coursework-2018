@@ -14,23 +14,25 @@ modelObject::modelObject(){
 
 void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
+    shaderLoader* shaderInst = shaderLoader::getInstance();
+    
     program = glCreateProgram();                    // Create the program, for this model, to attach the shaders to
     
     // Load, compile and attach the provided to the program
-    string vs_text = readShader(vsPath);
+    string vs_text = shaderInst->readShader(vsPath);
     const char * vs_source = vs_text.c_str();
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vs, 1, &vs_source, NULL);
     glCompileShader(vs);
-    checkErrorShader(vs);
+    shaderInst->checkErrorShader(vs);
     glAttachShader(program, vs);
     
-    string fs_text = readShader(fsPath);
+    string fs_text = shaderInst->readShader(fsPath);
     const char * fs_source = fs_text.c_str();
     GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fs, 1, &fs_source, NULL);
     glCompileShader(fs);
-    checkErrorShader(fs);
+    shaderInst->checkErrorShader(fs);
     glAttachShader(program, fs);
     
     glGenVertexArrays(1,&vao);

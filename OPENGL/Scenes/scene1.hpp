@@ -1,0 +1,52 @@
+//
+//  scene1.hpp
+//  3D Graphics and Animation Coursework
+//
+//  Created by Jack Davidson on 19/05/2018.
+//  Copyright © 2018 Jack Davidson. All rights reserved.
+//
+
+#ifndef scene1_hpp
+#define scene1_hpp
+
+#include <stdio.h>
+#include "sceneGraph.hpp"
+
+class scene1: public sceneGraph{
+private:
+    // Objects to be added into the system
+    modelObjectSingle*       torchObj;
+    modelObjectSingle*       front;
+    modelObjectInst*         planks;
+    modelObjectSingle*       floor;
+    modelObjectInst*         wall;
+    modelObjectSingle*       back;
+    modelObjectSingle*       roof;
+    modelObjectInst*         beam;
+    modelObjectSingle*       bulb;
+    modelObjectSingle*       wire;
+    modelObjectSingle*       table;
+    modelObjectSingle*       lamp;
+    
+    // These are the details for the swinging light above the player, it is a pendulum
+    float lightRadius = 0.25f;          // The radius at which the light swings
+    float lightYaw = 0.0f;              // instantiate its yaw and give its initial yaw as 0
+    float lightPitch = -20.0f;          // instantiate its pitch and give its initial pitch of -20 so that it can start with a 0 velocity and still move
+    double          v = 0;              // instantiate the lights velocity and start it with 0, this way it starts moving as gravity starts pulling it down
+    
+    double          prevTime = 0;       // time at the previous frame
+    
+    
+    // This specifically is for the torch, attached to the player.
+    float sphereRadius = 0.4;                           // Its sitting 0.4 m away from the camera
+    float yawOffset = 30;                               // Its offset from the camera by the 30 degrees in the yaw
+    float pitchOffset = 20;                             // Its offset from the camera by the 20 degrees in the pitch
+
+public:
+    scene1();
+    virtual void update(double currentTime);
+    virtual void turnCamera(double xoffset, double yoffset);
+    virtual void usePrimary();
+    virtual void useSecondary();
+};
+#endif /* scene1_hpp */

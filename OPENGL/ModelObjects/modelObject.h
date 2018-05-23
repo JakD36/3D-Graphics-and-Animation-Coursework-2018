@@ -23,6 +23,8 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
+#include "shaderLoader.hpp"
+
 
 enum lightType {point,spot};    // Tells program if light is a point or spot light
 const int LIGHTSN = 4;          // Number of the lights in the scene, defines the length of the array
@@ -61,11 +63,9 @@ public:
     void initModel(string,string,string);           // initialise the modelObject with model and its shaders
     void initTexture(string);                       // provide texture for model
     bool load(string);                              // load and parse .obj file
-    void checkErrorShader(GLuint shader);           // Check if there is an error in the shader
-    string readShader(string fileName);             // Read from the shader file
     bool loadMat(string);                           // Load the material file, from the provided pathname string
     void setupRender(glm::mat4&, lightStruct[], glm::vec3&);    // Setup all the uniforms, so that the shaders can access the relevant info, when needed
-    virtual void render(glm::mat4&,glm::mat4&, lightStruct[], glm::vec3&) const =0; // virtual method, allows us to change the method later on.
+    virtual void render(glm::mat4&,glm::mat4&, lightStruct[], glm::vec3&) const = 0; // virtual method, allows us to change the method later on.
     // This way specifically doesnt provide a definition to the render method, turning the modelObject into an abstract Class
 };
 
