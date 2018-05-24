@@ -9,8 +9,8 @@
 #ifndef scene1_hpp
 #define scene1_hpp
 
-#include <stdio.h>
 #include "sceneGraph.hpp"
+#include "camera.hpp"
 
 class scene1: public sceneGraph{
 private:
@@ -45,8 +45,8 @@ private:
 public:
     scene1();
     virtual void update(double currentTime);
-    virtual void turnCamera(double xoffset, double yoffset);
     virtual void usePrimary();
     virtual void useSecondary();
+    virtual void turn(GLfloat yaw, GLfloat pitch);
 };
 #endif /* scene1_hpp */

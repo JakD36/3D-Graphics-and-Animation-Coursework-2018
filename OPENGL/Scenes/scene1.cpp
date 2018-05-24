@@ -29,7 +29,7 @@ scene1::scene1(){
     torchObj->loadMat("Resources/newTorch.mtl");
     Objs.push_back(torchObj); //Add objects to vector Objs to be rendered!
                               // This is the most important part, this allows us to just loop through that vector and render each one.
-    torchObj->position = sceneCamera.getPosition() + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
+    torchObj->position = playerPosition + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
     
     // Room
     
@@ -240,7 +240,7 @@ scene1::scene1(){
     // torch light
     lights[2].type = lightType::spot;
     lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
-    lights[2].direction = sceneCamera.getFront(); // its facing the same direction of the player
+    lights[2].direction = glm::vec3(0.0f,0.0f,1.0f); // its facing the same direction of the player
     lights[2].id = glm::vec3(7.0f,7.0f,7.0f);
     lights[2].is = glm::vec3(5.0f,5.0f,5.0f);
     
@@ -283,7 +283,7 @@ void scene1::update(double currentTime){
     wire->rotation.x = -lightPitch-90;
     
     
-    lights[2].position = sceneCamera.getPosition()+sceneCamera.getFront()/3.0f; // we can update the position of the torch light based on the direction of the camera
+    lights[2].position = playerPosition+glm::vec3(0.0f,0.0f,1.0f)/3.0f; // we can update the position of the torch light based on the direction of the camera
 }
 
 void scene1::usePrimary(){
@@ -305,14 +305,14 @@ void scene1::useSecondary(){
 }
 
 
-void scene1::turnCamera(double xoffset, double yoffset){
-    
-    sceneCamera.turnCamera(xoffset, yoffset);
-    
-    torchObj->position = sceneCamera.getPosition() + posOnSphere(sphereRadius, sceneCamera.getYaw()+yawOffset, sceneCamera.getPitch() - pitchOffset); // our torchs position is based off the camera position
+void scene1::turn(GLfloat yaw, GLfloat pitch){
 
 
-    torchObj->rotation.x = -sceneCamera.getPitch();       // Torch seems to be backwards in its model so has to have its pitch rotated the other way
-    torchObj->rotation.y = sceneCamera.getYaw();
-    lights[2].direction = sceneCamera.getFront(); // the light from the torch just goes where we are looking
+    torchObj->position = playerPosition + posOnSphere(sphereRadius, yaw+yawOffset, pitch-pitchOffset); // our torchs position is based off the camera position
+
+
+    torchObj->rotation.x = -pitch;       // Torch seems to be backwards in its model so has to have its pitch rotated the other way
+    torchObj->rotation.y = yaw;
+    lights[2].direction = posOnSphere(1, yaw, pitch); // the light from the torch just goes where we are looking
 }
+

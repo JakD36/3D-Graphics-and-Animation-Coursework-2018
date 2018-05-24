@@ -17,15 +17,19 @@
 #include <stdio.h>
 
 #include "sceneGraph.hpp"
+#include "camera.hpp"
+#include "renderer.hpp"
 
 class controller{
 protected:
     sceneGraph* model;
+    renderer* view;
     GLfloat sensitivity;
     double lastX = 0, lastY = 0;
+    GLfloat yaw = 0, pitch = 0;
     bool keyStatus[1024] = {false};  // Stores if the keys have been presed or not
 public:
-    controller(GLFWwindow* window, sceneGraph* model);
+    controller(GLFWwindow* window, sceneGraph* model, renderer* view);
     
     void setSensitivity(GLfloat sensitivity);
     GLfloat getSensitivity();

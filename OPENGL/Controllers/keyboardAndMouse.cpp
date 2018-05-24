@@ -8,7 +8,7 @@
 
 #include "keyboardAndMouse.hpp"
 
-keyboardAndMouse::keyboardAndMouse(GLFWwindow* window, sceneGraph* scene ):controller(window,scene){
+keyboardAndMouse::keyboardAndMouse(GLFWwindow* window, sceneGraph* model, renderer* view):controller(window,model,view){
         glfwGetCursorPos(window, &lastX, &lastY);        // Need to call this to get the position of the cursor upon starting the application, as we cannot assume its position, otherwise we get weird jumps in the camera
 }
 
@@ -33,7 +33,14 @@ void keyboardAndMouse::onMouseMove(GLFWwindow* window, double x, double y){
     
     xoffset *= sensitivity; yoffset *= sensitivity; // We can reduce the speed of the movement by multiplying by the fraction sensitivity, increasing this fraction will speed up movement
     
-    model->turnCamera(xoffset, yoffset);
+    yaw += xoffset; pitch += yoffset;               // add the modified offset to the yaw or pitch angles to get the new angle
+    
+    // check for pitch out of bounds otherwise screen gets flipped
+    if (pitch > 89.0f) pitch = 89.0f; if (pitch < -89.0f) pitch = -89.0f;
+    
+    model->turn(yaw, pitch);
+    view->getCamera()->turnCamera(yaw, pitch);
+    
 }
 
 

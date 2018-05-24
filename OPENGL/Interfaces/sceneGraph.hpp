@@ -19,7 +19,6 @@
 #include "modelObject.h"
 #include "modelObjectSingle.h"
 #include "modelObjectInst.h"
-#include "camera.hpp"
 #include <vector>
 
 class sceneGraph{
@@ -27,10 +26,9 @@ protected:
     // Other variables!
     lightStruct lights[LIGHTSN];// Creates our array of lightStructs to store details on all the lights in the scene.
     vector<modelObject*> Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
-    camera sceneCamera;
     
     // Do we have objects that are global to the game
-    
+    glm::vec3 playerPosition;
 public:
     sceneGraph();
     
@@ -38,7 +36,6 @@ public:
     virtual void update(double currentTime) = 0;
     
     vector<modelObject*> getObjs();
-    camera getCamera();
     
     
     glm::vec3 posOnSphere(float radius,float yaw,float pitch);
@@ -51,7 +48,8 @@ public:
     */
     virtual void usePrimary() = 0;
     virtual void useSecondary() = 0;
-    virtual void turnCamera(double xoffset, double yoffset);
+    virtual void turn(GLfloat yaw, GLfloat pitch) = 0;
+    glm::vec3 getPlayerPosition();
     
 };
 

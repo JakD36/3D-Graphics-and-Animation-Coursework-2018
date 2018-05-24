@@ -28,12 +28,7 @@ GLfloat camera::getPitch(){
     return pitch;
 }
 
-void camera::turnCamera(double xoffset, double yoffset){
-    yaw += xoffset; pitch += yoffset;               // add the modified offset to the yaw or pitch angles to get the new angle
-    
-    // check for pitch out of bounds otherwise screen gets flipped
-    if (pitch > 89.0f) pitch = 89.0f; if (pitch < -89.0f) pitch = -89.0f;
-    
+void camera::turnCamera(GLfloat yaw, GLfloat pitch){
     
     cameraFront = glm::normalize(posOnSphere(1, yaw, pitch)); // so here we use pos on sphere to get the direction the camera is facing
                                                               // and normalise the resulting vector so we just have the unit vector

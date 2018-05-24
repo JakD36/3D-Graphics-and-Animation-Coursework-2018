@@ -29,7 +29,7 @@ public:
     GLfloat getPitch();
     void setPosition(glm::vec3 newPosition);
     void setFront(glm::vec3 newDirection);
-    void turnCamera(double xoffset, double yoffset);
+    void turnCamera(GLfloat yaw, GLfloat pitch);
     glm::vec3 posOnSphere(float radius,float yaw,float pitch);
 };
 

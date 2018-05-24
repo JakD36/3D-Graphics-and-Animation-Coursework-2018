@@ -15,6 +15,7 @@
 		041E17D020B05B9E002DE9F3 /* shaderLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041E17C820B05B9E002DE9F3 /* shaderLoader.cpp */; };
 		041E17D520B063C2002DE9F3 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041E17D320B063C2002DE9F3 /* controller.cpp */; };
 		041E17DB20B0672D002DE9F3 /* scene1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041E17D920B0672D002DE9F3 /* scene1.cpp */; };
+		045252A120B5C4EE00916340 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0452529F20B5C4EE00916340 /* renderer.cpp */; };
 		0455CBDB20B441E600864F35 /* keyboardAndMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0455CBD920B441E600864F35 /* keyboardAndMouse.cpp */; };
 		0455CBE020B4C62800864F35 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0455CBDE20B4C62800864F35 /* camera.cpp */; };
 		04972FAF1F72A47E00BAC6A4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04972FAE1F72A47E00BAC6A4 /* OpenGL.framework */; };
@@ -132,6 +133,8 @@
 		041E17D920B0672D002DE9F3 /* scene1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scene1.cpp; sourceTree = "<group>"; };
 		041E17DA20B0672D002DE9F3 /* scene1.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = scene1.hpp; sourceTree = "<group>"; };
 		042419B91F6C8363002C2D67 /* 3D Graphics and Animation Coursework */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "3D Graphics and Animation Coursework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0452529F20B5C4EE00916340 /* renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
+		045252A020B5C4EE00916340 /* renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
 		0455CBD920B441E600864F35 /* keyboardAndMouse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyboardAndMouse.cpp; sourceTree = "<group>"; };
 		0455CBDA20B441E600864F35 /* keyboardAndMouse.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = keyboardAndMouse.hpp; sourceTree = "<group>"; };
 		0455CBDE20B4C62800864F35 /* camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
@@ -280,8 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				041E177E20B05B9E002DE9F3 /* main.cpp */,
-				0455CBDE20B4C62800864F35 /* camera.cpp */,
-				0455CBDF20B4C62800864F35 /* camera.hpp */,
+				045252A220B61B2600916340 /* Views */,
 				041E17DC20B06744002DE9F3 /* Scenes */,
 				0455CBDC20B441F900864F35 /* Interfaces */,
 				0455CBDD20B4421500864F35 /* Controllers */,
@@ -291,6 +293,17 @@
 				041E17C620B05B9E002DE9F3 /* Singletons */,
 			);
 			path = OPENGL;
+			sourceTree = "<group>";
+		};
+		045252A220B61B2600916340 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0455CBDE20B4C62800864F35 /* camera.cpp */,
+				0455CBDF20B4C62800864F35 /* camera.hpp */,
+				0452529F20B5C4EE00916340 /* renderer.cpp */,
+				045252A020B5C4EE00916340 /* renderer.hpp */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0455CBDC20B441F900864F35 /* Interfaces */ = {
@@ -388,6 +401,7 @@
 				041E17CD20B05B9E002DE9F3 /* modelObject.cpp in Sources */,
 				041E17CE20B05B9E002DE9F3 /* modelObjectSingle.cpp in Sources */,
 				0455CBDB20B441E600864F35 /* keyboardAndMouse.cpp in Sources */,
+				045252A120B5C4EE00916340 /* renderer.cpp in Sources */,
 				041E17DB20B0672D002DE9F3 /* scene1.cpp in Sources */,
 				0455CBE020B4C62800864F35 /* camera.cpp in Sources */,
 				041E17C920B05B9E002DE9F3 /* sceneGraph.cpp in Sources */,

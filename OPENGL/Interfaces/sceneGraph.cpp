@@ -10,7 +10,7 @@
 
 
 sceneGraph::sceneGraph(){
-    
+    playerPosition = glm::vec3(0.0f,1.6f,0.0f);
 }
 
 vector<modelObject*> sceneGraph::getObjs(){
@@ -36,10 +36,6 @@ lightStruct* sceneGraph::getLights(){
     return lights;
 }
 
-void sceneGraph::turnCamera(double xoffset, double yoffset){
-    sceneCamera.turnCamera(xoffset,yoffset);
-}
-
-camera sceneGraph::getCamera(){
-    return sceneCamera;
+glm::vec3 sceneGraph::getPlayerPosition(){
+    return playerPosition;
 }

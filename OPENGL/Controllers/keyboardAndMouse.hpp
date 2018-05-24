@@ -17,7 +17,7 @@ protected:
     bool keyStatus[1024] = {false};  // Stores if the keys have been presed or not
     double lastX = 0, lastY = 0;        // position of mouse on screen in x and y for the last frame
 public:
-    keyboardAndMouse(GLFWwindow* window, sceneGraph* scene );
+    keyboardAndMouse(GLFWwindow* window, sceneGraph* model, renderer* view);
     
     virtual void onKey(GLFWwindow* window, int key, int scancode, int action, int mods);
     virtual void onMouseMove(GLFWwindow* window, double x, double y);
