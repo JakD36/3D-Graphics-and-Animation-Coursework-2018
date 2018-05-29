@@ -27,7 +27,7 @@ scene1::scene1(){
     torchObj->initModel("Resources/newTorch.obj","Shaders/vs.glsl","Shaders/fs.glsl");
     torchObj->initTexture("Resources/newTorchCol.ktx");
     torchObj->loadMat("Resources/newTorch.mtl");
-//    Objs.push_back(torchObj); //Add objects to vector Objs to be rendered!
+    Objs.push_back(torchObj); //Add objects to vector Objs to be rendered!
                               // This is the most important part, this allows us to just loop through that vector and render each one.
     torchObj->position = playerPosition + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
     
