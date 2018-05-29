@@ -14,7 +14,7 @@ void modelObjectInst::add(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale)
     this->scale.push_back(scale);
 }
 
-void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera) const{
+void modelObjectInst::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera){
     // This differs slightly from the code to render a single model object as it requires going through each instance in a for loop
     for(int i = 0;i<position.size();i++) {        
         glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f),position[i]);    // Initiate the model matrix as a 4x4 identity matrix

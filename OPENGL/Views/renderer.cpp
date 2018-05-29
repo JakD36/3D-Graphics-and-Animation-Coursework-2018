@@ -8,22 +8,54 @@
 
 #include "renderer.hpp"
 
-renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* myCamera, int windowWidth, int windowHeight){
+// Return the camera for use outwith this object, to set/get camera position.
+camera* renderer::getCamera(){
+    return viewCamera;
+}
+
+// Viewports just being left as standard for now as they are not working as expected on high DPI screens
+//void renderer::setViewport(float x, float y, float width, float height){
+//    viewportX = x;
+//    viewportY = y;
+//    viewportWidth = width;
+//    viewportHeight = height;
+//
+//    // Calculate proj_matrix for the first time.
+//    aspect = (float)width / (float)height;
+//    proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
+//}
+
+void renderer::setWindowDimensions(int windowWidth, int windowHeight){
     this->windowWidth = windowWidth;
     this->windowHeight = windowHeight;
-    this->window = window;
+    
+    
+    // Update viewport so its size is appropriate for the new window!
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+//    setViewport(width,height);
+    aspect = (float)width / (float)height;
+    proj_matrix = glm::perspective(glm::radians(50.0f),aspect,0.1f,1000.0f);
+}
+
+
+// Initialise the renderer for this viewport
+renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
+    // Assign the variables to the object
     this->scene = scene;
-    this->myCamera = myCamera;
+    this->viewCamera = viewCamera;
+    this->window = window;
     
-    
-    viewportX = 0;
-    viewportY = 0;
-    viewportWidth = windowWidth;
-    viewportHeight = windowHeight;
+    // Grab the window dimensions for the current window, saves passing too many arguments to the constructor
+    glfwGetWindowSize(window, &windowWidth, &windowHeight);
     
     // Calculate proj_matrix for the first time.
     aspect = (float)windowWidth / (float)windowHeight;
     proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
+    
+    // On high DPI, there are a higher number of pixels in the window than the length of the window, so we need to use the frameWidth and height,
+    int frameWidth, frameHeight;
+    glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
@@ -40,7 +72,7 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* myCamera, int 
     
     glBindTexture(GL_TEXTURE_2D, framebufferTexture);
     
-    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,windowWidth,windowHeight,0,GL_RGB,GL_UNSIGNED_BYTE,0);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,frameWidth,frameHeight,0,GL_RGB,GL_UNSIGNED_BYTE,0);
     
     // filtering needed - future lecture
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -49,9 +81,10 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* myCamera, int 
     // Depth buffer texture    - Need to attach depth too otherwise depth testing will not be performed.
     glGenRenderbuffers(1, &depthbuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, depthbuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowWidth, windowHeight);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, frameWidth, frameHeight);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthbuffer);
     
+    // The creates a polygon that the image will be rendered to on first pass
     displayVertices.push_back(glm::vec2(-1.0f, 1.0f));
     displayVertices.push_back(glm::vec2(-1.0f,-1.0f));
     displayVertices.push_back(glm::vec2( 1.0f,-1.0f));
@@ -79,7 +112,6 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* myCamera, int 
                  &displayUvs[0],
                  GL_STATIC_DRAW);
     
-    
     glGenVertexArrays(1,&displayVao);
     glBindVertexArray(displayVao);
     glVertexAttribPointer(0, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
@@ -87,7 +119,7 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* myCamera, int 
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
     
-    //load shaders
+    //load shaders, for the framebuffer operations
     displayProgram = glCreateProgram();
     
     shaderLoader* shaderInst = shaderLoader::getInstance();
@@ -121,8 +153,16 @@ void renderer::render(){
     
     glm::vec4 black = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
     
-//    glViewport(viewportX, viewportY, viewportWidth, viewportHeight); // Convert all our projected coordinates to screen coordinates for the texture
-    glViewport(0.0f, 0.0f, windowWidth, windowHeight);
+    
+    int frameWidth, frameHeight;//, frameLeft, frameRight, frameBottom, frameTop;
+//    glfwGetWindowFrameSize(window, &frameLeft, &frameTop, &frameRight, &frameBottom);
+//    frameWidth = frameRight - frameLeft;
+//    frameHeight = frameTop - frameBottom;
+    
+        glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
+    // Convert all our projected coordinates to screen coordinates for the texture
+    glViewport(0.0f, 0.0f, frameWidth, frameHeight);
+    
     glClearBufferfv(GL_COLOR, 0, &black[0]);
     static const GLfloat one = 1.0f;
     
@@ -132,12 +172,12 @@ void renderer::render(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     
-    glm::vec3 camPosition = myCamera->getPosition();
+    glm::vec3 camPosition = viewCamera->getPosition();
     
     // To create our camera, we use the lookAt function generate the viewMatrix
     // It takes 3 inputs, the position of the camera, the point in space it is facing and which direction is up, so its orientated properly
     glm::mat4 viewMatrix = glm::lookAt(camPosition,                       // eye
-                                       camPosition+myCamera->getFront(),           // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
+                                       camPosition+viewCamera->getFront(),           // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
                                        glm::vec3(0.0f, 1.0f, 0.0f));    // up
     
     // Render each object
@@ -151,17 +191,21 @@ void renderer::render(){
     
     
     for(int n = 0;n<Objs.size();n++){
-        Objs[n]->setupRender(proj_matrix,lights,camPosition);
+        Objs[n]->setupRender(proj_matrix,lights,camPosition); 
         Objs[n]->render(proj_matrix,viewMatrix,lights,camPosition);
     }
     
     // SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-//    glViewport(-windowWidth*2, -windowHeight*2, windowWidth*4, windowHeight*4);
-    glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+    
+    
+    // apparently the issue causing this, is due to the framebuffer being larger than the window size on high resolution screens so need to scale the width and height by the framebuffer size
+    glViewport(-frameWidth,-frameHeight, (GLsizei)frameWidth*2 ,(GLsizei)frameHeight*2); // Workaround to display full screen, no idea how to fix it properly
+//        glViewport(0,0, (GLsizei)frameWidth ,(GLsizei)frameHeight); // Workaround to display full screen, no idea how to fix it properly
+    
     
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT);
+    // glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST); //not needed as we are just displaying a single quad
     glUseProgram(displayProgram);
     glBindVertexArray(displayVao);
@@ -171,19 +215,4 @@ void renderer::render(){
     glBindVertexArray(0);
     
     
-}
-
-camera* renderer::getCamera(){
-    return myCamera;
-}
-
-void renderer::setViewport(float x, float y, float width, float height){
-    viewportX = x;
-    viewportY = y;
-    viewportWidth = width;
-    viewportHeight = height;
-    
-    // Calculate proj_matrix for the first time.
-    aspect = (float)width / (float)height;
-    proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
 }

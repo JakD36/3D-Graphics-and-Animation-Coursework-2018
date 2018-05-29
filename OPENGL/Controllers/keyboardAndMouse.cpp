@@ -8,8 +8,7 @@
 
 #include "keyboardAndMouse.hpp"
 
-keyboardAndMouse::keyboardAndMouse(GLFWwindow* window, sceneGraph* model, renderer* view):controller(window,model,view){
-        glfwGetCursorPos(window, &lastX, &lastY);        // Need to call this to get the position of the cursor upon starting the application, as we cannot assume its position, otherwise we get weird jumps in the camera
+keyboardAndMouse::keyboardAndMouse(GLFWwindow* window, sceneGraph* model, renderer* view): controller(window,model,view){
 }
 
 void keyboardAndMouse::onKey(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -39,17 +38,19 @@ void keyboardAndMouse::onMouseMove(GLFWwindow* window, double x, double y){
     if (pitch > 89.0f) pitch = 89.0f; if (pitch < -89.0f) pitch = -89.0f;
     
     model->turn(yaw, pitch);
-    view->getCamera()->turnCamera(yaw, pitch);
+    view->getCamera()->setDirection(yaw, pitch);
     
 }
 
 
 void keyboardAndMouse::onMouseButton(GLFWwindow* window, int button, int action, int mods){
+    // On left click activate primary action
     if(button == GLFW_MOUSE_BUTTON_LEFT){
         if(action == GLFW_PRESS){
             model->usePrimary();
         }
     }
+    // On right click activate secondary action
     if(button == GLFW_MOUSE_BUTTON_RIGHT){
         if(action == GLFW_PRESS){
             model->useSecondary();
@@ -58,5 +59,5 @@ void keyboardAndMouse::onMouseButton(GLFWwindow* window, int button, int action,
 }
 
 void keyboardAndMouse::onMouseWheel(GLFWwindow* window, double xoffset, double yoffset){
-    
+    // Blank as this does nothing
 }

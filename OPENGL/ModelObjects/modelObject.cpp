@@ -14,11 +14,12 @@ modelObject::modelObject(){
 
 void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
-    shaderLoader* shaderInst = shaderLoader::getInstance();
+    shaderLoader* shaderInst = shaderLoader::getInstance(); // Get the instance of the singleton to load the shader
     
     program = glCreateProgram();                    // Create the program, for this model, to attach the shaders to
     
     // Load, compile and attach the provided to the program
+    // Vertex shader
     string vs_text = shaderInst->readShader(vsPath);
     const char * vs_source = vs_text.c_str();
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -27,6 +28,7 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     shaderInst->checkErrorShader(vs);
     glAttachShader(program, vs);
     
+    // Fragment shader
     string fs_text = shaderInst->readShader(fsPath);
     const char * fs_source = fs_text.c_str();
     GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
@@ -38,27 +40,35 @@ void modelObject::initModel(string objPath,string vsPath,string fsPath){
     glGenVertexArrays(1,&vao);
     glBindVertexArray(vao);
     
-    glGenBuffers(3,buffer);
-    // Generate the buffer to store the vertices, uvs and normals
+    
+    
+    glGenBuffers(3,buffer); // Generate the buffer to store the vertices, uvs and normals
     glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
     
+//     TODO: Could move object loading to a singleton, save it being part of the model class
     load(objPath); // Get the vertices, uvs and normals from the .obj files
-    cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
+    
+    // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
+//    cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
+    
+    
     glBufferData(GL_ARRAY_BUFFER,                       // store the vertices in the first part of the buffer
                  out_vertices.size()*sizeof(glm::vec3), // vertices size * size of vec3 tells us how much space in the buffer to allocate
                  &out_vertices[0],                      // Where to start in the vertices vector
                  GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(0);
+    
     // Do the same for uvs
     glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
     glBufferData(GL_ARRAY_BUFFER,
-                 out_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates
+                 out_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates, so use size of vec2 for space allocation
                  &out_uvs[0],
                  GL_STATIC_DRAW);
     
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
+    
     // Same again for normals
     glBindBuffer(GL_ARRAY_BUFFER, buffer[2]);
     glBufferData(GL_ARRAY_BUFFER,
@@ -114,16 +124,22 @@ void modelObject::initTexture(string texPath){
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
+// End of code taken from lectures!
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
+ Reads the file provided, to extract the material properties for the object
+ 
+*/
 bool modelObject::loadMat(string name){
-    FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
-    int result;         // for taking output of fscanf function
-    char line[256];
-    pfile = fopen(name.c_str(),"r"); // open the file with read access
+    FILE* pfile = NULL;                 // using stdio and fscanf which means formatted scan file
+    int result;                         // for taking output of fscanf function
+    char line[256];                     // Line limited to 256 characters, more than enough space
+    
+    pfile = fopen(name.c_str(),"r");    // open the file with read access
     
     if(pfile == NULL){ // if the file doesnt open when using fopen
         cout<<"Could not find file >> "<<name<<endl; // print error and name of file that failed to open
@@ -133,29 +149,33 @@ bool modelObject::loadMat(string name){
         do{ // if file does open loop through each line of the file while EOF has not been reached
             result = fscanf(pfile,"%s",line); // %s refers to keep scanning until first whitespace
             // we can then compare the first section of text to the different headers for each line
-            if(strcmp(line,"Ka") == 0){
+            if(strcmp(line,"Ka") == 0){     // The materials reflectivity constant for ambient light
                 fscanf(pfile,"%f %f %f\n",&ka.r,&ka.g,&ka.b);
                 // line will be in format of %f %f %f\n ie three floats seperated by spaces
             }
-            else if(strcmp(line,"Kd") == 0){
+            else if(strcmp(line,"Kd") == 0){ // The materials reflectivity constant for diffused light
                 fscanf(pfile,"%f %f %f\n",&kd.r,&kd.g,&kd.b);
             }
-            else if(strcmp(line,"Ks") == 0){
+            else if(strcmp(line,"Ks") == 0){ // The materials reflectivity constant for specular light
                 fscanf(pfile,"%f %f %f\n",&ks.r,&ks.g,&ks.b);
             }
-            else if(strcmp(line,"Ni") == 0){
+            else if(strcmp(line,"Ni") == 0){ // The materials shininess indices for the specular lighting
                 fscanf(pfile,"%f\n",&shininess);
             }
-        } while (result != EOF);
-        return true;
+        } while (result != EOF); // end loop when End Of File has been reached
+        return true; // Return to true to show the file did open successfully
     }
 }
 
-
+/*
+ Set up the object to be rendered
+*/
 void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::vec3& camera){
     // For each model Object
     glUseProgram(program);
     glBindVertexArray(vao);
+    
+    // Pass projection matrix through to the shaders through the uniforms
     glUniformMatrix4fv(glGetUniformLocation(program,"proj_matrix"), 1, GL_FALSE, &proj_matrix[0][0]);
     // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
     
@@ -163,20 +183,29 @@ void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture[0]);
-    glUniform1i(glGetUniformLocation(program,"tex"), 0);
-    glUniform4f(glGetUniformLocation(program,"viewPosition"),camera.x,camera.y,camera.z,1.0f);
-    glUniform4f(glGetUniformLocation(program, "ia"), lightStruct::ia.r, lightStruct::ia.g, lightStruct::ia.b, 1.0f);
-    glUniform3f(glGetUniformLocation(program, "ka"), ka.r,ka.g,ka.b);
-    glUniform3f(glGetUniformLocation(program, "kd"), kd.r,kd.g,kd.b);
-    glUniform3f(glGetUniformLocation(program, "ks"), ks.r,ks.g,ks.b);
-    glUniform1f(glGetUniformLocation(program, "shininess"), shininess);
-    glUniform1f(glGetUniformLocation(program,"lightConstant"),0.25f);       // Constant used for attenuation
-    glUniform1f(glGetUniformLocation(program,"lightLinear"),0.7f);          // Constant used for attenuation
-    glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);       // Constant used for attenuation
+    
+    // Pass a number of values through to the shaders through the uniforms
+    glUniform1i(glGetUniformLocation(program,"tex"), 0);                    // The texture
+    glUniform4f(glGetUniformLocation(program,"viewPosition"),camera.x,camera.y,camera.z,1.0f); // The camera position
+    glUniform4f(glGetUniformLocation(program, "ia"), lightStruct::ia.r, lightStruct::ia.g, lightStruct::ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
+    glUniform3f(glGetUniformLocation(program, "ka"), ka.r,ka.g,ka.b); // The material materials ambient reflectivity constant
+    glUniform3f(glGetUniformLocation(program, "kd"), kd.r,kd.g,kd.b); // The material materials diffused reflectivity constant
+    glUniform3f(glGetUniformLocation(program, "ks"), ks.r,ks.g,ks.b); // The material materials specular reflectivity constant
+    glUniform1f(glGetUniformLocation(program, "shininess"), shininess); // The materials shininess indices
+    glUniform1f(glGetUniformLocation(program,"lightConstant"),0.25f);       // Constant used for attenuation, taken from lecture notes
+    glUniform1f(glGetUniformLocation(program,"lightLinear"),0.7f);          // Constant used for attenuation, taken from lecture notes
+    glUniform1f(glGetUniformLocation(program,"lightQuadratic"),1.0f);       // Constant used for attenuation, taken from lecture notes
 
     
-    // Loop through each of the lights and provide the necessary information to the shader
+    // Loop through each of the lights and provide the necessary information to the shader through the uniforms
     for(int n = 0;n<LIGHTSN;n++){
+        /*
+         Need to pass each piece of information in seperately, so that the shaders can read it
+         The name of each element is constructed as follows
+         lights[#].KEY
+         where the # is the number of that light
+         and the KEY is the information wanted for that light, such as on, type, lightPosition
+        */
         glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].on").c_str()),lights[n].lightOn);
         glUniform1i(glGetUniformLocation(program,("lights["+to_string(n)+"].type").c_str()),lights[n].type);
         glUniform4f(glGetUniformLocation(program,
@@ -192,6 +221,11 @@ void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::
         
         glUniform4f(glGetUniformLocation(program,("lights["+to_string(n)+"].is").c_str()),lights[n].is.r,lights[n].is.g,lights[n].is.b,1.0f);
     }
+    
+    /*
+     This is the same for all model Objects, so this is contained within the modelObject abstract class,
+     To render the object, call this method followed by the render method that is implemented in subclasses.
+    */
 }
 
 

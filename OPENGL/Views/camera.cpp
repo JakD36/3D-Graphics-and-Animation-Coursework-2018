@@ -8,17 +8,27 @@
 
 #include "camera.hpp"
 
+// Constructors
 camera::camera(){
-    cameraFront = glm::vec3(0.0f,0.0f,1.0f);  // the direction the camera is facing
-    cameraPos = glm::vec3(0.0f,1.6f,0.0f);    // The cameras position in the world space
+    position = glm::vec3(0.0f,1.6f,0.0f);    // The cameras position in the world space
+    yaw = 0; pitch = 0;
+    front = posOnSphere(1, yaw, pitch);
 }
 
+camera::camera(glm::vec3 position, GLfloat yaw, GLfloat pitch){
+    this->position = position;
+    this->yaw; this->pitch = pitch;
+    front = posOnSphere(1, yaw, pitch);
+}
+
+
+// Accessors
 glm::vec3 camera::getPosition(){
-    return cameraPos;
+    return position;
 }
 
 glm::vec3 camera::getFront(){
-    return cameraFront;
+    return front;
 }
 
 GLfloat camera::getYaw(){
@@ -28,17 +38,25 @@ GLfloat camera::getPitch(){
     return pitch;
 }
 
-void camera::turnCamera(GLfloat yaw, GLfloat pitch){
-    
-    cameraFront = glm::normalize(posOnSphere(1, yaw, pitch)); // so here we use pos on sphere to get the direction the camera is facing
-                                                              // and normalise the resulting vector so we just have the unit vector
+
+
+// Modifiers
+void camera::setPosition(glm::vec3 newPosition){
+    this->position = newPosition;
 }
 
+void camera::setDirection(GLfloat yaw, GLfloat pitch){
+    front = glm::normalize(posOnSphere(1, yaw, pitch)); // so here we use pos on sphere to get the direction the camera is facing
+                                                              // and normalise the resulting vector to make sure we just have the unit vector
+}
+
+
+// Calculate the cartesian vector from the spherical coordinates
 glm::vec3 camera::posOnSphere(float radius,float yaw,float pitch){
-    glm::vec3 pos;
-    pos.x = radius* sin( glm::radians(yaw) ) * cos(glm::radians(pitch) );
-    pos.y = radius* sin( glm::radians(pitch) );
-    pos.z = radius* cos( glm::radians(yaw) ) * cos(glm::radians(pitch) );
+    glm::vec3 pos; // initialise the vector to be returned as (0,0,0)
+    pos.x = radius * sin( glm::radians(yaw) ) * cos(glm::radians(pitch) );
+    pos.y = radius * sin( glm::radians(pitch) );
+    pos.z = radius * cos( glm::radians(yaw) ) * cos(glm::radians(pitch) );
     
     return pos;
 }

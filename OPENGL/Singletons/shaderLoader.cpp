@@ -8,7 +8,7 @@
 
 #include "shaderLoader.hpp"
 
-shaderLoader::shaderLoader(){
+shaderLoader::shaderLoader(){ // Default constructor!
 }
 
 shaderLoader* shaderLoader::getInstance(){
@@ -23,6 +23,7 @@ string shaderLoader::readShader(string fileName) {
     string output ="";          // String we will read each individual line of the shader too
     string wholeCode ="";       // We can append each line to this string so that the entire shader can be output,
     file.open(fileName);        // Open the provided shader file
+    
     if(!file){                  // Check if the file opened
         cout<<"Could not find file >> "<<fileName<<endl;
     }
@@ -32,6 +33,7 @@ string shaderLoader::readShader(string fileName) {
             //cout << output << endl;
         }
     }
+    
     file.close();               // Once finished reading the shader close the file
     
     return wholeCode;           // Output the code
@@ -57,4 +59,10 @@ void shaderLoader::checkErrorShader(GLuint shader) {
         cout << errorLog.data();
     }
 }
+
+// End of code taken from lectures.
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 

@@ -14,6 +14,7 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
 #include <gli/gli.hpp>
+
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -21,6 +22,10 @@
 
 using namespace std;
 
+/*
+ shaderLoader is a singleton to prevent, multiple shader loaders being instantiated across the different objects.
+ Uses lazy instantiation, so not to take up any space until it is required.
+*/
 class shaderLoader{
 private:
     shaderLoader(); // Constructor needs to be private so can only create it through the getInstance method

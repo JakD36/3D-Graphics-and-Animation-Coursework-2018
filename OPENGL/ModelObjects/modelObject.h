@@ -65,7 +65,8 @@ public:
     bool load(string);                              // load and parse .obj file
     bool loadMat(string);                           // Load the material file, from the provided pathname string
     void setupRender(glm::mat4&, lightStruct[], glm::vec3&);    // Setup all the uniforms, so that the shaders can access the relevant info, when needed
-    virtual void render(glm::mat4&,glm::mat4&, lightStruct[], glm::vec3&) const = 0; // virtual method, allows us to change the method later on.
+    
+    virtual void render(glm::mat4&,glm::mat4&, lightStruct[], glm::vec3&) = 0; // virtual method, allows us to change the method later on.
     // This way specifically doesnt provide a definition to the render method, turning the modelObject into an abstract Class
 };
 

@@ -162,11 +162,11 @@
 			isa = PBXGroup;
 			children = (
 				041E178020B05B9E002DE9F3 /* vs_display.glsl */,
+				041E178520B05B9E002DE9F3 /* fs_display.glsl */,
 				041E178120B05B9E002DE9F3 /* vs.glsl */,
 				041E178220B05B9E002DE9F3 /* fs.glsl */,
 				041E178320B05B9E002DE9F3 /* vs_light.glsl */,
 				041E178420B05B9E002DE9F3 /* fs_light.glsl */,
-				041E178520B05B9E002DE9F3 /* fs_display.glsl */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -174,12 +174,12 @@
 		041E178620B05B9E002DE9F3 /* ModelObjects */ = {
 			isa = PBXGroup;
 			children = (
-				041E178720B05B9E002DE9F3 /* modelObjectInst.h */,
+				041E178B20B05B9E002DE9F3 /* modelObject.cpp */,
 				041E178820B05B9E002DE9F3 /* modelObject.h */,
 				041E178920B05B9E002DE9F3 /* modelObjectInst.cpp */,
-				041E178A20B05B9E002DE9F3 /* modelObjectSingle.h */,
-				041E178B20B05B9E002DE9F3 /* modelObject.cpp */,
+				041E178720B05B9E002DE9F3 /* modelObjectInst.h */,
 				041E178C20B05B9E002DE9F3 /* modelObjectSingle.cpp */,
+				041E178A20B05B9E002DE9F3 /* modelObjectSingle.h */,
 			);
 			path = ModelObjects;
 			sourceTree = "<group>";
@@ -256,6 +256,8 @@
 		041E17DC20B06744002DE9F3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				041E177920B05B9D002DE9F3 /* sceneGraph.cpp */,
+				041E178E20B05B9E002DE9F3 /* sceneGraph.hpp */,
 				041E17D920B0672D002DE9F3 /* scene1.cpp */,
 				041E17DA20B0672D002DE9F3 /* scene1.hpp */,
 			);
@@ -283,14 +285,13 @@
 			isa = PBXGroup;
 			children = (
 				041E177E20B05B9E002DE9F3 /* main.cpp */,
-				045252A220B61B2600916340 /* Views */,
 				041E17DC20B06744002DE9F3 /* Scenes */,
-				0455CBDC20B441F900864F35 /* Interfaces */,
 				0455CBDD20B4421500864F35 /* Controllers */,
 				041E178620B05B9E002DE9F3 /* ModelObjects */,
-				041E178F20B05B9E002DE9F3 /* Resources */,
-				041E177F20B05B9E002DE9F3 /* Shaders */,
+				045252A220B61B2600916340 /* Views */,
 				041E17C620B05B9E002DE9F3 /* Singletons */,
+				041E177F20B05B9E002DE9F3 /* Shaders */,
+				041E178F20B05B9E002DE9F3 /* Resources */,
 			);
 			path = OPENGL;
 			sourceTree = "<group>";
@@ -306,20 +307,11 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		0455CBDC20B441F900864F35 /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-				041E177920B05B9D002DE9F3 /* sceneGraph.cpp */,
-				041E178E20B05B9E002DE9F3 /* sceneGraph.hpp */,
-				041E17D320B063C2002DE9F3 /* controller.cpp */,
-				041E17D420B063C2002DE9F3 /* controller.hpp */,
-			);
-			path = Interfaces;
-			sourceTree = "<group>";
-		};
 		0455CBDD20B4421500864F35 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				041E17D320B063C2002DE9F3 /* controller.cpp */,
+				041E17D420B063C2002DE9F3 /* controller.hpp */,
 				0455CBD920B441E600864F35 /* keyboardAndMouse.cpp */,
 				0455CBDA20B441E600864F35 /* keyboardAndMouse.hpp */,
 			);

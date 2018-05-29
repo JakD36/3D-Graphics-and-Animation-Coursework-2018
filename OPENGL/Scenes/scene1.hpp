@@ -12,9 +12,16 @@
 #include "sceneGraph.hpp"
 #include "camera.hpp"
 
+
+/*
+ The first scene of this project,
+ by inheriting from the sceneGraph abstract can have multiple scenes in the project and swap the scenes out by instantiating an object of the
+ new scene and providing a pointer to the scene to the renderer object.
+*/
 class scene1: public sceneGraph{
 private:
-    // Objects to be added into the system
+    
+    // Objects in this scene, using pointers that are global for this object in case they are to be used in both initialisation and update through each frame.
     modelObjectSingle*       torchObj;
     modelObjectSingle*       front;
     modelObjectInst*         planks;
@@ -44,7 +51,11 @@ private:
 
 public:
     scene1();
-    virtual void update(double currentTime);
+    
+    
+    virtual void update(double currentTime); // Update the scene every frame
+    
+    // Actions to be performed, same as the rest of the game
     virtual void usePrimary();
     virtual void useSecondary();
     virtual void turn(GLfloat yaw, GLfloat pitch);

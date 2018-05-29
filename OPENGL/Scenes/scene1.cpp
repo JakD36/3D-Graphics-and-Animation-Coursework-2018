@@ -286,6 +286,7 @@ void scene1::update(double currentTime){
     lights[2].position = playerPosition+glm::vec3(0.0f,0.0f,1.0f)/3.0f; // we can update the position of the torch light based on the direction of the camera
 }
 
+// Activates the primary action, this case turning the torch on or off
 void scene1::usePrimary(){
     if(lights[2].lightOn){ // we need to check if the light is on or off first, if its on we need to switch it off and vice versa
         lights[2].lightOn = false;
@@ -295,6 +296,7 @@ void scene1::usePrimary(){
     }
 }
 
+// Activates the secondary action, this case turning the ceiling light on or off
 void scene1::useSecondary(){
     if(lights[0].lightOn){
         lights[0].lightOn = false;
@@ -305,11 +307,11 @@ void scene1::useSecondary(){
 }
 
 
+// Turns the player to face the direction specified by the spherical coordinates
 void scene1::turn(GLfloat yaw, GLfloat pitch){
 
-
-    torchObj->position = playerPosition + posOnSphere(sphereRadius, yaw+yawOffset, pitch-pitchOffset); // our torchs position is based off the camera position
-
+    torchObj->position = playerPosition + posOnSphere(1, yaw+yawOffset, pitch-pitchOffset) * sphereRadius; // our torchs position is based off the camera position
+    // try adding vectors instead of adding yaw and pitch
 
     torchObj->rotation.x = -pitch;       // Torch seems to be backwards in its model so has to have its pitch rotated the other way
     torchObj->rotation.y = yaw;

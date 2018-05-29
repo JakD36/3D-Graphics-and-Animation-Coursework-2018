@@ -8,7 +8,7 @@
 
 #include "modelObjectSingle.h"
 
-void modelObjectSingle::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera) const{
+void modelObjectSingle::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lightStruct lights[],glm::vec3& camera){
     
     // Apply each of the transformations to a 4x4 identity matrix
     
@@ -20,9 +20,9 @@ void modelObjectSingle::render(glm::mat4& proj_matrix,glm::mat4& viewMatrix, lig
     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
     modelMatrix = glm::scale(modelMatrix, scale);
     
-    // Once the final model matrix has been calculated pass to the shaders to do the final calculations
+    // Once the final model matrix has been calculated pass to the shaders through the uniforms to do the final calculations
     glUniformMatrix4fv(glGetUniformLocation(program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(program,"viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
-    glDrawArrays(GL_TRIANGLES, 0, out_vertices.size()); // Draw vertices
+    glDrawArrays(GL_TRIANGLES, 0, out_vertices.size()); // Draw vertices, need to tell it how many vertices to draw so third argument is the out.vertices.size.
     
 }

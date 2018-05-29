@@ -8,11 +8,12 @@
 
 #include "sceneGraph.hpp"
 
-
+// Default constructor
 sceneGraph::sceneGraph(){
     playerPosition = glm::vec3(0.0f,1.6f,0.0f);
 }
 
+// Returns the objects of the scene, this is the same for every scene inheriting from this abstract
 vector<modelObject*> sceneGraph::getObjs(){
     return Objs;
 }
