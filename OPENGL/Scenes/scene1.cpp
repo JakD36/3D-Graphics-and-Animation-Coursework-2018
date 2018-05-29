@@ -27,7 +27,7 @@ scene1::scene1(){
     torchObj->initModel("Resources/newTorch.obj","Shaders/vs.glsl","Shaders/fs.glsl");
     torchObj->initTexture("Resources/newTorchCol.ktx");
     torchObj->loadMat("Resources/newTorch.mtl");
-    Objs.push_back(torchObj); //Add objects to vector Objs to be rendered!
+//    Objs.push_back(torchObj); //Add objects to vector Objs to be rendered!
                               // This is the most important part, this allows us to just loop through that vector and render each one.
     torchObj->position = playerPosition + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
     
@@ -274,12 +274,12 @@ void scene1::update(double currentTime){
         lightPitch = -160;
         //        v = 0;
     }
-    lights[0].position = glm::vec3(0.0f,2.25f,0.0f) + posOnSphere(lightRadius, lightYaw, lightPitch); // here we set the position of light source
+    lights[0].position = glm::vec3(0.0f,2.49f,0.0f) + posOnSphere(lightRadius, lightYaw, lightPitch); // here we set the position of light source
     bulb->position = lights[0].position; // set the position of the bulb to match
     bulb->rotation.x = -lightPitch-90;   // set the rotation of the bulb to match the angles for the model are weird, so dont ask why its so messed up
                                          // trial and error was used to find the right combination
     
-    wire->position = glm::vec3(0.0f,2.25f,0.0f) + posOnSphere(0.125, lightYaw, lightPitch); // need to set the wires position and rotation to match the bulb
+    wire->position = glm::vec3(0.0f,2.49f,0.0f) + posOnSphere(0.125, lightYaw, lightPitch); // need to set the wires position and rotation to match the bulb
     wire->rotation.x = -lightPitch-90;
     
     

@@ -23,6 +23,65 @@
 		04BB913B201792EC004D9C49 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */; };
 		04BB913C201792FB004D9C49 /* libGLEW.2.1.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		04BB913D201792FB004D9C49 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		04E8981C20BE18E500AF3FF5 /* vs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178020B05B9E002DE9F3 /* vs_display.glsl */; };
+		04E8981D20BE18E500AF3FF5 /* fs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178520B05B9E002DE9F3 /* fs_display.glsl */; };
+		04E8981E20BE18E500AF3FF5 /* vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178120B05B9E002DE9F3 /* vs.glsl */; };
+		04E8981F20BE18E500AF3FF5 /* fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178220B05B9E002DE9F3 /* fs.glsl */; };
+		04E8982020BE18E500AF3FF5 /* vs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178320B05B9E002DE9F3 /* vs_light.glsl */; };
+		04E8982120BE18E500AF3FF5 /* fs_light.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178420B05B9E002DE9F3 /* fs_light.glsl */; };
+		04E8982220BE18FC00AF3FF5 /* floor.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179020B05B9E002DE9F3 /* floor.mtl */; };
+		04E8982320BE18FC00AF3FF5 /* bulb.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179120B05B9E002DE9F3 /* bulb.blend */; };
+		04E8982420BE18FC00AF3FF5 /* Beam.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179220B05B9E002DE9F3 /* Beam.ktx */; };
+		04E8982520BE18FC00AF3FF5 /* wall.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179320B05B9E002DE9F3 /* wall.mtl */; };
+		04E8982620BE18FC00AF3FF5 /* bulb.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179420B05B9E002DE9F3 /* bulb.obj */; };
+		04E8982720BE18FC00AF3FF5 /* wire.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179520B05B9E002DE9F3 /* wire.blend */; };
+		04E8982820BE18FC00AF3FF5 /* beam.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179620B05B9E002DE9F3 /* beam.png */; };
+		04E8982920BE18FC00AF3FF5 /* roof.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179720B05B9E002DE9F3 /* roof.mtl */; };
+		04E8982A20BE18FC00AF3FF5 /* bulb.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179820B05B9E002DE9F3 /* bulb.ktx */; };
+		04E8982B20BE18FC00AF3FF5 /* front.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179920B05B9E002DE9F3 /* front.mtl */; };
+		04E8982C20BE18FC00AF3FF5 /* lamp.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179A20B05B9E002DE9F3 /* lamp.mtl */; };
+		04E8982D20BE18FC00AF3FF5 /* table.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179B20B05B9E002DE9F3 /* table.blend */; };
+		04E8982E20BE18FC00AF3FF5 /* newTorch.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179C20B05B9E002DE9F3 /* newTorch.obj */; };
+		04E8982F20BE18FC00AF3FF5 /* back.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179D20B05B9E002DE9F3 /* back.mtl */; };
+		04E8983020BE18FC00AF3FF5 /* beam.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179E20B05B9E002DE9F3 /* beam.obj */; };
+		04E8983120BE18FC00AF3FF5 /* table.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E179F20B05B9E002DE9F3 /* table.mtl */; };
+		04E8983220BE18FC00AF3FF5 /* plank.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A020B05B9E002DE9F3 /* plank.mtl */; };
+		04E8983320BE18FC00AF3FF5 /* bulb.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A120B05B9E002DE9F3 /* bulb.png */; };
+		04E8983420BE18FC00AF3FF5 /* wire.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A220B05B9E002DE9F3 /* wire.mtl */; };
+		04E8983520BE18FC00AF3FF5 /* beam.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A320B05B9E002DE9F3 /* beam.mtl */; };
+		04E8983620BE18FC00AF3FF5 /* newTorch.blend in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A420B05B9E002DE9F3 /* newTorch.blend */; };
+		04E8983720BE18FC00AF3FF5 /* wall.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A520B05B9E002DE9F3 /* wall.ktx */; };
+		04E8983820BE18FC00AF3FF5 /* back.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A620B05B9E002DE9F3 /* back.obj */; };
+		04E8983920BE18FC00AF3FF5 /* newTorch.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A720B05B9E002DE9F3 /* newTorch.mtl */; };
+		04E8983A20BE18FC00AF3FF5 /* roof.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A820B05B9E002DE9F3 /* roof.png */; };
+		04E8983B20BE18FC00AF3FF5 /* table.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17A920B05B9E002DE9F3 /* table.obj */; };
+		04E8983C20BE18FC00AF3FF5 /* floor.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17AA20B05B9E002DE9F3 /* floor.ktx */; };
+		04E8983D20BE18FC00AF3FF5 /* lamp.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17AB20B05B9E002DE9F3 /* lamp.obj */; };
+		04E8983E20BE18FC00AF3FF5 /* front.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17AC20B05B9E002DE9F3 /* front.obj */; };
+		04E8983F20BE18FC00AF3FF5 /* wire.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17AD20B05B9E002DE9F3 /* wire.obj */; };
+		04E8984020BE18FC00AF3FF5 /* wall.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17AE20B05B9E002DE9F3 /* wall.png */; };
+		04E8984120BE18FC00AF3FF5 /* roof.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17AF20B05B9E002DE9F3 /* roof.ktx */; };
+		04E8984220BE18FC00AF3FF5 /* plank.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B020B05B9E002DE9F3 /* plank.obj */; };
+		04E8984320BE18FC00AF3FF5 /* floor.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B120B05B9E002DE9F3 /* floor.png */; };
+		04E8984420BE18FC00AF3FF5 /* bulb.mtl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B220B05B9E002DE9F3 /* bulb.mtl */; };
+		04E8984520BE18FC00AF3FF5 /* lamp.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B320B05B9E002DE9F3 /* lamp.ktx */; };
+		04E8984620BE18FC00AF3FF5 /* front.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B420B05B9E002DE9F3 /* front.ktx */; };
+		04E8984720BE18FC00AF3FF5 /* wire.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B520B05B9E002DE9F3 /* wire.png */; };
+		04E8984820BE18FC00AF3FF5 /* NewTorchCol.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B620B05B9E002DE9F3 /* NewTorchCol.png */; };
+		04E8984920BE18FC00AF3FF5 /* newTorch.blend1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B720B05B9E002DE9F3 /* newTorch.blend1 */; };
+		04E8984A20BE18FC00AF3FF5 /* floor.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B820B05B9E002DE9F3 /* floor.obj */; };
+		04E8984B20BE18FC00AF3FF5 /* table.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17B920B05B9E002DE9F3 /* table.ktx */; };
+		04E8984C20BE18FC00AF3FF5 /* plank.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17BA20B05B9E002DE9F3 /* plank.png */; };
+		04E8984D20BE18FC00AF3FF5 /* back.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17BB20B05B9E002DE9F3 /* back.ktx */; };
+		04E8984E20BE18FC00AF3FF5 /* wall.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17BC20B05B9E002DE9F3 /* wall.obj */; };
+		04E8984F20BE18FC00AF3FF5 /* table.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17BD20B05B9E002DE9F3 /* table.png */; };
+		04E8985020BE18FC00AF3FF5 /* plank.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17BE20B05B9E002DE9F3 /* plank.ktx */; };
+		04E8985120BE18FC00AF3FF5 /* roof.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17BF20B05B9E002DE9F3 /* roof.obj */; };
+		04E8985220BE18FC00AF3FF5 /* back.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17C020B05B9E002DE9F3 /* back.png */; };
+		04E8985320BE18FC00AF3FF5 /* front.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17C120B05B9E002DE9F3 /* front.png */; };
+		04E8985420BE18FC00AF3FF5 /* lamp.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17C220B05B9E002DE9F3 /* lamp.png */; };
+		04E8985520BE18FC00AF3FF5 /* wire.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17C320B05B9E002DE9F3 /* wire.ktx */; };
+		04E8985620BE18FC00AF3FF5 /* NewTorchCol.ktx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E17C420B05B9E002DE9F3 /* NewTorchCol.ktx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +102,12 @@
 			dstPath = Shaders;
 			dstSubfolderSpec = 7;
 			files = (
+				04E8981C20BE18E500AF3FF5 /* vs_display.glsl in CopyFiles */,
+				04E8981D20BE18E500AF3FF5 /* fs_display.glsl in CopyFiles */,
+				04E8981E20BE18E500AF3FF5 /* vs.glsl in CopyFiles */,
+				04E8981F20BE18E500AF3FF5 /* fs.glsl in CopyFiles */,
+				04E8982020BE18E500AF3FF5 /* vs_light.glsl in CopyFiles */,
+				04E8982120BE18E500AF3FF5 /* fs_light.glsl in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +117,59 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				04E8982220BE18FC00AF3FF5 /* floor.mtl in CopyFiles */,
+				04E8982320BE18FC00AF3FF5 /* bulb.blend in CopyFiles */,
+				04E8982420BE18FC00AF3FF5 /* Beam.ktx in CopyFiles */,
+				04E8982520BE18FC00AF3FF5 /* wall.mtl in CopyFiles */,
+				04E8982620BE18FC00AF3FF5 /* bulb.obj in CopyFiles */,
+				04E8982720BE18FC00AF3FF5 /* wire.blend in CopyFiles */,
+				04E8982820BE18FC00AF3FF5 /* beam.png in CopyFiles */,
+				04E8982920BE18FC00AF3FF5 /* roof.mtl in CopyFiles */,
+				04E8982A20BE18FC00AF3FF5 /* bulb.ktx in CopyFiles */,
+				04E8982B20BE18FC00AF3FF5 /* front.mtl in CopyFiles */,
+				04E8982C20BE18FC00AF3FF5 /* lamp.mtl in CopyFiles */,
+				04E8982D20BE18FC00AF3FF5 /* table.blend in CopyFiles */,
+				04E8982E20BE18FC00AF3FF5 /* newTorch.obj in CopyFiles */,
+				04E8982F20BE18FC00AF3FF5 /* back.mtl in CopyFiles */,
+				04E8983020BE18FC00AF3FF5 /* beam.obj in CopyFiles */,
+				04E8983120BE18FC00AF3FF5 /* table.mtl in CopyFiles */,
+				04E8983220BE18FC00AF3FF5 /* plank.mtl in CopyFiles */,
+				04E8983320BE18FC00AF3FF5 /* bulb.png in CopyFiles */,
+				04E8983420BE18FC00AF3FF5 /* wire.mtl in CopyFiles */,
+				04E8983520BE18FC00AF3FF5 /* beam.mtl in CopyFiles */,
+				04E8983620BE18FC00AF3FF5 /* newTorch.blend in CopyFiles */,
+				04E8983720BE18FC00AF3FF5 /* wall.ktx in CopyFiles */,
+				04E8983820BE18FC00AF3FF5 /* back.obj in CopyFiles */,
+				04E8983920BE18FC00AF3FF5 /* newTorch.mtl in CopyFiles */,
+				04E8983A20BE18FC00AF3FF5 /* roof.png in CopyFiles */,
+				04E8983B20BE18FC00AF3FF5 /* table.obj in CopyFiles */,
+				04E8983C20BE18FC00AF3FF5 /* floor.ktx in CopyFiles */,
+				04E8983D20BE18FC00AF3FF5 /* lamp.obj in CopyFiles */,
+				04E8983E20BE18FC00AF3FF5 /* front.obj in CopyFiles */,
+				04E8983F20BE18FC00AF3FF5 /* wire.obj in CopyFiles */,
+				04E8984020BE18FC00AF3FF5 /* wall.png in CopyFiles */,
+				04E8984120BE18FC00AF3FF5 /* roof.ktx in CopyFiles */,
+				04E8984220BE18FC00AF3FF5 /* plank.obj in CopyFiles */,
+				04E8984320BE18FC00AF3FF5 /* floor.png in CopyFiles */,
+				04E8984420BE18FC00AF3FF5 /* bulb.mtl in CopyFiles */,
+				04E8984520BE18FC00AF3FF5 /* lamp.ktx in CopyFiles */,
+				04E8984620BE18FC00AF3FF5 /* front.ktx in CopyFiles */,
+				04E8984720BE18FC00AF3FF5 /* wire.png in CopyFiles */,
+				04E8984820BE18FC00AF3FF5 /* NewTorchCol.png in CopyFiles */,
+				04E8984920BE18FC00AF3FF5 /* newTorch.blend1 in CopyFiles */,
+				04E8984A20BE18FC00AF3FF5 /* floor.obj in CopyFiles */,
+				04E8984B20BE18FC00AF3FF5 /* table.ktx in CopyFiles */,
+				04E8984C20BE18FC00AF3FF5 /* plank.png in CopyFiles */,
+				04E8984D20BE18FC00AF3FF5 /* back.ktx in CopyFiles */,
+				04E8984E20BE18FC00AF3FF5 /* wall.obj in CopyFiles */,
+				04E8984F20BE18FC00AF3FF5 /* table.png in CopyFiles */,
+				04E8985020BE18FC00AF3FF5 /* plank.ktx in CopyFiles */,
+				04E8985120BE18FC00AF3FF5 /* roof.obj in CopyFiles */,
+				04E8985220BE18FC00AF3FF5 /* back.png in CopyFiles */,
+				04E8985320BE18FC00AF3FF5 /* front.png in CopyFiles */,
+				04E8985420BE18FC00AF3FF5 /* lamp.png in CopyFiles */,
+				04E8985520BE18FC00AF3FF5 /* wire.ktx in CopyFiles */,
+				04E8985620BE18FC00AF3FF5 /* NewTorchCol.ktx in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

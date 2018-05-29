@@ -205,7 +205,7 @@ void renderer::render(){
     
     
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    // glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST); //not needed as we are just displaying a single quad
     glUseProgram(displayProgram);
     glBindVertexArray(displayVao);
