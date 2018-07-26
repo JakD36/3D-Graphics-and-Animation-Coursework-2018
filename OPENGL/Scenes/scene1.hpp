@@ -41,7 +41,7 @@ private:
     float lightPitch = -20.0f;          // instantiate its pitch and give its initial pitch of -20 so that it can start with a 0 velocity and still move
     double          v = 0;              // instantiate the lights velocity and start it with 0, this way it starts moving as gravity starts pulling it down
     
-    double          prevTime = 0;       // time at the previous frame
+    double prevTime = 0;       // time at the previous frame
     
     
     // This specifically is for the torch, attached to the player.

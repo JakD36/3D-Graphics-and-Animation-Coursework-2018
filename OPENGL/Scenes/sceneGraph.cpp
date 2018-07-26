@@ -13,6 +13,18 @@ sceneGraph::sceneGraph(){
     playerPosition = glm::vec3(0.0f,1.6f,0.0f);
 }
 
+// TODO: Add copy constructor, allow for deep copy of object so to avoid any issues with two scenes using the same memory on the heap
+
+sceneGraph::~sceneGraph(){
+    
+    // Make sure to delete all the objects from the heap!
+    // Otherwise we will have a memory leak
+    // Any objects not added to the Objs list, make sure to add them to the relevant destructor so that there are no memory leaks
+    for(int n = 0; n < Objs.size(); n++){
+        delete Objs[n];
+    }
+}
+
 // Returns the objects of the scene, this is the same for every scene inheriting from this abstract
 vector<modelObject*> sceneGraph::getObjs(){
     return Objs;

@@ -257,7 +257,6 @@ scene1::scene1(){
 
 
 
-
 void scene1::update(double currentTime){
     double dt = currentTime - prevTime; // get the change in time between the last frame and the current frame so to accurately calculate any movement
     prevTime = currentTime;
