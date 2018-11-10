@@ -12,6 +12,10 @@ modelObject::modelObject(){
     // Does nothing
 }
 
+modelObject::~modelObject(){
+    // Does nothing
+}
+
 void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
     shaderLoader* shaderInst = shaderLoader::getInstance(); // Get the instance of the singleton to load the shader

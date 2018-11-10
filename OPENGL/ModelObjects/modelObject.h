@@ -60,6 +60,7 @@ public:
     GLfloat shininess;                              // Shininess constant of material
     
     modelObject();
+    virtual ~modelObject();
     void initModel(string,string,string);           // initialise the modelObject with model and its shaders
     void initTexture(string);                       // provide texture for model
     bool load(string);                              // load and parse .obj file

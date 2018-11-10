@@ -8,6 +8,8 @@
 
 #include "renderer.hpp"
 
+static bool init = false;
+
 // Return the camera for use outwith this object, to set/get camera position.
 camera* renderer::getCamera(){
     return viewCamera;
@@ -41,6 +43,10 @@ void renderer::setWindowDimensions(int windowWidth, int windowHeight){
 
 // Initialise the renderer for this viewport
 renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
+    
+    // Workaround for mojave issue
+    // FIX: Find permanent solution
+    
     // Assign the variables to the object
     this->scene = scene;
     this->viewCamera = viewCamera;
@@ -189,6 +195,14 @@ void renderer::render(){
         lights[n] = *(plight+n);
     }
     
+    if(!init){
+        int x,y;
+        glfwGetWindowPos(window, &x, &y);
+        glfwSetWindowPos(window, x+1, y);
+        
+        init = true;
+    }
+
     
     for(int n = 0;n<Objs.size();n++){
         Objs[n]->setupRender(proj_matrix,lights,camPosition); 

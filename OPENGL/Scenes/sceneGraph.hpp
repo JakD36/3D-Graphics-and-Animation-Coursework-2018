@@ -39,7 +39,7 @@ protected:
     glm::vec3 playerPosition;
 public:
     sceneGraph();
-    ~sceneGraph();
+    virtual ~sceneGraph();
     
     // Other methods
     virtual void update(double currentTime) = 0; // Function to update the scene, every frame based on keyframing or procedural animation

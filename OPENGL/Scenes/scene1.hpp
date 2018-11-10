@@ -53,6 +53,7 @@ public:
     scene1();
     
     
+    
     virtual void update(double currentTime); // Update the scene every frame
     
     // Actions to be performed, same as the rest of the game

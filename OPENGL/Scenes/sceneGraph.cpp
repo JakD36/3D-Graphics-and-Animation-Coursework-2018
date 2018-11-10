@@ -22,6 +22,7 @@ sceneGraph::~sceneGraph(){
     // Any objects not added to the Objs list, make sure to add them to the relevant destructor so that there are no memory leaks
     for(int n = 0; n < Objs.size(); n++){
         delete Objs[n];
+        Objs[n] = NULL;
     }
 }
 
