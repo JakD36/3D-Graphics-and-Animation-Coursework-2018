@@ -11,6 +11,22 @@
 // Default constructor
 sceneGraph::sceneGraph(){
     playerPosition = glm::vec3(0.0f,1.6f,0.0f);
+    string meshPath = "Resources/newTorch.obj";
+    string matPath = "Resources/newTorch.mtl";
+    string texPath = "Resources/newTorchCol.ktx";
+    string vsPath = "Shaders/vs.glsl";
+    string fsPath = "Shaders/fs.glsl";
+    
+    Mesh* mesh = new Mesh("Resources/newTorch.obj");
+    Material* mat = new Material("Resources/newTorch.mtl");
+    Texture* tex = new Texture("Resources/newTorchCol.ktx");
+    
+    VertexShader* vs = new VertexShader("Shaders/vs.glsl");
+    FragShader* fs = new FragShader("Shaders/fs.glsl");
+    
+    ShaderPipeline* pipeline = new ShaderPipeline(vs,fs);
+    
+    m_gameObject = new GameObject(mesh,mat,tex,pipeline);
 }
 
 // TODO: Add copy constructor, allow for deep copy of object so to avoid any issues with two scenes using the same memory on the heap

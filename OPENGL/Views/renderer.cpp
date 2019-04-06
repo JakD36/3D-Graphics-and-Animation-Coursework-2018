@@ -165,7 +165,7 @@ void renderer::render(){
 //    frameWidth = frameRight - frameLeft;
 //    frameHeight = frameTop - frameBottom;
     
-        glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
+    glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
     // Convert all our projected coordinates to screen coordinates for the texture
     glViewport(0.0f, 0.0f, frameWidth, frameHeight);
     
@@ -203,11 +203,12 @@ void renderer::render(){
         init = true;
     }
 
-    
     for(int n = 0;n<Objs.size();n++){
         Objs[n]->setupRender(proj_matrix,lights,camPosition); 
         Objs[n]->render(proj_matrix,viewMatrix,lights,camPosition);
     }
+    
+    scene->m_gameObject->Render(proj_matrix,viewMatrix,lights,camPosition);
     
     // SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER,0);

@@ -21,6 +21,8 @@
 #include "modelObjectInst.h"
 #include <vector>
 
+#include "GameObject.hpp"
+
 
 /* Abstract class for each scene to be based on
  
@@ -60,7 +62,7 @@ public:
     virtual void useSecondary() = 0;
     virtual void turn(GLfloat yaw, GLfloat pitch) = 0;
     
-    
+    GameObject* m_gameObject;
 };
 
 

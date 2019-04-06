@@ -23,6 +23,13 @@
 		04BB913B201792EC004D9C49 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */; };
 		04BB913C201792FB004D9C49 /* libGLEW.2.1.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		04BB913D201792FB004D9C49 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		04DE66C42258310400E93E31 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66C22258310400E93E31 /* GameObject.cpp */; };
+		04DE66C9225831D500E93E31 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66C7225831D500E93E31 /* Mesh.cpp */; };
+		04DE66D02258360500E93E31 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66CE2258360500E93E31 /* Material.cpp */; };
+		04DE66D22258369000E93E31 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66D12258369000E93E31 /* Texture.cpp */; };
+		04DE66D822583E2200E93E31 /* VertexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66D622583E2200E93E31 /* VertexShader.cpp */; };
+		04DE66DB22583E2F00E93E31 /* FragShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66D922583E2F00E93E31 /* FragShader.cpp */; };
+		04DE66DE225840B000E93E31 /* ShaderPipeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DE66DC225840B000E93E31 /* ShaderPipeline.cpp */; };
 		04E8981C20BE18E500AF3FF5 /* vs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178020B05B9E002DE9F3 /* vs_display.glsl */; };
 		04E8981D20BE18E500AF3FF5 /* fs_display.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178520B05B9E002DE9F3 /* fs_display.glsl */; };
 		04E8981E20BE18E500AF3FF5 /* vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 041E178120B05B9E002DE9F3 /* vs.glsl */; };
@@ -260,6 +267,20 @@
 		04972FAE1F72A47E00BAC6A4 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		04BB9138201792EC004D9C49 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		04BB9139201792EC004D9C49 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../../../usr/local/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		04DE66C22258310400E93E31 /* GameObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
+		04DE66C32258310400E93E31 /* GameObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameObject.hpp; sourceTree = "<group>"; };
+		04DE66C7225831D500E93E31 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		04DE66C8225831D500E93E31 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		04DE66CD2258347200E93E31 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		04DE66CE2258360500E93E31 /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		04DE66CF2258360500E93E31 /* Material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
+		04DE66D12258369000E93E31 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		04DE66D622583E2200E93E31 /* VertexShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexShader.cpp; sourceTree = "<group>"; };
+		04DE66D722583E2200E93E31 /* VertexShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexShader.hpp; sourceTree = "<group>"; };
+		04DE66D922583E2F00E93E31 /* FragShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FragShader.cpp; sourceTree = "<group>"; };
+		04DE66DA22583E2F00E93E31 /* FragShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FragShader.hpp; sourceTree = "<group>"; };
+		04DE66DC225840B000E93E31 /* ShaderPipeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderPipeline.cpp; sourceTree = "<group>"; };
+		04DE66DD225840B000E93E31 /* ShaderPipeline.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderPipeline.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +300,12 @@
 		041E177F20B05B9E002DE9F3 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				04DE66DC225840B000E93E31 /* ShaderPipeline.cpp */,
+				04DE66DD225840B000E93E31 /* ShaderPipeline.hpp */,
+				04DE66D622583E2200E93E31 /* VertexShader.cpp */,
+				04DE66D722583E2200E93E31 /* VertexShader.hpp */,
+				04DE66D922583E2F00E93E31 /* FragShader.cpp */,
+				04DE66DA22583E2F00E93E31 /* FragShader.hpp */,
 				041E178020B05B9E002DE9F3 /* vs_display.glsl */,
 				041E178520B05B9E002DE9F3 /* fs_display.glsl */,
 				041E178120B05B9E002DE9F3 /* vs.glsl */,
@@ -405,6 +432,10 @@
 				041E177E20B05B9E002DE9F3 /* main.cpp */,
 				041E17DC20B06744002DE9F3 /* Scenes */,
 				0455CBDD20B4421500864F35 /* Controllers */,
+				04DE66CC2258345F00E93E31 /* Texture */,
+				04DE66CA225832A900E93E31 /* Material */,
+				04DE66C62258318D00E93E31 /* Mesh */,
+				04DE66C52258311800E93E31 /* GameObject */,
 				041E178620B05B9E002DE9F3 /* ModelObjects */,
 				045252A220B61B2600916340 /* Views */,
 				041E17C620B05B9E002DE9F3 /* Singletons */,
@@ -434,6 +465,42 @@
 				0455CBDA20B441E600864F35 /* keyboardAndMouse.hpp */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		04DE66C52258311800E93E31 /* GameObject */ = {
+			isa = PBXGroup;
+			children = (
+				04DE66C22258310400E93E31 /* GameObject.cpp */,
+				04DE66C32258310400E93E31 /* GameObject.hpp */,
+			);
+			path = GameObject;
+			sourceTree = "<group>";
+		};
+		04DE66C62258318D00E93E31 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				04DE66C7225831D500E93E31 /* Mesh.cpp */,
+				04DE66C8225831D500E93E31 /* Mesh.hpp */,
+			);
+			path = Mesh;
+			sourceTree = "<group>";
+		};
+		04DE66CA225832A900E93E31 /* Material */ = {
+			isa = PBXGroup;
+			children = (
+				04DE66CE2258360500E93E31 /* Material.cpp */,
+				04DE66CF2258360500E93E31 /* Material.hpp */,
+			);
+			path = Material;
+			sourceTree = "<group>";
+		};
+		04DE66CC2258345F00E93E31 /* Texture */ = {
+			isa = PBXGroup;
+			children = (
+				04DE66CD2258347200E93E31 /* Texture.hpp */,
+				04DE66D12258369000E93E31 /* Texture.cpp */,
+			);
+			path = Texture;
 			sourceTree = "<group>";
 		};
 		04FB007E1F70913B0044343E /* Frameworks */ = {
@@ -508,14 +575,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DE66DB22583E2F00E93E31 /* FragShader.cpp in Sources */,
+				04DE66D22258369000E93E31 /* Texture.cpp in Sources */,
 				041E17CD20B05B9E002DE9F3 /* modelObject.cpp in Sources */,
 				041E17CE20B05B9E002DE9F3 /* modelObjectSingle.cpp in Sources */,
 				0455CBDB20B441E600864F35 /* keyboardAndMouse.cpp in Sources */,
 				045252A120B5C4EE00916340 /* renderer.cpp in Sources */,
+				04DE66DE225840B000E93E31 /* ShaderPipeline.cpp in Sources */,
+				04DE66C9225831D500E93E31 /* Mesh.cpp in Sources */,
+				04DE66D822583E2200E93E31 /* VertexShader.cpp in Sources */,
 				041E17DB20B0672D002DE9F3 /* scene1.cpp in Sources */,
 				0455CBE020B4C62800864F35 /* camera.cpp in Sources */,
 				041E17C920B05B9E002DE9F3 /* sceneGraph.cpp in Sources */,
+				04DE66D02258360500E93E31 /* Material.cpp in Sources */,
 				041E17CC20B05B9E002DE9F3 /* modelObjectInst.cpp in Sources */,
+				04DE66C42258310400E93E31 /* GameObject.cpp in Sources */,
 				041E17CB20B05B9E002DE9F3 /* main.cpp in Sources */,
 				041E17D020B05B9E002DE9F3 /* shaderLoader.cpp in Sources */,
 				041E17D520B063C2002DE9F3 /* controller.cpp in Sources */,
