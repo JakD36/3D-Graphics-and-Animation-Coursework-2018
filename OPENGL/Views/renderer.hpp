@@ -73,7 +73,7 @@ public:
     void setWindowDimensions(int windowWidth, int windowHeight); // Used to update the renderer the window has changed size
     
 //    For use with creating multiple viewports within 1 window, currently viewports are a bit off 
-//    void setViewport(float x, float y, float width, float height); // FIX: viewport, currently doesn't work properly on high DPI screens and results in the image being displayed in quarter of the screen.
+    void setViewport(float x, float y, float width, float height); 
 };
 
 #endif /* renderer_hpp */

@@ -15,17 +15,17 @@ camera* renderer::getCamera(){
     return viewCamera;
 }
 
-// Viewports just being left as standard for now as they are not working as expected on high DPI screens
-//void renderer::setViewport(float x, float y, float width, float height){
-//    viewportX = x;
-//    viewportY = y;
-//    viewportWidth = width;
-//    viewportHeight = height;
-//
-//    // Calculate proj_matrix for the first time.
-//    aspect = (float)width / (float)height;
-//    proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
-//}
+
+void renderer::setViewport(float x, float y, float width, float height){
+    viewportX = x;
+    viewportY = y;
+    viewportWidth = width;
+    viewportHeight = height;
+
+    // Calculate proj_matrix for the first time.
+    aspect = (float)width / (float)height;
+    proj_matrix =  glm::perspective(glm::radians(50.0f), aspect, 0.1f, 1000.0f);
+}
 
 void renderer::setWindowDimensions(int windowWidth, int windowHeight){
     this->windowWidth = windowWidth;
@@ -44,9 +44,6 @@ void renderer::setWindowDimensions(int windowWidth, int windowHeight){
 // Initialise the renderer for this viewport
 renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
     
-    // Workaround for mojave issue
-    // FIX: Find permanent solution
-    
     // Assign the variables to the object
     this->scene = scene;
     this->viewCamera = viewCamera;
@@ -62,6 +59,7 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
     // On high DPI, there are a higher number of pixels in the window than the length of the window, so we need to use the frameWidth and height,
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
+    
     
     // Framebuffer operations
     glFrontFace(GL_CCW);
@@ -81,8 +79,8 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,frameWidth,frameHeight,0,GL_RGB,GL_UNSIGNED_BYTE,0);
     
     // filtering needed - future lecture
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
     // Depth buffer texture    - Need to attach depth too otherwise depth testing will not be performed.
     glGenRenderbuffers(1, &depthbuffer);
@@ -148,11 +146,11 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
     
     glLinkProgram(displayProgram);
     glUseProgram(displayProgram);
-
 }
 
 
 void renderer::render(){
+    
     // So now to render to the framebuffer texture instead of screen
     glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,framebufferTexture,0);
@@ -167,7 +165,11 @@ void renderer::render(){
     
     glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
     // Convert all our projected coordinates to screen coordinates for the texture
-    glViewport(0.0f, 0.0f, frameWidth, frameHeight);
+    
+    glEnable(GL_SCISSOR_TEST);
+    
+    glViewport((GLint)0,(GLint)0, (GLsizei)frameWidth, (GLsizei)frameHeight);
+    glScissor(0, 0, frameWidth, frameHeight);
     
     glClearBufferfv(GL_COLOR, 0, &black[0]);
     static const GLfloat one = 1.0f;
@@ -195,6 +197,8 @@ void renderer::render(){
         lights[n] = *(plight+n);
     }
     
+    // Workaround for mojave issue
+    // FIX: Find permanent solution
     if(!init){
         int x,y;
         glfwGetWindowPos(window, &x, &y);
@@ -209,16 +213,13 @@ void renderer::render(){
     }
     
     scene->m_gameObject->Render(proj_matrix,viewMatrix,lights,camPosition);
-    
+
     // SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-    
-    
-    // apparently the issue causing this, is due to the framebuffer being larger than the window size on high resolution screens so need to scale the width and height by the framebuffer size
-    glViewport(-frameWidth,-frameHeight, (GLsizei)frameWidth*2 ,(GLsizei)frameHeight*2); // Workaround to display full screen, no idea how to fix it properly
-//        glViewport(0,0, (GLsizei)frameWidth ,(GLsizei)frameHeight); // Workaround to display full screen, no idea how to fix it properly
-    
-    
+
+    glViewport(viewportX,viewportY, viewportWidth, viewportHeight);
+    glScissor(viewportX,viewportY, viewportWidth, viewportHeight);
+
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST); //not needed as we are just displaying a single quad
@@ -228,6 +229,5 @@ void renderer::render(){
     glBindTexture(GL_TEXTURE_2D, framebufferTexture);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
-    
-    
+
 }

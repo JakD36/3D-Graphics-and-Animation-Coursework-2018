@@ -72,15 +72,24 @@ int main()
     myView = new renderer(window,&scene,mainCamera); // Initialise our rendering object, with the scene it will render and the camera it will be using
     
     
-    /* Was Looking into creating multiple views, using multiple renderer objects, this is easily achieved,
+    /*
+     Was Looking into creating multiple views, using multiple renderer objects, this is easily achieved,
      however there is an issue with the glViewport for high DPI screens like the retina displays in Macs.
-     
-    myView->setViewport(-windowWidth*2, 0, windowWidth/2, windowHeight/2);
+    */
+    myView->setViewport(0, windowHeight, windowWidth, windowHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
     
     camera* secondCam = new camera();
-    renderer* secondView = new renderer(&scene,secondCam);
-    secondView->setViewport(-windowWidth*2, -windowHeight*2, windowWidth*4, windowHeight*4);
-     */
+    renderer* secondView = new renderer(window,&scene,secondCam);
+    secondView->setViewport(windowWidth, windowHeight, windowWidth, windowHeight);
+    
+    camera* thirdCam = new camera();
+    renderer* thirdView = new renderer(window,&scene,thirdCam);
+    thirdView->setViewport(0, 0, windowWidth, windowHeight);
+    
+    camera* fourthCam = new camera();
+    renderer* fourthView = new renderer(window,&scene,fourthCam);
+    fourthView->setViewport(windowWidth, 0, windowWidth, windowHeight);
+     
     
     
     myController = new keyboardAndMouse(window,&scene,myView); // Initialise the controller, is provided reference to the model and the view so it can access both
@@ -99,7 +108,9 @@ int main()
         
         // Game loop - Render
         myView->render();
-//        secondView->render();
+        secondView->render();
+        thirdView->render();
+        fourthView->render();
         
         // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
         glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
@@ -172,7 +183,7 @@ void endProgram() {
 
 void hintsGLFW() {
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);            // Create context in debug mode - for debug message callback
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.2
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.1
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1 );
     
     // Following two lines are required for running on mac
@@ -285,4 +296,5 @@ void errorCallbackGLFW(int error, const char* description) {
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
+
 
