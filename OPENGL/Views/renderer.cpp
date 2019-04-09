@@ -123,29 +123,10 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
     
-    //load shaders, for the framebuffer operations
-    displayProgram = glCreateProgram();
     
-    shaderLoader* shaderInst = shaderLoader::getInstance();
-    
-    string dvs_text = shaderInst->readShader("Shaders/vs_display.glsl");
-    const char* dvs_source = dvs_text.c_str();
-    GLuint dvs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(dvs, 1, &dvs_source, NULL);
-    glCompileShader(dvs);
-    shaderInst->checkErrorShader(dvs);
-    glAttachShader(displayProgram, dvs);
-    
-    string dfs_text = shaderInst->readShader("Shaders/fs_display.glsl");
-    const char* dfs_source = dfs_text.c_str();
-    GLuint dfs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(dfs, 1, &dfs_source, NULL);
-    glCompileShader(dfs);
-    shaderInst->checkErrorShader(dfs);
-    glAttachShader(displayProgram, dfs);
-    
-    glLinkProgram(displayProgram);
-    glUseProgram(displayProgram);
+    VertexShader* displayVs = new VertexShader("Shaders/vs_display.glsl");
+    FragShader* displayFs = new FragShader("Shaders/fs_display.glsl");
+    framebufferPipeline = new ShaderPipeline(displayVs,displayFs);
 }
 
 
@@ -159,16 +140,12 @@ void renderer::render(){
     
     
     int frameWidth, frameHeight;//, frameLeft, frameRight, frameBottom, frameTop;
-//    glfwGetWindowFrameSize(window, &frameLeft, &frameTop, &frameRight, &frameBottom);
-//    frameWidth = frameRight - frameLeft;
-//    frameHeight = frameTop - frameBottom;
-    
     glfwGetFramebufferSize(window, &frameWidth, &frameHeight);
     // Convert all our projected coordinates to screen coordinates for the texture
     
-    glEnable(GL_SCISSOR_TEST);
+    glViewport(0,0, frameWidth, frameHeight);
     
-    glViewport((GLint)0,(GLint)0, (GLsizei)frameWidth, (GLsizei)frameHeight);
+    glEnable(GL_SCISSOR_TEST);
     glScissor(0, 0, frameWidth, frameHeight);
     
     glClearBufferfv(GL_COLOR, 0, &black[0]);
@@ -200,10 +177,8 @@ void renderer::render(){
     // Workaround for mojave issue
     // FIX: Find permanent solution
     if(!init){
-        int x,y;
-        glfwGetWindowPos(window, &x, &y);
-        glfwSetWindowPos(window, x+1, y);
-        
+        glfwHideWindow(window);
+        glfwShowWindow(window);
         init = true;
     }
 
@@ -214,6 +189,9 @@ void renderer::render(){
     
     scene->m_gameObject->Render(proj_matrix,viewMatrix,lights,camPosition);
 
+    
+    
+    
     // SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 
@@ -223,7 +201,7 @@ void renderer::render(){
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST); //not needed as we are just displaying a single quad
-    glUseProgram(displayProgram);
+    glUseProgram(framebufferPipeline->m_program);
     glBindVertexArray(displayVao);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, framebufferTexture);

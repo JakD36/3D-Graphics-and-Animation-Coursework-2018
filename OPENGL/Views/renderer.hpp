@@ -20,6 +20,8 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
 
+#include "ShaderPipeline.hpp"
+
 using namespace std;
 
 /*
@@ -45,6 +47,8 @@ private:
     GLuint            displayProgram;
     float                   aspect;                     // aspect ratio = width/height for exaple 4:3 or 16:9
     glm::mat4               proj_matrix;                // Will be used in handling perspective into the scene?
+    
+    ShaderPipeline* framebufferPipeline;
     
     
     camera* viewCamera; // The camera that this viewport is looking from, contains information on position in world space, direction it is facing

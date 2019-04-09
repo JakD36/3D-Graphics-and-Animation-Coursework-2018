@@ -76,20 +76,20 @@ int main()
      Was Looking into creating multiple views, using multiple renderer objects, this is easily achieved,
      however there is an issue with the glViewport for high DPI screens like the retina displays in Macs.
     */
-    myView->setViewport(0, windowHeight, windowWidth, windowHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
+    myView->setViewport(0, 0, windowWidth*2, windowHeight*2); // Provide the framebuffer sizes, on retina its 2x in x and y
     
-    camera* secondCam = new camera();
-    renderer* secondView = new renderer(window,&scene,secondCam);
-    secondView->setViewport(windowWidth, windowHeight, windowWidth, windowHeight);
+//    camera* secondCam = new camera();
+//    renderer* secondView = new renderer(window,&scene,secondCam);
+//    secondView->setViewport(windowWidth, windowHeight, windowWidth, windowHeight);
+//
+//    camera* thirdCam = new camera();
+//    renderer* thirdView = new renderer(window,&scene,thirdCam);
+//    thirdView->setViewport(0, 0, windowWidth, windowHeight);
+//
+//    camera* fourthCam = new camera();
+//    renderer* fourthView = new renderer(window,&scene,fourthCam);
+//    fourthView->setViewport(windowWidth, 0, windowWidth, windowHeight);
     
-    camera* thirdCam = new camera();
-    renderer* thirdView = new renderer(window,&scene,thirdCam);
-    thirdView->setViewport(0, 0, windowWidth, windowHeight);
-    
-    camera* fourthCam = new camera();
-    renderer* fourthView = new renderer(window,&scene,fourthCam);
-    fourthView->setViewport(windowWidth, 0, windowWidth, windowHeight);
-     
     
     
     myController = new keyboardAndMouse(window,&scene,myView); // Initialise the controller, is provided reference to the model and the view so it can access both
@@ -108,9 +108,9 @@ int main()
         
         // Game loop - Render
         myView->render();
-        secondView->render();
-        thirdView->render();
-        fourthView->render();
+//        secondView->render();
+//        thirdView->render();
+//        fourthView->render();
         
         // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
         glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
