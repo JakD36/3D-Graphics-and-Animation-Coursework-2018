@@ -6,7 +6,7 @@ objects = main.o controller.o keyboardAndMouse.o GameObject.o Material.o Mesh.o 
 # Read this as divisionExecutable depends on ..
 executable : $(objects)
 # Need to specify how executable is produced, using below statement
-	g++ -lglfw.3.3 -lGLEW.2.1.0  $(objects) -std=c++11 -w -o executable
+	g++ -lglfw.3.3 -lGLEW.2.1.0 -framework OpenGL $(objects) -std=c++11 -w -o executable
 
 # main.o does not exist, so specify how it is produced.
 
