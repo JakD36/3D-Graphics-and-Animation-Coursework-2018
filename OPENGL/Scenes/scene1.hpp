@@ -10,7 +10,7 @@
 #define scene1_hpp
 
 #include "sceneGraph.hpp"
-#include "camera.hpp"
+#include "../Views/camera.hpp"
 
 
 /*

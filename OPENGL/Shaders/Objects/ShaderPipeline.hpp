@@ -23,7 +23,7 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "shaderLoader.hpp"
+#include "../shaderLoader.hpp"
 #include "VertexShader.hpp"
 #include "FragShader.hpp"
 

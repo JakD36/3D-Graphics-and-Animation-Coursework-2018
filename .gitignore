@@ -2,3 +2,12 @@
 *.xcuserstate
 *.pbxproj
 
+# Ignore all C++ objects
+*.o
+
+.vscode
+Frameworks
+
+Resources
+Shaders
+executable

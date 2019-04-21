@@ -23,14 +23,14 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "Mesh.hpp"
-#include "Material.hpp"
-#include "Texture.hpp"
-#include "ShaderPipeline.hpp"
-#include "VertexShader.hpp"
-#include "FragShader.hpp"
+#include "../Mesh/Mesh.hpp"
+#include "../Material/Material.hpp"
+#include "../Texture/Texture.hpp"
+#include "../Shaders/Objects/ShaderPipeline.hpp"
+#include "../Shaders/Objects/VertexShader.hpp"
+#include "../Shaders/Objects/FragShader.hpp"
 
-#include "modelObject.h"
+#include "../ModelObjects/modelObject.h"
 
 class GameObject {
 public:

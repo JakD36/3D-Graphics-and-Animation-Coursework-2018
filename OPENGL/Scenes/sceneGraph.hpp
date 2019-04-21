@@ -16,12 +16,14 @@
 #include <gli/gli.hpp>
 
 #include <stdio.h>
-#include "modelObject.h"
-#include "modelObjectSingle.h"
-#include "modelObjectInst.h"
 #include <vector>
 
-#include "GameObject.hpp"
+#include "../ModelObjects/modelObject.h"
+#include "../ModelObjects/modelObjectSingle.h"
+#include "../ModelObjects/modelObjectInst.h"
+
+
+#include "../GameObject/GameObject.hpp"
 
 
 /* Abstract class for each scene to be based on

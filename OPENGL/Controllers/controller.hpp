@@ -16,9 +16,9 @@
 #include <GLM/gtx/transform.hpp>
 #include <stdio.h>
 
-#include "sceneGraph.hpp"
-#include "camera.hpp"
-#include "renderer.hpp"
+#include "../Scenes/sceneGraph.hpp"
+#include "../Views/camera.hpp"
+#include "../Views/renderer.hpp"
 
 /*
  Controller abstract class

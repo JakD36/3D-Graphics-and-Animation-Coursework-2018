@@ -300,18 +300,10 @@
 		041E177F20B05B9E002DE9F3 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				04DE66DC225840B000E93E31 /* ShaderPipeline.cpp */,
-				04DE66DD225840B000E93E31 /* ShaderPipeline.hpp */,
-				04DE66D622583E2200E93E31 /* VertexShader.cpp */,
-				04DE66D722583E2200E93E31 /* VertexShader.hpp */,
-				04DE66D922583E2F00E93E31 /* FragShader.cpp */,
-				04DE66DA22583E2F00E93E31 /* FragShader.hpp */,
-				041E178020B05B9E002DE9F3 /* vs_display.glsl */,
-				041E178520B05B9E002DE9F3 /* fs_display.glsl */,
-				041E178120B05B9E002DE9F3 /* vs.glsl */,
-				041E178220B05B9E002DE9F3 /* fs.glsl */,
-				041E178320B05B9E002DE9F3 /* vs_light.glsl */,
-				041E178420B05B9E002DE9F3 /* fs_light.glsl */,
+				041E17C720B05B9E002DE9F3 /* shaderLoader.hpp */,
+				041E17C820B05B9E002DE9F3 /* shaderLoader.cpp */,
+				0426D0162265260A00DA9DB9 /* Shaders */,
+				0426D015226525A300DA9DB9 /* Objects */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -389,15 +381,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		041E17C620B05B9E002DE9F3 /* Singletons */ = {
-			isa = PBXGroup;
-			children = (
-				041E17C720B05B9E002DE9F3 /* shaderLoader.hpp */,
-				041E17C820B05B9E002DE9F3 /* shaderLoader.cpp */,
-			);
-			path = Singletons;
-			sourceTree = "<group>";
-		};
 		041E17DC20B06744002DE9F3 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,11 +421,44 @@
 				04DE66C52258311800E93E31 /* GameObject */,
 				041E178620B05B9E002DE9F3 /* ModelObjects */,
 				045252A220B61B2600916340 /* Views */,
-				041E17C620B05B9E002DE9F3 /* Singletons */,
 				041E177F20B05B9E002DE9F3 /* Shaders */,
 				041E178F20B05B9E002DE9F3 /* Resources */,
 			);
 			path = OPENGL;
+			sourceTree = "<group>";
+		};
+		0426D0142265254E00DA9DB9 /* Framebuffer */ = {
+			isa = PBXGroup;
+			children = (
+				041E178020B05B9E002DE9F3 /* vs_display.glsl */,
+				041E178520B05B9E002DE9F3 /* fs_display.glsl */,
+			);
+			path = Framebuffer;
+			sourceTree = "<group>";
+		};
+		0426D015226525A300DA9DB9 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				04DE66DC225840B000E93E31 /* ShaderPipeline.cpp */,
+				04DE66DD225840B000E93E31 /* ShaderPipeline.hpp */,
+				04DE66D622583E2200E93E31 /* VertexShader.cpp */,
+				04DE66D722583E2200E93E31 /* VertexShader.hpp */,
+				04DE66D922583E2F00E93E31 /* FragShader.cpp */,
+				04DE66DA22583E2F00E93E31 /* FragShader.hpp */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		0426D0162265260A00DA9DB9 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				0426D0142265254E00DA9DB9 /* Framebuffer */,
+				041E178120B05B9E002DE9F3 /* vs.glsl */,
+				041E178220B05B9E002DE9F3 /* fs.glsl */,
+				041E178320B05B9E002DE9F3 /* vs_light.glsl */,
+				041E178420B05B9E002DE9F3 /* fs_light.glsl */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 		045252A220B61B2600916340 /* Views */ = {

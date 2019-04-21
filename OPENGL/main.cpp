@@ -12,11 +12,11 @@
 #include <GLM/gtx/transform.hpp>
 
 // My classes
-#include "sceneGraph.hpp"
-#include "scene1.hpp"
-#include "controller.hpp"
-#include "keyboardAndMouse.hpp"
-#include "renderer.hpp"
+#include "Scenes/sceneGraph.hpp"
+#include "Scenes/scene1.hpp"
+#include "Controllers/controller.hpp"
+#include "Controllers/keyboardAndMouse.hpp"
+#include "Views/renderer.hpp"
 
 
 using namespace std;
