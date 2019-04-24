@@ -1,13 +1,15 @@
 .DS_Store
-*.xcuserstate
-*.pbxproj
 
 # Ignore all C++ objects
 *.o
 
 .vscode
 Frameworks
+Include
+Build
 
-Resources
-Shaders
 3DG
+
+main
+
+Notes.txt

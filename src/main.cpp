@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <stdio.h>
+// #include <stdlib.h>
 
 // OpenGL - GLEW, GLFW and GLM
 #include <GL/glew.h>
@@ -58,8 +59,12 @@ int                     windowHeight = 480;         // height of the window
 controller* myController; // myController is global to be accessible through the callbacks
 renderer* myView; // is global to be accessible through callbacks
 
-int main()
+int main(int argc, char *argv[])
 {
+    // string path = argv[0];
+    // cout<<getenv("PWD")<<endl;
+
+
     // Intialise the program and the scene
     initOpenGL(); // Initialise OpenGL window,
     

@@ -1,72 +1,88 @@
 # Makefile
 # Specify what I need in the end. One single executable
 
-target = 3DG
-
-uOpt = -w -std=c++11
+target = app
+APP_NAME=GL
+uOpt = -w -std=c++11 -I Include/ 
 
 objects = main.o controller.o keyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o scene1.o sceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o shaderLoader.o Texture.o camera.o renderer.o
+
+all: clean_app $(target) package_app clean
 
 # Read this as divisionExecutable depends on ..
 $(target) : $(objects)
 # Need to specify how executable is produced, using below statement
-	g++ -lglfw.3.3 -lGLEW.2.1.0 -framework OpenGL $(objects) -std=c++11 -w -o $(target)
+	g++ -framework OpenGL $(objects) -std=c++11 -w -LFrameworks -lglfw3 -lGLEW -o main  -framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo
 
+#Frameworks/libGLEW.a Frameworks/libglfw3.a
 # main.o does not exist, so specify how it is produced.
 
-main.o: OPENGL/main.cpp 
-	g++ -c OPENGL/main.cpp $(uOpt)
+main.o: src/main.cpp 
+	g++ -c src/main.cpp $(uOpt)
 
-controller.o: OPENGL/Controllers/controller.cpp 
-	g++ -c OPENGL/Controllers/controller.cpp $(uOpt)
+controller.o: src/Controllers/controller.cpp 
+	g++ -c src/Controllers/controller.cpp $(uOpt)
 
-keyboardAndMouse.o: OPENGL/Controllers/keyboardAndMouse.cpp 
-	g++ -c OPENGL/Controllers/keyboardAndMouse.cpp $(uOpt)
+keyboardAndMouse.o: src/Controllers/keyboardAndMouse.cpp 
+	g++ -c src/Controllers/keyboardAndMouse.cpp $(uOpt)
 
-GameObject.o: OPENGL/GameObject/GameObject.cpp
-	g++ -c OPENGL/GameObject/GameObject.cpp $(uOpt)
+GameObject.o: src/GameObject/GameObject.cpp
+	g++ -c src/GameObject/GameObject.cpp $(uOpt)
 
-Mesh.o: OPENGL/Mesh/Mesh.cpp 
-	g++ -c OPENGL/Mesh/Mesh.cpp $(uOpt)
+Mesh.o: src/Mesh/Mesh.cpp 
+	g++ -c src/Mesh/Mesh.cpp $(uOpt)
 
-modelObject.o: OPENGL/ModelObjects/modelObject.cpp 
-	g++ -c OPENGL/ModelObjects/modelObject.cpp $(uOpt) 
+modelObject.o: src/ModelObjects/modelObject.cpp 
+	g++ -c src/ModelObjects/modelObject.cpp $(uOpt) 
 
-modelObjectInst.o: OPENGL/ModelObjects/modelObjectInst.cpp 
-	g++ -c OPENGL/ModelObjects/modelObjectInst.cpp $(uOpt) 
+modelObjectInst.o: src/ModelObjects/modelObjectInst.cpp 
+	g++ -c src/ModelObjects/modelObjectInst.cpp $(uOpt) 
 
-modelObjectSingle.o: OPENGL/ModelObjects/modelObjectSingle.cpp
-	g++ -c OPENGL/ModelObjects/modelObjectSingle.cpp $(uOpt) 
+modelObjectSingle.o: src/ModelObjects/modelObjectSingle.cpp
+	g++ -c src/ModelObjects/modelObjectSingle.cpp $(uOpt) 
 
-sceneGraph.o: OPENGL/Scenes/sceneGraph.cpp
-	g++ -c OPENGL/Scenes/sceneGraph.cpp $(uOpt) 
+sceneGraph.o: src/Scenes/sceneGraph.cpp
+	g++ -c src/Scenes/sceneGraph.cpp $(uOpt) 
 
-scene1.o: OPENGL/Scenes/scene1.cpp 
-	g++ -c OPENGL/Scenes/scene1.cpp $(uOpt) 
+scene1.o: src/Scenes/scene1.cpp 
+	g++ -c src/Scenes/scene1.cpp $(uOpt) 
 
-FragShader.o: OPENGL/Shaders/Objects/FragShader.cpp 
-	g++ -c OPENGL/Shaders/Objects/FragShader.cpp $(uOpt) 
+FragShader.o: src/Shaders/Objects/FragShader.cpp 
+	g++ -c src/Shaders/Objects/FragShader.cpp $(uOpt) 
 
-ShaderPipeline.o: OPENGL/Shaders/Objects/ShaderPipeline.cpp 
-	g++ -c OPENGL/Shaders/Objects/ShaderPipeline.cpp $(uOpt) 
+ShaderPipeline.o: src/Shaders/Objects/ShaderPipeline.cpp 
+	g++ -c src/Shaders/Objects/ShaderPipeline.cpp $(uOpt) 
 
-VertexShader.o: OPENGL/Shaders/Objects/VertexShader.cpp
-	g++ -c OPENGL/Shaders/Objects/VertexShader.cpp $(uOpt) 
+VertexShader.o: src/Shaders/Objects/VertexShader.cpp
+	g++ -c src/Shaders/Objects/VertexShader.cpp $(uOpt) 
 
-shaderLoader.o: OPENGL/Shaders/shaderLoader.cpp 
-	g++ -c OPENGL/Shaders/shaderLoader.cpp $(uOpt) 
+shaderLoader.o: src/Shaders/shaderLoader.cpp 
+	g++ -c src/Shaders/shaderLoader.cpp $(uOpt) 
 
-Texture.o: OPENGL/Texture/Texture.cpp 
-	g++ -c OPENGL/Texture/Texture.cpp $(uOpt) 
+Texture.o: src/Texture/Texture.cpp 
+	g++ -c src/Texture/Texture.cpp $(uOpt) 
 
-camera.o: OPENGL/Views/camera.cpp 
-	g++ -c OPENGL/Views/camera.cpp $(uOpt) 
+camera.o: src/Views/camera.cpp 
+	g++ -c src/Views/camera.cpp $(uOpt) 
 
-renderer.o: OPENGL/Views/renderer.cpp 
-	g++ -c OPENGL/Views/renderer.cpp $(uOpt) 
+renderer.o: src/Views/renderer.cpp 
+	g++ -c src/Views/renderer.cpp $(uOpt) 
 
-Material.o: OPENGL/Material/Material.cpp 
-	g++ -c OPENGL/Material/Material.cpp $(uOpt)
+Material.o: src/Material/Material.cpp 
+	g++ -c src/Material/Material.cpp $(uOpt)
+
+clean_app:
+	rm -r "./Build/$(APP_NAME).app/"
+	
+package_app:
+	mkdir -p "./Build/$(APP_NAME).app"/Contents/{MacOS,Resources}
+	
+	# Copy any Resources folders
+	cp -r "Resources/" "./Build/$(APP_NAME).app/Contents/Resources/"
+	
+	cp Info.plist "./Build/$(APP_NAME).app/Contents/"
+	sed -e "s/APP_NAME/$(APP_NAME)/g" -i "" "./Build/$(APP_NAME).app/Contents/Info.plist"
+	cp ./main "./Build/$(APP_NAME).app/Contents/MacOS/$(APP_NAME)"
 
 clean:
 	rm *.o
