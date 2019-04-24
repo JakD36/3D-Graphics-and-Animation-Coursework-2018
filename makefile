@@ -72,7 +72,7 @@ Material.o: src/Material/Material.cpp
 	g++ -c src/Material/Material.cpp $(uOpt)
 
 clean_app:
-	rm -r "./Build/$(APP_NAME).app/"
+	rm -rf "./Build/$(APP_NAME).app/"
 	
 package_app:
 	mkdir -p "./Build/$(APP_NAME).app"/Contents/{MacOS,Resources}
