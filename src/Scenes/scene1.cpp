@@ -25,9 +25,9 @@ scene1::scene1(){
     
     // Torch
     torchObj = new modelObjectSingle();
-    torchObj->initModel("Resources/newTorch.obj","Shaders/vs.glsl","Shaders/fs.glsl");
-    torchObj->initTexture("Resources/newTorchCol.ktx");
-    torchObj->loadMat("Resources/newTorch.mtl");
+    torchObj->initModel("Set/newTorch.obj","Shaders/vs.glsl","Shaders/fs.glsl");
+    torchObj->initTexture("Textures/newTorchCol.ktx");
+    torchObj->loadMat("Materials/newTorch.mtl");
     Objs.push_back(torchObj); //Add objects to vector Objs to be rendered!
                               // This is the most important part, this allows us to just loop through that vector and render each one.
     torchObj->position = playerPosition + posOnSphere(sphereRadius,yawOffset,-pitchOffset);
@@ -36,25 +36,25 @@ scene1::scene1(){
     
     // Front of room
     front = new modelObjectSingle();
-    front->initModel("Resources/front.obj","Shaders/vs.glsl","Shaders/fs.glsl");
-    front->initTexture("Resources/front.ktx");
-    front->loadMat("Resources/front.mtl");
+    front->initModel("Set/front.obj","Shaders/vs.glsl","Shaders/fs.glsl");
+    front->initTexture("Textures/front.ktx");
+    front->loadMat("Materials/front.mtl");
     Objs.push_back(front); //Add objects to vector Objs to be rendered!
     
     // Back wall
     back = new modelObjectSingle();
-    back->initModel("Resources/back.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    back->initTexture("Resources/back.ktx");
-    back->loadMat("Resources/back.mtl");
+    back->initModel("Set/back.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    back->initTexture("Textures/back.ktx");
+    back->loadMat("Materials/back.mtl");
     back->rotation.y = 180.0f;
     back->position = glm::vec3(0.0f,2.0f,3.0f);
     Objs.push_back(back); //Add objects to vector Objs to be rendered!
     
     // Roof
     roof = new modelObjectSingle();
-    roof->initModel("Resources/roof.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    roof->initTexture("Resources/roof.ktx");
-    roof->loadMat("Resources/roof.mtl");
+    roof->initModel("Set/roof.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    roof->initTexture("Textures/roof.ktx");
+    roof->loadMat("Materials/roof.mtl");
     roof->position.y = 2.5f;
     Objs.push_back(roof); //Add objects to vector Objs to be rendered!
     
@@ -62,9 +62,9 @@ scene1::scene1(){
     // For models to be instanced its a little different, we still use its constructor, init model, texture and load the material
     // but for the position, rotations and scale we need to push back each to create a new instance of the item
     beam = new modelObjectInst();
-    beam->initModel("Resources/beam.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    beam->initTexture("Resources/beam.ktx");
-    beam->loadMat("Resources/beam.mtl");
+    beam->initModel("Set/beam.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    beam->initTexture("Textures/beam.ktx");
+    beam->loadMat("Materials/beam.mtl");
     
     beam->position.push_back(glm::vec3(0.0f,2.61f,0.0f));
     beam->rotation.push_back(glm::vec3(0.0f,0.0f,0.0f));
@@ -82,9 +82,9 @@ scene1::scene1(){
     
     // Plank
     planks = new modelObjectInst();
-    planks->initModel("Resources/plank.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    planks->initTexture("Resources/plank.ktx");
-    planks->loadMat("Resources/plank.mtl");
+    planks->initModel("Set/plank.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    planks->initTexture("Textures/plank.ktx");
+    planks->loadMat("Materials/plank.mtl");
     
     // Plank 1
     planks->position.push_back(glm::vec3(2.2f,1.5f,-3.0f));
@@ -175,16 +175,16 @@ scene1::scene1(){
     
     // Floor
     floor = new modelObjectSingle();
-    floor->initModel("Resources/floor.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    floor->initTexture("Resources/floor.ktx");
-    floor->loadMat("Resources/floor.mtl");
+    floor->initModel("Set/floor.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    floor->initTexture("Textures/floor.ktx");
+    floor->loadMat("Materials/floor.mtl");
     Objs.push_back(floor); //Add objects to vector Objs to be rendered!
     
     // Wall
     wall = new modelObjectInst();
-    wall->initModel("Resources/wall.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    wall->initTexture("Resources/wall.ktx");
-    wall->loadMat("Resources/wall.mtl");
+    wall->initModel("Set/wall.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    wall->initTexture("Textures/wall.ktx");
+    wall->loadMat("Materials/wall.mtl");
     
     // Wall 1
     wall->position.push_back(glm::vec3(3.0f,1.25f,0.0f));
@@ -198,29 +198,29 @@ scene1::scene1(){
     
     //Lightbulb
     bulb = new modelObjectSingle();
-    bulb->initModel("Resources/bulb.obj", "Shaders/vs_light.glsl", "Shaders/fs_light.glsl");
-    bulb->initTexture("Resources/bulb.ktx");
-    bulb->loadMat("Resources/bulb.mtl");
+    bulb->initModel("Set/bulb.obj", "Shaders/vs_light.glsl", "Shaders/fs_light.glsl");
+    bulb->initTexture("Textures/bulb.ktx");
+    bulb->loadMat("Materials/bulb.mtl");
     Objs.push_back(bulb); //Add objects to vector Objs to be rendered!
     
     wire = new  modelObjectSingle();
-    wire->initModel("Resources/wire.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    wire->initTexture("Resources/wire.ktx");
-    wire->loadMat("Resources/wire.mtl");
+    wire->initModel("Set/wire.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    wire->initTexture("Textures/wire.ktx");
+    wire->loadMat("Materials/wire.mtl");
     Objs.push_back(wire); //Add objects to vector Objs to be rendered!
     
     table = new modelObjectSingle();
-    table->initModel("Resources/table.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    table->initTexture("Resources/table.ktx");
-    table->loadMat("Resources/table.mtl");
+    table->initModel("Set/table.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    table->initTexture("Textures/table.ktx");
+    table->loadMat("Materials/table.mtl");
     table->position = glm::vec3(1.8f,1.0f,1.8f);
     table->rotation.y = 45;
     Objs.push_back(table); //Add objects to vector Objs to be rendered!
     
     lamp = new modelObjectSingle();
-    lamp->initModel("Resources/lamp.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
-    lamp->initTexture("Resources/lamp.ktx");
-    lamp->loadMat("Resources/lamp.mtl");
+    lamp->initModel("Set/lamp.obj", "Shaders/vs.glsl", "Shaders/fs.glsl");
+    lamp->initTexture("Textures/lamp.ktx");
+    lamp->loadMat("Materials/lamp.mtl");
     lamp->position = glm::vec3(2.4f,1.025f,1.6f);
     lamp->rotation.y = 120;
     Objs.push_back(lamp); //Add objects to vector Objs to be rendered!

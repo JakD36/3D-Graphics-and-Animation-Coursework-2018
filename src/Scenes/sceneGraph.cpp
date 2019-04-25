@@ -11,15 +11,15 @@
 // Default constructor
 sceneGraph::sceneGraph(){
     playerPosition = glm::vec3(0.0f,1.6f,0.0f);
-    string meshPath = "Resources/newTorch.obj";
-    string matPath = "Resources/newTorch.mtl";
-    string texPath = "Resources/newTorchCol.ktx";
+    string meshPath = "Set/newTorch.obj";
+    string matPath = "Materials/newTorch.mtl";
+    string texPath = "Textures/newTorchCol.ktx";
     string vsPath = "Shaders/vs.glsl";
     string fsPath = "Shaders/fs.glsl";
     
-    Mesh* mesh = new Mesh("Resources/newTorch.obj");
-    Material* mat = new Material("Resources/newTorch.mtl");
-    Texture* tex = new Texture("Resources/newTorchCol.ktx");
+    Mesh* mesh = new Mesh("Set/newTorch.obj");
+    Material* mat = new Material("Materials/newTorch.mtl");
+    Texture* tex = new Texture("Textures/newTorchCol.ktx");
     
     VertexShader* vs = new VertexShader("Shaders/vs.glsl");
     FragShader* fs = new FragShader("Shaders/fs.glsl");
