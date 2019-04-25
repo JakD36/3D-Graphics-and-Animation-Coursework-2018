@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+from PIL import Image
+import os, sys
+
+fileSuffix = [
+        "_512x512@2x",
+        "_512x512",
+        "_256x256@2x",
+        "_256x256",
+        "_128x128@2x",
+        "_128x128",
+        "_32x32@2x",
+        "_32x32",
+        "_16x16@2x",
+        "_16x16"
+    ]
+divider = [
+    1,
+    2,
+    2,
+    4,
+    4,
+    8,
+    16,
+    32,
+    32,
+    64
+]
+ext = ".png"
+
+def convert(file):
+    im = Image.open(file+ext)
+    
+    os.makedirs("IconBuilder.iconset",exist_ok=True)
+
+    for n in range(0,10):
+        imResize = im.resize( (1024//divider[n], 1024//divider[n]), Image.ANTIALIAS)    # best down-sizing filter
+        imResize.save(os.path.join("IconBuilder.iconset",file) + fileSuffix[n] + ext)
+
+    os.system("iconutil -c icns iconbuilder.iconset")
+    os.rename("iconbuilder.icns",file + ".icns")
+    
+    for n in os.listdir("IconBuilder.iconset"):
+        os.remove(os.path.join("IconBuilder.iconset",n))
+    os.removedirs("IconBuilder.iconset")
+
+def main(argv=None):
+    if argv == None:
+        argv = sys.argv
+    
+    if len(argv) < 2:
+        print("Please provide the name of at least one png.")
+        sys.exit(2)
+    
+    for n in range(1,len(argv)):
+        convert(argv[n])
+    
+if __name__ == "__main__":
+    main()

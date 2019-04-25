@@ -8,8 +8,8 @@
     <string>com.jack-davidson.APP_NAME</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
-	<!-- <key>NSPrincipalClass</key>
-	<string>NSApplication</string> -->
+	<key>CFBundleIconFile</key>
+    <string>icon</string>
     <key>CFBundleName</key>
     <string>APP_NAME</string>
     <key>CFBundlePackageType</key>

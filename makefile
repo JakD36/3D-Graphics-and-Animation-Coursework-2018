@@ -77,6 +77,9 @@ clean_app:
 package_app:
 	mkdir -p "./Build/$(APP_NAME).app"/Contents/{MacOS,Resources}
 	
+	./IconBuilder icon
+	mv icon.icns "./Build/$(APP_NAME).app/Contents/Resources/"
+	
 	# Copy any Resources folders
 	cp -r "Resources/" "./Build/$(APP_NAME).app/Contents/Resources/"
 	
@@ -86,3 +89,4 @@ package_app:
 
 clean:
 	rm *.o
+	rm main
