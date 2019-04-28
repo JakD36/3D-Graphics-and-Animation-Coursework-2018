@@ -23,7 +23,7 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "../Shaders/shaderLoader.hpp"
+#include "../Shaders/ShaderLoader.hpp"
 
 class Texture{
 public:

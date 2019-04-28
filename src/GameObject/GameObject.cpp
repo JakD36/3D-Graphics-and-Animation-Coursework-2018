@@ -87,6 +87,6 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     // Once the final model matrix has been calculated pass to the shaders through the uniforms to do the final calculations
     glUniformMatrix4fv(glGetUniformLocation(m_shaderPipeline->m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(m_shaderPipeline->m_program,"viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
-    glDrawArrays(GL_TRIANGLES, 0, m_mesh->out_vertices.size()); // Draw vertices, need to tell it how many vertices to draw so third argument is the out.vertices.size.
+    glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertices.size()); // Draw vertices, need to tell it how many vertices to draw so third argument is the out.vertices.size.
     
 }

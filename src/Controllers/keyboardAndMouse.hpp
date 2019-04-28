@@ -6,20 +6,20 @@
 //  Copyright © 2018 Jack Davidson. All rights reserved.
 //
 
-#ifndef keyboardAndMouse_hpp
-#define keyboardAndMouse_hpp
+#ifndef KeyboardAndMouse_hpp
+#define KeyboardAndMouse_hpp
 
 #include <stdio.h>
-#include "controller.hpp"
+#include "Controller.hpp"
 
-class keyboardAndMouse: public controller{
+class KeyboardAndMouse: public Controller{
 public:
-    keyboardAndMouse(GLFWwindow* window, sceneGraph* model, renderer* view);
+    KeyboardAndMouse(GLFWwindow* window, SceneGraph* model, Renderer* view);
     
-    virtual void onKey(GLFWwindow* window, int key, int scancode, int action, int mods);
-    virtual void onMouseMove(GLFWwindow* window, double x, double y);
-    virtual void onMouseButton(GLFWwindow* window, int button, int action, int mods);
-    virtual void onMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
+    virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods);
+    virtual void OnMouseMove(GLFWwindow* window, double x, double y);
+    virtual void OnMouseButton(GLFWwindow* window, int button, int action, int mods);
+    virtual void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
 };
 
 #endif /* keyboardAndMouse_hpp */

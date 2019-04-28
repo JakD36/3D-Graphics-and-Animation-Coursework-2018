@@ -1,22 +1,22 @@
 //
-//  renderer.cpp
+//  Renderer.cpp
 //  3D Graphics and Animation Coursework
 //
 //  Created by Jack Davidson on 23/05/2018.
 //  Copyright © 2018 Jack Davidson. All rights reserved.
 //
 
-#include "renderer.hpp"
+#include "Renderer.hpp"
 
 static bool init = false;
 
 // Return the camera for use outwith this object, to set/get camera position.
-camera* renderer::getCamera(){
+Camera* Renderer::GetCamera(){
     return p_camera;
 }
 
 
-void renderer::setViewport(float x, float y, float width, float height){
+void Renderer::SetViewport(float x, float y, float width, float height){
     m_viewportX = x;
     m_viewportY = y;
     m_viewportWidth = width;
@@ -27,7 +27,7 @@ void renderer::setViewport(float x, float y, float width, float height){
     m_proj_matrix =  glm::perspective(glm::radians(50.0f), m_aspect, 0.1f, 1000.0f);
 }
 
-void renderer::setWindowDimensions(int windowWidth, int windowHeight){
+void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
     this->m_windowWidth = windowWidth;
     this->m_windowHeight = windowHeight;
     
@@ -35,14 +35,14 @@ void renderer::setWindowDimensions(int windowWidth, int windowHeight){
     // Update viewport so its size is appropriate for the new window!
     int width, height;
     glfwGetFramebufferSize(p_window, &width, &height);
-//    setViewport(width,height);
+//    SetViewport(width,height);
     m_aspect = (float)width / (float)height;
     m_proj_matrix = glm::perspective(glm::radians(50.0f),m_aspect,0.1f,1000.0f);
 }
 
 
-// Initialise the renderer for this viewport
-renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
+// Initialise the Renderer for this viewport
+Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
     
     // Assign the variables to the object
     this->p_scene = scene;
@@ -115,7 +115,7 @@ renderer::renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera){
 }
 
 
-void renderer::render(){
+void Renderer::Render(){
     
     // So now to render to the framebuffer texture instead of screen
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer);
@@ -139,18 +139,18 @@ void renderer::render(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     
-    glm::vec3 camPosition = p_camera->getPosition();
+    glm::vec3 camPosition = p_camera->GetPosition();
     
     // To create our camera, we use the lookAt function generate the viewMatrix
     // It takes 3 inputs, the position of the camera, the point in space it is facing and which direction is up, so its orientated properly
     glm::mat4 viewMatrix = glm::lookAt(camPosition,                       // eye
-                                       camPosition+p_camera->getFront(),           // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
+                                       camPosition+p_camera->GetFront(),           // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
                                        glm::vec3(0.0f, 1.0f, 0.0f));    // up
     
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
-    vector<modelObject*> Objs = p_scene->getObjs();
-    lightStruct* p_lights = p_scene->getLights();
+    vector<modelObject*> Objs = p_scene->GetObjs();
+    lightStruct* p_lights = p_scene->GetLights();
     lightStruct lights[LIGHTSN];
     for(int n = 0; n < LIGHTSN; n++){
         lights[n] = *(p_lights+n);

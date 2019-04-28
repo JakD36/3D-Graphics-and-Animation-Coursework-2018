@@ -1,26 +1,26 @@
 //
-//  renderer.hpp
+//  Renderer.hpp
 //  3D Graphics and Animation Coursework
 //
 //  Created by Jack Davidson on 23/05/2018.
 //  Copyright © 2018 Jack Davidson. All rights reserved.
 //
 
-#ifndef renderer_hpp
-#define renderer_hpp
+#ifndef Renderer_hpp
+#define Renderer_hpp
 
 #include <stdio.h>
 #include <vector>
 
-#include "../Scenes/sceneGraph.hpp"
-#include "camera.hpp"
+#include "../Scenes/SceneGraph.hpp"
+#include "Camera.hpp"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "../Shaders/Objects/ShaderPipeline.hpp"
+#include "../Shaders/ShaderPipeline.hpp"
 
 using namespace std;
 
@@ -28,7 +28,7 @@ using namespace std;
 /// Renderer class
 /// Renders the scene provided, from the point of view of the camera assigned to the object.
 ///
-class renderer{
+class Renderer{
 private:
     GLFWwindow*       p_window; // The window the viewport is rendering to
     
@@ -62,8 +62,8 @@ private:
     
     ShaderPipeline*   p_framebufferPipeline;
     
-    camera*           p_camera;
-    sceneGraph*       p_scene;
+    Camera*           p_camera;
+    SceneGraph*       p_scene;
     
     int m_windowWidth, m_windowHeight; // The current windows width and height
     
@@ -73,19 +73,19 @@ private:
     glm::vec4 m_clearColour = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
     
 public:
-    renderer(GLFWwindow* window, sceneGraph* scene, camera* viewCamera); // Requires a camera to view the scene, a window to render to, and a scene to draw
-    void render(); // Render the scene on screen
+    Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera); // Requires a camera to view the scene, a window to render to, and a scene to draw
+    void Render(); // Render the scene on screen
     
     // Accessors
-    camera* getCamera();
+    Camera* GetCamera();
     
     // Mutators
     // Allows for starting a new scene, changing environments, changing levels. Simply swap the scene
-    void changeScene(sceneGraph* scene); // FIX: Need to implement some form of defensive programming to make sure a scene is actually provided
+    void ChangeScene(SceneGraph* scene); // FIX: Need to implement some form of defensive programming to make sure a scene is actually provided
     
-    void setWindowDimensions(int windowWidth, int windowHeight); // Used to update the renderer the window has changed size
+    void SetWindowDimensions(int windowWidth, int windowHeight); // Used to update the Renderer the window has changed size
 //    For use with creating multiple viewports within 1 window, currently viewports are a bit off 
-    void setViewport(float x, float y, float width, float height); 
+    void SetViewport(float x, float y, float width, float height); 
 };
 
-#endif /* renderer_hpp */
+#endif /* Renderer_hpp */

@@ -1,24 +1,24 @@
 //
-//  shaderLoader.cpp
+//  ShaderLoader.cpp
 //  3D Graphics and Animation Coursework
 //
 //  Created by Jack Davidson on 19/05/2018.
 //  Copyright © 2018 Jack Davidson. All rights reserved.
 //
 
-#include "shaderLoader.hpp"
+#include "ShaderLoader.hpp"
 
-shaderLoader::shaderLoader(){ // Default constructor!
+ShaderLoader::ShaderLoader(){ // Default constructor!
 }
 
-shaderLoader* shaderLoader::getInstance(){
-    if(instance == NULL){
-        instance = new shaderLoader();
+ShaderLoader* ShaderLoader::GetInstance(){
+    if(m_instance == NULL){
+        m_instance = new ShaderLoader();
     }
-    return instance;
+    return m_instance;
 }
 
-string shaderLoader::readShader(string fileName) {
+string ShaderLoader::ReadShader(string fileName) {
     fstream file;
     string output ="";          // String we will read each individual line of the shader too
     string wholeCode ="";       // We can append each line to this string so that the entire shader can be output,
@@ -46,7 +46,7 @@ string shaderLoader::readShader(string fileName) {
 
 // Taken from F21GA 3D Graphics and Animation Labs
 
-void shaderLoader::checkErrorShader(GLuint shader) {
+void ShaderLoader::CheckErrorShader(GLuint shader) {
     // Get log lenght
     GLint maxLength;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);

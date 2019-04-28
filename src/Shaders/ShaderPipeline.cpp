@@ -16,5 +16,4 @@ ShaderPipeline::ShaderPipeline(VertexShader* vs, FragShader* fs){
     glAttachShader(m_program, fs->m_shader);
     
     glLinkProgram(m_program);
-//    glUseProgram(m_program);
 }

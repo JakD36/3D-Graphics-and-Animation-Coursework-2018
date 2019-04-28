@@ -18,27 +18,27 @@ modelObject::~modelObject(){
 
 void modelObject::initModel(string objPath,string vsPath,string fsPath){
     
-    shaderLoader* shaderInst = shaderLoader::getInstance(); // Get the instance of the singleton to load the shader
+    ShaderLoader* shaderInst = ShaderLoader::GetInstance(); // Get the instance of the singleton to load the shader
     
     program = glCreateProgram();                    // Create the program, for this model, to attach the shaders to
     
     // Load, compile and attach the provided to the program
     // Vertex shader
-    string vs_text = shaderInst->readShader(vsPath);
+    string vs_text = shaderInst->ReadShader(vsPath);
     const char * vs_source = vs_text.c_str();
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vs, 1, &vs_source, NULL);
     glCompileShader(vs);
-    shaderInst->checkErrorShader(vs);
+    shaderInst->CheckErrorShader(vs);
     glAttachShader(program, vs);
     
     // Fragment shader
-    string fs_text = shaderInst->readShader(fsPath);
+    string fs_text = shaderInst->ReadShader(fsPath);
     const char * fs_source = fs_text.c_str();
     GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fs, 1, &fs_source, NULL);
     glCompileShader(fs);
-    shaderInst->checkErrorShader(fs);
+    shaderInst->CheckErrorShader(fs);
     glAttachShader(program, fs);
     
     glGenVertexArrays(1,&vao);

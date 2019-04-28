@@ -23,8 +23,8 @@ Mesh::Mesh(string meshName){
     
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer[0]);
     glBufferData(GL_ARRAY_BUFFER,                       // store the vertices in the first part of the buffer
-                 out_vertices.size()*sizeof(glm::vec3), // vertices size * size of vec3 tells us how much space in the buffer to allocate
-                 &out_vertices[0],                      // Where to start in the vertices vector
+                 m_vertices.size()*sizeof(glm::vec3), // vertices size * size of vec3 tells us how much space in the buffer to allocate
+                 &m_vertices[0],                      // Where to start in the vertices vector
                  GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(0);
@@ -32,8 +32,8 @@ Mesh::Mesh(string meshName){
     // Do the same for uvs
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
     glBufferData(GL_ARRAY_BUFFER,
-                 out_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates, so use size of vec2 for space allocation
-                 &out_uvs[0],
+                 m_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates, so use size of vec2 for space allocation
+                 &m_uvs[0],
                  GL_STATIC_DRAW);
     
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
@@ -42,8 +42,8 @@ Mesh::Mesh(string meshName){
     // Same again for normals
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
     glBufferData(GL_ARRAY_BUFFER,
-                 out_normals.size()*sizeof(glm::vec3),
-                 &out_normals[0],
+                 m_normals.size()*sizeof(glm::vec3),
+                 &m_normals[0],
                  GL_STATIC_DRAW);
     
     glVertexAttribPointer(2, 3 , GL_FLOAT, GL_FALSE, 0, NULL);
@@ -201,15 +201,15 @@ bool Mesh::Load(string meshName){
             
             unsigned int vertexIndex = vertexIndices[i]; // Creates an index and assigns 2 above the current place in loop so we start at the end
             glm::vec3 vertex = tmpV[vertexIndex-1]; // stores the tmpV and subtracts 1 from index as C++ starts at 0 not 1
-            out_vertices.push_back(vertex); // this adds the position to the back of the vertex
+            m_vertices.push_back(vertex); // this adds the position to the back of the vertex
             
             vertexIndex = vertexIndices[i+1]; // so we get the index for the middle vertex by moving up 1 indices
             vertex = tmpV[vertexIndex-1];
-            out_vertices.push_back(vertex); // this makes the position of our new vertex
+            m_vertices.push_back(vertex); // this makes the position of our new vertex
             
             vertexIndex = vertexIndices[i+2]; // finally indexes the first value in the 3 and adds it to the back of the 3 completing reverse of batch
             vertex = tmpV[vertexIndex-1];
-            out_vertices.push_back(vertex); // this makes the position of our new vertex
+            m_vertices.push_back(vertex); // this makes the position of our new vertex
         }
         
         // Repeats the above done for vertices for both normals and uvs if we have them
@@ -220,15 +220,15 @@ bool Mesh::Load(string meshName){
                 
                 unsigned int normalIndex = normalIndices[i];
                 glm::vec3 normal = tmpVn[normalIndex-1];
-                out_normals.push_back(normal);
+                m_normals.push_back(normal);
                 
                 normalIndex = normalIndices[i+1];
                 normal = tmpVn[normalIndex-1];
-                out_normals.push_back(normal);
+                m_normals.push_back(normal);
                 
                 normalIndex = normalIndices[i+2];
                 normal = tmpVn[normalIndex-1];
-                out_normals.push_back(normal);
+                m_normals.push_back(normal);
             }
         }
         if(!tmpVt.empty()){
@@ -238,15 +238,15 @@ bool Mesh::Load(string meshName){
                 
                 unsigned int uvIndex = uvIndices[i];
                 glm::vec2 uv = tmpVt[uvIndex-1];
-                out_uvs.push_back(uv);
+                m_uvs.push_back(uv);
                 
                 uvIndex = uvIndices[i+1];
                 uv = tmpVt[uvIndex-1];
-                out_uvs.push_back(uv);
+                m_uvs.push_back(uv);
                 
                 uvIndex = uvIndices[i+2];
                 uv = tmpVt[uvIndex-1];
-                out_uvs.push_back(uv);
+                m_uvs.push_back(uv);
             }
         }
         /*// Now to go through vertex, uv and normal and push each to the vectors that will be outputted from the object

@@ -6,8 +6,8 @@
 //  Copyright © 2018 Jack Davidson. All rights reserved.
 //
 
-#ifndef camera_hpp
-#define camera_hpp
+#ifndef Camera_hpp
+#define Camera_hpp
 
 #include <stdio.h>
 
@@ -16,32 +16,32 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
 
+#include "../Utils/VectorUtils.hpp"
 
 /*
  Camara class
  containing the cameras position and direction it is facing 
 */
-class camera{
+class Camera{
 protected:
-    glm::vec3 position;                 // Position of the camera in the world space
-    glm::vec3 front;                    // Direction the camera is facing
-    GLfloat yaw=0, pitch=0;             // The yaw and pitch angles to be calculated from the change in mouse position
+    glm::vec3 m_position;                 // Position of the camera in the world space
+    glm::vec3 m_front;                    // Direction the camera is facing
+    GLfloat m_yaw=0, m_pitch=0;             // The yaw and pitch angles to be calculated from the change in mouse position
 public:
-    camera();                                               // Default constructor
-    camera(glm::vec3 position, GLfloat yaw, GLfloat pitch); // Constructor to define position and direction facing
+    Camera();                                               // Default constructor
+    Camera(glm::vec3 position, GLfloat yaw, GLfloat pitch); // Constructor to define position and direction facing
     
     
     // Accessors
-    glm::vec3 getPosition();
-    glm::vec3 getFront();
-    GLfloat getYaw();
-    GLfloat getPitch();
+    glm::vec3 GetPosition();
+    glm::vec3 GetFront();
+    GLfloat GetYaw();
+    GLfloat GetPitch();
     
     // Mutators 
-    void setPosition(glm::vec3 newPosition);
-    void setDirection(GLfloat yaw, GLfloat pitch);
-    glm::vec3 posOnSphere(float radius,float yaw,float pitch);
+    void SetPosition(glm::vec3 newPosition);
+    void SetDirection(GLfloat yaw, GLfloat pitch);
 };
 
 
-#endif /* camera_hpp */
+#endif /* Camera_hpp */

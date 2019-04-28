@@ -23,20 +23,17 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "../Shaders/shaderLoader.hpp"
+#include "../Shaders/ShaderLoader.hpp"
 
 class Mesh{
     
 public:
-    std::vector < glm::vec3 > out_vertices;         // Vertices of our objects mesh
-    std::vector < glm::vec2 > out_uvs;              // uvs coordinates for texture mapping
-    std::vector < glm::vec3 > out_normals;          // Normals to each plane in our mesh
+    std::vector < glm::vec3 > m_vertices;         // Vertices of our objects mesh
+    std::vector < glm::vec2 > m_uvs;              // uvs coordinates for texture mapping
+    std::vector < glm::vec3 > m_normals;          // Normals to each plane in our mesh
     GLuint          m_buffer[3];                      // Buffer to store the vertices, uvs and the normals for the model
     GLuint          m_vao; 
     bool Load(string meshName);
-    
-    
-    
 
     Mesh(string meshName);
 };

@@ -6,7 +6,7 @@ APP_NAME=GL
 FLAGS = -w -std=c++11
 BUILDDIR = Build
 
-objects = main.o controller.o keyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o scene1.o sceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o shaderLoader.o Texture.o camera.o renderer.o
+objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o
 
 all: clean_app $(target) package_app clean
 
@@ -29,10 +29,10 @@ $(target) : $(objects)
 main.o: src/main.cpp 
 	g++ -c src/main.cpp $(FLAGS) -o $(BUILDDIR)/main.o
 
-controller.o: src/Controllers/controller.cpp 
-	g++ -c src/Controllers/controller.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/controller.o
+Controller.o: src/Controllers/Controller.cpp 
+	g++ -c src/Controllers/Controller.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Controller.o
 
-keyboardAndMouse.o: src/Controllers/keyboardAndMouse.cpp 
+KeyboardAndMouse.o: src/Controllers/keyboardAndMouse.cpp 
 	g++ -c src/Controllers/keyboardAndMouse.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/keyboardAndMouse.o
 
 GameObject.o: src/GameObject/GameObject.cpp
@@ -50,32 +50,32 @@ modelObjectInst.o: src/ModelObjects/modelObjectInst.cpp
 modelObjectSingle.o: src/ModelObjects/modelObjectSingle.cpp
 	g++ -c src/ModelObjects/modelObjectSingle.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/modelObjectSingle.o
 
-sceneGraph.o: src/Scenes/sceneGraph.cpp
-	g++ -c src/Scenes/sceneGraph.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/sceneGraph.o
+SceneGraph.o: src/Scenes/sceneGraph.cpp
+	g++ -c src/Scenes/SceneGraph.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/SceneGraph.o
 
-scene1.o: src/Scenes/scene1.cpp 
-	g++ -c src/Scenes/scene1.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/scene1.o
+Scene1.o: src/Scenes/scene1.cpp 
+	g++ -c src/Scenes/Scene1.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Scene1.o
 
-FragShader.o: src/Shaders/Objects/FragShader.cpp 
-	g++ -c src/Shaders/Objects/FragShader.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/FragShader.o
+FragShader.o: src/Shaders/FragShader.cpp 
+	g++ -c src/Shaders/FragShader.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/FragShader.o
 
-ShaderPipeline.o: src/Shaders/Objects/ShaderPipeline.cpp 
-	g++ -c src/Shaders/Objects/ShaderPipeline.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/ShaderPipeline.o
+ShaderPipeline.o: src/Shaders/ShaderPipeline.cpp 
+	g++ -c src/Shaders/ShaderPipeline.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/ShaderPipeline.o
 
-VertexShader.o: src/Shaders/Objects/VertexShader.cpp
-	g++ -c src/Shaders/Objects/VertexShader.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/VertexShader.o
+VertexShader.o: src/Shaders/VertexShader.cpp
+	g++ -c src/Shaders/VertexShader.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/VertexShader.o
 
-shaderLoader.o: src/Shaders/shaderLoader.cpp 
-	g++ -c src/Shaders/shaderLoader.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/shaderLoader.o
+ShaderLoader.o: src/Shaders/shaderLoader.cpp 
+	g++ -c src/Shaders/ShaderLoader.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/ShaderLoader.o
 
 Texture.o: src/Texture/Texture.cpp 
 	g++ -c src/Texture/Texture.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Texture.o
 
-camera.o: src/Views/camera.cpp 
-	g++ -c src/Views/camera.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/camera.o
+Camera.o: src/Views/camera.cpp 
+	g++ -c src/Views/Camera.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Camera.o
 
-renderer.o: src/Views/renderer.cpp 
-	g++ -c src/Views/renderer.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/renderer.o
+Renderer.o: src/Views/Renderer.cpp 
+	g++ -c src/Views/Renderer.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Renderer.o
 
 Material.o: src/Material/Material.cpp 
 	g++ -c src/Material/Material.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Material.o

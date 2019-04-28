@@ -26,9 +26,9 @@ using namespace std;
 #include "../Mesh/Mesh.hpp"
 #include "../Material/Material.hpp"
 #include "../Texture/Texture.hpp"
-#include "../Shaders/Objects/ShaderPipeline.hpp"
-#include "../Shaders/Objects/VertexShader.hpp"
-#include "../Shaders/Objects/FragShader.hpp"
+#include "../Shaders/ShaderPipeline.hpp"
+#include "../Shaders/VertexShader.hpp"
+#include "../Shaders/FragShader.hpp"
 
 #include "../ModelObjects/modelObject.h"
 

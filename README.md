@@ -49,8 +49,8 @@ g++ -c src/Shaders/Objects/ShaderPipeline.cpp -w -std=c++11 -I Include/
 g++ -c src/Shaders/shaderLoader.cpp -w -std=c++11 -I Include/  
 g++ -c src/Texture/Texture.cpp -w -std=c++11 -I Include/  
 g++ -c src/Views/camera.cpp -w -std=c++11 -I Include/  
-g++ -c src/Views/renderer.cpp -w -std=c++11 -I Include/  
-g++ -framework OpenGL main.o controller.o keyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o scene1.o sceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o shaderLoader.o Texture.o camera.o renderer.o -std=c++11 -w -LFrameworks -lglfw3 -lGLEW -o main  -framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo
+g++ -c src/Views/Renderer.cpp -w -std=c++11 -I Include/  
+g++ -framework OpenGL main.o controller.o keyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o scene1.o sceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o shaderLoader.o Texture.o camera.o Renderer.o -std=c++11 -w -LFrameworks -lglfw3 -lGLEW -o main  -framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo
 mkdir -p "./Build/GL.app"/Contents/{MacOS,Resources}
 # Copy any Resources folders
 cp -r "Resources/" "./Build/GL.app/Contents/Resources/"

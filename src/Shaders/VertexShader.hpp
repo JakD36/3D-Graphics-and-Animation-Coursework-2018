@@ -1,13 +1,13 @@
 //
-//  ShaderPipeline.hpp
+//  VertexShader.hpp
 //  3D Graphics and Animation Coursework
 //
 //  Created by Jack Davidson on 06/04/2019.
 //  Copyright © 2019 Jack Davidson. All rights reserved.
 //
 
-#ifndef ShaderPipeline_hpp
-#define ShaderPipeline_hpp
+#ifndef VertexShader_hpp
+#define VertexShader_hpp
 
 #include <iostream>
 #include <string>
@@ -23,16 +23,13 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "../shaderLoader.hpp"
-#include "VertexShader.hpp"
-#include "FragShader.hpp"
+#include "ShaderLoader.hpp"
 
-class ShaderPipeline{
+class VertexShader{
 public:
-    GLuint          m_program;                        // Program to attach our shaders to
-
-    ShaderPipeline(VertexShader* vs, FragShader* fs);
+    VertexShader(string vsPath);
     
+    GLuint m_shader;
 };
 
-#endif /* ShaderPipeline_hpp */
+#endif /* VertexShader_hpp */

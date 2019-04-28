@@ -10,13 +10,13 @@
 
 FragShader::FragShader(string fsPath){
     
-    shaderLoader* shaderInst = shaderLoader::getInstance(); // Get the instance of the singleton to load the shader
+    ShaderLoader* shaderInst = ShaderLoader::GetInstance(); // Get the instance of the singleton to load the shader
     
     // Fragment shader
-    string fs_text = shaderInst->readShader(fsPath);
+    string fs_text = shaderInst->ReadShader(fsPath);
     const char * fs_source = fs_text.c_str();
     m_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(m_shader, 1, &fs_source, NULL);
     glCompileShader(m_shader);
-    shaderInst->checkErrorShader(m_shader);
+    shaderInst->CheckErrorShader(m_shader);
 }
