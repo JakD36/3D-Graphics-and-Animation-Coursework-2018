@@ -17,6 +17,14 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, ShaderPipeline* 
     m_shaderPipeline = pipeline;
 }
 
+GameObject::GameObject(string meshPath, string materialPath, string texturePath, ShaderPipeline* pipeline){
+    m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
+    m_material = ResourceService<Material>::GetInstance()->Request(materialPath);
+    m_texture = ResourceService<Texture>::GetInstance()->Request(texturePath);
+
+    m_shaderPipeline = pipeline;
+}
+
 void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStruct lights[], glm::vec3& camera){
     // For each model Object
     glUseProgram(m_shaderPipeline->m_program);

@@ -25,7 +25,6 @@ using namespace std;
 
 #include "../Shaders/ShaderLoader.hpp"
 
-
 using namespace std;
 
 class Material{

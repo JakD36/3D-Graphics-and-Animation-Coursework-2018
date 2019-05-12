@@ -11,22 +11,6 @@
 // Default constructor
 SceneGraph::SceneGraph(){
     m_playerPosition = glm::vec3(0.0f,1.6f,0.0f);
-    string meshPath = "Set/newTorch.obj";
-    string matPath = "Materials/newTorch.mtl";
-    string texPath = "Textures/newTorchCol.ktx";
-    string vsPath = "Shaders/vs.glsl";
-    string fsPath = "Shaders/fs.glsl";
-    
-    Mesh* mesh = new Mesh("Set/newTorch.obj");
-    Material* mat = new Material("Materials/newTorch.mtl");
-    Texture* tex = new Texture("Textures/newTorchCol.ktx");
-    
-    VertexShader* vs = new VertexShader("Shaders/vs.glsl");
-    FragShader* fs = new FragShader("Shaders/fs.glsl");
-    
-    ShaderPipeline* pipeline = new ShaderPipeline(vs,fs);
-    
-    m_gameObject = new GameObject(mesh,mat,tex,pipeline);
 }
 
 // TODO: Add copy constructor, allow for deep copy of object so to avoid any issues with two scenes using the same memory on the heap
@@ -43,7 +27,7 @@ SceneGraph::~SceneGraph(){
 }
 
 // Returns the objects of the scene, this is the same for every scene inheriting from this abstract
-vector<modelObject*> SceneGraph::GetObjs(){
+vector<GameObject*> SceneGraph::GetObjs(){
     return m_Objs;
 }
 

@@ -149,7 +149,7 @@ void Renderer::Render(){
     
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
-    vector<modelObject*> Objs = p_scene->GetObjs();
+    vector<GameObject*> Objs = p_scene->GetObjs();
     lightStruct* p_lights = p_scene->GetLights();
     lightStruct lights[LIGHTSN];
     for(int n = 0; n < LIGHTSN; n++){
@@ -165,11 +165,8 @@ void Renderer::Render(){
     }
 
     for(int n = 0;n<Objs.size();n++){
-        Objs[n]->setupRender(m_proj_matrix,lights,camPosition);
-        Objs[n]->render(m_proj_matrix,viewMatrix,lights,camPosition);
+        Objs[n]->Render(m_proj_matrix,viewMatrix,lights,camPosition); 
     }
-    
-    p_scene->m_gameObject->Render(m_proj_matrix,viewMatrix,lights,camPosition); // New gameobject approach to models and renders
     
     // SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER,0);

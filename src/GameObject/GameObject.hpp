@@ -32,13 +32,16 @@ using namespace std;
 
 #include "../ModelObjects/modelObject.h"
 
+#include "../ResourceManager/ResourceService.hpp"
+
 class GameObject {
 public:
-    glm::vec3 m_position  = glm::vec3(1.0f,1.5f,.25f);
-    glm::vec3 m_rotation  = glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 m_scale     = glm::vec3(.2f,.2f,.2f);
+    glm::vec3 m_position  = glm::vec3(0.f,0.f,0.f);
+    glm::vec3 m_rotation  = glm::vec3(0.f,0.f,0.f);
+    glm::vec3 m_scale     = glm::vec3(1.f,1.f,1.f);
     
     GameObject(Mesh*, Material*, Texture*, ShaderPipeline*);
+    GameObject(string mesh, string mat, string tex, ShaderPipeline*);
     
     Mesh* m_mesh;
     Texture* m_texture;

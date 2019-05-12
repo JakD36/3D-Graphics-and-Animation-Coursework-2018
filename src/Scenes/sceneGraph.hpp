@@ -38,7 +38,7 @@ class SceneGraph{
 protected:
     
     lightStruct m_lights[LIGHTSN];// Creates our array of lightStructs to store details on all the lights in the scene.
-    vector<modelObject*> m_Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
+    vector<GameObject*> m_Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
     
     // Do we have objects that are global to the game
     glm::vec3 m_playerPosition;
@@ -49,7 +49,7 @@ public:
     // Other methods
     virtual void Update(double currentTime) = 0; // Function to update the scene, every frame based on keyframing or procedural animation
     
-    vector<modelObject*> GetObjs(); // Return the vector of pointers to all the objects in the scene
+    vector<GameObject*> GetObjs(); // Return the vector of pointers to all the objects in the scene
     
     lightStruct* GetLights();
     glm::vec3 GetPlayerPosition();
@@ -61,8 +61,6 @@ public:
     virtual void UsePrimary() = 0;
     virtual void UseSecondary() = 0;
     virtual void Turn(GLfloat yaw, GLfloat pitch) = 0;
-    
-    GameObject* m_gameObject;
 };
 
 

@@ -11,6 +11,7 @@
 
 #include "SceneGraph.hpp"
 #include "../Views/Camera.hpp"
+#include "../ResourceManager/ResourceService.hpp"
 
 
 /*
@@ -22,18 +23,7 @@ class Scene1: public SceneGraph{
 private:
     
     // Objects in this scene, using pointers that are global for this object in case they are to be used in both initialisation and update through each frame.
-    modelObjectSingle*       torchObj;
-    modelObjectSingle*       front;
-    modelObjectInst*         planks;
-    modelObjectSingle*       floor;
-    modelObjectInst*         wall;
-    modelObjectSingle*       back;
-    modelObjectSingle*       roof;
-    modelObjectInst*         beam;
-    modelObjectSingle*       bulb;
-    modelObjectSingle*       wire;
-    modelObjectSingle*       table;
-    modelObjectSingle*       lamp;
+    GameObject *m_bulb, *m_wire, *m_torch;
     
     // These are the details for the swinging light above the player, it is a pendulum
     float m_lightRadius = 0.25f;          // The radius at which the light swings
@@ -51,9 +41,6 @@ private:
 
 public:
     Scene1();
-    
-    
-    
     virtual void Update(double currentTime); // Update the scene every frame
     
     // Actions to be performed, same as the rest of the game
