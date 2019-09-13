@@ -6,7 +6,7 @@ APP_NAME=GL
 FLAGS = -w -std=c++11
 BUILDDIR = Build
 
-objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o
+objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o Render.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_opengl3.o imgui_impl_glfw.o imgui_widgets.o
 
 all: clean_app $(target) package_app clean
 
@@ -28,6 +28,9 @@ $(target) : $(objects)
 
 main.o: src/main.cpp 
 	g++ -c src/main.cpp $(FLAGS) -o $(BUILDDIR)/main.o
+
+Render.o: src/Views/Render.cpp
+	g++ -c src/Views/Render.cpp $(FLAGS) -o $(BUILDDIR)/Render.o
 
 Controller.o: src/Controllers/Controller.cpp 
 	g++ -c src/Controllers/Controller.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Controller.o
@@ -79,6 +82,24 @@ Renderer.o: src/Views/Renderer.cpp
 
 Material.o: src/Material/Material.cpp 
 	g++ -c src/Material/Material.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Material.o
+
+imgui_demo.o: Include/DearImgui/imgui_demo.cpp
+	g++ -c Include/DearImgui/imgui_demo.cpp -I Include/ -o $(BUILDDIR)/imgui_demo.o
+
+imgui.o: Include/DearImgui/imgui.cpp
+	g++ -c Include/DearImgui/imgui.cpp -I Include/ -o $(BUILDDIR)/imgui.o
+
+imgui_draw.o: Include/DearImgui/imgui_draw.cpp
+	g++ -c Include/DearImgui/imgui_draw.cpp -I Include/ -o $(BUILDDIR)/imgui_draw.o
+
+imgui_impl_opengl3.o: Include/DearImgui/imgui_impl_opengl3.cpp
+	g++ -c Include/DearImgui/imgui_impl_opengl3.cpp -I Include/ -o $(BUILDDIR)/imgui_impl_opengl3.o
+
+imgui_impl_glfw.o: Include/DearImgui/imgui_impl_glfw.cpp
+	g++ -c Include/DearImgui/imgui_impl_glfw.cpp -I Include/ -o $(BUILDDIR)/imgui_impl_glfw.o
+
+imgui_widgets.o: Include/DearImgui/imgui_widgets.cpp
+	g++ -c Include/DearImgui/imgui_widgets.cpp -I Include/ -o $(BUILDDIR)/imgui_widgets.o
 
 clean_app:
 	rm -rf "./$(BUILDDIR)/$(APP_NAME).app/"
