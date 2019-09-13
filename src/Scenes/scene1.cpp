@@ -8,6 +8,7 @@
 
 #include "Scene1.hpp"
 
+#include "../Views/Render.hpp"
 
 Scene1::Scene1(){
     // Initialise Objects
@@ -18,9 +19,7 @@ Scene1::Scene1(){
     // sort any other variables that need set
     double startTime = glfwGetTime(); // So we can see how long it takes for all models to load
 
-    VertexShader* vs = new VertexShader("Shaders/vs.glsl");
-    FragShader* fs = new FragShader("Shaders/fs.glsl");
-    ShaderPipeline* pipeline = new ShaderPipeline(vs,fs);
+    ShaderPipeline* pipeline = new ShaderPipeline("Shaders/vs.glsl","Shaders/fs.glsl");
 
     m_torch = new GameObject("Set/newTorch.obj","Materials/newTorch.mtl","Textures/newTorchCol.ktx",pipeline);
     m_torch->m_position = m_playerPosition + Utils::Spherical2Cartesian(m_sphereRadius,m_yawOffset,-m_pitchOffset);
@@ -201,7 +200,7 @@ Scene1::Scene1(){
     m_Objs.push_back(go);
     
     //Lightbulb
-    ShaderPipeline* lightPipeline = new ShaderPipeline(new VertexShader("Shaders/vs_light.glsl"),new FragShader("Shaders/fs_light.glsl"));
+    ShaderPipeline* lightPipeline = new ShaderPipeline("Shaders/vs_light.glsl","Shaders/fs_light.glsl");
     m_bulb = new GameObject("Set/bulb.obj","Materials/bulb.mtl","Textures/bulb.ktx",lightPipeline);
     m_Objs.push_back(m_bulb);
     
@@ -249,7 +248,14 @@ Scene1::Scene1(){
     m_lights[3].is = glm::vec3(1.0f,1.0f,1.0f);
     
     
+    
     cout<<"Time to load "<<glfwGetTime()-startTime<<endl;   // Just a nice thing to know
+    RenderManager rm;
+    for(vector<GameObject*>::iterator iter = m_Objs.begin(); iter != m_Objs.end(); ++iter)
+    {
+        rm.QueueToAddOrUpdate(*iter);
+    }
+    rm.Batch();
 }
 
 

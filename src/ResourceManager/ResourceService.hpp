@@ -35,7 +35,7 @@ public:
         }
         return m_instance;
     }
-    
+
     T* Request(string key)
     {
         T* p_resource = NULL;    

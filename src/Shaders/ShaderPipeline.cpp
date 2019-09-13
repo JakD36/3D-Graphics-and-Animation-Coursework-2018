@@ -17,3 +17,13 @@ ShaderPipeline::ShaderPipeline(VertexShader* vs, FragShader* fs){
     
     glLinkProgram(m_program);
 }
+
+ShaderPipeline::ShaderPipeline(string vert, string frag){
+    
+    m_program = glCreateProgram();  // Create the program, for this model, to attach the shaders to
+    
+    glAttachShader(m_program, ResourceService<VertexShader>::GetInstance()->Request(vert)->m_shader);
+    glAttachShader(m_program, ResourceService<FragShader>::GetInstance()->Request(frag)->m_shader);
+    
+    glLinkProgram(m_program);
+}

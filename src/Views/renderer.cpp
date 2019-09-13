@@ -54,7 +54,7 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
     
     // Calculate proj_matrix for the first time.
     m_aspect = (float)m_windowWidth / (float)m_windowHeight;
-    m_proj_matrix =  glm::perspective(glm::radians(50.0f), m_aspect, 0.1f, 1000.0f);
+    m_proj_matrix = glm::perspective(glm::radians(50.0f), m_aspect, 0.1f, 1000.0f);
     
     // On high DPI, there are a higher number of pixels in the window than the length of the window, so we need to use the frameWidth and height,
     int frameWidth, frameHeight;

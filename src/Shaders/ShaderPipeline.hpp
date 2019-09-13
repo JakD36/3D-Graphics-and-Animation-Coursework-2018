@@ -27,11 +27,14 @@ using namespace std;
 #include "VertexShader.hpp"
 #include "FragShader.hpp"
 
+#include "../ResourceManager/ResourceService.hpp"
+
 class ShaderPipeline{
 public:
     GLuint          m_program;                        // Program to attach our shaders to
 
     ShaderPipeline(VertexShader* vs, FragShader* fs);
+    ShaderPipeline(string vert, string frag);
     
 };
 
