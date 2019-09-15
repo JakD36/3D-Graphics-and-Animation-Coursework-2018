@@ -31,7 +31,10 @@ protected:
     // For MVC controller requires access to the model and the view
     SceneGraph* p_model;
     Renderer* p_view;
+    GLFWwindow* p_window;
     
+    bool m_aimInput = true;
+
     GLfloat m_sensitivity; // The look sensitivity of this controller
     double m_lastX = 0, m_lastY = 0; // Last position in the x and y axis of the cursor
     GLfloat m_yaw = 0, m_pitch = 0; // the resulting spherical coordinates from cursor or stick movement to look in
@@ -45,8 +48,8 @@ public:
     
     void ChangeScene(SceneGraph* newModel); // FIX: Need to add some form of defensive programming to make sure controller is not passed a NULL pointer
     
-    
-    
+    void ToggleCursor();
+
     // pure abstract methods
     virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods) = 0;
     virtual void OnMouseMove(GLFWwindow* window, double x, double y) = 0;

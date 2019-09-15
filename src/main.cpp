@@ -18,6 +18,7 @@
 #include "Controllers/Controller.hpp"
 #include "Controllers/KeyboardAndMouse.hpp"
 #include "Views/Renderer.hpp"
+#include "Utils/Profile.h"
 
 #include "../Include/DearImgui/imgui.h"
 #include "../Include/DearImgui/imgui_impl_glfw.h"
@@ -57,8 +58,8 @@ void endProgram();
 
 // Global variables
 GLFWwindow*             window;                     // Window the app will be displayed in
-int                     windowWidth = 640;          // width of the window
-int                     windowHeight = 480;         // height of the window
+int                     windowWidth = (int)(720.0f*16.0f/9.0f); // width of the window
+int                     windowHeight = 720;         // height of the window
 
 Controller* myController; // myController is global to be accessible through the callbacks
 Renderer* myView; // is global to be accessible through callbacks
@@ -68,10 +69,8 @@ int main(int argc, char *argv[])
     // string path = argv[0];
     // cout<<getenv("PWD")<<endl;
 
-
     // Intialise the program and the scene
     initOpenGL(); // Initialise OpenGL window,
-    
     
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
     Scene1 scene; // Initialise the scene i.e the model
@@ -81,8 +80,7 @@ int main(int argc, char *argv[])
     myView = new Renderer(window,&scene,mainCamera); // Initialise our rendering object, with the scene it will render and the camera it will be using
     
     /*
-     Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved,
-     however there is an issue with the glViewport for high DPI screens like the retina displays in Macs.
+     Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved
     */
     int framebufferWidth, framebufferHeight;
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
@@ -108,17 +106,17 @@ int main(int argc, char *argv[])
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
-
     // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
     bool running = true;
-    do {                                        // run until the window is closed
+    do { // run until the window is closed
+        // Profile profiler = Profile("main");
+        TIME("main");
         double currentTime = glfwGetTime();     // retrieve timelapse
         
         ImGui_ImplOpenGL3_NewFrame();
@@ -126,8 +124,8 @@ int main(int argc, char *argv[])
         ImGui::NewFrame();
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        // bool show_demo_window = true;
-        // ImGui::ShowDemoWindow(&show_demo_window);
+        bool show_demo_window = true;
+        ImGui::ShowDemoWindow(&show_demo_window);
 
         {
             static float f = 0.0f;
@@ -135,7 +133,7 @@ int main(int argc, char *argv[])
 
             ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            // ImGui::Text("Profiler %s %i",profiler.GetIdentifier().c_str(),10);//InstrumentedProfiler::s_timings.length);               // Display some text (you can use a format strings too)
             // ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             // ImGui::Checkbox("Another Window", &show_another_window);
 
@@ -169,7 +167,7 @@ int main(int argc, char *argv[])
         // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
         glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
 
-        running &= (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE);    // exit if escape key pressed
+        //running &= (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE);    // exit if escape key pressed
         running &= (glfwWindowShouldClose(window) != GL_TRUE);
     } while (running);
     
@@ -187,11 +185,11 @@ int main(int argc, char *argv[])
 
 
 void initOpenGL(){
+    
     if (!glfwInit()) {                                  // Checking for GLFW
         cout << "Could not initialise GLFW...";
     }
     glfwSetErrorCallback(errorCallbackGLFW);            // Setup a function to catch and display all GLFW errors.
-    
     
     hintsGLFW();                                        // Setup glfw with various hints.
     
@@ -223,6 +221,7 @@ void initOpenGL(){
     glfwSetCursorPosCallback(window, onMouseMoveCallback);          // Set callback for mouse move
     glfwSetScrollCallback(window, onMouseWheelCallback);            // Set callback for mouse wheel.
                                                                     //    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Set mouse cursor.
+    
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
     
     glfwSwapInterval(1);    // Ony render when synced (V SYNC)

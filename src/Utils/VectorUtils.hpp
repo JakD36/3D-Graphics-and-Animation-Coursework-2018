@@ -21,8 +21,7 @@ namespace Utils{
         
         std::string str = str1 + " >> " + std::to_string(vec3.x)
         + "\t" + str2 + " >> " + std::to_string(vec3.y)
-         + "\t" + str3 + " >> " + std::to_string(vec3.z);
-         
+         + "\t" + str3 + " >> " + std::to_string(vec3.z);   
     }
 
 }
