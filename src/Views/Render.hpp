@@ -19,6 +19,8 @@
 
 #include <iostream>
 
+#include "../Utils/Profile.h"
+
 using namespace std;
 
 class RenderManager{

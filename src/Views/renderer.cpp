@@ -17,6 +17,7 @@ Camera* Renderer::GetCamera(){
 
 
 void Renderer::SetViewport(float x, float y, float width, float height){
+    Profile profile("Set Viewport");
     m_viewportX = x;
     m_viewportY = y;
     m_viewportWidth = width;
@@ -28,6 +29,7 @@ void Renderer::SetViewport(float x, float y, float width, float height){
 }
 
 void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
+    Profile profile("Set Window Dimensions");
     this->m_windowWidth = windowWidth;
     this->m_windowHeight = windowHeight;
     
@@ -43,7 +45,7 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
 
 // Initialise the Renderer for this viewport
 Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
-    
+    Profile profile("Render Constructor");
     // Assign the variables to the object
     this->p_scene = scene;
     this->p_camera = viewCamera;
@@ -116,7 +118,7 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
 
 
 void Renderer::Render(){
-    
+    Profile profile("Render");
     // So now to render to the framebuffer texture instead of screen
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,m_framebufferTexture,0);

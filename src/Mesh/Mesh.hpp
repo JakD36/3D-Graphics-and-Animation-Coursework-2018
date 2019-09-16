@@ -24,6 +24,7 @@ using namespace std;
 #include <GLM/gtx/transform.hpp>
 
 #include "../Shaders/ShaderLoader.hpp"
+#include "../Utils/Profile.h"
 
 class Mesh{
     

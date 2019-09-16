@@ -7,10 +7,10 @@
 //
 
 #include "Scene1.hpp"
-
 #include "../Views/Render.hpp"
 
 Scene1::Scene1(){
+    Profile profile("Scene1 Constructor");
     // Initialise Objects
     // Instantiate Object
     // initModel
@@ -261,6 +261,7 @@ Scene1::Scene1(){
 
 
 void Scene1::Update(double currentTime){
+    Profile profile("Scene1 Update");
     double dt = currentTime - m_prevTime; // get the change in time between the last frame and the current frame so to accurately calculate any movement
     m_prevTime = currentTime;
     
@@ -290,6 +291,7 @@ void Scene1::Update(double currentTime){
 
 // Activates the primary action, this case turning the torch on or off
 void Scene1::UsePrimary(){
+    Profile profile("Scene1 UsePrimary");
     if(m_lights[2].lightOn){ // we need to check if the light is on or off first, if its on we need to switch it off and vice versa
         m_lights[2].lightOn = false;
     }
@@ -300,6 +302,7 @@ void Scene1::UsePrimary(){
 
 // Activates the secondary action, this case turning the ceiling light on or off
 void Scene1::UseSecondary(){
+    Profile profile("Scene1 UseSecondary");
     if(m_lights[0].lightOn){
         m_lights[0].lightOn = false;
     }
@@ -311,7 +314,7 @@ void Scene1::UseSecondary(){
 
 // Turns the player to face the direction specified by the spherical coordinates
 void Scene1::Turn(GLfloat yaw, GLfloat pitch){
-
+    Profile profile("Scene1 Turn");
     m_torch->m_position = m_playerPosition + Utils::Spherical2Cartesian(1, yaw+m_yawOffset, pitch-m_pitchOffset) * m_sphereRadius; // our torchs position is based off the camera position
     // try adding vectors instead of adding yaw and pitch
 

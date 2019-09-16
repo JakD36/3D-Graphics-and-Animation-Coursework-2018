@@ -11,6 +11,7 @@
 
 Material::Material(string materialName)
 {
+    Profile profile("Material Constructor");
     FILE* pfile = NULL;                 // using stdio and fscanf which means formatted scan file
     int result;                         // for taking output of fscanf function
     char line[256];                     // Line limited to 256 characters, more than enough space
@@ -23,6 +24,7 @@ Material::Material(string materialName)
     }
     else{
         do{ // if file does open loop through each line of the file while EOF has not been reached
+            Profile profile("Read Material file");
             result = fscanf(pfile,"%s",line); // %s refers to keep scanning until first whitespace
                                               // we can then compare the first section of text to the different headers for each line
             if(strcmp(line,"Ka") == 0){     // The materials reflectivity constant for ambient light

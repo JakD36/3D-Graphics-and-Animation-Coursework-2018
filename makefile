@@ -8,7 +8,7 @@ BUILDDIR = Build
 CC = g++
 #CC = clang
 
-objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o Render.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_opengl3.o imgui_impl_glfw.o imgui_widgets.o
+objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o Render.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_opengl3.o imgui_impl_glfw.o imgui_widgets.o Profile.o ProfilerService.o ProfileData.o
 
 all: clean_app $(target) package_app clean
 
@@ -102,6 +102,15 @@ imgui_impl_glfw.o: Include/DearImgui/imgui_impl_glfw.cpp
 
 imgui_widgets.o: Include/DearImgui/imgui_widgets.cpp
 	$(CC) -c Include/DearImgui/imgui_widgets.cpp -I Include/ -o $(BUILDDIR)/imgui_widgets.o
+
+Profile.o: src/Utils/Profile.cpp
+	$(CC) -c src/Utils/Profile.cpp -I Include/ -o $(BUILDDIR)/Profile.o
+
+ProfilerService.o: src/Utils/ProfilerService.cpp
+	$(CC) -c src/Utils/ProfilerService.cpp -I Include/ -o $(BUILDDIR)/ProfilerService.o
+
+ProfileData.o: src/Utils/ProfileData.cpp
+	$(CC) -c src/Utils/ProfileData.cpp -I Include/ -o $(BUILDDIR)/ProfileData.o
 
 clean_app:
 	rm -rf "./$(BUILDDIR)/$(APP_NAME).app/"

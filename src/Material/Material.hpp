@@ -22,6 +22,7 @@ using namespace std;
 #include <GLM/glm.hpp>
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
+#include "../Utils/Profile.h"
 
 #include "../Shaders/ShaderLoader.hpp"
 

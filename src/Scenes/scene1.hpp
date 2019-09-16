@@ -12,7 +12,7 @@
 #include "SceneGraph.hpp"
 #include "../Views/Camera.hpp"
 #include "../ResourceManager/ResourceService.hpp"
-
+#include "../Utils/Profile.h"
 
 /*
  The first scene of this project,

@@ -15,6 +15,8 @@
 #include "../Scenes/SceneGraph.hpp"
 #include "Camera.hpp"
 
+#include "../Utils/Profile.h"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>

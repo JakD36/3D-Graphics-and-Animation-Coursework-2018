@@ -9,7 +9,7 @@
 #include "Mesh.hpp"
 
 Mesh::Mesh(string meshName){
-    
+    Profile profile("Mesh Constructor");
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
 
@@ -53,6 +53,7 @@ Mesh::Mesh(string meshName){
 }
 
 bool Mesh::Load(string meshName){
+    Profile profile("Load Mesh");
     // Variables
     FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
@@ -77,6 +78,7 @@ bool Mesh::Load(string meshName){
     }
     else{
         do{ // if file does open loop through each line of the file while EOF has not been reached
+            Profile profile("Read Mesh File");
             result = fscanf(pfile,"%s",line); // %s refers to keep scanning until first whitespace
                                               // we can then compare the first section of text to the different headers for each line
             
