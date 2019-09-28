@@ -10,14 +10,12 @@
 
 // Default constructor
 SceneGraph::SceneGraph(){
-    Profile profile("SceneGraph Constructor");
     m_playerPosition = glm::vec3(0.0f,1.6f,0.0f);
 }
 
 // TODO: Add copy constructor, allow for deep copy of object so to avoid any issues with two scenes using the same memory on the heap
 
 SceneGraph::~SceneGraph(){
-    Profile profile("SceneGraph Deconstructor");
     // Make sure to delete all the objects from the heap!
     // Otherwise we will have a memory leak
     // Any objects not added to the Objs list, make sure to add them to the relevant destructor so that there are no memory leaks
@@ -29,16 +27,13 @@ SceneGraph::~SceneGraph(){
 
 // Returns the objects of the scene, this is the same for every scene inheriting from this abstract
 vector<GameObject*> SceneGraph::GetObjs(){
-    Profile profile("SceneGraph GetObjs");
     return m_Objs;
 }
 
 lightStruct* SceneGraph::GetLights(){
-    Profile profile("SceneGraph GetLights");
     return m_lights;
 }
 
 glm::vec3 SceneGraph::GetPlayerPosition(){
-    Profile profile("SceneGraph GetPlayerPosition");
     return m_playerPosition;
 }

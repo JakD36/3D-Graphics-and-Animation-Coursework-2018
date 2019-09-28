@@ -31,7 +31,7 @@ using namespace std;
 #include "../Shaders/FragShader.hpp"
 
 #include "../ModelObjects/modelObject.h"
-#include "../Utils/profile.h"
+#include "../Utils/profileService.h"
 #include "../ResourceManager/ResourceService.hpp"
 
 class GameObject {

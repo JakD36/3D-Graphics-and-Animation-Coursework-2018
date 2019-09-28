@@ -25,7 +25,7 @@
 
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
-#include "../Utils/Profile.h"
+#include "../Utils/ProfileService.h"
 
 
 /* Abstract class for each scene to be based on

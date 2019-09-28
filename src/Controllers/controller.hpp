@@ -19,7 +19,7 @@
 #include "../Scenes/SceneGraph.hpp"
 #include "../Views/Camera.hpp"
 #include "../Views/Renderer.hpp"
-#include "../Utils/Profile.h"
+#include "../Utils/ProfileService.h"
 
 /*
  Controller abstract class

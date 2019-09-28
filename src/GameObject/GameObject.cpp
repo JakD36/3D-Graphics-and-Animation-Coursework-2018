@@ -9,7 +9,6 @@
 #include "GameObject.hpp"
 
 GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, ShaderPipeline* pipeline){
-    Profile profile("Gamobject Constructor");
     m_mesh = mesh;
     m_material = mat;
     m_texture = tex;
@@ -18,16 +17,19 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, ShaderPipeline* 
 }
 
 GameObject::GameObject(string meshPath, string materialPath, string texturePath, ShaderPipeline* pipeline){
-    Profile profile("Gamobject Constructor");
+    int profiler = ProfilerService::GetInstance()->StartTimer("GO Init");
+
     m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
     m_material = ResourceService<Material>::GetInstance()->Request(materialPath);
     m_texture = ResourceService<Texture>::GetInstance()->Request(texturePath);
 
     m_shaderPipeline = pipeline;
+
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStruct lights[], glm::vec3& camera){
-    Profile profile("Gamobject Render");
+    int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
     // For each model Object
     glUseProgram(m_shaderPipeline->m_program);
     glBindVertexArray(m_mesh->m_vao);
@@ -56,7 +58,6 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     
     // Loop through each of the lights and provide the necessary information to the shader through the uniforms
     for(int n = 0;n<LIGHTSN;n++){
-        Profile profile("Processing Lights");
         /*
          Need to pass each piece of information in seperately, so that the shaders can read it
          The name of each element is constructed as follows
@@ -100,4 +101,6 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     glUniformMatrix4fv(glGetUniformLocation(m_shaderPipeline->m_program,"viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
     glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertices.size()); // Draw vertices, need to tell it how many vertices to draw so third argument is the out.vertices.size.
     
+
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }

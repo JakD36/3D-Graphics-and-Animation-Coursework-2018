@@ -18,7 +18,7 @@
 #include "Controllers/Controller.hpp"
 #include "Controllers/KeyboardAndMouse.hpp"
 #include "Views/Renderer.hpp"
-#include "Utils/Profile.h"
+#include "Utils/ProfileService.h"
 
 #include "../Include/DearImgui/imgui.h"
 #include "../Include/DearImgui/imgui_impl_glfw.h"
@@ -68,7 +68,7 @@ ProfilerService* ProfilerService::m_instance = NULL;
 
 int main(int argc, char *argv[])
 {
-    Profile profile("main");
+    int profiler = ProfilerService::GetInstance()->StartTimer("main");
     // string path = argv[0];
     // cout<<getenv("PWD")<<endl;
 
@@ -118,8 +118,7 @@ int main(int argc, char *argv[])
 
     bool running = true;
     do { // run until the window is closed
-        // Profile profiler = Profile("main");
-        Profile profile("mainloop");
+        int profiler = ProfilerService::GetInstance()->StartTimer("mainloop");
         double currentTime = glfwGetTime();     // retrieve timelapse
         
         ImGui_ImplOpenGL3_NewFrame();
@@ -131,6 +130,7 @@ int main(int argc, char *argv[])
         ImGui::ShowDemoWindow(&show_demo_window);
 
         {
+            int profiler = ProfilerService::GetInstance()->StartTimer("Imgui Window");
             static float f = 0.0f;
             static int counter = 0;
 
@@ -150,6 +150,8 @@ int main(int argc, char *argv[])
 
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
+
+            ProfilerService::GetInstance()->StopTimer(profiler);
         }
 
         // Game loop - Input
@@ -165,17 +167,19 @@ int main(int argc, char *argv[])
 //        fourthView->Render();
         ProfilerService* instance = ProfilerService::GetInstance();
         instance->Draw();
-
+        int profiler2 = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        ProfilerService::GetInstance()->StopTimer(profiler2);
         
+        int profiler3 = ProfilerService::GetInstance()->StartTimer("Swap Buffer");
         // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
         glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
-
+        ProfilerService::GetInstance()->StopTimer(profiler3);
         //running &= (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE);    // exit if escape key pressed
         running &= (glfwWindowShouldClose(window) != GL_TRUE);
         
-        
+        ProfilerService::GetInstance()->StopTimer(profiler);
     } while (running);
     
     // Make sure to remove any items from the heap, get rid of dangling pointers
@@ -186,13 +190,15 @@ int main(int argc, char *argv[])
     delete mainCamera;
     mainCamera = NULL;
     
+    ProfilerService::GetInstance()->StopTimer(profiler);
     return 0;
 }
 
 
 
 void initOpenGL(){
-    Profile profile("Init OpenGL");
+    int profiler = ProfilerService::GetInstance()->StartTimer("Init OpenGL");
+    
     if (!glfwInit()) {                                  // Checking for GLFW
         cout << "Could not initialise GLFW...";
     }
@@ -234,16 +240,22 @@ void initOpenGL(){
     glfwSwapInterval(1);    // Ony render when synced (V SYNC)
     glfwWindowHint(GLFW_SAMPLES, 32);
     glfwWindowHint(GLFW_STEREO, GL_FALSE);
+    
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 void endProgram() {
-    Profile profile("End glfw");
+    int profiler = ProfilerService::GetInstance()->StartTimer("End glfw");
+    
     glfwMakeContextCurrent(window);             // destroys window handler
     glfwTerminate();                            // destroys all windows and releases resources.
+    
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 void hintsGLFW() {
-    Profile profile("hintsGLFW");
+    int profiler = ProfilerService::GetInstance()->StartTimer("hintsGLFW");
+    
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);            // Create context in debug mode - for debug message callback
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.1
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1 );
@@ -251,31 +263,33 @@ void hintsGLFW() {
     // Following two lines are required for running on mac
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 
 // callback functions call the methods of the controller or Renderer, so that functionality can be swapped as need be by changing the object
 void onResizeCallback(GLFWwindow* window, int w, int h) {
-    Profile profile("On resize callback");
+    int profiler = ProfilerService::GetInstance()->StartTimer("On resize callback");
+    
     windowWidth = w;
     windowHeight = h;
     
     // Call methods of the renderers used
     myView->SetWindowDimensions(w, h);
+
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 void onKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    Profile profile("On key callback");
     myController->OnKey(window, key, scancode, action, mods);
 }
 
 void onMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-    Profile profile("on mouse button callback");
     myController->OnMouseButton(window, button, action, mods);
 }
 
 void onMouseMoveCallback(GLFWwindow* window, double x, double y) {
-    Profile profile("on mouse move callback");
     myController->OnMouseMove(window, x, y ); // So we can swap out the controller and will have no effect on the callback
 }
 
@@ -290,7 +304,8 @@ void onMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
 // Taken from F21GA 3D Graphics and Animation Labs
 
 void debugGL() {
-    Profile profile("Debug GL");
+    int profiler = ProfilerService::GetInstance()->StartTimer("Debug GL");
+    
     //Output some debugging information
     cout << "VENDOR: " << (char *)glGetString(GL_VENDOR) << endl;
     cout << "VERSION: " << (char *)glGetString(GL_VERSION) << endl;
@@ -302,6 +317,8 @@ void debugGL() {
     glDebugMessageCallback((GLDEBUGPROC)openGLDebugCallback, nullptr); // debugGL does not work, currently throws Thread #: EXC bad access error
     
     glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
+
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 static void APIENTRY openGLDebugCallback(GLenum source,

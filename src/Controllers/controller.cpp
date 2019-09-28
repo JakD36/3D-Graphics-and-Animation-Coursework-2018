@@ -9,7 +9,6 @@
 #include "Controller.hpp"
 
 Controller::Controller(GLFWwindow* window, SceneGraph* model,Renderer* view){ // FIX: Add defensive programming make sure pointer is not null
-    Profile profile("Controller Constructor");
     this->p_model = model;
     this->p_view = view;
     this->p_window = window;

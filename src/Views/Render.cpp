@@ -12,6 +12,7 @@ void RenderManager::QueueToRemove(GameObject* in_gameObject)
 
 void RenderManager::Batch()
 {   
+    int profiler = ProfilerService::GetInstance()->StartTimer("Render Batch");
     while(!m_addUpdateQueue.empty())
     {
         GameObject* next = m_addUpdateQueue.front();
@@ -52,5 +53,5 @@ void RenderManager::Batch()
     {
         cout<<(*m_iterator)->m_mesh<<" "<<(*m_iterator)->m_texture<<endl;
     }
-    
+    ProfilerService::GetInstance()->StopTimer(profiler);
 }
