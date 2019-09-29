@@ -3,6 +3,9 @@
 ProfilerService::ProfilerService(){
     m_index = 0;
     m_nextDepth = 0;
+    m_maxRewindTime = 5.0;
+    m_windowTime = m_maxRewindTime;
+    m_canvasWidth = -1.0f;
     for(int i = 0; i < PROFILE_SIZE; ++i){
         m_storage[i].m_length = -1.0;
     }
@@ -43,11 +46,35 @@ void ProfilerService::StopTimer(int timer){
 
 void ProfilerService::Draw(){
     int profiler = ProfilerService::GetInstance()->StartTimer("Draw Profiler");
-    ImGui::Begin("Profiler");
+    
+    if(m_canvasWidth >= 0)
+        ImGui::SetNextWindowContentWidth(m_canvasWidth);
+    ImGui::Begin("Profiler",NULL,ImGuiWindowFlags_AlwaysHorizontalScrollbar);
+    
+    ImVec2 canvasSize = ImGui::GetContentRegionAvail();
+
+    if(ImGui::Button("Zoom in")){
+        m_windowTime *= 0.5;
+        m_canvasWidth = canvasSize.x * (m_maxRewindTime / m_windowTime);
+    }
+        
+    ImGui::SameLine();
+    
+    if(ImGui::Button("Zoom out")){
+        m_windowTime *= 2;
+        if(m_windowTime > m_maxRewindTime)
+            m_windowTime = m_maxRewindTime;
+        m_canvasWidth = canvasSize.x * (m_maxRewindTime / m_windowTime);
+    }
+    ImGui::SameLine();
+    
+    if(ImGui::Button("Reset")){
+        m_windowTime = m_maxRewindTime;
+        m_canvasWidth = canvasSize.x * (m_maxRewindTime / m_windowTime);
+    }
     
     ImDrawList* drawList = ImGui::GetWindowDrawList();
     ImVec2 canvasPos = ImGui::GetCursorScreenPos();
-    ImVec2 canvasSize = ImGui::GetContentRegionAvail();
     
     float barHeight = 20.0f;
     float rowHeight = barHeight + 3.0f;
@@ -61,13 +88,12 @@ void ProfilerService::Draw(){
     //! Text padding from the top-left
     ImVec2 textPad(3.0f, 3.0f);
 
-    double rootTime = 5.0;
-
-    double startTime = glfwGetTime() - rootTime;
+    double startTime = glfwGetTime() - m_maxRewindTime;
+    
     for(int n = 0; n < PROFILE_SIZE; ++n){
         if(m_storage[n].m_length > 0){
-            float xOffset = canvasSize.x * (-startTime + m_storage[n].m_start) / rootTime;
-            float width = canvasSize.x * m_storage[n].m_length / rootTime; 
+            float xOffset = canvasSize.x * (-startTime + m_storage[n].m_start) / m_windowTime;
+            float width = canvasSize.x * m_storage[n].m_length / m_windowTime; 
 
             ImVec2 topLeft(
                         canvasPos.x + xOffset + barSpacing,
@@ -81,8 +107,8 @@ void ProfilerService::Draw(){
             drawList->AddText(add(topLeft, textPad), colText, m_storage[n].m_identifier.c_str());
         }
         else if(m_storage[n].m_length <= -2.0){
-            float xOffset = canvasSize.x * (-startTime + m_storage[n].m_start) / rootTime;
-            float width = canvasSize.x * (glfwGetTime() - m_storage[n].m_start) / rootTime; 
+            float xOffset = canvasSize.x * (-startTime + m_storage[n].m_start) / m_windowTime;
+            float width = canvasSize.x * (glfwGetTime() - m_storage[n].m_start) / m_windowTime; 
 
             ImVec2 topLeft(
                         canvasPos.x + xOffset + barSpacing,

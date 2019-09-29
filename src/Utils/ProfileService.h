@@ -13,7 +13,7 @@
 #include "../../Include/DearImgui/imgui_impl_glfw.h"
 #include "../../Include/DearImgui/imgui_impl_opengl3.h"
 
-#define PROFILE_SIZE 7200
+#define PROFILE_SIZE 36000
 
 using namespace std;
 
@@ -33,6 +33,9 @@ class ProfilerService{
         float m_start;
         int m_index;
         int m_nextDepth;
+        double m_windowTime;
+        double m_maxRewindTime;
+        float m_canvasWidth;
         ProfileData m_storage[PROFILE_SIZE];
 
     public:
