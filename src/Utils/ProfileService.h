@@ -19,15 +19,23 @@ using namespace std;
 
 inline ImVec2 add(ImVec2 a, ImVec2 b) { return ImVec2(a.x + b.x, a.y + b.y); }
 
-struct ProfileData{
-    string m_identifier;
-    double m_start;
-    double m_length;
-    int Depth;
-};
-
 class ProfilerService{
     private:
+
+        // enum Status{
+        //     EMPTY,
+        //     OPEN,
+        //     CLOSED
+        // }
+
+        struct ProfileData{
+            string Identifier;
+            double Start;
+            double Length;
+            int Depth;
+            // Status Status;
+        };
+
         ProfilerService();
         static ProfilerService* m_instance;
         float m_start;
