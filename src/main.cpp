@@ -1,5 +1,4 @@
 // Standard libraries
-#include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -24,37 +23,27 @@
 #include "../Include/DearImgui/imgui_impl_glfw.h"
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
 
-
 using namespace std;
 
 // initialise Static variables
 ShaderLoader* ShaderLoader::m_instance = NULL;
 glm::vec3 lightStruct::ia = glm::vec3(0.0f,1.0f,0.2f); // we assign the static variable for the light struct out with the any functions
 
-
 // Our prototypes for OpenGL functions used throughout the program, mainly the callbacks to handle user input
-void errorCallbackGLFW(int error, const char* description);
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void onResizeCallback(GLFWwindow* window, int w, int h);
-void onKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void onMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-void onMouseMoveCallback(GLFWwindow* window, double x, double y);
-void onMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
-void debugGL();
-static void APIENTRY openGLDebugCallback(GLenum source,
-                                         GLenum type,
-                                         GLuint id,
-                                         GLenum severity,
-                                         GLsizei length,
-                                         const GLchar* message,
-                                         const GLvoid* userParam);
-
+void ErrorCallbackGLFW(int error, const char* description);
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void OnResizeCallback(GLFWwindow* window, int w, int h);
+void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+void OnMouseMoveCallback(GLFWwindow* window, double x, double y);
+void OnMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
+void DebugGL();
+static void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam);
 
 // Prototypes for setting up OpenGL and closing it down
-void initOpenGL();
-void hintsGLFW();
-void endProgram();
-
+void InitOpenGL();
+void HintsGLFW();
+void EndProgram();
 
 // Global variables
 GLFWwindow*             window;                     // Window the app will be displayed in
@@ -69,11 +58,9 @@ ProfilerService* ProfilerService::m_instance = NULL;
 int main(int argc, char *argv[])
 {
     int profiler = ProfilerService::GetInstance()->StartTimer("main");
-    // string path = argv[0];
-    // cout<<getenv("PWD")<<endl;
 
     // Intialise the program and the scene
-    initOpenGL(); // Initialise OpenGL window,
+    InitOpenGL(); // Initialise OpenGL window,
     
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
     Scene1 scene; // Initialise the scene i.e the model
@@ -82,24 +69,25 @@ int main(int argc, char *argv[])
     
     myView = new Renderer(window,&scene,mainCamera); // Initialise our rendering object, with the scene it will render and the camera it will be using
     
-    /*
-     Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved
-    */
+    
+    // Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved
     int framebufferWidth, framebufferHeight;
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
     myView->SetViewport(0, 0, framebufferWidth, framebufferHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
-    
-//    camera* secondCam = new camera();
-//    Renderer* secondView = new Renderer(window,&scene,secondCam);
-//    secondView->SetViewport(windowWidth, windowHeight, windowWidth, windowHeight);
-//
-//    camera* thirdCam = new camera();
-//    Renderer* thirdView = new Renderer(window,&scene,thirdCam);
-//    thirdView->SetViewport(0, 0, windowWidth, windowHeight);
-//
-//    camera* fourthCam = new camera();
-//    Renderer* fourthView = new Renderer(window,&scene,fourthCam);
-//    fourthView->SetViewport(windowWidth, 0, windowWidth, windowHeight);
+
+    /* Setting up other renderers
+        camera* secondCam = new camera();
+        Renderer* secondView = new Renderer(window,&scene,secondCam);
+        secondView->SetViewport(windowWidth, windowHeight, windowWidth, windowHeight);
+
+        camera* thirdCam = new camera();
+        Renderer* thirdView = new Renderer(window,&scene,thirdCam);
+        thirdView->SetViewport(0, 0, windowWidth, windowHeight);
+
+        camera* fourthCam = new camera();
+        Renderer* fourthView = new Renderer(window,&scene,fourthCam);
+        fourthView->SetViewport(windowWidth, 0, windowWidth, windowHeight);
+    */  
     
     myController = new KeyboardAndMouse(window,&scene,myView); // Initialise the controller, is provided reference to the model and the view so it can access both
     
@@ -107,11 +95,7 @@ int main(int argc, char *argv[])
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    //ImGui::StyleColorsClassic();
     // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 410 core");
@@ -129,30 +113,38 @@ int main(int argc, char *argv[])
         // ImGui::ShowDemoWindow(&show_demo_window);
 
         // Game loop - Input
-        glfwPollEvents();                       // from the GLFW documentation - Processes only those events that have already been received and then returns immediately.
+        glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
         
         // Game loop - Update
         scene.Update(currentTime);              // update (physics, animation, structures, etc)
         
         // Game loop - Render
         myView->Render();
-//        secondView->Render();
-//        thirdView->Render();
-//        fourthView->Render();
-        ProfilerService* instance = ProfilerService::GetInstance();
-        instance->Draw();
-        int profiler2 = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        ProfilerService::GetInstance()->StopTimer(profiler2);
-        
-        int profiler3 = ProfilerService::GetInstance()->StartTimer("Swap Buffer");
-        // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
-        glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
-        ProfilerService::GetInstance()->StopTimer(profiler3);
-        //running &= (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE);    // exit if escape key pressed
+
+        /* Other renderers
+            secondView->Render();
+            thirdView->Render();
+            fourthView->Render();
+        */
+
+        { // Render ImGui
+            ProfilerService* profilerInstance = ProfilerService::GetInstance();
+            profilerInstance->Draw();
+            int profiler2 = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            ProfilerService::GetInstance()->StopTimer(profiler2);
+        }
+       
+        { // Perform Swap Buffer
+            int profiler3 = ProfilerService::GetInstance()->StartTimer("Swap Buffer");
+            // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
+            glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
+            ProfilerService::GetInstance()->StopTimer(profiler3);
+            //running &= (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE);    // exit if escape key pressed
+        }
         running &= (glfwWindowShouldClose(window) != GL_TRUE);
-        
+
         ProfilerService::GetInstance()->StopTimer(profiler);
     } while (running);
     
@@ -170,23 +162,22 @@ int main(int argc, char *argv[])
 
 
 
-void initOpenGL(){
+void InitOpenGL(){
     int profiler = ProfilerService::GetInstance()->StartTimer("Init OpenGL");
     
     if (!glfwInit()) {                                  // Checking for GLFW
-        cout << "Could not initialise GLFW...";
+        printf("Could not initialise GLFW...\n");
     }
-    glfwSetErrorCallback(errorCallbackGLFW);            // Setup a function to catch and display all GLFW errors.
+    glfwSetErrorCallback(ErrorCallbackGLFW);            // Setup a function to catch and display all GLFW errors.
     
-    hintsGLFW();                                        // Setup glfw with various hints.
+    HintsGLFW();                                        // Setup glfw with various hints.
     
     // Start a window using GLFW
     string title = "My OpenGL Application";
     window = glfwCreateWindow(windowWidth, windowHeight, title.c_str(), NULL, NULL);
     if (!window) {                                      // Window or OpenGL context creation failed
-        cout << "Could not initialise GLFW...";
-        endProgram();
-        //return 0;
+        printf("Could not initialise GLFW...\n");
+        EndProgram();
     }
     
     glfwMakeContextCurrent(window);                     // making the OpenGL context current
@@ -195,30 +186,30 @@ void initOpenGL(){
     glewExperimental = GL_TRUE;                         // hack: catching them all - forcing newest debug callback (glDebugMessageCallback)
     GLenum errGLEW = glewInit();
     if (GLEW_OK != errGLEW) {                           // Problems starting GLEW?
-        cout << "Could not initialise GLEW...";
-        endProgram();
+        printf("Could not initialise GLEW...\n");
+        EndProgram();
     }
     
-//    debugGL();
+    //DebugGL();
     
     // Setup all the message loop callbacks.
-    glfwSetWindowSizeCallback(window, onResizeCallback);            // Set callback for resize
-    glfwSetKeyCallback(window, onKeyCallback);                      // Set Callback for keys
-    glfwSetMouseButtonCallback(window, onMouseButtonCallback);      // Set callback for mouse click
-    glfwSetCursorPosCallback(window, onMouseMoveCallback);          // Set callback for mouse move
-    glfwSetScrollCallback(window, onMouseWheelCallback);            // Set callback for mouse wheel.
-                                                                    //    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Set mouse cursor.
+    glfwSetWindowSizeCallback(window, OnResizeCallback);            // Set callback for resize
+    glfwSetKeyCallback(window, OnKeyCallback);                      // Set Callback for keys
+    glfwSetMouseButtonCallback(window, OnMouseButtonCallback);      // Set callback for mouse click
+    glfwSetCursorPosCallback(window, OnMouseMoveCallback);          // Set callback for mouse move
+    glfwSetScrollCallback(window, OnMouseWheelCallback);            // Set callback for mouse wheel.
     
+    // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Set mouse cursor.
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
     
-    glfwSwapInterval(1);    // Ony render when synced (V SYNC)
+    glfwSwapInterval(1);    // Ony render when synced (V SYNC each 1 frame)
     glfwWindowHint(GLFW_SAMPLES, 32);
     glfwWindowHint(GLFW_STEREO, GL_FALSE);
     
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-void endProgram() {
+void EndProgram() {
     int profiler = ProfilerService::GetInstance()->StartTimer("End glfw");
     
     glfwMakeContextCurrent(window);             // destroys window handler
@@ -227,8 +218,8 @@ void endProgram() {
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-void hintsGLFW() {
-    int profiler = ProfilerService::GetInstance()->StartTimer("hintsGLFW");
+void HintsGLFW() {
+    int profiler = ProfilerService::GetInstance()->StartTimer("HintsGLFW");
     
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);            // Create context in debug mode - for debug message callback
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.1
@@ -243,7 +234,7 @@ void hintsGLFW() {
 
 
 // callback functions call the methods of the controller or Renderer, so that functionality can be swapped as need be by changing the object
-void onResizeCallback(GLFWwindow* window, int w, int h) {
+void OnResizeCallback(GLFWwindow* window, int w, int h) {
     int profiler = ProfilerService::GetInstance()->StartTimer("On resize callback");
     
     windowWidth = w;
@@ -255,19 +246,19 @@ void onResizeCallback(GLFWwindow* window, int w, int h) {
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-void onKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     myController->OnKey(window, key, scancode, action, mods);
 }
 
-void onMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+void OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
     myController->OnMouseButton(window, button, action, mods);
 }
 
-void onMouseMoveCallback(GLFWwindow* window, double x, double y) {
+void OnMouseMoveCallback(GLFWwindow* window, double x, double y) {
     myController->OnMouseMove(window, x, y ); // So we can swap out the controller and will have no effect on the callback
 }
 
-void onMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
+void OnMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
 }
 
 
@@ -277,78 +268,72 @@ void onMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
 
 // Taken from F21GA 3D Graphics and Animation Labs
 
-void debugGL() {
+void DebugGL() {
     int profiler = ProfilerService::GetInstance()->StartTimer("Debug GL");
     
     //Output some debugging information
-    cout << "VENDOR: " << (char *)glGetString(GL_VENDOR) << endl;
-    cout << "VERSION: " << (char *)glGetString(GL_VERSION) << endl;
-    cout << "RENDERER: " << (char *)glGetString(GL_RENDERER) << endl;
-    
+    printf("VENDOR %s\n",(char *)glGetString(GL_VENDOR));
+    printf("VERSION %s\n",(char *)glGetString(GL_VERSION));
+    printf("RENDERER %s\n",(char *)glGetString(GL_RENDERER));
+
     // Enable Opengl Debug
-//    glEnable(GL_DEBUG_OUTPUT);
+    // glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback((GLDEBUGPROC)openGLDebugCallback, nullptr); // debugGL does not work, currently throws Thread #: EXC bad access error
+    glDebugMessageCallback((GLDEBUGPROC)OpenGLDebugCallback, nullptr); // debugGL does not work, currently throws Thread #: EXC bad access error
     
     glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
 
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-static void APIENTRY openGLDebugCallback(GLenum source,
-                                         GLenum type,
-                                         GLuint id,
-                                         GLenum severity,
-                                         GLsizei length,
-                                         const GLchar* message,
-                                         const GLvoid* userParam) {
+static void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam) {
     
-    cout << "---------------------opengl-callback------------" << endl;
-    cout << "Message: " << message << endl;
-    cout << "type: ";
+    printf("---------------------opengl-callback------------\n");
+    printf("Message: %s",message);
+    printf("type: ");
     switch (type) {
         case GL_DEBUG_TYPE_ERROR:
-            cout << "ERROR";
+            printf("ERROR");
             break;
         case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-            cout << "DEPRECATED_BEHAVIOR";
+            printf("DEPRECATED_BEHAVIOR");
             break;
         case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-            cout << "UNDEFINED_BEHAVIOR";
+            printf("UNDEFINED_BEHAVIOR");
             break;
         case GL_DEBUG_TYPE_PORTABILITY:
-            cout << "PORTABILITY";
+            printf("PORTABILITY");
             break;
         case GL_DEBUG_TYPE_PERFORMANCE:
-            cout << "PERFORMANCE";
+            printf("PERFORMANCE");
             break;
         case GL_DEBUG_TYPE_OTHER:
-            cout << "OTHER";
+            printf("OTHER");
             break;
     }
-    cout << " --- ";
+    printf(" --- ");
     
-    cout << "id: " << id << " --- ";
-    cout << "severity: ";
+    printf("id: %d --- ",id);
+    printf("severity: ");
     switch (severity) {
         case GL_DEBUG_SEVERITY_LOW:
-            cout << "LOW";
+            printf("LOW");
             break;
         case GL_DEBUG_SEVERITY_MEDIUM:
-            cout << "MEDIUM";
+            printf("MEDIUM");
             break;
         case GL_DEBUG_SEVERITY_HIGH:
-            cout << "HIGH";
+            printf("HIGH");
             break;
         case GL_DEBUG_SEVERITY_NOTIFICATION:
-            cout << "NOTIFICATION";
+            printf("NOTIFICATION");
     }
-    cout << endl;
-    cout << "-----------------------------------------" << endl;
+    printf("\n");
+    printf("-----------------------------------------\n");
 }
 
-void errorCallbackGLFW(int error, const char* description) {
-    cout << "Error GLFW: " << description << "\n";
+void ErrorCallbackGLFW(int error, const char* description) {
+    printf("Error GLFW: %s\n",description);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
