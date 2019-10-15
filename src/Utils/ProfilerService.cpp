@@ -21,7 +21,8 @@ ProfilerService* ProfilerService::GetInstance(){
 int ProfilerService::StartTimer(string identifier){
     m_storage[m_index].Identifier = identifier;
     m_storage[m_index].Start = glfwGetTime();
-    m_storage[m_index].Length = 0.0;
+    m_storage[m_index].Length = -2.0;
+    m_storage[m_index].Status = Status::RECORDING;
     
     int minusIndex = m_index - 1;
     int prevIndex =  minusIndex < 0 ? PROFILE_SIZE - 1 : minusIndex;
@@ -42,6 +43,7 @@ int ProfilerService::StartTimer(string identifier){
 void ProfilerService::StopTimer(int timer){
     m_storage[timer].Length = glfwGetTime() - m_storage[timer].Start;
     --m_nextDepth;
+    m_storage[timer].Status = Status::COMPLETE;
 }
 
 void ProfilerService::Draw(){
@@ -49,6 +51,7 @@ void ProfilerService::Draw(){
     
     
     ImGui::Begin("Profiler",NULL);
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImVec2 canvasSize = ImGui::GetContentRegionAvail();
     if(ImGui::Button("Zoom in")){
         m_windowTime *= 0.5;
@@ -92,22 +95,24 @@ void ProfilerService::Draw(){
     double startTime = glfwGetTime() - m_maxRewindTime;
     
     for(int n = 0; n < PROFILE_SIZE; ++n){
-        float width = canvasSize.x * m_storage[n].Length / m_windowTime; 
-        if(width > 1){
-            float xOffset = canvasSize.x * (-startTime + m_storage[n].Start) / m_windowTime;
+        if(m_storage[n].Status == Status::COMPLETE){
+            float width = canvasSize.x * m_storage[n].Length / m_windowTime; 
+            if(width > 1){
+                float xOffset = canvasSize.x * (-startTime + m_storage[n].Start) / m_windowTime;
 
-            ImVec2 topLeft(
-                        canvasPos.x + xOffset + barSpacing,
-                        canvasPos.y + (m_storage[n].Depth * rowHeight));
-            ImVec2 botRight(
-                    canvasPos.x + xOffset + width - barSpacing,
-                    canvasPos.y + barHeight + (m_storage[n].Depth * rowHeight));
+                ImVec2 topLeft(
+                            canvasPos.x + xOffset + barSpacing,
+                            canvasPos.y + (m_storage[n].Depth * rowHeight));
+                ImVec2 botRight(
+                        canvasPos.x + xOffset + width - barSpacing,
+                        canvasPos.y + barHeight + (m_storage[n].Depth * rowHeight));
 
-            drawList->AddRectFilled(topLeft, botRight, colBar);
-            
-            drawList->AddText(add(topLeft, textPad), colText, m_storage[n].Identifier.c_str());
+                drawList->AddRectFilled(topLeft, botRight, colBar);
+                
+                drawList->AddText(add(topLeft, textPad), colText, m_storage[n].Identifier.c_str());
+            }
         }
-        else if(m_storage[n].Length <= -2.0){
+        else if(m_storage[n].Status == Status::RECORDING){
             float xOffset = canvasSize.x * (-startTime + m_storage[n].Start) / m_windowTime;
             float width = canvasSize.x * (glfwGetTime() - m_storage[n].Start) / m_windowTime; 
 

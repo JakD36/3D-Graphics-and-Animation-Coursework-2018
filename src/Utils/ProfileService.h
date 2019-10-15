@@ -22,18 +22,18 @@ inline ImVec2 add(ImVec2 a, ImVec2 b) { return ImVec2(a.x + b.x, a.y + b.y); }
 class ProfilerService{
     private:
 
-        // enum Status{
-        //     EMPTY,
-        //     OPEN,
-        //     CLOSED
-        // }
+        enum Status{
+            EMPTY,
+            RECORDING,
+            COMPLETE
+        };
 
         struct ProfileData{
             string Identifier;
             double Start;
             double Length;
             int Depth;
-            // Status Status;
+            Status Status;
         };
 
         ProfilerService();
