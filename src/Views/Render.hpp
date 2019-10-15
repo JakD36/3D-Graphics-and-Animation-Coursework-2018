@@ -41,12 +41,4 @@ public:
     void Render();
 };
 
-struct RenderComponent{
-public:
-    Mesh
-    Orientation
-    Shader
-    Texture    
-} 
-
 #endif
