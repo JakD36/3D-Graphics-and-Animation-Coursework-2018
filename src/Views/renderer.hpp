@@ -9,7 +9,6 @@
 #ifndef Renderer_hpp
 #define Renderer_hpp
 
-#include <stdio.h>
 #include <vector>
 
 #include "../Scenes/SceneGraph.hpp"
@@ -33,10 +32,11 @@ using namespace std;
 class Renderer{
 private:
     GLFWwindow*       p_window; // The window the viewport is rendering to
-    
+
     GLuint            m_framebuffer;
     GLuint            m_framebufferTexture;
     GLuint            m_depthbuffer;
+
     // For completing 2 pass rendering for framebuffer effects
     GLuint            m_displayVao;
     GLuint            m_displayBuffer[2];
@@ -86,8 +86,8 @@ public:
     void ChangeScene(SceneGraph* scene); // FIX: Need to implement some form of defensive programming to make sure a scene is actually provided
     
     void SetWindowDimensions(int windowWidth, int windowHeight); // Used to update the Renderer the window has changed size
-//    For use with creating multiple viewports within 1 window, currently viewports are a bit off 
-    void SetViewport(float x, float y, float width, float height); 
+
+    void SetViewport(float x, float y, float width, float height); // For use with creating multiple viewports within 1 window,
 };
 
 #endif /* Renderer_hpp */

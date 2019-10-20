@@ -18,7 +18,7 @@ Mesh::Mesh(string meshName){
     Load(meshName);
  
     // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
-//        cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
+    // cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
     
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer[0]);
     glBufferData(GL_ARRAY_BUFFER,                       // store the vertices in the first part of the buffer

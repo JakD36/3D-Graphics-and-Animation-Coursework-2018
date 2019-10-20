@@ -8,13 +8,10 @@
 
 #include "Renderer.hpp"
 
-static bool init = false;
-
 // Return the camera for use outwith this object, to set/get camera position.
 Camera* Renderer::GetCamera(){
     return p_camera;
 }
-
 
 void Renderer::SetViewport(float x, float y, float width, float height){
     m_viewportX = x;
@@ -31,11 +28,10 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
     this->m_windowWidth = windowWidth;
     this->m_windowHeight = windowHeight;
     
-    
     // Update viewport so its size is appropriate for the new window!
     int width, height;
     glfwGetFramebufferSize(p_window, &width, &height);
-//    SetViewport(width,height);
+
     m_aspect = (float)width / (float)height;
     m_proj_matrix = glm::perspective(glm::radians(50.0f),m_aspect,0.1f,1000.0f);
 }
@@ -60,7 +56,6 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
     
-    
     // Framebuffer operations
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);    // These lines prevent faces facing away from the camera from being rendered
@@ -69,8 +64,11 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
     glDepthFunc(GL_LEQUAL);
     
     //Setup the framebuffer using the following code taken from the the lecture notes and code
-    
-    glGenFramebuffers(1,&m_framebuffer);
+    /*
+        Frame buffer 0 is is our screen,
+        Frame buffer 1 is where we render to do perform our post processing effects
+    */
+    glGenFramebuffers(1,&m_framebuffer); 
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer);
     glGenTextures(1,&m_framebufferTexture);
     
@@ -82,13 +80,13 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
-    // Depth buffer texture    - Need to attach depth too otherwise depth testing will not be performed.
+    // Depth buffer texture - Need to attach depth too otherwise depth testing will not be performed.
     glGenRenderbuffers(1, &m_depthbuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, m_depthbuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, frameWidth, frameHeight);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthbuffer);
     
-    glGenBuffers(2,m_displayBuffer);
+    glGenBuffers(2,m_displayBuffer); // TODO: Verify are we using 3 framebuffers and why?
     glBindBuffer(GL_ARRAY_BUFFER, m_displayBuffer[0]);
     glBufferData(GL_ARRAY_BUFFER,
                  6 * sizeof(glm::vec2),
@@ -108,7 +106,6 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(1);
     
-    
     VertexShader* displayVs = new VertexShader("Shaders/vs_display.glsl");
     FragShader* displayFs = new FragShader("Shaders/fs_display.glsl");
     p_framebufferPipeline = new ShaderPipeline(displayVs,displayFs);
@@ -120,10 +117,10 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
 void Renderer::Render(){
     int profiler = ProfilerService::GetInstance()->StartTimer("Render");
     // So now to render to the framebuffer texture instead of screen
-    glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,m_framebufferTexture,0);
     
-    int frameWidth, frameHeight;//, frameLeft, frameRight, frameBottom, frameTop;
+    int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
     // Convert all our projected coordinates to screen coordinates for the texture
     
@@ -146,7 +143,7 @@ void Renderer::Render(){
     // To create our camera, we use the lookAt function generate the viewMatrix
     // It takes 3 inputs, the position of the camera, the point in space it is facing and which direction is up, so its orientated properly
     glm::mat4 viewMatrix = glm::lookAt(camPosition,                       // eye
-                                       camPosition+p_camera->GetFront(),           // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
+                                       camPosition+p_camera->GetFront(), // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
                                        glm::vec3(0.0f, 1.0f, 0.0f));    // up
     
     // Render each object
@@ -156,14 +153,6 @@ void Renderer::Render(){
     lightStruct lights[LIGHTSN];
     for(int n = 0; n < LIGHTSN; n++){
         lights[n] = *(p_lights+n);
-    }
-    
-    // Workaround for mojave issue
-    // FIX: Find permanent solution
-    if(!init){
-        glfwHideWindow(p_window);
-        glfwShowWindow(p_window);
-        init = true;
     }
 
     for(int n = 0;n<Objs.size();n++){

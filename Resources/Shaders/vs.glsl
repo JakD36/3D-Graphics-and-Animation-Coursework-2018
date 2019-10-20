@@ -19,10 +19,11 @@ out VS_OUT
 uniform mat4 modelMatrix;
 uniform mat4 proj_matrix;
 uniform mat4 viewMatrix;
+uniform mat4 mvp;
 
 void main(void)
 {
-    gl_Position = proj_matrix * viewMatrix * modelMatrix * position;// apply all our coordinate transformations,
+    gl_Position = mvp * position;// apply all our coordinate transformations,
     // model space - model transform -> world space
     // world space - view transform -> view space
     // view space - proj transform -> normalised space

@@ -5,8 +5,8 @@ target = app
 APP_NAME=GL
 FLAGS = -w -std=c++11
 BUILDDIR = Build
-CC = g++
-#CC = clang
+# CC = g++
+CC = clang++
 
 objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o Render.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_opengl3.o imgui_impl_glfw.o imgui_widgets.o ProfilerService.o
 
