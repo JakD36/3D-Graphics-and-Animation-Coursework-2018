@@ -11,47 +11,45 @@
 Mesh::Mesh(string meshName){
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
-
     
-    glGenBuffers(3,m_buffer); // Generate the buffer to store the vertices, uvs and normals
+    glGenBuffers(1,&m_buffer); // Generate the buffer to store the vertices, uvs and normals
     
-    Load(meshName);
+    vector<float> interleavedData = Load(meshName);
  
     // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
     // cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
     glBufferData(GL_ARRAY_BUFFER,                       // store the vertices in the first part of the buffer
-                 m_vertices.size()*sizeof(glm::vec3), // vertices size * size of vec3 tells us how much space in the buffer to allocate
-                 &m_vertices[0],                      // Where to start in the vertices vector
+                 interleavedData.size()*sizeof(float), // vertices size * size of vec3 tells us how much space in the buffer to allocate
+                 &interleavedData[0],                      // Where to start in the vertices vector
                  GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, NULL);
     glEnableVertexAttribArray(0);
     
     // Do the same for uvs
-    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 m_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates, so use size of vec2 for space allocation
-                 &m_uvs[0],
-                 GL_STATIC_DRAW);
+//    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
+//    glBufferData(GL_ARRAY_BUFFER,
+//                 m_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates, so use size of vec2 for space allocation
+//                 &m_uvs[0],
+//                 GL_STATIC_DRAW);
     
-    glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
+    glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 3));
     glEnableVertexAttribArray(1);
     
     // Same again for normals
-    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 m_normals.size()*sizeof(glm::vec3),
-                 &m_normals[0],
-                 GL_STATIC_DRAW);
+//    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
+//    glBufferData(GL_ARRAY_BUFFER,
+//                 m_normals.size()*sizeof(glm::vec3),
+//                 &m_normals[0],
+//                 GL_STATIC_DRAW);
     
-    glVertexAttribPointer(2, 3 , GL_FLOAT, GL_FALSE, 0, NULL);
+    glVertexAttribPointer(2, 3 , GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 5));
     glEnableVertexAttribArray(2);
-
-    
 }
 
-bool Mesh::Load(string meshName){
+std::vector<float> Mesh::Load(string meshName){
     // Variables
     FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
@@ -66,13 +64,15 @@ bool Mesh::Load(string meshName){
     int matches;
     
     unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+    vector<glm::vec3> verts, normals;
+    vector<glm::vec2> uvs;
     
-    
+    vector<float> interleavedData;
     pfile = fopen(meshName.c_str(),"r"); // open the file with read access
     
     if(pfile == NULL){ // if the file doesnt open when using fopen
         cout<<"Could not find file >> "<<meshName<<endl; // print error and name of file that failed to open
-        return false; // exit function as it has failed
+        return interleavedData; // exit function as it has failed
     }
     else{
         do{ // if file does open loop through each line of the file while EOF has not been reached
@@ -80,7 +80,7 @@ bool Mesh::Load(string meshName){
                                               // we can then compare the first section of text to the different headers for each line
             
             // "v" means the following text is vertexs
-            if(strcmp(line,"v") == 0){ // vertex indices (x,y,z) glm::vec3
+            if(strcmp(line,"v") == 0){ // vertex indices
                 glm::vec3 vertex; // create temporary storage for vertices
                 
                 fscanf(pfile,"%f %f %f\n",&vertex.x,&vertex.y,&vertex.z); // take the vertices and assign to vertex variable
@@ -186,12 +186,8 @@ bool Mesh::Load(string meshName){
                     cout<<"This gave "<< matches<<" matches"<<endl;
                 }
             }
-            
-            
-            
         } while (result != EOF);
-        
-        
+
         // Now to go through vertex, uv and normal and push each to the vectors that will be outputted from the object
         for(unsigned int i=0; i<vertexIndices.size();i+=3){ // loops through the vertexIndices in batches of 3, so we can reverse them so that everything is displayed correctly
             
@@ -200,15 +196,15 @@ bool Mesh::Load(string meshName){
             
             unsigned int vertexIndex = vertexIndices[i]; // Creates an index and assigns 2 above the current place in loop so we start at the end
             glm::vec3 vertex = tmpV[vertexIndex-1]; // stores the tmpV and subtracts 1 from index as C++ starts at 0 not 1
-            m_vertices.push_back(vertex); // this adds the position to the back of the vertex
+            verts.push_back(vertex); // this adds the position to the back of the vertex
             
             vertexIndex = vertexIndices[i+1]; // so we get the index for the middle vertex by moving up 1 indices
             vertex = tmpV[vertexIndex-1];
-            m_vertices.push_back(vertex); // this makes the position of our new vertex
+            verts.push_back(vertex); // this makes the position of our new vertex
             
             vertexIndex = vertexIndices[i+2]; // finally indexes the first value in the 3 and adds it to the back of the 3 completing reverse of batch
             vertex = tmpV[vertexIndex-1];
-            m_vertices.push_back(vertex); // this makes the position of our new vertex
+            verts.push_back(vertex); // this makes the position of our new vertex
         }
         
         // Repeats the above done for vertices for both normals and uvs if we have them
@@ -219,15 +215,15 @@ bool Mesh::Load(string meshName){
                 
                 unsigned int normalIndex = normalIndices[i];
                 glm::vec3 normal = tmpVn[normalIndex-1];
-                m_normals.push_back(normal);
+                normals.push_back(normal);
                 
                 normalIndex = normalIndices[i+1];
                 normal = tmpVn[normalIndex-1];
-                m_normals.push_back(normal);
+                normals.push_back(normal);
                 
                 normalIndex = normalIndices[i+2];
                 normal = tmpVn[normalIndex-1];
-                m_normals.push_back(normal);
+                normals.push_back(normal);
             }
         }
         if(!tmpVt.empty()){
@@ -237,52 +233,36 @@ bool Mesh::Load(string meshName){
                 
                 unsigned int uvIndex = uvIndices[i];
                 glm::vec2 uv = tmpVt[uvIndex-1];
-                m_uvs.push_back(uv);
+                uvs.push_back(uv);
                 
                 uvIndex = uvIndices[i+1];
                 uv = tmpVt[uvIndex-1];
-                m_uvs.push_back(uv);
+                uvs.push_back(uv);
                 
                 uvIndex = uvIndices[i+2];
                 uv = tmpVt[uvIndex-1];
-                m_uvs.push_back(uv);
+                uvs.push_back(uv);
             }
         }
-        /*// Now to go through vertex, uv and normal and push each to the vectors that will be outputted from the object
-         for(unsigned int i=0; i<vertexIndices.size();i++){ // loops through the vertexIndices in batches of 3, so we can reverse them so that everything is displayed correctly
-         
-         // the index of the vertex position is vertexIndices[i]
-         // so the position is temp_vertices[vertexIndex-1], -1 because C++ starts at 0 whereas obj starts at 1
-         
-         unsigned int vertexIndex = vertexIndices[i]; // Creates an index and assigns 2 above the current place in loop so we start at the end
-         glm::vec3 vertex = tmpV[vertexIndex-1]; // stores the tmpV and subtracts 1 from index as C++ starts at 0 not 1
-         out_vertices.push_back(vertex); // this adds the position to the back of the vertex
-         
-         }
-         
-         // Repeats the above done for vertices for both normals and uvs if we have them
-         if(!tmpVn.empty()){ // If we have normals push them
-         for(unsigned int i=0; i<normalIndices.size();i++){
-         // the index of the vertex position is vertexIndices[i]
-         // so the position is temp_vertices[vertexIndex-1] -1 because C++ starts at 0 whereas obj starts at
-         
-         unsigned int normalIndex = normalIndices[i];
-         glm::vec3 normal = tmpVn[normalIndex-1];
-         out_normals.push_back(normal);
-         }
-         }
-         if(!tmpVt.empty()){
-         for(unsigned int i=0; i<uvIndices.size();i++){
-         // the index of the vertex position is vertexIndices[i]
-         // so the position is temp_vertices[vertexIndex-1] -1 because C++ starts at 0 whereas obj starts at
-         
-         unsigned int uvIndex = uvIndices[i];
-         glm::vec2 uv = tmpVt[uvIndex-1];
-         out_uvs.push_back(uv);
-         }
-         }*/
+
+        for(int i = 0; i < verts.size(); ++i)
+        {
+            interleavedData.push_back(verts[i].x);
+            interleavedData.push_back(verts[i].y);
+            interleavedData.push_back(verts[i].z);
+
+            interleavedData.push_back(uvs[i].x);
+            interleavedData.push_back(uvs[i].y);
+
+            interleavedData.push_back(normals[i].x);
+            interleavedData.push_back(normals[i].y);
+            interleavedData.push_back(normals[i].z);
+        }
+
+        m_vertCount = verts.size() * 3;
+
         fclose(pfile); // closes file and returns true to indicate that the import was successful
-        return true;
+        return interleavedData;
     }
 }
 

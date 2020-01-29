@@ -17,8 +17,6 @@ out VS_OUT
 
 // Grab our different matrices from the uniforms for use in calculations below
 uniform mat4 modelMatrix;
-uniform mat4 proj_matrix;
-uniform mat4 viewMatrix;
 uniform mat4 mvp;
 
 void main(void)
@@ -35,5 +33,5 @@ void main(void)
     // and the fragments position for the light calculation
     vec3 normalsT = mat3(transpose(inverse(modelMatrix))) * vec3(normals.xyz);
     vs_out.normals = vec4(normalsT,1.0);
-    vs_out.fragPos = modelMatrix*position; // This gives the fragments position in the world space, as we are performing a model transformation.
+    vs_out.fragPos = modelMatrix * position; // This gives the fragments position in the world space, as we are performing a model transformation.
 }

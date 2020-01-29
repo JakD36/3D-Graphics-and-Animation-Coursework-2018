@@ -30,7 +30,7 @@ void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y){
         int mouseX = static_cast<int>(x); // Get the new mouse position
         int mouseY = static_cast<int>(y);
         
-        GLfloat xoffset = mouseX - m_lastX; // get the change in the mouse position in x and y
+        GLfloat xoffset = m_lastX - mouseX; // get the change in the mouse position in x and y
         GLfloat yoffset = m_lastY - mouseY; // Reversed
         m_lastX = mouseX; m_lastY = mouseY;   // we can now set the old mouse position to the new one for the next frame
         

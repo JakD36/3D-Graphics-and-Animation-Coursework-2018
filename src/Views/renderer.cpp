@@ -36,75 +36,73 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
     m_proj_matrix = glm::perspective(glm::radians(50.0f),m_aspect,0.1f,1000.0f);
 }
 
-
 // Initialise the Renderer for this viewport
-Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
+Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera) {
     int profiler = ProfilerService::GetInstance()->StartTimer("Renderer Initialisation");
+
     // Assign the variables to the object
     this->p_scene = scene;
     this->p_camera = viewCamera;
     this->p_window = window;
-    
+
     // Grab the window dimensions for the current window, saves passing too many arguments to the constructor
     glfwGetWindowSize(p_window, &m_windowWidth, &m_windowHeight);
-    
+
     // Calculate proj_matrix for the first time.
-    m_aspect = (float)m_windowWidth / (float)m_windowHeight;
+    m_aspect = (float) m_windowWidth / (float) m_windowHeight;
     m_proj_matrix = glm::perspective(glm::radians(50.0f), m_aspect, 0.1f, 1000.0f);
-    
+
     // On high DPI, there are a higher number of pixels in the window than the length of the window, so we need to use the frameWidth and height,
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
-    
+
+
     // Framebuffer operations
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);    // These lines prevent faces facing away from the camera from being rendered
     glEnable(GL_CULL_FACE); // These lines prevent faces facing away from the camera from being rendered
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    
-    //Setup the framebuffer using the following code taken from the the lecture notes and code
+
+
+    {
+    // Setup the framebuffer using the following code taken from the the lecture notes and code
     /*
         Frame buffer 0 is is our screen,
         Frame buffer 1 is where we render to do perform our post processing effects
     */
-    glGenFramebuffers(1,&m_framebuffer); 
-    glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer);
-    glGenTextures(1,&m_framebufferTexture);
-    
-    glBindTexture(GL_TEXTURE_2D, m_framebufferTexture);
-    
-    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,frameWidth,frameHeight,0,GL_RGB,GL_UNSIGNED_BYTE,0);
-    
-    // filtering needed - future lecture
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    // Depth buffer texture - Need to attach depth too otherwise depth testing will not be performed.
-    glGenRenderbuffers(1, &m_depthbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_depthbuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, frameWidth, frameHeight);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthbuffer);
-    
-    glGenBuffers(2,m_displayBuffer); // TODO: Verify are we using 3 framebuffers and why?
-    glBindBuffer(GL_ARRAY_BUFFER, m_displayBuffer[0]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 6 * sizeof(glm::vec2),
-                 &m_displayVertices[0],
-                 GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, m_displayBuffer[1]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 6 * sizeof(glm::vec2),
-                 &m_displayUvs[0],
-                 GL_STATIC_DRAW);
-    
-    glGenVertexArrays(1,&m_displayVao);
-    glBindVertexArray(m_displayVao);
-    glVertexAttribPointer(0, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(1);
+        glGenFramebuffers(1, &m_framebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+        glGenTextures(1, &m_framebufferTexture);
+        glBindTexture(GL_TEXTURE_2D, m_framebufferTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameWidth, frameHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear sample when texture is minified
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Linear sample when texture is magnified
+    }
+
+    { // Depth buffer texture - Need to attach depth too otherwise depth testing will not be performed.
+        glGenRenderbuffers(1, &m_depthbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, m_depthbuffer);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, frameWidth, frameHeight);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthbuffer);
+    }
+
+    { // Stored Quad verts + UVs for framebuffer
+        glGenBuffers(1, &m_displayBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, m_displayBuffer);
+        glBufferData(GL_ARRAY_BUFFER,
+                     12 * sizeof(glm::vec2),
+                     &m_displayCoords[0],
+                     GL_STATIC_DRAW);
+
+        glGenVertexArrays(1, &m_displayVao);
+        glBindVertexArray(m_displayVao);
+
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec2), NULL);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec2), (GLvoid *) (sizeof(glm::vec2)));
+        glEnableVertexAttribArray(1);
+    }
     
     VertexShader* displayVs = new VertexShader("Shaders/vs_display.glsl");
     FragShader* displayFs = new FragShader("Shaders/fs_display.glsl");
@@ -116,7 +114,8 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera){
 
 void Renderer::Render(){
     int profiler = ProfilerService::GetInstance()->StartTimer("Render");
-    // So now to render to the framebuffer texture instead of screen
+
+    // Render to the framebuffer texture instead of screen
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,m_framebufferTexture,0);
     
@@ -138,25 +137,44 @@ void Renderer::Render(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     
-    glm::vec3 camPosition = p_camera->GetPosition();
-    
-    // To create our camera, we use the lookAt function generate the viewMatrix
-    // It takes 3 inputs, the position of the camera, the point in space it is facing and which direction is up, so its orientated properly
-    glm::mat4 viewMatrix = glm::lookAt(camPosition,                       // eye
-                                       camPosition+p_camera->GetFront(), // centre, we need to use the pos+cameraFront to make sure its pointing to the right point in space
-                                       glm::vec3(0.0f, 1.0f, 0.0f));    // up
-    
+    glm::mat4 viewMatrix = p_camera->BuildViewMatrix();
+
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
     vector<GameObject*> Objs = p_scene->GetObjs();
     lightStruct* p_lights = p_scene->GetLights();
     lightStruct lights[LIGHTSN];
+    
     for(int n = 0; n < LIGHTSN; n++){
-        lights[n] = *(p_lights+n);
+        lights[n] = *(p_lights + n);
     }
 
+    for(int i = 0; i < Objs.size(); ++i)
+    {
+        GLuint index = glGetUniformBlockIndex(Objs[i]->m_shaderPipeline->m_program,"lightBlock");
+        glUniformBlockBinding(Objs[i]->m_shaderPipeline->m_program, index, 0);
+    }
+    
+    lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
+    lights[2].spotOuterCutOff = glm::cos(glm::radians(20.0f));
+    
+    lights[3].spotCutOff = glm::cos(glm::radians(15.0f));
+    lights[3].spotOuterCutOff = glm::cos(glm::radians(20.0f));
+
+    GLuint ubo;
+    glGenBuffers(1, &ubo);
+    glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+    glBufferData(GL_UNIFORM_BUFFER, 96 * LIGHTSN, NULL, GL_STATIC_DRAW); // allocate 96 bytes of memory
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    
+    glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, 96 * LIGHTSN);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, 96 * LIGHTSN, lights);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    glm::vec3 camPos = p_camera->GetPosition();
+
     for(int n = 0;n<Objs.size();n++){
-        Objs[n]->Render(m_proj_matrix,viewMatrix,lights,camPosition); 
+        Objs[n]->Render(m_proj_matrix,viewMatrix,lights,camPos);
     }
     
     // SECOND PASS

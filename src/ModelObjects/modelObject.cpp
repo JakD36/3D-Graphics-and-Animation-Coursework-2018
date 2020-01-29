@@ -191,7 +191,7 @@ void modelObject::setupRender(glm::mat4& proj_matrix, lightStruct lights[],glm::
     // Pass a number of values through to the shaders through the uniforms
     glUniform1i(glGetUniformLocation(program,"tex"), 0);                    // The texture
     glUniform4f(glGetUniformLocation(program,"viewPosition"),camera.x,camera.y,camera.z,1.0f); // The camera position
-    glUniform4f(glGetUniformLocation(program, "ia"), lightStruct::ia.r, lightStruct::ia.g, lightStruct::ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
+    glUniform4f(glGetUniformLocation(program, "ia"), ia.r, ia.g, ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
     glUniform3f(glGetUniformLocation(program, "ka"), ka.r,ka.g,ka.b); // The material materials ambient reflectivity constant
     glUniform3f(glGetUniformLocation(program, "kd"), kd.r,kd.g,kd.b); // The material materials diffused reflectivity constant
     glUniform3f(glGetUniformLocation(program, "ks"), ks.r,ks.g,ks.b); // The material materials specular reflectivity constant

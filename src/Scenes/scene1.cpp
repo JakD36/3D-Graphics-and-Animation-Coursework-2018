@@ -7,7 +7,6 @@
 //
 
 #include "Scene1.hpp"
-#include "../Views/Render.hpp"
 
 Scene1::Scene1(){
     int profiler = ProfilerService::GetInstance()->StartTimer("Scene Initialisation");
@@ -251,12 +250,6 @@ Scene1::Scene1(){
     
     
     cout<<"Time to load "<<glfwGetTime()-startTime<<endl;   // Just a nice thing to know
-    RenderManager rm;
-    for(vector<GameObject*>::iterator iter = m_Objs.begin(); iter != m_Objs.end(); ++iter)
-    {
-        rm.QueueToAddOrUpdate(*iter);
-    }
-    rm.Batch();
     
     ProfilerService::GetInstance()->StopTimer(profiler);
 }

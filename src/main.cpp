@@ -1,9 +1,6 @@
 // Standard libraries
 #include <string>
-#include <fstream>
-#include <vector>
 #include <stdio.h>
-// #include <stdlib.h>
 
 // OpenGL - GLEW, GLFW and GLM
 #include <GL/glew.h>
@@ -27,7 +24,6 @@ using namespace std;
 
 // initialise Static variables
 ShaderLoader* ShaderLoader::m_instance = NULL;
-glm::vec3 lightStruct::ia = glm::vec3(0.0f,1.0f,0.2f); // we assign the static variable for the light struct out with the any functions
 
 // Our prototypes for OpenGL functions used throughout the program, mainly the callbacks to handle user input
 void ErrorCallbackGLFW(int error, const char* description);
@@ -59,7 +55,6 @@ int main(int argc, char *argv[])
 {
     int profiler = ProfilerService::GetInstance()->StartTimer("main");
 
-    // Intialise the program and the scene
     InitOpenGL(); // Initialise OpenGL window,
     
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
@@ -68,26 +63,11 @@ int main(int argc, char *argv[])
     Camera* mainCamera = new Camera(); // Initialise the main camera, FPS camera attached to player!
     
     myView = new Renderer(window,&scene,mainCamera); // Initialise our rendering object, with the scene it will render and the camera it will be using
-    
-    
+
     // Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved
     int framebufferWidth, framebufferHeight;
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
     myView->SetViewport(0, 0, framebufferWidth, framebufferHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
-
-    /* Setting up other renderers
-        camera* secondCam = new camera();
-        Renderer* secondView = new Renderer(window,&scene,secondCam);
-        secondView->SetViewport(windowWidth, windowHeight, windowWidth, windowHeight);
-
-        camera* thirdCam = new camera();
-        Renderer* thirdView = new Renderer(window,&scene,thirdCam);
-        thirdView->SetViewport(0, 0, windowWidth, windowHeight);
-
-        camera* fourthCam = new camera();
-        Renderer* fourthView = new Renderer(window,&scene,fourthCam);
-        fourthView->SetViewport(windowWidth, 0, windowWidth, windowHeight);
-    */  
     
     myController = new KeyboardAndMouse(window,&scene,myView); // Initialise the controller, is provided reference to the model and the view so it can access both
     
@@ -103,7 +83,7 @@ int main(int argc, char *argv[])
     bool running = true;
     do { // run until the window is closed
         int profiler = ProfilerService::GetInstance()->StartTimer("mainloop");
-        double currentTime = glfwGetTime();     // retrieve timelapse
+        double currentTime = glfwGetTime();
         
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -112,20 +92,11 @@ int main(int argc, char *argv[])
         // bool show_demo_window = true;
         // ImGui::ShowDemoWindow(&show_demo_window);
 
-        // Game loop - Input
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
-        
-        // Game loop - Update
-        scene.Update(currentTime);              // update (physics, animation, structures, etc)
-        
-        // Game loop - Render
-        myView->Render();
 
-        /* Other renderers
-            secondView->Render();
-            thirdView->Render();
-            fourthView->Render();
-        */
+        scene.Update(currentTime);              // update (physics, animation, structures, etc)
+
+        myView->Render();
 
         { // Render ImGui
             ProfilerService* profilerInstance = ProfilerService::GetInstance();
@@ -141,7 +112,6 @@ int main(int argc, char *argv[])
             // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
             glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
             ProfilerService::GetInstance()->StopTimer(profiler3);
-            //running &= (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE);    // exit if escape key pressed
         }
         running &= (glfwWindowShouldClose(window) != GL_TRUE);
 
@@ -159,7 +129,6 @@ int main(int argc, char *argv[])
     ProfilerService::GetInstance()->StopTimer(profiler);
     return 0;
 }
-
 
 
 void InitOpenGL(){
@@ -232,7 +201,6 @@ void HintsGLFW() {
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-
 // callback functions call the methods of the controller or Renderer, so that functionality can be swapped as need be by changing the object
 void OnResizeCallback(GLFWwindow* window, int w, int h) {
     int profiler = ProfilerService::GetInstance()->StartTimer("On resize callback");
@@ -286,7 +254,8 @@ void DebugGL() {
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-static void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam) {
+static void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam)
+{
     
     printf("---------------------opengl-callback------------\n");
     printf("Message: %s",message);

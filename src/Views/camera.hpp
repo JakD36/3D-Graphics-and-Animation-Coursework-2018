@@ -25,22 +25,25 @@
 class Camera{
 protected:
     glm::vec3 m_position;                 // Position of the camera in the world space
-    glm::vec3 m_front;                    // Direction the camera is facing
-    GLfloat m_yaw=0, m_pitch=0;             // The yaw and pitch angles to be calculated from the change in mouse position
+    glm::vec3 m_forward;                    // Direction the camera is facing
+    GLfloat m_yaw=0, m_pitch=0;           // The yaw and pitch angles to be calculated from the change in mouse position
+
+    GLfloat m_fov;
+    glm::vec3 m_up;
+
 public:
     Camera();                                               // Default constructor
     Camera(glm::vec3 position, GLfloat yaw, GLfloat pitch); // Constructor to define position and direction facing
-    
-    
-    // Accessors
+
     glm::vec3 GetPosition();
-    glm::vec3 GetFront();
+    glm::vec3 GetForward();
     GLfloat GetYaw();
     GLfloat GetPitch();
-    
-    // Mutators 
+
     void SetPosition(glm::vec3 newPosition);
     void SetDirection(GLfloat yaw, GLfloat pitch);
+
+    glm::mat4 BuildViewMatrix();
 };
 
 

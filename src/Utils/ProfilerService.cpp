@@ -22,7 +22,7 @@ int ProfilerService::StartTimer(string identifier){
     m_storage[m_index].Identifier = identifier;
     m_storage[m_index].Start = glfwGetTime();
     m_storage[m_index].Length = -2.0;
-    m_storage[m_index].Status = Status::RECORDING;
+    m_storage[m_index].Status = RECORDING;
     
     int minusIndex = m_index - 1;
     int prevIndex =  minusIndex < 0 ? PROFILE_SIZE - 1 : minusIndex;
@@ -43,7 +43,7 @@ int ProfilerService::StartTimer(string identifier){
 void ProfilerService::StopTimer(int timer){
     m_storage[timer].Length = glfwGetTime() - m_storage[timer].Start;
     --m_nextDepth;
-    m_storage[timer].Status = Status::COMPLETE;
+    m_storage[timer].Status = COMPLETE;
 }
 
 void ProfilerService::Draw(){
@@ -95,7 +95,7 @@ void ProfilerService::Draw(){
     double startTime = glfwGetTime() - m_maxRewindTime;
     
     for(int n = 0; n < PROFILE_SIZE; ++n){
-        if(m_storage[n].Status == Status::COMPLETE){
+        if(m_storage[n].Status == COMPLETE){
             float width = canvasSize.x * m_storage[n].Length / m_windowTime; 
             if(width > 1){
                 float xOffset = canvasSize.x * (-startTime + m_storage[n].Start) / m_windowTime;
@@ -112,7 +112,7 @@ void ProfilerService::Draw(){
                 drawList->AddText(add(topLeft, textPad), colText, m_storage[n].Identifier.c_str());
             }
         }
-        else if(m_storage[n].Status == Status::RECORDING){
+        else if(m_storage[n].Status == RECORDING){
             float xOffset = canvasSize.x * (-startTime + m_storage[n].Start) / m_windowTime;
             float width = canvasSize.x * (glfwGetTime() - m_storage[n].Start) / m_windowTime; 
 

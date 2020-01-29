@@ -29,12 +29,12 @@ using namespace std;
 class Mesh{
     
 public:
-    std::vector < glm::vec3 > m_vertices;         // Vertices of our objects mesh
-    std::vector < glm::vec2 > m_uvs;              // uvs coordinates for texture mapping
-    std::vector < glm::vec3 > m_normals;          // Normals to each plane in our mesh
-    GLuint          m_buffer[3];                      // Buffer to store the vertices, uvs and the normals for the model
+    int m_vertCount;
+
+    GLuint          m_buffer;                      // Buffer to store the vertices, uvs and the normals for the model
     GLuint          m_vao; 
-    bool Load(string meshName);
+
+    std::vector<float> Load(string meshName);
 
     Mesh(string meshName);
 };

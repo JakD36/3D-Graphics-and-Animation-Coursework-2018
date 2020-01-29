@@ -39,24 +39,21 @@ private:
 
     // For completing 2 pass rendering for framebuffer effects
     GLuint            m_displayVao;
-    GLuint            m_displayBuffer[2];
-    
-    glm::vec2 m_displayVertices[6] = {
-        glm::vec2(-1.0f, 1.0f),
-        glm::vec2(-1.0f,-1.0f),
-        glm::vec2( 1.0f,-1.0f),
-        glm::vec2(-1.0f, 1.0f),
-        glm::vec2( 1.0f,-1.0f),
-        glm::vec2( 1.0f, 1.0f)
-    };
-    
-    glm::vec2 m_displayUvs[6] = {
-        glm::vec2(0.0f, 1.0f),
-        glm::vec2(0.0f, 0.0f),
-        glm::vec2(1.0f, 0.0f),
-        glm::vec2(0.0f, 1.0f),
-        glm::vec2(1.0f, 0.0f),
-        glm::vec2(1.0f, 1.0f)
+    GLuint            m_displayBuffer;
+
+    glm::vec2 m_displayCoords[12] = { // Interleaved coordinates for displaying to a Quad
+            glm::vec2(-1.0f, 1.0f), // v
+            glm::vec2(0.0f, 1.0f), // uv
+            glm::vec2(-1.0f,-1.0f), // v
+            glm::vec2(0.0f, 0.0f), // uv
+            glm::vec2( 1.0f,-1.0f), // v
+            glm::vec2(1.0f, 0.0f), // uv
+            glm::vec2(-1.0f, 1.0f), // v
+            glm::vec2(0.0f, 1.0f), // uv
+            glm::vec2( 1.0f,-1.0f), // v
+            glm::vec2(1.0f, 0.0f), // uv
+            glm::vec2( 1.0f, 1.0f),// v
+            glm::vec2(1.0f, 1.0f) // uv
     };
     
     float             m_aspect;                     // aspect ratio = width/height for exaple 4:3 or 16:9
@@ -76,12 +73,10 @@ private:
     
 public:
     Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera); // Requires a camera to view the scene, a window to render to, and a scene to draw
-    void Render(); // Render the scene on screen
-    
-    // Accessors
+    void Render();
+
     Camera* GetCamera();
-    
-    // Mutators
+
     // Allows for starting a new scene, changing environments, changing levels. Simply swap the scene
     void ChangeScene(SceneGraph* scene); // FIX: Need to implement some form of defensive programming to make sure a scene is actually provided
     

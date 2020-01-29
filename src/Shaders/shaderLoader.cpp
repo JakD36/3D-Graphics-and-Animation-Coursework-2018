@@ -20,8 +20,8 @@ ShaderLoader* ShaderLoader::GetInstance(){
 
 string ShaderLoader::ReadShader(string fileName) {
     fstream file;
-    string output ="";          // String we will read each individual line of the shader too
-    string wholeCode ="";       // We can append each line to this string so that the entire shader can be output,
+    string output = "";          // String we will read each individual line of the shader too
+    string wholeCode = "";       // We can append each line to this string so that the entire shader can be output,
     file.open(fileName);        // Open the provided shader file
     
     if(!file){                  // Check if the file opened
