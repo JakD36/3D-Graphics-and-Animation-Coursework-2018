@@ -11,17 +11,9 @@ out VS_OUT
     vec2 tc;
 } vs_out;
 
-// Then tell the shader the variables to grab from the uniform
-uniform mat4 modelMatrix; // The model matrix that has been concatenated to include translations,rotations and scale
-uniform mat4 proj_matrix; // our matrix to apply our perspective to the scene
-uniform mat4 viewMatrix;  // the view matrix to be able to see from the cameras perspective
-
+uniform mat4 mvp;
 void main(void)
 {
-    gl_Position = proj_matrix * viewMatrix * modelMatrix * position; // apply all our coordinate transformations,
-    // model space - model transform -> world space - view transform -> view space
-    // view space - proj transform -> normalised space - viewport transform -> screen space
-    
-    // we do the viewport transformation with glViewport function in the main render function for each framebuffer
+    gl_Position = mvp * position; // apply all our coordinate transformations,
     vs_out.tc = tc; // make sure to assign our texture coordinates to the output of the shader
 }

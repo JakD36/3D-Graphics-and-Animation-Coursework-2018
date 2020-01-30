@@ -56,14 +56,12 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera) {
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
 
-
     // Framebuffer operations
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);    // These lines prevent faces facing away from the camera from being rendered
     glEnable(GL_CULL_FACE); // These lines prevent faces facing away from the camera from being rendered
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-
 
     {
     // Setup the framebuffer using the following code taken from the the lecture notes and code
@@ -144,7 +142,7 @@ void Renderer::Render(){
     vector<GameObject*> Objs = p_scene->GetObjs();
     lightStruct* p_lights = p_scene->GetLights();
     lightStruct lights[LIGHTSN];
-    
+
     for(int n = 0; n < LIGHTSN; n++){
         lights[n] = *(p_lights + n);
     }
@@ -157,18 +155,18 @@ void Renderer::Render(){
     
     lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
     lights[2].spotOuterCutOff = glm::cos(glm::radians(20.0f));
-    
+
     lights[3].spotCutOff = glm::cos(glm::radians(15.0f));
     lights[3].spotOuterCutOff = glm::cos(glm::radians(20.0f));
 
     GLuint ubo;
     glGenBuffers(1, &ubo);
     glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-    glBufferData(GL_UNIFORM_BUFFER, 96 * LIGHTSN, NULL, GL_STATIC_DRAW); // allocate 96 bytes of memory
+    glBufferData(GL_UNIFORM_BUFFER, lightStructByteSize * LIGHTSN, NULL, GL_STATIC_DRAW); // allocate 96 bytes of memory
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
     
-    glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, 96 * LIGHTSN);
-    glBufferSubData(GL_UNIFORM_BUFFER, 0, 96 * LIGHTSN, lights);
+    glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, lightStructByteSize * LIGHTSN);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, lightStructByteSize * LIGHTSN, lights);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     glm::vec3 camPos = p_camera->GetPosition();

@@ -18,11 +18,6 @@
 #include <stdio.h>
 #include <vector>
 
-#include "../ModelObjects/modelObject.h"
-#include "../ModelObjects/modelObjectSingle.h"
-#include "../ModelObjects/modelObjectInst.h"
-
-
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
 #include "../Utils/ProfileService.h"

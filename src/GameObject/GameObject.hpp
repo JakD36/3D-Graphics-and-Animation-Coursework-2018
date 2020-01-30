@@ -30,9 +30,9 @@ using namespace std;
 #include "../Shaders/VertexShader.hpp"
 #include "../Shaders/FragShader.hpp"
 
-#include "../ModelObjects/modelObject.h"
 #include "../Utils/profileService.h"
 #include "../ResourceManager/ResourceService.hpp"
+#include "../Lights/Lights.hpp"
 
 class GameObject {
 public:
