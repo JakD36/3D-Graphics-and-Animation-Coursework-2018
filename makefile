@@ -8,7 +8,7 @@ BUILDDIR = Build
 # CC = g++
 CC = clang++
 
-objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o modelObject.o modelObjectInst.o modelObjectSingle.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o Render.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_opengl3.o imgui_impl_glfw.o imgui_widgets.o ProfilerService.o
+objects = main.o Controller.o KeyboardAndMouse.o GameObject.o Material.o Mesh.o Scene1.o SceneGraph.o FragShader.o VertexShader.o ShaderPipeline.o ShaderLoader.o Texture.o Camera.o Renderer.o Render.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_opengl3.o imgui_impl_glfw.o imgui_widgets.o ProfilerService.o
 
 all: clean_app $(target) package_app clean
 
@@ -45,15 +45,6 @@ GameObject.o: src/GameObject/GameObject.cpp
 
 Mesh.o: src/Mesh/Mesh.cpp 
 	$(CC) -c src/Mesh/Mesh.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/Mesh.o
-
-modelObject.o: src/ModelObjects/modelObject.cpp 
-	$(CC) -c src/ModelObjects/modelObject.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/modelObject.o
-
-modelObjectInst.o: src/ModelObjects/modelObjectInst.cpp 
-	$(CC) -c src/ModelObjects/modelObjectInst.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/modelObjectInst.o
-
-modelObjectSingle.o: src/ModelObjects/modelObjectSingle.cpp
-	$(CC) -c src/ModelObjects/modelObjectSingle.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/modelObjectSingle.o
 
 SceneGraph.o: src/Scenes/sceneGraph.cpp
 	$(CC) -c src/Scenes/SceneGraph.cpp $(FLAGS) -I Include/ -o $(BUILDDIR)/SceneGraph.o

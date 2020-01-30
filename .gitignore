@@ -4,6 +4,8 @@
 *.o
 
 .vscode
+.idea
+
 Frameworks
 Include
 
@@ -15,3 +17,7 @@ Debug
 main
 
 Notes.txt
+
+cmake-build-debug
+
+imgui.ini
