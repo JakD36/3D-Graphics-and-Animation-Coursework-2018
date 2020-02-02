@@ -1,11 +1,3 @@
-//
-//  Renderer.cpp
-//  3D Graphics and Animation Coursework
-//
-//  Created by Jack Davidson on 23/05/2018.
-//  Copyright © 2018 Jack Davidson. All rights reserved.
-//
-
 #include "Renderer.hpp"
 
 // Return the camera for use outwith this object, to set/get camera position.
@@ -18,10 +10,6 @@ void Renderer::SetViewport(float x, float y, float width, float height){
     m_viewportY = y;
     m_viewportWidth = width;
     m_viewportHeight = height;
-
-    // Calculate proj_matrix for the first time.
-    m_aspect = (float)width / (float)height;
-    m_proj_matrix =  glm::perspective(glm::radians(50.0f), m_aspect, 0.1f, 1000.0f);
 }
 
 void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
@@ -31,9 +19,6 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
     // Update viewport so its size is appropriate for the new window!
     int width, height;
     glfwGetFramebufferSize(p_window, &width, &height);
-
-    m_aspect = (float)width / (float)height;
-    m_proj_matrix = glm::perspective(glm::radians(50.0f),m_aspect,0.1f,1000.0f);
 }
 
 // Initialise the Renderer for this viewport
@@ -47,10 +32,6 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera) {
 
     // Grab the window dimensions for the current window, saves passing too many arguments to the constructor
     glfwGetWindowSize(p_window, &m_windowWidth, &m_windowHeight);
-
-    // Calculate proj_matrix for the first time.
-    m_aspect = (float) m_windowWidth / (float) m_windowHeight;
-    m_proj_matrix = glm::perspective(glm::radians(50.0f), m_aspect, 0.1f, 1000.0f);
 
     // On high DPI, there are a higher number of pixels in the window than the length of the window, so we need to use the frameWidth and height,
     int frameWidth, frameHeight;
@@ -101,10 +82,9 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera) {
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec2), (GLvoid *) (sizeof(glm::vec2)));
         glEnableVertexAttribArray(1);
     }
-    
-    VertexShader* displayVs = new VertexShader("Shaders/vs_display.glsl");
-    FragShader* displayFs = new FragShader("Shaders/fs_display.glsl");
-    p_framebufferPipeline = new ShaderPipeline(displayVs,displayFs);
+
+    ShaderManager* shaderManager = ShaderManager::GetInstance();
+    m_framebufferProgram = shaderManager->RequestProgram("Shaders/vs_display.glsl","Shaders/fs_display.glsl");
 
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
@@ -135,7 +115,7 @@ void Renderer::Render(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     
-    glm::mat4 viewMatrix = p_camera->BuildViewMatrix();
+    glm::mat4 viewMatrix = p_camera->BuildViewMat();
 
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
@@ -149,8 +129,8 @@ void Renderer::Render(){
 
     for(int i = 0; i < Objs.size(); ++i)
     {
-        GLuint index = glGetUniformBlockIndex(Objs[i]->m_shaderPipeline->m_program,"lightBlock");
-        glUniformBlockBinding(Objs[i]->m_shaderPipeline->m_program, index, 0);
+        GLuint index = glGetUniformBlockIndex(Objs[i]->m_program,"lightBlock");
+        glUniformBlockBinding(Objs[i]->m_program, index, 0);
     }
     
     lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
@@ -170,9 +150,10 @@ void Renderer::Render(){
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     glm::vec3 camPos = p_camera->GetPosition();
+    glm::mat4 projMatrix = p_camera->GetCachedProjMat();
 
     for(int n = 0;n<Objs.size();n++){
-        Objs[n]->Render(m_proj_matrix,viewMatrix,lights,camPos);
+        Objs[n]->Render(projMatrix,viewMatrix,lights,camPos);
     }
     
     // SECOND PASS
@@ -184,7 +165,7 @@ void Renderer::Render(){
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST); //not needed as we are just displaying a single quad
-    glUseProgram(p_framebufferPipeline->m_program);
+    glUseProgram(m_framebufferProgram);
     glBindVertexArray(m_displayVao);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_framebufferTexture);

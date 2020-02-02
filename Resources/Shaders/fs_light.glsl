@@ -14,5 +14,4 @@ uniform sampler2D tex; // We need to grab the texture from the uniform
 void main(void)
 {
     color = vec4( texture(tex, fs_in.tc).xyz, 1.0); // So all we need to do is use the texture function to assign the colours appropriately using the texture coordinates.
-}
-
+} 

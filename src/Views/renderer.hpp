@@ -22,7 +22,7 @@
 #include <GLM/gtx/transform.hpp>
 #include "../Lights/Lights.hpp"
 
-#include "../Shaders/ShaderPipeline.hpp"
+#include "../Shaders/ShaderManager.h"
 
 using namespace std;
 
@@ -56,11 +56,8 @@ private:
             glm::vec2( 1.0f, 1.0f),// v
             glm::vec2(1.0f, 1.0f) // uv
     };
-    
-    float             m_aspect;                     // aspect ratio = width/height for exaple 4:3 or 16:9
-    glm::mat4         m_proj_matrix;                // Will be used in handling perspective into the scene?
-    
-    ShaderPipeline*   p_framebufferPipeline;
+
+    GLuint m_framebufferProgram;
     
     Camera*           p_camera;
     SceneGraph*       p_scene;
@@ -83,7 +80,7 @@ public:
     
     void SetWindowDimensions(int windowWidth, int windowHeight); // Used to update the Renderer the window has changed size
 
-    void SetViewport(float x, float y, float width, float height); // For use with creating multiple viewports within 1 window,
+    void SetViewport(float x, float y, float width, float height);
 };
 
 #endif /* Renderer_hpp */

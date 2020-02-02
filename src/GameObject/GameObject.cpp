@@ -8,22 +8,22 @@
 
 #include "GameObject.hpp"
 
-GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, ShaderPipeline* pipeline){
+GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram){
     m_mesh = mesh;
     m_material = mat;
     m_texture = tex;
     
-    m_shaderPipeline = pipeline;
+    m_program = shaderProgram;
 }
 
-GameObject::GameObject(string meshPath, string materialPath, string texturePath, ShaderPipeline* pipeline){
+GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram){
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Init");
 
     m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
     m_material = ResourceService<Material>::GetInstance()->Request(materialPath);
     m_texture = ResourceService<Texture>::GetInstance()->Request(texturePath);
 
-    m_shaderPipeline = pipeline;
+    m_program = shaderProgram;
 
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
@@ -32,7 +32,7 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
     
     // For each model Object
-    glUseProgram(m_shaderPipeline->m_program);
+    glUseProgram(m_program);
     glBindVertexArray(m_mesh->m_vao);
     
     // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
@@ -40,19 +40,19 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_texture->m_texture[0]);
-    glUniform1i(glGetUniformLocation(m_shaderPipeline->m_program,"tex"), 0);                    // The texture
+    glUniform1i(glGetUniformLocation(m_program,"tex"), 0);                    // The texture
     
     // Pass a number of values through to the shaders through the uniforms
-    glUniform4f(glGetUniformLocation(m_shaderPipeline->m_program,"viewPosition"),camera.x,camera.y,camera.z,1.0f); // The camera position
+    glUniform4f(glGetUniformLocation(m_program,"viewPosition"),camera.x,camera.y,camera.z,1.0f); // The camera position
     
-    glUniform4f(glGetUniformLocation(m_shaderPipeline->m_program, "ia"), ia.r, ia.g, ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
-    glUniform3f(glGetUniformLocation(m_shaderPipeline->m_program, "ka"), m_material->m_ka.r,m_material->m_ka.g,m_material->m_ka.b); // The material materials ambient reflectivity constant
-    glUniform3f(glGetUniformLocation(m_shaderPipeline->m_program, "kd"), m_material->m_kd.r,m_material->m_kd.g,m_material->m_kd.b); // The material materials diffused reflectivity constant
-    glUniform3f(glGetUniformLocation(m_shaderPipeline->m_program, "ks"), m_material->m_ks.r,m_material->m_ks.g,m_material->m_ks.b); // The material materials specular reflectivity constant
-    glUniform1f(glGetUniformLocation(m_shaderPipeline->m_program, "shininess"), m_material->m_shininess); // The materials shininess indices
-    glUniform1f(glGetUniformLocation(m_shaderPipeline->m_program, "lightConstant"),0.25f);       // Constant used for attenuation, taken from lecture notes
-    glUniform1f(glGetUniformLocation(m_shaderPipeline->m_program, "lightLinear"),0.7f);          // Constant used for attenuation, taken from lecture notes
-    glUniform1f(glGetUniformLocation(m_shaderPipeline->m_program, "lightQuadratic"),1.0f);       // Constant used for attenuation, taken from lecture notes
+    glUniform4f(glGetUniformLocation(m_program, "ia"), ia.r, ia.g, ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
+    glUniform3f(glGetUniformLocation(m_program, "ka"), m_material->m_ka.r,m_material->m_ka.g,m_material->m_ka.b); // The material materials ambient reflectivity constant
+    glUniform3f(glGetUniformLocation(m_program, "kd"), m_material->m_kd.r,m_material->m_kd.g,m_material->m_kd.b); // The material materials diffused reflectivity constant
+    glUniform3f(glGetUniformLocation(m_program, "ks"), m_material->m_ks.r,m_material->m_ks.g,m_material->m_ks.b); // The material materials specular reflectivity constant
+    glUniform1f(glGetUniformLocation(m_program, "shininess"), m_material->m_shininess); // The materials shininess indices
+    glUniform1f(glGetUniformLocation(m_program, "lightConstant"),0.25f);       // Constant used for attenuation, taken from lecture notes
+    glUniform1f(glGetUniformLocation(m_program, "lightLinear"),0.7f);          // Constant used for attenuation, taken from lecture notes
+    glUniform1f(glGetUniformLocation(m_program, "lightQuadratic"),1.0f);       // Constant used for attenuation, taken from lecture notes
     
 
     /// So for some reason the transformations here are done translation, rotation then scale, whereas online im reading scale, rotation, translation
@@ -66,8 +66,8 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     modelMatrix = glm::scale(modelMatrix, m_scale);
     
     glm::mat4 mvp = proj_matrix * viewMatrix * modelMatrix;
-    glUniformMatrix4fv(glGetUniformLocation(m_shaderPipeline->m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(m_shaderPipeline->m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 
     glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount); // TODO: Jump to use a tri count
     ProfilerService::GetInstance()->StopTimer(profiler);

@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "Controller.hpp"
+#include "../Shaders/ShaderManager.h"
 
 class KeyboardAndMouse: public Controller{
 public:

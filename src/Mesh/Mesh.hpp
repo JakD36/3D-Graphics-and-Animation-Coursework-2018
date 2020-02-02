@@ -23,7 +23,6 @@ using namespace std;
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-#include "../Shaders/ShaderLoader.hpp"
 #include "../Utils/ProfileService.h"
 
 class Mesh{

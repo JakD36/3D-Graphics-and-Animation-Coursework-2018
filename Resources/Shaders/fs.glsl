@@ -48,7 +48,6 @@ uniform vec3 kd;                // Diffuse constant
 uniform vec3 ks;                // specular constant
 uniform float shininess;        // shininess constant
 
-
 void main(void)
 /*{
     color = vec4(lights[0].type,lights[1].type,lights[2].type,lights[3].type);
@@ -312,5 +311,6 @@ void main(void)
     //Once diffuse and specular has been found for all light sources we can use the equation for colour with a texture and light
     // Light
     color = vec4((ambient+totalDiffuse+totalSpecular)*texture(tex,fs_in.tc).rgb,1.0);
+
 }
 */

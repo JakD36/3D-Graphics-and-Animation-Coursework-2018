@@ -26,9 +26,6 @@ using namespace std;
 #include "../Mesh/Mesh.hpp"
 #include "../Material/Material.hpp"
 #include "../Texture/Texture.hpp"
-#include "../Shaders/ShaderPipeline.hpp"
-#include "../Shaders/VertexShader.hpp"
-#include "../Shaders/FragShader.hpp"
 
 #include "../Utils/profileService.h"
 #include "../ResourceManager/ResourceService.hpp"
@@ -40,15 +37,13 @@ public:
     glm::vec3 m_rotation  = glm::vec3(0.f,0.f,0.f);
     glm::vec3 m_scale     = glm::vec3(1.f,1.f,1.f);
     
-    GameObject(Mesh*, Material*, Texture*, ShaderPipeline*);
-    GameObject(string mesh, string mat, string tex, ShaderPipeline*);
+    GameObject(Mesh*, Material*, Texture*, GLuint);
+    GameObject(string mesh, string mat, string tex, GLuint);
     
     Mesh* m_mesh;
     Texture* m_texture;
     Material* m_material;
-    ShaderPipeline* m_shaderPipeline;
-    VertexShader* m_vs;
-    FragShader* m_fs;
+    GLuint m_program;
     
     void Render(glm::mat4&,glm::mat4&,lightStruct[],glm::vec3&);
 };

@@ -22,6 +22,12 @@ void KeyboardAndMouse::OnKey(GLFWwindow* window, int key, int scancode, int acti
 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         ToggleCursor();
+
+    if (key == GLFW_KEY_R && action == GLFW_PRESS)
+    {
+        ShaderManager* instance = ShaderManager::GetInstance();
+        instance->RecompileShaders();
+    }
 }
 
 void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y){

@@ -24,8 +24,6 @@ using namespace std;
 #include <GLM/gtx/transform.hpp>
 #include "../Utils/ProfileService.h"
 
-#include "../Shaders/ShaderLoader.hpp"
-
 using namespace std;
 
 class Material{

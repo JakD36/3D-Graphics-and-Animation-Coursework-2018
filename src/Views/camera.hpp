@@ -15,6 +15,7 @@
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>
 #include <GLM/gtx/transform.hpp>
+#include <GLM/gtx/quaternion.hpp>
 
 #include "../Utils/VectorUtils.hpp"
 
@@ -25,25 +26,33 @@
 class Camera{
 protected:
     glm::vec3 m_position;                 // Position of the camera in the world space
-    glm::vec3 m_forward;                    // Direction the camera is facing
-    GLfloat m_yaw=0, m_pitch=0;           // The yaw and pitch angles to be calculated from the change in mouse position
-
-    GLfloat m_fov;
+    glm::quat m_rotation;
     glm::vec3 m_up;
 
+    glm::vec3 m_forward;                    // Direction the camera is facing
+
+    float m_closeClipPlane;
+    float m_farClipPlane;
+    float m_fov;
+    float m_aspect;
+
+    glm::mat4 m_projMatrix;
+
 public:
-    Camera();                                               // Default constructor
-    Camera(glm::vec3 position, GLfloat yaw, GLfloat pitch); // Constructor to define position and direction facing
+    Camera();
+    Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec);
+    Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec);
 
     glm::vec3 GetPosition();
     glm::vec3 GetForward();
-    GLfloat GetYaw();
-    GLfloat GetPitch();
 
     void SetPosition(glm::vec3 newPosition);
     void SetDirection(GLfloat yaw, GLfloat pitch);
+    void LookAt(glm::vec3 target);
 
-    glm::mat4 BuildViewMatrix();
+    glm::mat4 BuildViewMat();
+    void BuildProjectionMat();
+    glm::mat4 GetCachedProjMat();
 };
 
 

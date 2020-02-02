@@ -14,7 +14,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         Include/DearImgui/imgui_widgets.cpp
 
         Include/glm/detail/glm.cpp
-#
+
         Resources/Shaders/fs.glsl
         Resources/Shaders/fs_display.glsl
         Resources/Shaders/fs_light.glsl
@@ -45,15 +45,6 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Scenes/sceneGraph.cpp
         src/Scenes/sceneGraph.hpp
 
-        src/Shaders/FragShader.cpp
-        src/Shaders/FragShader.hpp
-        src/Shaders/shaderLoader.cpp
-        src/Shaders/shaderLoader.hpp
-        src/Shaders/ShaderPipeline.cpp
-        src/Shaders/ShaderPipeline.hpp
-        src/Shaders/VertexShader.cpp
-        src/Shaders/VertexShader.hpp
-
         src/Texture/Texture.cpp
         src/Texture/Texture.hpp
 
@@ -66,7 +57,11 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Views/Renderer.cpp
         src/Views/Renderer.hpp
 
-        src/main.cpp)
+        src/main.cpp
+        src/Shaders/ShaderManager.cpp
+        src/Shaders/ShaderManager.h
+        src/Shaders/ShaderUtils.h
+        src/Shaders/ShaderUtils.cpp)
 
 
 find_library( COCOA_FW Cocoa )
