@@ -4,15 +4,25 @@
 #include <unordered_map>
 #include <string>
 #include <GL/glew.h>
+#include <sys/stat.h>
 
 #include "ShaderUtils.h"
+#include "../Utils/ProfileService.h"
 
 using namespace std;
 
+struct ShaderInfo
+{
+public:
+    string path;
+    GLuint shader;
+    time_t lastModified;
+};
+
 class ShaderManager {
 private:
+    vector<ShaderInfo> m_shaderInfo;
     unordered_map<string,GLuint> m_programs;
-    unordered_map<string,GLuint> m_shaders;
 
     GLuint m_defaultVertShader;
     GLuint m_defaultFragShader;
@@ -38,7 +48,9 @@ public:
     static ShaderManager* GetInstance();
 
     GLuint RequestProgram(string vertPath, string fragPath);
+    void Update();
     void RecompileShaders();
+
 };
 
 #endif

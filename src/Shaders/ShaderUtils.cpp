@@ -7,6 +7,7 @@ bool CheckDriverSupportsBinaryPrograms(){
         printf("Driver does not support any binary formats.\n");
         return false;
     }
+
     printf("Driver supports binary formats.\n");
     return true;
 }
@@ -76,12 +77,13 @@ void CheckShaderLog(GLuint shader) {
         std::vector<GLchar> errorLog(maxLength);
         // Get the log file
         glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-        std::cout << "--------------Shader compilation error-------------\n";
-        std::cout << errorLog.data();
+        std::cout << "--------------Shader compilation error-------------" << std::endl;
+        std::cout << errorLog.data() << std::endl;
+        std::cout << "----------------------- END -----------------------" << std::endl;
     }
 }
 
-GLuint CompileShader(const GLenum& type,const std::string& source){
+GLuint CompileShader(const GLenum& type, const std::string& source){
     GLuint shader = glCreateShader(type);
     const char * constantSrc = source.c_str();
     glShaderSource(shader, 1, &constantSrc, NULL);
@@ -106,8 +108,9 @@ void CheckProgramLog(GLuint program){
         std::vector<GLchar> log(maxLength);
         // Get the log file
         glGetShaderInfoLog(program, maxLength, &maxLength, &log[0]);
-        std::cout << "--------------Shader compilation error-------------\n";
-        std::cout << log.data();
+        std::cout << "-------------- Shader Link Error -------------" << std::endl;
+        std::cout << log.data() << std::endl;
+        std::cout << "--------------------- END --------------------" << std::endl;
     }
 }
 
@@ -126,6 +129,9 @@ void CreateProgram(const GLuint program, const GLuint& vert,const  GLuint& frag)
         printf("Error program did not link");
 
     CheckProgramLog(program);
+
+    glDetachShader(program,vert);
+    glDetachShader(program,frag);
 }
 
 GLuint CreateProgram(const GLuint& vert, const GLuint& tessCtrl, const GLuint& tessEval,const GLuint& geo, const GLuint& frag){

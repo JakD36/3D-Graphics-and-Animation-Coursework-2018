@@ -14,6 +14,7 @@
 #include "Controllers/Controller.hpp"
 #include "Controllers/KeyboardAndMouse.hpp"
 #include "Views/Renderer.hpp"
+#include "Shaders/ShaderManager.h"
 #include "Utils/ProfileService.h"
 
 #include "../Include/DearImgui/imgui.h"
@@ -79,11 +80,15 @@ int main(int argc, char *argv[])
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
+    ShaderManager* smInstance = ShaderManager::GetInstance();
+
     bool running = true;
     do { // run until the window is closed
         int profiler = profilerInstance->StartTimer("mainloop");
         double currentTime = glfwGetTime();
-        
+
+        smInstance->Update();
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
