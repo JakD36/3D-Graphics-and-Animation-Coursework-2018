@@ -11,11 +11,10 @@
 bool CheckDriverSupportsBinaryPrograms();
 void SaveCompiledProgramToFile(GLuint program,std::string filepath);
 GLuint LoadProgramFromBinary(std::string filepath);
-void CheckErrorShader(GLuint shader);
-GLuint CompileShader(const GLenum& type,const std::string& source);
-void CreateProgram(const GLuint program, const GLuint& vert,const  GLuint& frag);
-GLuint CreateProgram(const GLuint& vert, const GLuint& tessCtrl, const GLuint& tessEval,const GLuint& geo, const GLuint& frag);
+GLuint CompileShader(const GLenum type,const std::string& source);
+void LinkProgram(const GLuint program, const GLuint vert, const  GLuint frag);
 std::string LoadShader(std::string filepath);
 void CheckShaderLog(GLuint shader);
 void CheckProgramLog(GLuint program);
+void RecompileShader(GLuint shader, std::string path, const char* fallback);
 #endif

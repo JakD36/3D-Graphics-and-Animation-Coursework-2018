@@ -223,26 +223,26 @@ Scene1::Scene1(){
     
     // Add lights to scene, number of lights determined by const int LIGHTSN
     // The ceiling light
-    m_lights[0].type = lightType::point; // So we have an enum for point and spot lights that lets us know which light we are dealing with
+    m_lights[0].type = LightType::point; // So we have an enum for point and spot lights that lets us know which light we are dealing with
     m_lights[0].position = glm::vec3(0.0f,2.0f,0.0f);
     m_lights[0].id = glm::vec3(5.0f,5.0f,5.0f);
     m_lights[0].is = glm::vec3(5.0f,5.0f,5.0f);
     
     // red light by the door
-    m_lights[1].type = lightType::point;
+    m_lights[1].type = LightType::point;
     m_lights[1].position = glm::vec3(-1.7f,1.5f,-2.8f);
     m_lights[1].id = glm::vec3(1.5f,0.0f,0.0f);
     m_lights[1].is = glm::vec3(0.5f,0.0f,0.0f);
     
     // torch light
-    m_lights[2].type = lightType::spot;
+    m_lights[2].type = LightType::spot;
     m_lights[2].position = glm::vec3(0.0f,1.0f,0.0f);
     m_lights[2].direction = glm::vec3(0.0f,0.0f,1.0f); // its facing the same direction of the player
     m_lights[2].id = glm::vec3(7.0f,7.0f,7.0f);
     m_lights[2].is = glm::vec3(5.0f,5.0f,5.0f);
     
     // the lamp light
-    m_lights[3].type = lightType::spot;
+    m_lights[3].type = LightType::spot;
     m_lights[3].position = lamp->m_position +glm::vec3(0.0f,0.5f,0.0f);
     m_lights[3].direction = glm::vec3(-0.5f,-0.3f,0.3f);
     m_lights[3].id = glm::vec3(5.0f,5.0f,5.0f);

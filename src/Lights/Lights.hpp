@@ -7,15 +7,19 @@
 #include <gli/gli.hpp>
 #include <GLM/gtx/transform.hpp>
 
-enum lightType {point,spot};    // Tells program if light is a point or spot light
+enum LightType {point,spot};    // Tells program if light is a point or spot light
 const int LIGHTSN = 4;          // Number of the lights in the scene, defines the length of the array
 
 const int lightStructByteSize = 96;
 
-struct lightStruct{             // Struct to store details on each light
+// TODO: Reorganise LightStruct to reduce the amount of padding required
+
+static glm::vec3 ia = glm::vec3(0.0f,1.0f,0.2f);        // Ambient Intensity, a static variable that is the same for all lights and used only the once
+
+struct LightStruct{             // Struct to store details on each light
 public:
     int lightOn = true;        // Allows us to be able switch lights on and off
-    lightType type = lightType::point; // 0 is point light, 1 is spotlight. Default is point
+    LightType type = LightType::point; // 0 is point light, 1 is spotlight. Default is point
 
     float padding1;
     float padding2;
@@ -38,9 +42,5 @@ public:
     glm::vec3 is = glm::vec3(3.0f,3.0f,3.0f);
     float padding14 = 1.0f;
 };
-
-static glm::vec3 ia = glm::vec3(0.0f,1.0f,0.2f);        // Ambient Intensity, a static variable that is the same for all lights and used only the once
-
-
 
 #endif

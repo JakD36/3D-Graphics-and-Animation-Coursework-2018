@@ -29,13 +29,12 @@ using namespace std;
 
 // Our prototypes for OpenGL functions used throughout the program, mainly the callbacks to handle user input
 void ErrorCallbackGLFW(int error, const char* description);
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void OnResizeCallback(GLFWwindow* window, int w, int h);
 void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void OnMouseMoveCallback(GLFWwindow* window, double x, double y);
 void OnMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
-void DebugGL();
+void SetupOpenglDebug();
 static void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam);
 
 // Prototypes for setting up OpenGL and closing it down
@@ -104,6 +103,11 @@ int main(int argc, char *argv[])
 
         scene.Update(currentTime);              // update (physics, animation, structures, etc)
 
+        ImGui::Begin("Debug",NULL);
+        string debug = to_string(myView->GetCamera()->GetForward().x) + ", " + to_string(myView->GetCamera()->GetForward().y) + ", " + to_string(myView->GetCamera()->GetForward().z);
+        ImGui::Text(debug.c_str());
+        ImGui::End();
+
         myView->Render();
 
         { // Render ImGui
@@ -166,8 +170,8 @@ void InitOpenGL(){
         printf("Could not initialise GLEW...\n");
         EndProgram();
     }
-    
-    //DebugGL();
+
+    SetupOpenglDebug();
     
     // Setup all the message loop callbacks.
     glfwSetWindowSizeCallback(window, OnResizeCallback);            // Set callback for resize
@@ -175,7 +179,7 @@ void InitOpenGL(){
     glfwSetMouseButtonCallback(window, OnMouseButtonCallback);      // Set callback for mouse click
     glfwSetCursorPosCallback(window, OnMouseMoveCallback);          // Set callback for mouse move
     glfwSetScrollCallback(window, OnMouseWheelCallback);            // Set callback for mouse wheel.
-    
+
     // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Set mouse cursor.
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
     
@@ -247,7 +251,7 @@ void OnMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
 
 // Taken from F21GA 3D Graphics and Animation Labs
 
-void DebugGL() {
+void SetupOpenglDebug() {
     ProfilerService* profilerService = ProfilerService::GetInstance();
     int profiler = profilerService->StartTimer("Debug GL");
     
@@ -257,12 +261,16 @@ void DebugGL() {
     printf("RENDERER %s\n",(char *)glGetString(GL_RENDERER));
 
     // Enable Opengl Debug
-    // glEnable(GL_DEBUG_OUTPUT);
-    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback((GLDEBUGPROC)OpenGLDebugCallback, nullptr); // debugGL does not work, currently throws Thread #: EXC bad access error
-    
-    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
-
+    if(glDebugMessageCallback)
+    {
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+        glDebugMessageCallback(OpenGLDebugCallback, nullptr);
+        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
+    }
+    else
+    {
+        printf("OpenGL Debug Output not available\n");
+    }
     profilerService->StopTimer(profiler);
 }
 

@@ -30,7 +30,7 @@ vector<GameObject*> SceneGraph::GetObjs(){
     return m_Objs;
 }
 
-lightStruct* SceneGraph::GetLights(){
+LightStruct* SceneGraph::GetLights(){
     return m_lights;
 }
 

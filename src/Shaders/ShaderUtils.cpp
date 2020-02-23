@@ -83,7 +83,7 @@ void CheckShaderLog(GLuint shader) {
     }
 }
 
-GLuint CompileShader(const GLenum& type, const std::string& source){
+GLuint CompileShader(const GLenum type, const std::string& source){
     GLuint shader = glCreateShader(type);
     const char * constantSrc = source.c_str();
     glShaderSource(shader, 1, &constantSrc, NULL);
@@ -114,7 +114,8 @@ void CheckProgramLog(GLuint program){
     }
 }
 
-void CreateProgram(const GLuint program, const GLuint& vert,const  GLuint& frag){
+void LinkProgram(const GLuint program, const GLuint vert, const GLuint frag)
+{
     glAttachShader(program, vert);
     glAttachShader(program, frag);
 
@@ -132,18 +133,6 @@ void CreateProgram(const GLuint program, const GLuint& vert,const  GLuint& frag)
 
     glDetachShader(program,vert);
     glDetachShader(program,frag);
-}
-
-GLuint CreateProgram(const GLuint& vert, const GLuint& tessCtrl, const GLuint& tessEval,const GLuint& geo, const GLuint& frag){
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vert);
-    glAttachShader(program, tessCtrl);
-    glAttachShader(program, tessEval);
-    glAttachShader(program, geo);
-    glAttachShader(program, frag);
-    glLinkProgram(program);
-
-    return program;
 }
 
 std::string LoadShader(std::string filepath) {
@@ -165,3 +154,23 @@ std::string LoadShader(std::string filepath) {
 
     return output;
 }
+
+void RecompileShader(GLuint shader, std::string path, const char* fallback)
+{
+    std::string source = LoadShader(path);
+    const char* csrc = source.c_str();
+    glShaderSource(shader,1,&csrc,NULL);
+    glCompileShader(shader);
+
+    GLint status;
+    glGetShaderiv(shader,GL_COMPILE_STATUS, &status);
+
+    CheckShaderLog(shader);
+
+    if(status == GL_FALSE)
+    {
+        glShaderSource(shader, 1, &fallback, NULL);
+        glCompileShader(shader);
+    }
+}
+

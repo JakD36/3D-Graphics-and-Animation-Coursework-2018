@@ -9,6 +9,18 @@ ShaderManager::ShaderManager()
     profilerInstance->StopTimer(profiler);
 }
 
+int ShaderManager::FindShader(string id)
+{
+    int count = m_shaderInfo.size();
+    for(int i = 0; i < count; ++i)
+    {
+        if(m_shaderInfo[i].path == id)
+            return i;
+    }
+
+    return -1;
+}
+
 void ShaderManager::Update()
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
@@ -30,7 +42,7 @@ void ShaderManager::Update()
 
     if(recompileRequired)
     {
-        RecompileShaders();
+        RecompileAllProgramShaders();
     }
     profilerInstance->StopTimer(profiler);
 }
@@ -39,6 +51,7 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
     int profiler = profilerInstance->StartTimer("ShaderManager Request Program");
+
     unordered_map<string, GLuint>::iterator result;
 
     // Program
@@ -55,18 +68,8 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
     // Shaders
     GLuint vert, frag;
 
-    bool found = false;
-    int shaderCount = m_shaderInfo.size();
-    int searchIndex;
-    for(searchIndex = 0; searchIndex < shaderCount; ++searchIndex)
-    {
-        if(m_shaderInfo[searchIndex].path == vertPath){
-            found = true;
-            break;
-        }
-    }
-
-    if(found)
+    int searchIndex = FindShader(vertPath);
+    if(searchIndex >= 0)
     {
         vert = m_shaderInfo[searchIndex].shader;
     }
@@ -87,17 +90,9 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
         m_shaderInfo.push_back(newShader);
     }
 
-    found = false;
-    shaderCount = m_shaderInfo.size();
-    for(searchIndex = 0; searchIndex < shaderCount; ++searchIndex)
-    {
-        if(m_shaderInfo[searchIndex].path == fragPath){
-            found = true;
-            break;
-        }
-    }
+    searchIndex = FindShader(fragPath);
 
-    if(found)
+    if(searchIndex >= 0)
     {
         frag = m_shaderInfo[searchIndex].shader;
     }
@@ -123,55 +118,26 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
 
     if(vertStatus == GL_TRUE && fragStatus == GL_TRUE)
     {
-        CreateProgram(program,vert,frag);
+        LinkProgram(program, vert, frag);
     }
     else
     {
-        CreateProgram(program,m_defaultVertShader,m_defaultFragShader);
+        LinkProgram(program, m_defaultVertShader, m_defaultFragShader);
     }
 
     profilerInstance->StopTimer(profiler);
     return program;
 }
 
-void RecompileShader(GLuint shader, string path, const char* fallback)
+ShaderManager* ShaderManager::GetInstance()
 {
-    string source = LoadShader(path);
-    const char* csrc = source.c_str();
-    glShaderSource(shader,1,&csrc,NULL);
-    glCompileShader(shader);
-
-    GLint status;
-    glGetShaderiv(shader,GL_COMPILE_STATUS, &status);
-
-    CheckShaderLog(shader);
-
-    if(status == GL_FALSE)
-    {
-        glShaderSource(shader, 1, &fallback, NULL);
-        glCompileShader(shader);
+    if (m_instance == NULL){
+        m_instance = new ShaderManager();
     }
+    return m_instance;
 }
 
-void RelinkProgram(GLuint program, GLuint vert, GLuint frag)
-{
-    glAttachShader(program, vert);
-    glAttachShader(program, frag);
-
-    glProgramParameteri(program,GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_TRUE);
-
-    glLinkProgram(program);
-
-    GLint isLinked = GL_FALSE;
-    glGetProgramiv(program, GL_LINK_STATUS, (int *)&isLinked);
-
-    CheckProgramLog(program);
-
-    glDetachShader(program,vert);
-    glDetachShader(program,frag);
-}
-
-void ShaderManager::RecompileShaders()
+void ShaderManager::RecompileAllProgramShaders()
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
     int profiler = profilerInstance->StartTimer("ShaderManager Recompile shaders");
@@ -249,15 +215,7 @@ void ShaderManager::RecompileShaders()
             }
         }
 
-        RelinkProgram(program,vert,frag);
+        LinkProgram(program,vert,frag);
     }
     profilerInstance->StopTimer(profiler);
-}
-
-ShaderManager* ShaderManager::GetInstance()
-{
-    if (m_instance == NULL){
-        m_instance = new ShaderManager();
-    }
-    return m_instance;
 }

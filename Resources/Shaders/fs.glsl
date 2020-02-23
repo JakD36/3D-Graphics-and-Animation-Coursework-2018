@@ -1,6 +1,6 @@
 #version 410 core
 
-/// TODO: Fix shader issues with using UBO that conflicts with the for loop and lights[n].type
+/// TODO: Fix shader issues with using UBO that conflicts with the for loop and lights[n].type, Seems to be a driver issue
 
 // The more complex fragment shader to cover the majority of the objects in the scene
 out vec4 color; // We will output the colour of each fragment as per usual

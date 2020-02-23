@@ -114,14 +114,14 @@ void Renderer::Render(){
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    
+
     glm::mat4 viewMatrix = p_camera->BuildViewMat();
 
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
     vector<GameObject*> Objs = p_scene->GetObjs();
-    lightStruct* p_lights = p_scene->GetLights();
-    lightStruct lights[LIGHTSN];
+    LightStruct* p_lights = p_scene->GetLights();
+    LightStruct lights[LIGHTSN];
 
     for(int n = 0; n < LIGHTSN; n++){
         lights[n] = *(p_lights + n);

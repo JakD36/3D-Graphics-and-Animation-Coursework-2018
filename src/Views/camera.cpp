@@ -76,7 +76,6 @@ glm::mat4 Camera::GetCachedProjMat()
     return m_projMatrix;
 }
 
-
 void Camera::SetPosition(glm::vec3 newPosition){
     this->m_position = newPosition;
 }
@@ -85,14 +84,8 @@ void Camera::LookAt(glm::vec3 target) // TODO: Fix the calculation of the rotati
 {
     m_forward = glm::normalize(target - m_position);
     const glm::vec3 fd = glm::vec3(0.0f,0.0f,1.0f);
-//    glm::vec3 normal = glm::cross(fd,m_forward);
-//    glm::vec3 rotationAxis = glm::normalize(normal);
-//    float angle = glm::atan(glm::length(normal),glm::dot(m_forward,fd));
-    glm::vec3 rotationAxis = glm::normalize(glm::cross(fd,m_forward));
-    float angle = glm::acos(glm::dot(fd,m_forward));
-    angle = glm::sqrt(1 + glm::dot(fd, m_forward));
-    m_rotation = glm::quat(angle,rotationAxis);
-    m_forward = m_rotation * fd;
+    m_rotation = Utils::FromToRotation(fd, m_forward);
+    m_forward = fd * m_rotation;
 }
 
 void Camera::SetDirection(GLfloat yaw, GLfloat pitch){

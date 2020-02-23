@@ -28,7 +28,7 @@ GameObject::GameObject(string meshPath, string materialPath, string texturePath,
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStruct lights[], glm::vec3& camera){
+void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, LightStruct lights[], glm::vec3& camera){
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
     
     // For each model Object
@@ -53,7 +53,6 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     glUniform1f(glGetUniformLocation(m_program, "lightConstant"),0.25f);       // Constant used for attenuation, taken from lecture notes
     glUniform1f(glGetUniformLocation(m_program, "lightLinear"),0.7f);          // Constant used for attenuation, taken from lecture notes
     glUniform1f(glGetUniformLocation(m_program, "lightQuadratic"),1.0f);       // Constant used for attenuation, taken from lecture notes
-    
 
     /// So for some reason the transformations here are done translation, rotation then scale, whereas online im reading scale, rotation, translation
     // TRS is done in reverse is a quirk of this specific method of creating the model matrix in OpenGL
@@ -69,6 +68,6 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, lightStru
     glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 
-    glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount); // TODO: Jump to use a tri count
+    glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);
     ProfilerService::GetInstance()->StopTimer(profiler);
 }

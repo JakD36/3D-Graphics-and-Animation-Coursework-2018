@@ -2,6 +2,7 @@
 #define VectorUtils_hpp
 
 #include <glm/glm.hpp>
+#include <GLM/gtx/quaternion.hpp>
 #include <string>
 
 namespace Utils{
@@ -14,6 +15,7 @@ namespace Utils{
          + "\t" + str3 + " >> " + std::to_string(vec3.z);   
     }
 
+    glm::quat FromToRotation(glm::vec3 vec1, glm::vec3 vec2);
 }
 
 #endif /* VectorUtils_hpp */

@@ -45,7 +45,7 @@ public:
     Material* m_material;
     GLuint m_program;
     
-    void Render(glm::mat4&,glm::mat4&,lightStruct[],glm::vec3&);
+    void Render(glm::mat4&, glm::mat4&, LightStruct[], glm::vec3&);
 };
 
 #endif /* GameObject_hpp */
