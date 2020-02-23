@@ -6,11 +6,6 @@
 #include <GL/glew.h>
 #include <sys/stat.h>
 
-#ifdef WIN32
-    #include <unistd.h>
-    #define stat _stat
-#endif
-
 #include "ShaderUtils.h"
 #include "../Utils/ProfileService.h"
 
