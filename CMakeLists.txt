@@ -61,22 +61,36 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Shaders/ShaderManager.cpp
         src/Shaders/ShaderManager.h
         src/Shaders/ShaderUtils.h
-        src/Shaders/ShaderUtils.cpp)
+        src/Shaders/ShaderUtils.cpp
+        )
 
+if(APPLE)
+    find_library( COCOA_FW Cocoa )
+    find_library( OPENGL_FW OpenGL )
+    find_library( IOKIT_FW IOKit )
+    find_library( COREFOUNDATION_FW CoreFoundation )
+    find_library( COREVIDEO_FW CoreVideo )
+    find_library( GLEW GLEW Frameworks)
+    find_library( GLFW glfw3 Frameworks)
 
-find_library( COCOA_FW Cocoa )
-find_library( OPENGL_FW OpenGL )
-find_library( IOKIT_FW IOKit )
-find_library( COREFOUNDATION_FW CoreFoundation )
-find_library( COREVIDEO_FW CoreVideo )
-find_library( GLEW GLEW Frameworks)
-find_library( GLFW glfw3 Frameworks)
+    target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
+            ${GLFW}
+            ${GLEW}
+            ${COCOA_FW}
+            ${OPENGL_FW}
+            ${IOKIT_FW}
+            ${COREFOUNDATION_FW}
+            ${COREVIDEO_FW})
+endif()
 
-target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
-        ${GLFW}
-        ${GLEW}
-        ${COCOA_FW}
-        ${OPENGL_FW}
-        ${IOKIT_FW}
-        ${COREFOUNDATION_FW}
-        ${COREVIDEO_FW})
+if(WIN32)
+    find_library( GLEW_S glew32s Frameworks)
+    find_library( GLFW glfw3 Frameworks)
+    find_package(OpenGL REQUIRED)
+
+    target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
+            ${GLFW}
+            ${GLEW_S}
+            ${OPENGL_LIBRARIES}
+            )
+endif()

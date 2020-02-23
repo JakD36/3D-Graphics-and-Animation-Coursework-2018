@@ -2,6 +2,10 @@
 #include <string>
 #include <stdio.h>
 
+#if(WIN32)
+#define GLEW_STATIC
+#endif
+
 // OpenGL - GLEW, GLFW and GLM
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

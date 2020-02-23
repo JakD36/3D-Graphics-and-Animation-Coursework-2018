@@ -21,10 +21,10 @@ void ShaderManager::Update()
         struct stat buf;
         stat(m_shaderInfo[i].path.c_str(),&buf);
 
-        if(m_shaderInfo[i].lastModified != buf.st_mtimespec.tv_sec)
+        if(m_shaderInfo[i].lastModified != buf.st_mtime)
         {
             recompileRequired = true;
-            m_shaderInfo[i].lastModified = buf.st_mtimespec.tv_sec;
+            m_shaderInfo[i].lastModified = buf.st_mtime;
         }
     }
 
@@ -82,7 +82,7 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
         {
             vertPath,
             vert,
-            buf.st_mtimespec.tv_sec
+            buf.st_mtime
         };
         m_shaderInfo.push_back(newShader);
     }
@@ -112,7 +112,7 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
         ShaderInfo newShader{
             fragPath,
             frag,
-            buf.st_mtimespec.tv_sec
+            buf.st_mtime
         };
         m_shaderInfo.push_back(newShader);
     }

@@ -16,7 +16,7 @@ in VS_OUT // grab the outputs from the vertex shader and assign to fs_in
 uniform sampler2D tex; // the texture
 
 // Set up the same lightStruc in GLSL that is used in the rest of the program, this way we can grab the lightStruc from the uniform and access everything we need
-layout (std140) struct lightStruct{
+ struct lightStruct{
     int on;
     int type;
 
@@ -31,7 +31,7 @@ layout (std140) struct lightStruct{
 };
 
 #define LIGHTS 4 // We can get away with this number being higher than the one from the rest of the program, but if this is less than the number of lights then, lights will not be rendered
-uniform lightBlock
+layout (std140) uniform lightBlock
 {
     lightStruct lights[LIGHTS];
 };
