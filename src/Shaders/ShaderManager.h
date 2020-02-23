@@ -5,9 +5,10 @@
 #include <string>
 #include <GL/glew.h>
 #include <sys/stat.h>
-#ifndef WIN32
-#include <unistd.h>
-#define stat _stat
+
+#ifdef WIN32
+    #include <unistd.h>
+    #define stat _stat
 #endif
 
 #include "ShaderUtils.h"
