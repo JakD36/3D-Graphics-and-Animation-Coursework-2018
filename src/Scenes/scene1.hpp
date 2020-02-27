@@ -11,7 +11,6 @@
 
 #include "SceneGraph.hpp"
 #include "../Views/Camera.hpp"
-#include "../ResourceManager/ResourceService.hpp"
 #include "../Utils/ProfileService.h"
 #include <GLM/gtx/quaternion.hpp>
 #include "../Shaders/ShaderManager.h"

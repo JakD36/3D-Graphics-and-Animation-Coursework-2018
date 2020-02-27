@@ -11,6 +11,7 @@
 // Default constructor
 SceneGraph::SceneGraph(){
     m_playerPosition = glm::vec3(0.0f,1.6f,0.0f);
+    p_camera = new Camera();
 }
 
 // TODO: Add copy constructor, allow for deep copy of object so to avoid any issues with two scenes using the same memory on the heap
@@ -36,4 +37,9 @@ LightStruct* SceneGraph::GetLights(){
 
 glm::vec3 SceneGraph::GetPlayerPosition(){
     return m_playerPosition;
+}
+
+Camera* SceneGraph::GetCamera()
+{
+    return p_camera;
 }

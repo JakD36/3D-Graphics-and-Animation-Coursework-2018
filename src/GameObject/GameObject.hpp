@@ -28,8 +28,9 @@ using namespace std;
 #include "../Texture/Texture.hpp"
 
 #include "../Utils/profileService.h"
-#include "../ResourceManager/ResourceService.hpp"
 #include "../Lights/Lights.hpp"
+#include "../ResourceManager/ResourceService.hpp"
+#include "../Views/Camera.hpp"
 
 class GameObject {
 public:
@@ -45,7 +46,7 @@ public:
     Material* m_material;
     GLuint m_program;
     
-    void Render(glm::mat4&, glm::mat4&, LightStruct[], glm::vec3&);
+    void Render(Camera camera);
 };
 
 #endif /* GameObject_hpp */

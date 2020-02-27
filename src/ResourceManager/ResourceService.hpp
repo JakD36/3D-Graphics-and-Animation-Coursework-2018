@@ -8,6 +8,8 @@
 #include "../Mesh/Mesh.hpp"
 #include "../Texture/Texture.hpp"
 
+// TODO move away from resource manager for all types
+
 template <class T>
 struct Resource
 {

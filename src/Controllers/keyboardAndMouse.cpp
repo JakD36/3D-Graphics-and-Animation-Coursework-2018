@@ -8,7 +8,7 @@
 
 #include "KeyboardAndMouse.hpp"
 
-KeyboardAndMouse::KeyboardAndMouse(GLFWwindow* window, SceneGraph* model, Renderer* view): Controller(window,model,view){
+KeyboardAndMouse::KeyboardAndMouse(GLFWwindow* window, SceneGraph* model): Controller(window,model){
 }
 
 void KeyboardAndMouse::OnKey(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -42,7 +42,7 @@ void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y){
         if (m_pitch > 89.0f) m_pitch = 89.0f; if (m_pitch < -89.0f) m_pitch = -89.0f;
         
         p_model->Turn(m_yaw, m_pitch);
-        p_view->GetCamera()->SetDirection(m_yaw, m_pitch);
+        p_model->GetCamera()->SetDirection(m_yaw, m_pitch);
     }
 }
 

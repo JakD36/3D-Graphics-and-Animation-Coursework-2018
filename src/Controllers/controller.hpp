@@ -31,7 +31,6 @@ class Controller{
 protected:
     // For MVC controller requires access to the model and the view
     SceneGraph* p_model;
-    Renderer* p_view;
     GLFWwindow* p_window;
     
     bool m_aimInput = true;
@@ -42,7 +41,7 @@ protected:
     bool m_keyStatus[1024] = {false};  // Stores if the keys have been presed or not
 public:
     // Constructor, always need a window, model and view for the controller to interact with so no default controller
-    Controller(GLFWwindow* window, SceneGraph* model, Renderer* view);
+    Controller(GLFWwindow* window, SceneGraph* model);
     
     void SetSensitivity(GLfloat sensitivity);
     GLfloat GetSensitivity();

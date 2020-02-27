@@ -15,7 +15,7 @@
 
 class KeyboardAndMouse: public Controller{
 public:
-    KeyboardAndMouse(GLFWwindow* window, SceneGraph* model, Renderer* view);
+    KeyboardAndMouse(GLFWwindow* window, SceneGraph* model);
     
     virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods);
     virtual void OnMouseMove(GLFWwindow* window, double x, double y);

@@ -8,9 +8,8 @@
 
 #include "Controller.hpp"
 
-Controller::Controller(GLFWwindow* window, SceneGraph* model,Renderer* view){ // FIX: Add defensive programming make sure pointer is not null
+Controller::Controller(GLFWwindow* window, SceneGraph* model){ // FIX: Add defensive programming make sure pointer is not null
     this->p_model = model;
-    this->p_view = view;
     this->p_window = window;
     
     glfwGetCursorPos(window, &m_lastX, &m_lastY);        // Need to call this to get the position of the cursor upon starting the application, as we cannot assume its position, otherwise we get weird jumps in the camera
@@ -19,7 +18,7 @@ Controller::Controller(GLFWwindow* window, SceneGraph* model,Renderer* view){ //
     
     this->m_sensitivity = 0.05;
     p_model->Turn(initYaw, initPitch); // Make sure the torch is facing the same direction as camera at start
-    Camera* mainCamera = view->GetCamera();
+    Camera* mainCamera = model->GetCamera();
     mainCamera->SetDirection(initYaw,initPitch); // point the camera in same direction as torch above
 }
 

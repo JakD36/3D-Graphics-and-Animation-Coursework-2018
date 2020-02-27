@@ -24,6 +24,7 @@ using namespace std;
 #include <GLM/gtx/transform.hpp>
 
 #include "../Utils/ProfileService.h"
+#include "../ResourceManager/ResourceService.hpp"
 
 class Mesh{
     

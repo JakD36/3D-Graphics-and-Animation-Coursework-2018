@@ -21,6 +21,7 @@
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
 #include "../Utils/ProfileService.h"
+#include "../Views/camera.hpp"
 
 
 /** Abstract class for each scene to be based on
@@ -30,10 +31,9 @@
 */
 class SceneGraph{
 protected:
-    
     LightStruct m_lights[LIGHTSN];// Creates our array of lightStructs to store details on all the lights in the scene.
     vector<GameObject*> m_Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
-    
+    Camera* p_camera;
     // Do we have objects that are global to the game
     glm::vec3 m_playerPosition;
 public:
@@ -44,7 +44,7 @@ public:
     virtual void Update(double currentTime) = 0; // Function to update the scene, every frame based on keyframing or procedural animation
     
     vector<GameObject*> GetObjs(); // Return the vector of pointers to all the objects in the scene
-    
+    Camera* GetCamera();
     LightStruct* GetLights();
     glm::vec3 GetPlayerPosition();
     

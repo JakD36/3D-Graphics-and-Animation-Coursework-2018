@@ -7,6 +7,7 @@
 //
 
 #include "GameObject.hpp"
+#include "../Views/Camera.hpp"
 
 GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram){
     m_mesh = mesh;
@@ -14,6 +15,8 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderPro
     m_texture = tex;
     
     m_program = shaderProgram;
+
+
 }
 
 GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram){
@@ -28,7 +31,9 @@ GameObject::GameObject(string meshPath, string materialPath, string texturePath,
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, LightStruct lights[], glm::vec3& camera){
+
+
+void GameObject::Render(Camera camera){
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
     
     // For each model Object
@@ -43,8 +48,8 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, LightStru
     glUniform1i(glGetUniformLocation(m_program,"tex"), 0);                    // The texture
     
     // Pass a number of values through to the shaders through the uniforms
-    glUniform4f(glGetUniformLocation(m_program,"viewPosition"),camera.x,camera.y,camera.z,1.0f); // The camera position
-    
+    glUniform3fv(glGetUniformLocation(m_program,"viewPosition"),sizeof(glm::vec3),&camera.GetPosition()[0]); // The camera position
+
     glUniform4f(glGetUniformLocation(m_program, "ia"), ia.r, ia.g, ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
     glUniform3f(glGetUniformLocation(m_program, "ka"), m_material->m_ka.r,m_material->m_ka.g,m_material->m_ka.b); // The material materials ambient reflectivity constant
     glUniform3f(glGetUniformLocation(m_program, "kd"), m_material->m_kd.r,m_material->m_kd.g,m_material->m_kd.b); // The material materials diffused reflectivity constant
@@ -64,7 +69,7 @@ void GameObject::Render(glm::mat4& proj_matrix, glm::mat4& viewMatrix, LightStru
     modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
     modelMatrix = glm::scale(modelMatrix, m_scale);
     
-    glm::mat4 mvp = proj_matrix * viewMatrix * modelMatrix;
+    glm::mat4 mvp = camera.GetCachedProjMat() * camera.BuildViewMat() * modelMatrix;
     glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 

@@ -44,8 +44,8 @@ void EndProgram();
 
 // Global variables
 GLFWwindow*             window;                     // Window the app will be displayed in
-int                     windowWidth = (int)(480.0f*16.0f/9.0f); // width of the window
-int                     windowHeight = 480;         // height of the window
+int                     windowWidth = (int)(240.0f*16.0f/9.0f); // width of the window
+int                     windowHeight = 240;         // height of the window
 
 Controller* myController; // myController is global to be accessible through the callbacks
 Renderer* myView; // is global to be accessible through callbacks
@@ -62,17 +62,15 @@ int main(int argc, char *argv[])
     
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
     Scene1 scene; // Initialise the scene i.e the model
-    
-    Camera* mainCamera = new Camera(); // Initialise the main camera, FPS camera attached to player!
 
-    myView = new Renderer(window,&scene,mainCamera); // Initialise our rendering object, with the scene it will render and the camera it will be using
+    myView = new Renderer(window); // Initialise our rendering object, with the scene it will render and the camera it will be using
 
     // Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved
     int framebufferWidth, framebufferHeight;
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
     myView->SetViewport(0, 0, framebufferWidth, framebufferHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
     
-    myController = new KeyboardAndMouse(window,&scene,myView); // Initialise the controller, is provided reference to the model and the view so it can access both
+    myController = new KeyboardAndMouse(window,&scene); // Initialise the controller, is provided reference to the model and the view so it can access both
     
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -103,12 +101,12 @@ int main(int argc, char *argv[])
 
         scene.Update(currentTime);              // update (physics, animation, structures, etc)
 
-        ImGui::Begin("Debug",NULL);
-        string debug = to_string(myView->GetCamera()->GetForward().x) + ", " + to_string(myView->GetCamera()->GetForward().y) + ", " + to_string(myView->GetCamera()->GetForward().z);
-        ImGui::Text(debug.c_str());
-        ImGui::End();
+//        ImGui::Begin("Debug",NULL);
+//        string debug = to_string(myView->GetCamera()->GetForward().x) + ", " + to_string(myView->GetCamera()->GetForward().y) + ", " + to_string(myView->GetCamera()->GetForward().z);
+//        ImGui::Text(debug.c_str());
+//        ImGui::End();
 
-        myView->Render();
+        myView->Render(&scene);
 
         { // Render ImGui
             profilerInstance->Draw();
@@ -120,7 +118,6 @@ int main(int argc, char *argv[])
        
         { // Perform Swap Buffer
             int profiler3 = profilerInstance->StartTimer("Swap Buffer");
-            // Swap buffers done here so that multiple viewports can be rendered before they are put on screen
             glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
             profilerInstance->StopTimer(profiler3);
         }
@@ -134,8 +131,6 @@ int main(int argc, char *argv[])
     myController = NULL;
     delete myView;
     myView = NULL;
-    delete mainCamera;
-    mainCamera = NULL;
 
     profilerInstance->StopTimer(profiler);
     return 0;

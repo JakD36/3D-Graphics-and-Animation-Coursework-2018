@@ -1,10 +1,5 @@
 #include "Renderer.hpp"
 
-// Return the camera for use outwith this object, to set/get camera position.
-Camera* Renderer::GetCamera(){
-    return p_camera;
-}
-
 void Renderer::SetViewport(float x, float y, float width, float height){
     m_viewportX = x;
     m_viewportY = y;
@@ -22,12 +17,9 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
 }
 
 // Initialise the Renderer for this viewport
-Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera) {
+Renderer::Renderer(GLFWwindow* window) {
     int profiler = ProfilerService::GetInstance()->StartTimer("Renderer Initialisation");
 
-    // Assign the variables to the object
-    this->p_scene = scene;
-    this->p_camera = viewCamera;
     this->p_window = window;
 
     // Grab the window dimensions for the current window, saves passing too many arguments to the constructor
@@ -90,37 +82,44 @@ Renderer::Renderer(GLFWwindow* window, SceneGraph* scene, Camera* viewCamera) {
 }
 
 
-void Renderer::Render(){
+void Renderer::Render(SceneGraph* scene){
     int profiler = ProfilerService::GetInstance()->StartTimer("Render");
+    RenderToTexture(scene);
+    RenderTextureToScreen(m_framebufferTexture);
+    ProfilerService::GetInstance()->StopTimer(profiler);
+}
 
+void Renderer::RenderToTexture(SceneGraph* scene)
+{
     // Render to the framebuffer texture instead of screen
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,m_framebufferTexture,0);
-    
+
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
     // Convert all our projected coordinates to screen coordinates for the texture
-    
+
     glViewport(0,0, frameWidth, frameHeight);
-    
+
     glEnable(GL_SCISSOR_TEST);
     glScissor(0, 0, frameWidth, frameHeight);
-    
+
     glClearBufferfv(GL_COLOR, 0, &m_clearColour[0]);
     static const GLfloat one = 1.0f;
-    
+
     glEnable(GL_DEPTH_TEST);
     glClearBufferfv(GL_DEPTH, 0, &one);
-    
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    glm::mat4 viewMatrix = p_camera->BuildViewMat();
+    Camera* camera = scene->GetCamera();
+    glm::mat4 viewMatrix = camera->BuildViewMat();
 
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
-    vector<GameObject*> Objs = p_scene->GetObjs();
-    LightStruct* p_lights = p_scene->GetLights();
+    vector<GameObject*> Objs = scene->GetObjs();
+    LightStruct* p_lights = scene->GetLights();
     LightStruct lights[LIGHTSN];
 
     for(int n = 0; n < LIGHTSN; n++){
@@ -144,18 +143,21 @@ void Renderer::Render(){
     glBindBuffer(GL_UNIFORM_BUFFER, ubo);
     glBufferData(GL_UNIFORM_BUFFER, lightStructByteSize * LIGHTSN, NULL, GL_STATIC_DRAW); // allocate 96 bytes of memory
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-    
+
     glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, lightStructByteSize * LIGHTSN);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, lightStructByteSize * LIGHTSN, lights);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    glm::vec3 camPos = p_camera->GetPosition();
-    glm::mat4 projMatrix = p_camera->GetCachedProjMat();
+    glm::vec3 camPos = camera->GetPosition();
+    glm::mat4 projMatrix = camera->GetCachedProjMat();
 
     for(int n = 0;n<Objs.size();n++){
-        Objs[n]->Render(projMatrix,viewMatrix,lights,camPos);
+        Objs[n]->Render(*camera);
     }
-    
+}
+
+void Renderer::RenderTextureToScreen(GLuint srcTexture)
+{
     // SECOND PASS
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 
@@ -163,14 +165,16 @@ void Renderer::Render(){
     glScissor(m_viewportX, m_viewportY, m_viewportWidth, m_viewportHeight);
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
     glClear(GL_COLOR_BUFFER_BIT);
-    glDisable(GL_DEPTH_TEST); //not needed as we are just displaying a single quad
+    glDisable(GL_DEPTH_TEST); // not needed as we are just displaying a single quad
+
     glUseProgram(m_framebufferProgram);
     glBindVertexArray(m_displayVao);
+
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_framebufferTexture);
+    glBindTexture(GL_TEXTURE_2D, srcTexture);
+
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
-
-    ProfilerService::GetInstance()->StopTimer(profiler);
 }
