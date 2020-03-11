@@ -15,19 +15,18 @@
 #include <vector>
 #include <stdio.h>
 
-using namespace std;
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
+#include <glm/glm.hpp>
 #include <gli/gli.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/gtx/transform.hpp>
 #include "../ResourceManager/ResourceService.hpp"
 
 class Texture{
 public:
-    Texture(string texturePath);
-    GLuint          m_texture[1];                     //
+    Texture(std::string texturePath);
+    ~Texture();
+    GLuint          m_texture[1];
 };
 
 

@@ -15,19 +15,17 @@
 #include <vector>
 #include <stdio.h>
 
-using namespace std;
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
+#include <glm/glm.hpp>
 #include <gli/gli.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "../Mesh/Mesh.hpp"
 #include "../Material/Material.hpp"
 #include "../Texture/Texture.hpp"
 
-#include "../Utils/profileService.h"
+#include "../Utils/ProfileService.h"
 #include "../Lights/Lights.hpp"
 #include "../ResourceManager/ResourceService.hpp"
 #include "../Views/Camera.hpp"
@@ -39,7 +37,7 @@ public:
     glm::vec3 m_scale     = glm::vec3(1.f,1.f,1.f);
     
     GameObject(Mesh*, Material*, Texture*, GLuint);
-    GameObject(string mesh, string mat, string tex, GLuint);
+    GameObject(std::string mesh, std::string mat, std::string tex, GLuint);
     
     Mesh* m_mesh;
     Texture* m_texture;

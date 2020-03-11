@@ -15,16 +15,12 @@
 #include <vector>
 #include <stdio.h>
 
-using namespace std;
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
+#include <glm/glm.hpp>
 #include <gli/gli.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/gtx/transform.hpp>
 #include "../Utils/ProfileService.h"
-
-using namespace std;
 
 class Material{
 public:
@@ -33,7 +29,7 @@ public:
     glm::vec3 m_ks;                                   // Specular material constant
     GLfloat m_shininess;                              // Shininess constant of material
     
-    Material(string materialName);
+    Material(std::string materialName);
 };
 
 #endif /* Material_hpp */

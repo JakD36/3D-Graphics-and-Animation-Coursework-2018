@@ -3,11 +3,11 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
+#include <glm/glm.hpp>
 #include <gli/gli.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/gtx/transform.hpp>
 
-enum LightType {point,spot};    // Tells program if light is a point or spot light
+enum class LightType {point,spot};    // Tells program if light is a point or spot light
 const int LIGHTSN = 4;          // Number of the lights in the scene, defines the length of the array
 
 const int lightStructByteSize = 96;
@@ -41,6 +41,17 @@ public:
     float padding13 = 1.0f;
     glm::vec3 is = glm::vec3(3.0f,3.0f,3.0f);
     float padding14 = 1.0f;
+};
+
+class LightUniformBuffer
+{
+private:
+    GLuint m_uniformBufferObject;
+public:
+    LightUniformBuffer();
+    ~LightUniformBuffer();
+
+    void UpdateData(LightStruct* lights);
 };
 
 #endif

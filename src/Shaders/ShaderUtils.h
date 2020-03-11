@@ -1,7 +1,7 @@
 #ifndef ShaderUtils_h
 #define ShaderUtils_h
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <fstream>
 #include <vector>

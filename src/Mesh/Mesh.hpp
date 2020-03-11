@@ -15,13 +15,11 @@
 #include <vector>
 #include <stdio.h>
 
-using namespace std;
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
+#include <glm/glm.hpp>
 #include <gli/gli.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "../Utils/ProfileService.h"
 #include "../ResourceManager/ResourceService.hpp"
@@ -34,9 +32,10 @@ public:
     GLuint          m_buffer;                      // Buffer to store the vertices, uvs and the normals for the model
     GLuint          m_vao; 
 
-    std::vector<float> Load(string meshName);
+    std::vector<float> Load(std::string meshName);
 
-    Mesh(string meshName);
+    Mesh(std::string meshName);
+    ~Mesh();
 };
 
 #endif /* Mesh_hpp */

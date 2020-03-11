@@ -9,14 +9,14 @@
 #include "GameObject.hpp"
 #include "../Views/Camera.hpp"
 
+using namespace std;
+
 GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram){
     m_mesh = mesh;
     m_material = mat;
     m_texture = tex;
     
     m_program = shaderProgram;
-
-
 }
 
 GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram){
@@ -35,25 +35,26 @@ GameObject::GameObject(string meshPath, string materialPath, string texturePath,
 
 void GameObject::Render(Camera camera){
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
-    
+
     // For each model Object
     glUseProgram(m_program);
     glBindVertexArray(m_mesh->m_vao);
-    
+
     // Bind textures and samplers - using 0 as I know there is only one texture - need to extend.
     // Assign the values to each of the appropriate uniforms so that they can be accessed by the shaders
-    
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_texture->m_texture[0]);
-    glUniform1i(glGetUniformLocation(m_program,"tex"), 0);                    // The texture
-    
-    // Pass a number of values through to the shaders through the uniforms
-    glUniform3fv(glGetUniformLocation(m_program,"viewPosition"),sizeof(glm::vec3),&camera.GetPosition()[0]); // The camera position
 
-    glUniform4f(glGetUniformLocation(m_program, "ia"), ia.r, ia.g, ia.b, 1.0f); // The ambient light intensity, as there is only one for the scene
-    glUniform3f(glGetUniformLocation(m_program, "ka"), m_material->m_ka.r,m_material->m_ka.g,m_material->m_ka.b); // The material materials ambient reflectivity constant
-    glUniform3f(glGetUniformLocation(m_program, "kd"), m_material->m_kd.r,m_material->m_kd.g,m_material->m_kd.b); // The material materials diffused reflectivity constant
-    glUniform3f(glGetUniformLocation(m_program, "ks"), m_material->m_ks.r,m_material->m_ks.g,m_material->m_ks.b); // The material materials specular reflectivity constant
+    glUniform1i(glGetUniformLocation(m_program,"tex"), 0);                    // The texture
+
+    // Pass a number of values through to the shaders through the uniforms
+
+    glUniform3fv(glGetUniformLocation(m_program,"viewPosition"),1,&camera.GetPosition()[0]); // The camera position
+    glUniform4fv(glGetUniformLocation(m_program, "ia"),1, &glm::vec4(ia,1.f)[0]); // The ambient light intensity, as there is only one for the scene
+    glUniform3fv(glGetUniformLocation(m_program, "ka"),1, &m_material->m_ka[0]); // The material materials ambient reflectivity constant
+    glUniform3fv(glGetUniformLocation(m_program, "kd"),1, &m_material->m_kd[0]); // The material materials diffused reflectivity constant
+    glUniform3fv(glGetUniformLocation(m_program, "ks"),1, &m_material->m_ks[0]); // The material materials specular reflectivity constant
     glUniform1f(glGetUniformLocation(m_program, "shininess"), m_material->m_shininess); // The materials shininess indices
     glUniform1f(glGetUniformLocation(m_program, "lightConstant"),0.25f);       // Constant used for attenuation, taken from lecture notes
     glUniform1f(glGetUniformLocation(m_program, "lightLinear"),0.7f);          // Constant used for attenuation, taken from lecture notes

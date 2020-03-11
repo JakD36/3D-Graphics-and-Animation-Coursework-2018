@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include "Texture.hpp"
 
+using namespace std;
+
 Texture::Texture(string texturePath)
 {
     glGenTextures(1, m_texture);
@@ -42,4 +44,9 @@ Texture::Texture(string texturePath)
     
     // Generate mipmaps (next lecture)
     glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+Texture::~Texture()
+{
+    glDeleteTextures(1,m_texture);
 }

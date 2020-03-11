@@ -9,12 +9,11 @@
 #ifndef Controller_hpp
 #define Controller_hpp
 
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
-#include <GLM/gtx/transform.hpp>
-#include <stdio.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <cstdio>
 
 #include "../Scenes/SceneGraph.hpp"
 #include "../Views/Camera.hpp"
@@ -42,7 +41,7 @@ protected:
 public:
     // Constructor, always need a window, model and view for the controller to interact with so no default controller
     Controller(GLFWwindow* window, SceneGraph* model);
-    
+    virtual ~Controller();
     void SetSensitivity(GLfloat sensitivity);
     GLfloat GetSensitivity();
     

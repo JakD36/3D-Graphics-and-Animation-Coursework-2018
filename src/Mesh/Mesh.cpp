@@ -8,6 +8,8 @@
 
 #include "Mesh.hpp"
 
+using namespace std;
+
 Mesh::Mesh(string meshName){
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
@@ -17,8 +19,6 @@ Mesh::Mesh(string meshName){
     vector<float> interleavedData = Load(meshName);
  
     // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
-    // cout<<"Vertices\t"<<out_vertices.size()<<"\tUVS\t"<<out_uvs.size()<<"\tNormals"<<out_normals.size()<<endl;
-    
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
     glBufferData(GL_ARRAY_BUFFER,                       // store the vertices in the first part of the buffer
                  interleavedData.size()*sizeof(float), // vertices size * size of vec3 tells us how much space in the buffer to allocate
@@ -27,24 +27,10 @@ Mesh::Mesh(string meshName){
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, NULL);
     glEnableVertexAttribArray(0);
-    
-    // Do the same for uvs
-//    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
-//    glBufferData(GL_ARRAY_BUFFER,
-//                 m_uvs.size()*sizeof(glm::vec2),      // Uvs are only two coordinates, so use size of vec2 for space allocation
-//                 &m_uvs[0],
-//                 GL_STATIC_DRAW);
-    
+
     glVertexAttribPointer(1, 2 , GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 3));
     glEnableVertexAttribArray(1);
-    
-    // Same again for normals
-//    glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
-//    glBufferData(GL_ARRAY_BUFFER,
-//                 m_normals.size()*sizeof(glm::vec3),
-//                 &m_normals[0],
-//                 GL_STATIC_DRAW);
-    
+
     glVertexAttribPointer(2, 3 , GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 5));
     glEnableVertexAttribArray(2);
 }
@@ -266,4 +252,8 @@ std::vector<float> Mesh::Load(string meshName){
     }
 }
 
-
+Mesh::~Mesh()
+{
+    glDeleteBuffers(1,&m_buffer);
+    glDeleteVertexArrays(1,&m_vao);
+}

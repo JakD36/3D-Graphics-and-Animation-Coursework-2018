@@ -1,5 +1,7 @@
 #include "ShaderManager.h"
 
+using namespace std;
+
 ShaderManager::ShaderManager()
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
@@ -18,6 +20,17 @@ int ShaderManager::FindShader(string id)
             return i;
     }
 
+    return -1;
+}
+
+int ShaderManager::FindProgram(string id)
+{
+    int count = m_shaderInfo.size();
+    for(int i = 0; i < count; ++i)
+    {
+        if(m_programs[i].path == id)
+            return i;
+    }
     return -1;
 }
 
@@ -52,18 +65,20 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
     int profiler = profilerInstance->StartTimer("ShaderManager Request Program");
 
-    unordered_map<string, GLuint>::iterator result;
-
     // Program
     string programName = vertPath + "+" + fragPath;
-    result = m_programs.find(programName);
-    if(result != m_programs.end())
+    int result = FindProgram(programName);
+    if(result >= 0)
     {
-        return result->second;
+        return m_programs[result].program;
     }
 
     GLuint program = glCreateProgram();
-    m_programs.emplace(programName,program);
+    m_programs.push_back(
+            ProgramInfo {
+                programName,
+                program
+            });
 
     // Shaders
     GLuint vert, frag;
@@ -141,12 +156,11 @@ void ShaderManager::RecompileAllProgramShaders()
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
     int profiler = profilerInstance->StartTimer("ShaderManager Recompile shaders");
-    unordered_map<string,GLuint>::iterator iter;
-
-    for(iter = m_programs.begin(); iter != m_programs.end(); ++iter)
+    int programCount = m_programs.size();
+    for(int i = 0; i < programCount; ++i)
     {
-        string programName = iter->first;
-        GLuint program = iter->second;
+        string programName = m_programs[i].path;
+        GLuint program = m_programs[i].program;
 
         GLuint vert,frag;
 
@@ -218,4 +232,9 @@ void ShaderManager::RecompileAllProgramShaders()
         LinkProgram(program,vert,frag);
     }
     profilerInstance->StopTimer(profiler);
+}
+
+vector<ProgramInfo>* ShaderManager::GetShaderPrograms()
+{
+    return &m_programs;
 }

@@ -20,7 +20,7 @@ Camera::Camera(){
     m_closeClipPlane = 0.1f;
     m_farClipPlane = 1000.0f;
     m_aspect = 16.0f/9.0f;
-    m_projMatrix =  glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
+    m_projMatrix = glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
 }
 
 Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec){

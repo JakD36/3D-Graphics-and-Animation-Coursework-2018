@@ -18,14 +18,13 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "../Lights/Lights.hpp"
 
 #include "../Shaders/ShaderManager.h"
-
-using namespace std;
+#include "buffers.h"
 
 ///
 /// Renderer class
@@ -35,30 +34,8 @@ class Renderer{
 private:
     GLFWwindow*       p_window; // The window the viewport is rendering to
 
-    GLuint            m_framebuffer;
-    GLuint            m_framebufferTexture;
-    GLuint            m_depthbuffer;
-
-    // For completing 2 pass rendering for framebuffer effects
-    GLuint            m_displayVao;
-    GLuint            m_displayBuffer;
-
-    const glm::vec2 m_displayCoords[12] = { // Interleaved coordinates for displaying to a Quad
-            glm::vec2(-1.0f, 1.0f), // v
-            glm::vec2(0.0f, 1.0f), // uv
-            glm::vec2(-1.0f,-1.0f), // v
-            glm::vec2(0.0f, 0.0f), // uv
-            glm::vec2( 1.0f,-1.0f), // v
-            glm::vec2(1.0f, 0.0f), // uv
-            glm::vec2(-1.0f, 1.0f), // v
-            glm::vec2(0.0f, 1.0f), // uv
-            glm::vec2( 1.0f,-1.0f), // v
-            glm::vec2(1.0f, 0.0f), // uv
-            glm::vec2( 1.0f, 1.0f),// v
-            glm::vec2(1.0f, 1.0f) // uv
-    };
-
-    GLuint m_framebufferProgram;
+    FramebufferBase* m_framebuffer;
+    LightUniformBuffer m_lightUbo;
 
     int m_windowWidth, m_windowHeight; // The current windows width and height
     
@@ -69,13 +46,13 @@ private:
     
 public:
     Renderer(GLFWwindow* window); // Requires a camera to view the scene, a window to render to, and a scene to draw
+    ~Renderer();
 
     void SetWindowDimensions(int windowWidth, int windowHeight); // Used to update the Renderer the window has changed size
     void SetViewport(float x, float y, float width, float height);
 
     void Render(SceneGraph* scene);
-    void RenderToTexture(SceneGraph* scene);
-    void RenderTextureToScreen(GLuint srcTexture);
+    void RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight);
 };
 
 #endif /* Renderer_hpp */

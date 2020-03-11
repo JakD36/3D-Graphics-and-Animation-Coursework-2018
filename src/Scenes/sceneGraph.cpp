@@ -6,7 +6,7 @@
 //  Copyright © 2018 Jack Davidson. All rights reserved.
 //
 
-#include "sceneGraph.hpp"
+#include "SceneGraph.hpp"
 
 // Default constructor
 SceneGraph::SceneGraph(){

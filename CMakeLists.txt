@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(3D_Graphics_and_Animation_Coursework_2018)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(Include)
 
@@ -62,7 +62,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Shaders/ShaderManager.h
         src/Shaders/ShaderUtils.h
         src/Shaders/ShaderUtils.cpp
-        src/Utils/VectorUtils.cpp)
+        src/Utils/VectorUtils.cpp src/Views/Buffers.cpp src/Views/Buffers.h src/Lights/Lights.cpp)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

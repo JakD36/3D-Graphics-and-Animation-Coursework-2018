@@ -37,7 +37,7 @@ layout (std140) uniform lightBlock
 };
 
 // grab the light relevant info from uniforms
-uniform vec4  viewPosition;     // camera position
+uniform vec3  viewPosition;     // camera position
 uniform float lightConstant;    // used for calculating attenuation
 uniform float lightLinear;      // used for calculating attenuation
 uniform float lightQuadratic;   // used for calculating attenuation
@@ -94,8 +94,8 @@ void main(void)
         float distance = length(lights[0].lightPosition - fs_in.fragPos);
         float attenuation = 1.0f / (lightConstant + lightLinear * distance + lightQuadratic * (distance*distance));
 
-        vec4 viewDir = normalize(viewPosition - fs_in.fragPos); // find the direction from the position of the fragment in the world space to the camera
-        vec4 reflectDir = reflect(-lightDir,normalize(fs_in.normals)); // find the direction that the light ideally reflects along
+        vec3 viewDir = normalize(viewPosition - fs_in.fragPos.xyz); // find the direction from the position of the fragment in the world space to the camera
+        vec3 reflectDir = reflect(-lightDir.xyz,normalize(fs_in.normals.xyz)); // find the direction that the light ideally reflects along
         float spec = pow(max(dot(viewDir,reflectDir),0.0),shininess); // find the angle between these two vectors using dot product
 
         if(lights[0].type == 0){ // if point light, remember we have two types of light, point and spotlight in this project
@@ -136,8 +136,8 @@ void main(void)
         float distance = length(lights[1].lightPosition - fs_in.fragPos);
         float attenuation = 1.0f / (lightConstant + lightLinear * distance + lightQuadratic * (distance*distance));
 
-        vec4 viewDir = normalize(viewPosition - fs_in.fragPos); // find the direction from the position of the fragment in the world space to the camera
-        vec4 reflectDir = reflect(-lightDir,normalize(fs_in.normals)); // find the direction that the light ideally reflects along
+        vec3 viewDir = normalize(viewPosition - fs_in.fragPos.xyz); // find the direction from the position of the fragment in the world space to the camera
+        vec3 reflectDir = reflect(-lightDir.xyz,normalize(fs_in.normals.xyz)); // find the direction that the light ideally reflects along
         float spec = pow(max(dot(viewDir,reflectDir),0.0),shininess); // find the angle between these two vectors using dot product
 
         if(lights[1].type == 0){ // if point light, remember we have two types of light, point and spotlight in this project

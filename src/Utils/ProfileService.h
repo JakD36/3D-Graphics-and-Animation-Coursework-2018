@@ -15,21 +15,19 @@
 
 #define PROFILE_SIZE 36000
 
-using namespace std;
-
 inline ImVec2 add(ImVec2 a, ImVec2 b) { return ImVec2(a.x + b.x, a.y + b.y); }
 
 class ProfilerService{
     private:
 
-        enum Status{
+        enum class Status{
             EMPTY,
             RECORDING,
             COMPLETE
         };
 
         struct ProfileData{
-            string Identifier;
+            std::string Identifier;
             double Start;
             double Length;
             int Depth;
@@ -37,7 +35,7 @@ class ProfilerService{
         };
 
         ProfilerService();
-        static ProfilerService* m_instance;
+        inline static ProfilerService* m_instance = NULL;
         float m_start;
         int m_index;
         int m_nextDepth;
@@ -49,7 +47,7 @@ class ProfilerService{
     public:
         static ProfilerService* GetInstance();
         
-        int StartTimer(string identifier);
+        int StartTimer(std::string identifier);
         void StopTimer(int timer);
         
         void Draw();      

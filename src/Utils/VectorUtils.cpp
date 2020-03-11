@@ -9,6 +9,7 @@ namespace Utils {
         if (dot == 1.0f) {
             return glm::quat();
         }
+
         glm::vec3 rotationAxis = glm::normalize(glm::cross(vec1, vec2));
         if (dot < -0.999f) {
             const glm::vec3 tmp1 = glm::vec3(0.0f, 0.0f, 1.0f);

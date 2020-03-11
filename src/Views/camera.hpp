@@ -9,13 +9,13 @@
 #ifndef Camera_hpp
 #define Camera_hpp
 
-#include <stdio.h>
+#include <cstdio>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
-#include <GLM/gtx/transform.hpp>
-#include <GLM/gtx/quaternion.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "../Utils/VectorUtils.hpp"
 

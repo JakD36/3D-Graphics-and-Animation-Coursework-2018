@@ -22,6 +22,8 @@ Controller::Controller(GLFWwindow* window, SceneGraph* model){ // FIX: Add defen
     mainCamera->SetDirection(initYaw,initPitch); // point the camera in same direction as torch above
 }
 
+Controller::~Controller(){}
+
 void Controller::ChangeScene(SceneGraph* newModel){ // FIX: Add defensive programming make sure pointer is not null
     this->p_model = newModel;
 }

@@ -11,17 +11,17 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include <gli/gli.hpp>
 
-#include <stdio.h>
+#include <cstdio>
 #include <vector>
 
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
 #include "../Utils/ProfileService.h"
-#include "../Views/camera.hpp"
+#include "../Views/Camera.hpp"
 
 
 /** Abstract class for each scene to be based on

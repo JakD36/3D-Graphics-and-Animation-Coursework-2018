@@ -9,21 +9,26 @@
 #include "ShaderUtils.h"
 #include "../Utils/ProfileService.h"
 
-using namespace std;
-
 /// Struct to store file information for a shader.
 struct ShaderInfo
 {
 public:
-    string path;
+    std::string path;
     GLuint shader;
     time_t lastModified;
 };
 
+struct ProgramInfo
+{
+public:
+    std::string path;
+    GLuint program;
+};
+
 class ShaderManager {
 private:
-    vector<ShaderInfo> m_shaderInfo;
-    unordered_map<string,GLuint> m_programs;
+    std::vector<ShaderInfo> m_shaderInfo;
+    std::vector<ProgramInfo> m_programs;
 
     GLuint m_defaultVertShader;
     GLuint m_defaultFragShader;
@@ -43,22 +48,24 @@ private:
                                 "    color = vec4(1,0,1,1);\n"
                                 "}";
 
-    static ShaderManager* m_instance;
+    inline static ShaderManager* m_instance = NULL;
     ShaderManager();
-    int FindShader(string id);
+    int FindShader(std::string id);
+    int FindProgram(std::string id);
 
 public:
     static ShaderManager* GetInstance();
 
     /// Searches for a program that uses the provided shaders to return or compiles and links a new program
     /// @returns A program, using the provided shaders if they compiled, or a program with the default shaders if not
-    GLuint RequestProgram(string vertPath, string fragPath);
+    GLuint RequestProgram(std::string vertPath, std::string fragPath);
 
     /// Performs a check to see if shaders need recompiled.
     void Update();
 
     /// Updates the shaders and relinks the programs to use the new shaders
     void RecompileAllProgramShaders();
+    std::vector<ProgramInfo>* GetShaderPrograms();
 };
 
 #endif

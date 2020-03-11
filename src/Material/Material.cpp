@@ -8,6 +8,7 @@
 
 #include "Material.hpp"
 
+using namespace std;
 
 Material::Material(string materialName)
 {
@@ -19,7 +20,6 @@ Material::Material(string materialName)
     
     if(pfile == NULL){ // if the file doesnt open when using fopen
         cout<<"Could not find file >> "<<materialName<<endl; // print error and name of file that failed to open
-                                                     //            return false; // exit function as it has failed
     }
     else{
         do{ // if file does open loop through each line of the file while EOF has not been reached
@@ -39,6 +39,6 @@ Material::Material(string materialName)
                 fscanf(pfile,"%f\n",&m_shininess);
             }
         } while (result != EOF); // end loop when End Of File has been reached
-                                 //            return true; // Return to true to show the file did open successfully
     }
+    fclose(pfile);
 }

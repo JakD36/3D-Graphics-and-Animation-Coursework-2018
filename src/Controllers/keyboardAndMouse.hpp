@@ -9,7 +9,7 @@
 #ifndef KeyboardAndMouse_hpp
 #define KeyboardAndMouse_hpp
 
-#include <stdio.h>
+#include <cstdio>
 #include "Controller.hpp"
 #include "../Shaders/ShaderManager.h"
 

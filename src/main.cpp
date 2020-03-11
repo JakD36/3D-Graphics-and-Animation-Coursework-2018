@@ -1,6 +1,6 @@
 // Standard libraries
 #include <string>
-#include <stdio.h>
+#include <cstdio>
 
 #if(WIN32)
 #define GLEW_STATIC
@@ -9,8 +9,8 @@
 // OpenGL - GLEW, GLFW and GLM
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <GLM/glm.hpp>
-#include <GLM/gtx/transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 
 // My classes
 #include "Scenes/SceneGraph.hpp"
@@ -50,16 +50,13 @@ int                     windowHeight = 240;         // height of the window
 Controller* myController; // myController is global to be accessible through the callbacks
 Renderer* myView; // is global to be accessible through callbacks
 
-ShaderManager* ShaderManager::m_instance = NULL;
-ProfilerService* ProfilerService::m_instance = NULL;
-
 int main(int argc, char *argv[])
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
     int profiler = profilerInstance->StartTimer("main");
 
     InitOpenGL(); // Initialise OpenGL window,
-    
+
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
     Scene1 scene; // Initialise the scene i.e the model
 
@@ -105,9 +102,9 @@ int main(int argc, char *argv[])
 //        string debug = to_string(myView->GetCamera()->GetForward().x) + ", " + to_string(myView->GetCamera()->GetForward().y) + ", " + to_string(myView->GetCamera()->GetForward().z);
 //        ImGui::Text(debug.c_str());
 //        ImGui::End();
-
+        printf("Pre Render = %d\n\n",(int)glGetError());
         myView->Render(&scene);
-
+        printf("Post Render = %d\n\n",(int)glGetError());
         { // Render ImGui
             profilerInstance->Draw();
             int profiler2 = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
