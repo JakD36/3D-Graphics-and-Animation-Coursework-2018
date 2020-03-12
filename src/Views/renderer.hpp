@@ -24,7 +24,7 @@
 #include "../Lights/Lights.hpp"
 
 #include "../Shaders/ShaderManager.h"
-#include "buffers.h"
+#include "Buffers.h"
 
 ///
 /// Renderer class
