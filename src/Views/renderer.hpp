@@ -9,22 +9,13 @@
 #ifndef Renderer_hpp
 #define Renderer_hpp
 
-#include <vector>
-
-#include "../Scenes/SceneGraph.hpp"
-#include "Camera.hpp"
-
-#include "../Utils/ProfileService.h"
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
 
-#include "../Lights/Lights.hpp"
-
-#include "../Shaders/ShaderManager.h"
 #include "Buffers.h"
+#include "../Lights/Lights.hpp"
+#include "../Scenes/SceneGraph.hpp"
 
 ///
 /// Renderer class
@@ -45,14 +36,14 @@ private:
     glm::vec4 m_clearColour = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
     
 public:
-    Renderer(GLFWwindow* window); // Requires a camera to view the scene, a window to render to, and a scene to draw
-    ~Renderer();
+    Renderer(GLFWwindow* window) noexcept; // Requires a camera to view the scene, a window to render to, and a scene to draw
+    ~Renderer() noexcept;
 
-    void SetWindowDimensions(int windowWidth, int windowHeight); // Used to update the Renderer the window has changed size
-    void SetViewport(float x, float y, float width, float height);
+    void SetWindowDimensions(int windowWidth, int windowHeight) noexcept; // Used to update the Renderer the window has changed size
+    void SetViewport(float x, float y, float width, float height) noexcept;
 
-    void Render(SceneGraph* scene);
-    void RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight);
+    void Render(SceneGraph* scene) noexcept;
+    void RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight) noexcept;
 };
 
 #endif /* Renderer_hpp */

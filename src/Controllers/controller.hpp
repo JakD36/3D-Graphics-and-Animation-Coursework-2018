@@ -11,14 +11,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <cstdio>
-
 #include "../Scenes/SceneGraph.hpp"
-#include "../Views/Camera.hpp"
-#include "../Views/Renderer.hpp"
-#include "../Utils/ProfileService.h"
 
 /*
  Controller abstract class
@@ -40,20 +33,20 @@ protected:
     bool m_keyStatus[1024] = {false};  // Stores if the keys have been presed or not
 public:
     // Constructor, always need a window, model and view for the controller to interact with so no default controller
-    Controller(GLFWwindow* window, SceneGraph* model);
-    virtual ~Controller();
-    void SetSensitivity(GLfloat sensitivity);
-    GLfloat GetSensitivity();
+    Controller(GLFWwindow* window, SceneGraph* model) noexcept;
+    virtual ~Controller() noexcept;
+    void SetSensitivity(GLfloat sensitivity) noexcept;
+    GLfloat GetSensitivity() noexcept;
     
-    void ChangeScene(SceneGraph* newModel); // FIX: Need to add some form of defensive programming to make sure controller is not passed a NULL pointer
+    void ChangeScene(SceneGraph* newModel) noexcept; // FIX: Need to add some form of defensive programming to make sure controller is not passed a NULL pointer
     
-    void ToggleCursor();
+    void ToggleCursor() noexcept;
 
     // pure abstract methods
-    virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods) = 0;
-    virtual void OnMouseMove(GLFWwindow* window, double x, double y) = 0;
-    virtual void OnMouseButton(GLFWwindow* window, int button, int action, int mods) = 0;
-    virtual void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset) = 0 ;
+    virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods) noexcept = 0;
+    virtual void OnMouseMove(GLFWwindow* window, double x, double y) noexcept = 0;
+    virtual void OnMouseButton(GLFWwindow* window, int button, int action, int mods) noexcept = 0;
+    virtual void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset) noexcept = 0 ;
 };
 
 

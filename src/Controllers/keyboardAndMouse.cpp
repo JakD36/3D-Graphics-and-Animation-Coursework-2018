@@ -8,10 +8,10 @@
 
 #include "KeyboardAndMouse.hpp"
 
-KeyboardAndMouse::KeyboardAndMouse(GLFWwindow* window, SceneGraph* model): Controller(window,model){
+KeyboardAndMouse::KeyboardAndMouse(GLFWwindow* window, SceneGraph* model)  noexcept: Controller(window,model){
 }
 
-void KeyboardAndMouse::OnKey(GLFWwindow* window, int key, int scancode, int action, int mods){
+void KeyboardAndMouse::OnKey(GLFWwindow* window, int key, int scancode, int action, int mods) noexcept{
     if (action == GLFW_PRESS)
         m_keyStatus[key] = true;
     else if (action == GLFW_RELEASE)
@@ -24,7 +24,7 @@ void KeyboardAndMouse::OnKey(GLFWwindow* window, int key, int scancode, int acti
         ToggleCursor();
 }
 
-void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y){
+void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y) noexcept{
     if(m_aimInput){
         // This is the code for a look around (FPS like) camera
         int mouseX = static_cast<int>(x); // Get the new mouse position
@@ -47,7 +47,7 @@ void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y){
 }
 
 
-void KeyboardAndMouse::OnMouseButton(GLFWwindow* window, int button, int action, int mods){
+void KeyboardAndMouse::OnMouseButton(GLFWwindow* window, int button, int action, int mods) noexcept{
     // On left click activate primary action
     if(button == GLFW_MOUSE_BUTTON_LEFT){
         if(action == GLFW_PRESS){
@@ -62,6 +62,6 @@ void KeyboardAndMouse::OnMouseButton(GLFWwindow* window, int button, int action,
     }
 }
 
-void KeyboardAndMouse::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset){
+void KeyboardAndMouse::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset) noexcept{
     // Blank as this does nothing
 }

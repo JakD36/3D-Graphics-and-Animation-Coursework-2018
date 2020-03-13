@@ -7,8 +7,10 @@
 //
 
 #include "Controller.hpp"
+#include "../Views/Camera.hpp"
 
-Controller::Controller(GLFWwindow* window, SceneGraph* model){ // FIX: Add defensive programming make sure pointer is not null
+
+Controller::Controller(GLFWwindow* window, SceneGraph* model) noexcept{ // FIX: Add defensive programming make sure pointer is not null
     this->p_model = model;
     this->p_window = window;
     
@@ -22,20 +24,20 @@ Controller::Controller(GLFWwindow* window, SceneGraph* model){ // FIX: Add defen
     mainCamera->SetDirection(initYaw,initPitch); // point the camera in same direction as torch above
 }
 
-Controller::~Controller(){}
+Controller::~Controller() noexcept{}
 
-void Controller::ChangeScene(SceneGraph* newModel){ // FIX: Add defensive programming make sure pointer is not null
+void Controller::ChangeScene(SceneGraph* newModel) noexcept{ // FIX: Add defensive programming make sure pointer is not null
     this->p_model = newModel;
 }
 
-void Controller::SetSensitivity(GLfloat sensitivity){
+void Controller::SetSensitivity(GLfloat sensitivity) noexcept{
     this->m_sensitivity = sensitivity; 
 }
 
-GLfloat Controller::GetSensitivity(){
+GLfloat Controller::GetSensitivity() noexcept{
     return m_sensitivity;
 }
-void Controller::ToggleCursor(){
+void Controller::ToggleCursor() noexcept{
     if(m_aimInput){
         m_aimInput = false;
         glfwSetInputMode(p_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Remove curser for FPS cam

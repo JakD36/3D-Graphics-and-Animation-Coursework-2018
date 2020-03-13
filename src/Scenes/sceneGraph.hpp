@@ -10,18 +10,13 @@
 #define sceneGraph_hpp
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <gli/gli.hpp>
-
-#include <cstdio>
 #include <vector>
-
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
 #include "../Utils/ProfileService.h"
 #include "../Views/Camera.hpp"
+#include "../Lights/Lights.hpp"
 
 
 /** Abstract class for each scene to be based on
@@ -32,29 +27,29 @@
 class SceneGraph{
 protected:
     LightStruct m_lights[LIGHTSN];// Creates our array of lightStructs to store details on all the lights in the scene.
-    vector<GameObject*> m_Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
+    std::vector<GameObject*> m_Objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
     Camera* p_camera;
     // Do we have objects that are global to the game
     glm::vec3 m_playerPosition;
 public:
-    SceneGraph();
-    virtual ~SceneGraph();
+    SceneGraph() noexcept;
+    virtual ~SceneGraph() noexcept;
     
     // Other methods
-    virtual void Update(double currentTime) = 0; // Function to update the scene, every frame based on keyframing or procedural animation
+    virtual void Update(double currentTime) noexcept = 0; // Function to update the scene, every frame based on keyframing or procedural animation
     
-    vector<GameObject*> GetObjs(); // Return the vector of pointers to all the objects in the scene
-    Camera* GetCamera();
-    LightStruct* GetLights();
-    glm::vec3 GetPlayerPosition();
+    std::vector<GameObject*> GetObjs() noexcept; // Return the vector of pointers to all the objects in the scene
+    Camera* GetCamera() noexcept;
+    LightStruct* GetLights() noexcept;
+    glm::vec3 GetPlayerPosition() noexcept;
     
     /* Actions Performed!
      These are the actions that can be performed in the game
      For example, jump, move forward/backward, turn, alter direction looking at, switch light on or off.
     */
-    virtual void UsePrimary() = 0;
-    virtual void UseSecondary() = 0;
-    virtual void Turn(GLfloat yaw, GLfloat pitch) = 0;
+    virtual void UsePrimary() noexcept = 0;
+    virtual void UseSecondary() noexcept = 0;
+    virtual void Turn(GLfloat yaw, GLfloat pitch) noexcept = 0;
 };
 
 

@@ -9,20 +9,9 @@
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <vector>
-#include <stdio.h>
-
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <gli/gli.hpp>
-#include <glm/gtx/transform.hpp>
-
-#include "../Utils/ProfileService.h"
-#include "../ResourceManager/ResourceService.hpp"
+#include <string>
+#include <vector>
 
 class Mesh{
     
@@ -32,10 +21,10 @@ public:
     GLuint          m_buffer;                      // Buffer to store the vertices, uvs and the normals for the model
     GLuint          m_vao; 
 
-    std::vector<float> Load(std::string meshName);
+    std::vector<float> Load(std::string meshName) noexcept;
 
-    Mesh(std::string meshName);
-    ~Mesh();
+    Mesh(std::string meshName) noexcept;
+    ~Mesh() noexcept;
 };
 
 #endif /* Mesh_hpp */

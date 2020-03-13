@@ -1,5 +1,10 @@
 #include "ShaderUtils.h"
 
+#include <cstdio>
+#include <fstream>
+#include <vector>
+#include <iostream>
+
 bool CheckDriverSupportsBinaryPrograms(){
     GLint formats = 0;
     glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);

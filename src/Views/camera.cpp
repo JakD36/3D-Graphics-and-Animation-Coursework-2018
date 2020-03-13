@@ -7,9 +7,11 @@
 //
 
 #include "Camera.hpp"
+#include <glm/gtx/transform.hpp>
+#include "../Utils/VectorUtils.hpp"
 
 // Constructors
-Camera::Camera(){
+Camera::Camera() noexcept{
     m_position = glm::vec3(0.0f,1.6f,0.0f);    // The cameras position in the world space
     m_rotation = glm::quat();
     m_up = glm::vec3(0.0f,1.0f,0.0f);
@@ -23,7 +25,7 @@ Camera::Camera(){
     m_projMatrix = glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
 }
 
-Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec){
+Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept{
     m_position = position;
     m_rotation = rotation;
     m_up = upVec;
@@ -37,7 +39,7 @@ Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec){
     m_projMatrix =  glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
 }
 
-Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec)
+Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec) noexcept
 {
     m_position = position;
     m_rotation = glm::quat(eulerAngles);
@@ -53,34 +55,34 @@ Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec)
 }
 
 // Accessors
-glm::vec3 Camera::GetPosition(){
+glm::vec3 Camera::GetPosition() noexcept{
     return m_position;
 }
 
-glm::vec3 Camera::GetForward(){
+glm::vec3 Camera::GetForward() noexcept{
     return m_forward;
 }
 
-glm::mat4 Camera::BuildViewMat()
+glm::mat4 Camera::BuildViewMat() noexcept
 {
     return glm::lookAt(m_position, m_position + m_forward, m_up);
 }
 
-void Camera::BuildProjectionMat()
+void Camera::BuildProjectionMat() noexcept
 {
     m_projMatrix = glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
 }
 
-glm::mat4 Camera::GetCachedProjMat()
+glm::mat4 Camera::GetCachedProjMat() noexcept
 {
     return m_projMatrix;
 }
 
-void Camera::SetPosition(glm::vec3 newPosition){
+void Camera::SetPosition(glm::vec3 newPosition) noexcept{
     this->m_position = newPosition;
 }
 
-void Camera::LookAt(glm::vec3 target) // TODO: Fix the calculation of the rotation quaternion
+void Camera::LookAt(glm::vec3 target) noexcept // TODO: Fix the calculation of the rotation quaternion
 {
     m_forward = glm::normalize(target - m_position);
     const glm::vec3 fd = glm::vec3(0.0f,0.0f,1.0f);
@@ -88,7 +90,7 @@ void Camera::LookAt(glm::vec3 target) // TODO: Fix the calculation of the rotati
     m_forward = fd * m_rotation;
 }
 
-void Camera::SetDirection(GLfloat yaw, GLfloat pitch){
+void Camera::SetDirection(GLfloat yaw, GLfloat pitch) noexcept{
 
     m_forward = glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f)) * glm::vec3(0.0f,0.0f,1.0f);
 }

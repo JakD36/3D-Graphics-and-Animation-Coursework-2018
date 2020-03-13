@@ -1,8 +1,14 @@
 #include "ProfileService.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "../../Include/DearImgui/imgui.h"
+
 
 using namespace std;
 
-ProfilerService::ProfilerService(){
+ImVec2 add(ImVec2 a, ImVec2 b) noexcept { return ImVec2(a.x + b.x, a.y + b.y); }
+
+ProfilerService::ProfilerService() noexcept{
     m_index = 0;
     m_nextDepth = 0;
     m_maxRewindTime = 5.0;
@@ -13,14 +19,14 @@ ProfilerService::ProfilerService(){
     }
 }
 
-ProfilerService* ProfilerService::GetInstance(){
+ProfilerService* ProfilerService::GetInstance() noexcept{
     if (m_instance == NULL){
         m_instance = new ProfilerService();
     }
     return m_instance;
 }
 
-int ProfilerService::StartTimer(string identifier){
+int ProfilerService::StartTimer(string identifier) noexcept{
     m_storage[m_index].Identifier = identifier;
     m_storage[m_index].Start = glfwGetTime();
     m_storage[m_index].Length = -2.0;
@@ -42,13 +48,13 @@ int ProfilerService::StartTimer(string identifier){
     return tmp;
 }
 
-void ProfilerService::StopTimer(int timer){
+void ProfilerService::StopTimer(int timer) noexcept{
     m_storage[timer].Length = glfwGetTime() - m_storage[timer].Start;
     --m_nextDepth;
     m_storage[timer].Status = Status::COMPLETE;
 }
 
-void ProfilerService::Draw(){
+void ProfilerService::Draw() noexcept{
     int profiler = ProfilerService::GetInstance()->StartTimer("Draw Profiler");
     
     

@@ -4,10 +4,6 @@
 #include <unordered_map>
 #include <string>
 
-#include "../Material/Material.hpp"
-#include "../Mesh/Mesh.hpp"
-#include "../Texture/Texture.hpp"
-
 // TODO move away from resource manager for all types
 
 template <class T>
@@ -27,10 +23,10 @@ private:
     
     unordered_map<string, Resource<T>> m_resourceDirectory;
     
-    static ResourceService<T>* m_instance;
+    inline static ResourceService<T>* m_instance = NULL;
 public:
     
-    static ResourceService<T>* GetInstance()
+    static ResourceService<T>* GetInstance() noexcept
     {
         if(m_instance == NULL){
             m_instance = new ResourceService<T>();
@@ -38,7 +34,7 @@ public:
         return m_instance;
     }
 
-    T* Request(string key)
+    T* Request(string key) noexcept
     {
         T* p_resource = NULL;    
         auto result = m_resourceDirectory.find(key);
@@ -59,7 +55,7 @@ public:
         return p_resource;
     }
     
-    void Dispose(string key)
+    void Dispose(string key) noexcept
     {
         auto result = m_resourceDirectory.find(key);
         if (result != m_resourceDirectory.end())
@@ -74,9 +70,6 @@ public:
         }    
     }
 };
-
-template <class T>
-ResourceService<T>* ResourceService<T>::m_instance = NULL;
 
 
 

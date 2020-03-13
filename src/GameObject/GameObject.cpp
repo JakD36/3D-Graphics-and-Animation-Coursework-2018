@@ -7,11 +7,14 @@
 //
 
 #include "GameObject.hpp"
-#include "../Views/Camera.hpp"
+#include "../Utils/ProfileService.h"
+#include "../Lights/Lights.hpp"
+#include "../ResourceManager/ResourceService.hpp"
+#include <glm/gtx/transform.hpp>
 
 using namespace std;
 
-GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram){
+GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram) noexcept{
     m_mesh = mesh;
     m_material = mat;
     m_texture = tex;
@@ -19,7 +22,7 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderPro
     m_program = shaderProgram;
 }
 
-GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram){
+GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram) noexcept{
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Init");
 
     m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
@@ -33,7 +36,7 @@ GameObject::GameObject(string meshPath, string materialPath, string texturePath,
 
 
 
-void GameObject::Render(Camera camera){
+void GameObject::Render(Camera camera) noexcept{
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
 
     // For each model Object

@@ -6,22 +6,19 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BUFFERS_H
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
 
-#include "../Shaders/ShaderManager.h"
 
 class FramebufferBase
 {
 protected:
     GLuint m_framebuffer;
 public:
-    FramebufferBase();
-    virtual ~FramebufferBase();
+    FramebufferBase() noexcept;
+    virtual ~FramebufferBase() noexcept;
 
-    virtual void RenderTo() const = 0;
-    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const = 0;
+    virtual void RenderTo() const noexcept = 0;
+    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept = 0;
     // TODO: Consider a post scene render call, so we specify internally where we are rendering and then render the scene as normal before calling the post render
 };
 
@@ -30,11 +27,11 @@ class SinglePassFramebuffer : public FramebufferBase
 protected:
     GLuint m_framebuffer;
 public:
-    SinglePassFramebuffer();
-    virtual ~SinglePassFramebuffer();
+    SinglePassFramebuffer() noexcept;
+    virtual ~SinglePassFramebuffer() noexcept;
 
-    virtual void RenderTo() const;
-    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const;
+    virtual void RenderTo() const noexcept;
+    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept;
 };
 
 class TwoPassFramebuffer : public FramebufferBase
@@ -64,16 +61,15 @@ private:
             glm::vec2(1.0f, 1.0f) // uv
     };
 
-    void InitFramebuffer(int frameWidth, int frameHeight);
-    void InitDepthbuffer(int frameWidth, int frameHeight);
+    void InitFramebuffer(int frameWidth, int frameHeight) noexcept;
+    void InitDepthbuffer(int frameWidth, int frameHeight) noexcept;
 public:
-    TwoPassFramebuffer();
-    TwoPassFramebuffer(int frameWidth, int frameHeight);
-    ~TwoPassFramebuffer();
+    TwoPassFramebuffer() noexcept;
+    TwoPassFramebuffer(int frameWidth, int frameHeight) noexcept;
+    ~TwoPassFramebuffer() noexcept;
 
-    virtual void RenderTo() const;
-    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const;
-    // TODO: Consider a post scene render call, so we specify internally where we are rendering and then render the scene as normal before calling the post render
+    virtual void RenderTo() const noexcept;
+    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept;
 };
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BUFFERS_H

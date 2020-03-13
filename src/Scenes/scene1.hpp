@@ -10,10 +10,8 @@
 #define Scene1_hpp
 
 #include "SceneGraph.hpp"
-#include "../Views/Camera.hpp"
-#include "../Utils/ProfileService.h"
-#include <glm/gtx/quaternion.hpp>
-#include "../Shaders/ShaderManager.h"
+#include "../GameObject/GameObject.hpp"
+#include <GL/glew.h>
 
 /*
  The first scene of this project,
@@ -41,12 +39,12 @@ private:
     float m_pitchOffset = 20;                             // Its offset from the camera by the 20 degrees in the pitch
 
 public:
-    Scene1();
-    virtual void Update(double currentTime); // Update the scene every frame
+    Scene1() noexcept;
+    virtual void Update(double currentTime) noexcept; // Update the scene every frame
     
     // Actions to be performed, same as the rest of the game
-    virtual void UsePrimary();
-    virtual void UseSecondary();
-    virtual void Turn(GLfloat yaw, GLfloat pitch);
+    virtual void UsePrimary() noexcept;
+    virtual void UseSecondary() noexcept;
+    virtual void Turn(GLfloat yaw, GLfloat pitch) noexcept;
 };
 #endif /* Scene1_hpp */

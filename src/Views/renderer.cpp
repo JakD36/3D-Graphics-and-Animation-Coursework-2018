@@ -1,15 +1,20 @@
 #include "Renderer.hpp"
 
+#include <vector>
+#include "Camera.hpp"
+
+#include "../Shaders/ShaderManager.h"
+
 using namespace std;
 
-void Renderer::SetViewport(float x, float y, float width, float height){
+void Renderer::SetViewport(float x, float y, float width, float height) noexcept{
     m_viewportX = x;
     m_viewportY = y;
     m_viewportWidth = width;
     m_viewportHeight = height;
 }
 
-void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
+void Renderer::SetWindowDimensions(int windowWidth, int windowHeight) noexcept{
     this->m_windowWidth = windowWidth;
     this->m_windowHeight = windowHeight;
     
@@ -19,7 +24,7 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight){
 }
 
 // Initialise the Renderer for this viewport
-Renderer::Renderer(GLFWwindow* window) {
+Renderer::Renderer(GLFWwindow* window) noexcept {
     int profiler = ProfilerService::GetInstance()->StartTimer("Renderer Initialisation");
 
     p_window = window;
@@ -44,13 +49,13 @@ Renderer::Renderer(GLFWwindow* window) {
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-Renderer::~Renderer()
+Renderer::~Renderer() noexcept
 {
     delete m_framebuffer;
     m_framebuffer = NULL;
 }
 
-void Renderer::Render(SceneGraph* scene){
+void Renderer::Render(SceneGraph* scene) noexcept{
     int profiler = ProfilerService::GetInstance()->StartTimer("Render");
 
     int frameWidth, frameHeight;
@@ -63,7 +68,7 @@ void Renderer::Render(SceneGraph* scene){
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
-void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight)
+void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight) noexcept
 {
     // Convert all our projected coordinates to screen coordinates for the texture
     glViewport(viewportX, viewportY, viewportWidth, viewportHeight);

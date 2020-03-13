@@ -3,27 +3,28 @@
 //
 
 #include "Buffers.h"
+#include "../Shaders/ShaderManager.h"
 
 using namespace std;
 
-FramebufferBase::FramebufferBase() : m_framebuffer(0) {};
-FramebufferBase::~FramebufferBase(){};
+FramebufferBase::FramebufferBase() noexcept : m_framebuffer(0) {};
+FramebufferBase::~FramebufferBase() noexcept {};
 
-SinglePassFramebuffer::SinglePassFramebuffer() : m_framebuffer(0) {};
-SinglePassFramebuffer::~SinglePassFramebuffer(){};
-void SinglePassFramebuffer::RenderTo() const
+SinglePassFramebuffer::SinglePassFramebuffer() noexcept : m_framebuffer(0) {};
+SinglePassFramebuffer::~SinglePassFramebuffer() noexcept {};
+void SinglePassFramebuffer::RenderTo() const  noexcept
 {
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
 }
-void SinglePassFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const { }
+void SinglePassFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const  noexcept { }
 
 
-void TwoPassFramebuffer::RenderTo() const
+void TwoPassFramebuffer::RenderTo() const noexcept
 {
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,m_framebufferTexture,0);
 }
-void TwoPassFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const
+void TwoPassFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept
 {
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 
@@ -44,7 +45,7 @@ void TwoPassFramebuffer::PostRender(int viewportX, int viewportY, int viewportWi
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 }
-TwoPassFramebuffer::TwoPassFramebuffer(int frameWidth, int frameHeight)
+TwoPassFramebuffer::TwoPassFramebuffer(int frameWidth, int frameHeight) noexcept
 {
     InitFramebuffer(frameWidth, frameHeight);
     InitDepthbuffer(frameWidth, frameHeight);
@@ -69,7 +70,7 @@ TwoPassFramebuffer::TwoPassFramebuffer(int frameWidth, int frameHeight)
     ShaderManager* shaderManager = ShaderManager::GetInstance();
     m_framebufferProgram = shaderManager->RequestProgram("Shaders/vs_display.glsl","Shaders/fs_display.glsl");
 }
-TwoPassFramebuffer::~TwoPassFramebuffer()
+TwoPassFramebuffer::~TwoPassFramebuffer() noexcept
 {
     glDeleteBuffers(1,&m_framebuffer);
     glDeleteTextures(1,&m_framebufferTexture);
@@ -78,7 +79,7 @@ TwoPassFramebuffer::~TwoPassFramebuffer()
     glDeleteBuffers(1,&m_displayBuffer);
     glDeleteVertexArrays(1,&m_displayVao);
 }
-void TwoPassFramebuffer::InitFramebuffer(int frameWidth, int frameHeight)
+void TwoPassFramebuffer::InitFramebuffer(int frameWidth, int frameHeight) noexcept
 {
     // Setup the framebuffer using the following code taken from the the lecture notes and code
     /*
@@ -93,7 +94,7 @@ void TwoPassFramebuffer::InitFramebuffer(int frameWidth, int frameHeight)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear sample when texture is minified
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Linear sample when texture is magnified
 }
-void TwoPassFramebuffer::InitDepthbuffer(int frameWidth, int frameHeight)
+void TwoPassFramebuffer::InitDepthbuffer(int frameWidth, int frameHeight) noexcept
 {   // Depth buffer texture - Need to attach depth too otherwise depth testing will not be performed.
     glGenRenderbuffers(1, &m_depthbuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, m_depthbuffer);

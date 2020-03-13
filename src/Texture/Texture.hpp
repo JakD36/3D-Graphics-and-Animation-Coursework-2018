@@ -9,24 +9,14 @@
 #ifndef Texture_h
 #define Texture_h
 
-#include <iostream>
 #include <string>
-#include <fstream>
-#include <vector>
-#include <stdio.h>
-
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <gli/gli.hpp>
-#include <glm/gtx/transform.hpp>
-#include "../ResourceManager/ResourceService.hpp"
 
 class Texture{
 public:
-    Texture(std::string texturePath);
-    ~Texture();
-    GLuint          m_texture[1];
+    Texture(std::string texturePath) noexcept;
+    ~Texture() noexcept;
+    GLuint m_texture[1];
 };
 
 

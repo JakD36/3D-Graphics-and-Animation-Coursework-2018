@@ -3,8 +3,9 @@
 //
 
 #include "Lights.hpp"
+#include <GL/glew.h>
 
-LightUniformBuffer::LightUniformBuffer()
+LightUniformBuffer::LightUniformBuffer() noexcept
 {
     glGenBuffers(1, &m_uniformBufferObject);
     glBindBuffer(GL_UNIFORM_BUFFER, m_uniformBufferObject);
@@ -12,12 +13,12 @@ LightUniformBuffer::LightUniformBuffer()
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-LightUniformBuffer::~LightUniformBuffer()
+LightUniformBuffer::~LightUniformBuffer() noexcept
 {
     glDeleteBuffers(1,&m_uniformBufferObject);
 }
 
-void LightUniformBuffer::UpdateData(LightStruct* lights)
+void LightUniformBuffer::UpdateData(LightStruct* lights) noexcept
 {
     glBindBufferRange(GL_UNIFORM_BUFFER, 0, m_uniformBufferObject, 0, lightStructByteSize * LIGHTSN);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, lightStructByteSize * LIGHTSN, lights);

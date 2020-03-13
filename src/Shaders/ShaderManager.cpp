@@ -1,4 +1,8 @@
 #include "ShaderManager.h"
+#include <sys/stat.h>
+
+#include "ShaderUtils.h"
+#include "../Utils/ProfileService.h"
 
 using namespace std;
 
@@ -167,8 +171,6 @@ void ShaderManager::RecompileAllProgramShaders()
         int index = programName.find("+");
         string vertPath = programName.substr(0,index);
         string fragPath = programName.substr(index+1,programName.length() - index+1);
-
-        unordered_map<string,GLuint>::iterator result;
 
         bool found = false;
         int shaderCount = m_shaderInfo.size();

@@ -1,13 +1,9 @@
 #ifndef SHADERMANAGER_H
 #define SHADERMANAGER_H
 
-#include <unordered_map>
 #include <string>
+#include <vector>
 #include <GL/glew.h>
-#include <sys/stat.h>
-
-#include "ShaderUtils.h"
-#include "../Utils/ProfileService.h"
 
 /// Struct to store file information for a shader.
 struct ShaderInfo

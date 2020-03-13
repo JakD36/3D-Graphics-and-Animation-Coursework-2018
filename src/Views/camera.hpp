@@ -9,15 +9,9 @@
 #ifndef Camera_hpp
 #define Camera_hpp
 
-#include <cstdio>
-
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
 #include <glm/gtx/quaternion.hpp>
-
-#include "../Utils/VectorUtils.hpp"
 
 /*
  Camara class
@@ -39,20 +33,20 @@ protected:
     glm::mat4 m_projMatrix;
 
 public:
-    Camera();
-    Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec);
-    Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec);
+    Camera() noexcept;
+    Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept;
+    Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec) noexcept;
 
-    glm::vec3 GetPosition();
-    glm::vec3 GetForward();
+    glm::vec3 GetPosition() noexcept;
+    glm::vec3 GetForward() noexcept;
 
-    void SetPosition(glm::vec3 newPosition);
-    void SetDirection(GLfloat yaw, GLfloat pitch);
-    void LookAt(glm::vec3 target);
+    void SetPosition(glm::vec3 newPosition) noexcept;
+    void SetDirection(GLfloat yaw, GLfloat pitch) noexcept;
+    void LookAt(glm::vec3 target) noexcept;
 
-    glm::mat4 BuildViewMat();
-    void BuildProjectionMat();
-    glm::mat4 GetCachedProjMat();
+    glm::mat4 BuildViewMat() noexcept;
+    void BuildProjectionMat() noexcept;
+    glm::mat4 GetCachedProjMat() noexcept;
 };
 
 

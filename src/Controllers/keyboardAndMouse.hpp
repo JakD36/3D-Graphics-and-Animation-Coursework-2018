@@ -9,18 +9,16 @@
 #ifndef KeyboardAndMouse_hpp
 #define KeyboardAndMouse_hpp
 
-#include <cstdio>
 #include "Controller.hpp"
-#include "../Shaders/ShaderManager.h"
 
 class KeyboardAndMouse: public Controller{
 public:
-    KeyboardAndMouse(GLFWwindow* window, SceneGraph* model);
+    KeyboardAndMouse(GLFWwindow* window, SceneGraph* model) noexcept;
     
-    virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods);
-    virtual void OnMouseMove(GLFWwindow* window, double x, double y);
-    virtual void OnMouseButton(GLFWwindow* window, int button, int action, int mods);
-    virtual void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
+    virtual void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods) noexcept;
+    virtual void OnMouseMove(GLFWwindow* window, double x, double y) noexcept;
+    virtual void OnMouseButton(GLFWwindow* window, int button, int action, int mods) noexcept;
+    virtual void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset) noexcept;
 };
 
 #endif /* keyboardAndMouse_hpp */

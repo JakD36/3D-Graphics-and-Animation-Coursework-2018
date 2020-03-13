@@ -6,12 +6,16 @@
 //  Copyright © 2019 Jack Davidson. All rights reserved.
 //
 
-#include <stdio.h>
 #include "Texture.hpp"
+#include <iostream>
+#include <vector>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <gli/gli.hpp>
 
 using namespace std;
 
-Texture::Texture(string texturePath)
+Texture::Texture(string texturePath) noexcept
 {
     glGenTextures(1, m_texture);
     gli::texture tex = gli::load(texturePath);
@@ -46,7 +50,7 @@ Texture::Texture(string texturePath)
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-Texture::~Texture()
+Texture::~Texture() noexcept
 {
     glDeleteTextures(1,m_texture);
 }

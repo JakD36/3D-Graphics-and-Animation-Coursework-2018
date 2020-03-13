@@ -1,11 +1,7 @@
 #ifndef ShaderUtils_h
 #define ShaderUtils_h
 
-#include <cstdio>
 #include <string>
-#include <fstream>
-#include <vector>
-#include <iostream>
 #include <GL/glew.h>
 
 bool CheckDriverSupportsBinaryPrograms();

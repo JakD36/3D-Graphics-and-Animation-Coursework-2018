@@ -6,11 +6,14 @@
 //  Copyright © 2019 Jack Davidson. All rights reserved.
 //
 
+#include <GL/glew.h>
 #include "Mesh.hpp"
+#include <iostream>
+#include <glm/glm.hpp>
 
 using namespace std;
 
-Mesh::Mesh(string meshName){
+Mesh::Mesh(string meshName) noexcept{
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
     
@@ -35,7 +38,7 @@ Mesh::Mesh(string meshName){
     glEnableVertexAttribArray(2);
 }
 
-std::vector<float> Mesh::Load(string meshName){
+std::vector<float> Mesh::Load(string meshName) noexcept{
     // Variables
     FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
@@ -252,7 +255,7 @@ std::vector<float> Mesh::Load(string meshName){
     }
 }
 
-Mesh::~Mesh()
+Mesh::~Mesh() noexcept
 {
     glDeleteBuffers(1,&m_buffer);
     glDeleteVertexArrays(1,&m_vao);

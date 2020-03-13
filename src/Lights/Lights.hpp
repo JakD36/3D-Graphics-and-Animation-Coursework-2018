@@ -2,10 +2,7 @@
 #define Lights_hpp
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <gli/gli.hpp>
-#include <glm/gtx/transform.hpp>
 
 enum class LightType {point,spot};    // Tells program if light is a point or spot light
 const int LIGHTSN = 4;          // Number of the lights in the scene, defines the length of the array
@@ -48,10 +45,10 @@ class LightUniformBuffer
 private:
     GLuint m_uniformBufferObject;
 public:
-    LightUniformBuffer();
-    ~LightUniformBuffer();
+    LightUniformBuffer() noexcept;
+    ~LightUniformBuffer() noexcept;
 
-    void UpdateData(LightStruct* lights);
+    void UpdateData(LightStruct* lights) noexcept;
 };
 
 #endif
