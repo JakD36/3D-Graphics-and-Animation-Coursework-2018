@@ -98,18 +98,14 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
         lights[n] = *(p_lights + n);
     }
 
-    printf("Pre Block Binding = %d\n\n",(int)glGetError());
     vector<ProgramInfo>* programs = ShaderManager::GetInstance()->GetShaderPrograms();
-    int programCount = programs->size();
-    for(int i = 0; i < programCount; ++i)
+
+    for(int i = 0, n = programs->size(); i < n; ++i)
     {
         GLuint index = glGetUniformBlockIndex((*programs)[i].program,"lightBlock");
-        printf("%s %d\n\n",(*programs)[i].path.c_str(),index);
-        printf("Mid Block Binding = %s\n\n",(char*)glewGetErrorString(glGetError()));
-        glUniformBlockBinding((*programs)[i].program, index, 0);
+        if(index != GL_INVALID_INDEX)
+            glUniformBlockBinding((*programs)[i].program, index, 0);
     }
-    GLenum error = glGetError();
-    printf("Post Block Binding = %d %s\n\n",error,(char*)glewGetErrorString(error));
 
     lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
     lights[2].spotOuterCutOff = glm::cos(glm::radians(20.0f));
@@ -117,19 +113,13 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     lights[3].spotCutOff = glm::cos(glm::radians(15.0f));
     lights[3].spotOuterCutOff = glm::cos(glm::radians(20.0f));
 
-    printf("Pre light buffer = %d\n\n",(int)glGetError());
-
     m_lightUbo.UpdateData(lights);
-
-    printf("Post light buffer = %d\n\n",(int)glGetError());
 
     glm::vec3 camPos = camera->GetPosition();
     glm::mat4 projMatrix = camera->GetCachedProjMat();
 
-    printf("Pre Object Render = %d\n\n",(int)glGetError());
     for(int n = 0;n<Objs.size();n++)
     {
         Objs[n]->Render(*camera);
     }
-    printf("Post Object Render = %d\n\n",(int)glGetError());
 }

@@ -64,7 +64,6 @@ int main(int argc, char *argv[])
 
     ShaderManager* smInstance = ShaderManager::GetInstance();
 
-    bool running = true;
     do { // run until the window is closed
         int profiler = profilerInstance->StartTimer("mainloop");
         double currentTime = glfwGetTime();
@@ -86,9 +85,9 @@ int main(int argc, char *argv[])
 //        string debug = to_string(myView->GetCamera()->GetForward().x) + ", " + to_string(myView->GetCamera()->GetForward().y) + ", " + to_string(myView->GetCamera()->GetForward().z);
 //        ImGui::Text(debug.c_str());
 //        ImGui::End();
-        printf("Pre Render = %d\n\n",(int)glGetError());
+
         myView->Render(&scene);
-        printf("Post Render = %d\n\n",(int)glGetError());
+
         { // Render ImGui
             profilerInstance->Draw();
             int profiler2 = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
@@ -102,10 +101,9 @@ int main(int argc, char *argv[])
             glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
             profilerInstance->StopTimer(profiler3);
         }
-        running &= (glfwWindowShouldClose(window) != GL_TRUE);
 
         profilerInstance->StopTimer(profiler);
-    } while (running);
+    } while (glfwWindowShouldClose(window) != GL_TRUE);
     
     // Make sure to remove any items from the heap, get rid of dangling pointers
     delete myController;
