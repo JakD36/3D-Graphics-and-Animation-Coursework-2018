@@ -1,5 +1,8 @@
 #include "OpenGLCallbacks.h"
 #include <cstdio>
+#include "Utils/ProfileService.h"
+#include "Views/Renderer.hpp"
+#include "Controllers/Controller.hpp"
 
 // callback functions call the methods of the controller or Renderer, so that functionality can be swapped as need be by changing the object
 void OnResizeCallback(GLFWwindow* window, int w, int h) {

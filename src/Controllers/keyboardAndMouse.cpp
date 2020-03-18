@@ -7,6 +7,8 @@
 //
 
 #include "KeyboardAndMouse.hpp"
+#include "../Views/Camera.hpp"
+#include "../Scenes/SceneGraph.hpp"
 
 KeyboardAndMouse::KeyboardAndMouse(GLFWwindow* window, SceneGraph* model)  noexcept: Controller(window,model){
 }

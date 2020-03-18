@@ -12,6 +12,7 @@
 #include "../Shaders/ShaderManager.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "../GameObject/GameObject.hpp"
 
 using namespace std;
 

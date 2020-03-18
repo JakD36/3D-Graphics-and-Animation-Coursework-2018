@@ -13,9 +13,10 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "Buffers.h"
 #include "../Lights/Lights.hpp"
-#include "../Scenes/SceneGraph.hpp"
+
+class FramebufferBase;
+class SceneGraph;
 
 ///
 /// Renderer class

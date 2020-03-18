@@ -11,7 +11,8 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../Scenes/SceneGraph.hpp"
+
+class SceneGraph;
 
 /*
  Controller abstract class

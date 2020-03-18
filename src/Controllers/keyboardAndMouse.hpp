@@ -10,6 +10,9 @@
 #define KeyboardAndMouse_hpp
 
 #include "Controller.hpp"
+#include <GL/glew.h>
+
+class Scenegraph;
 
 class KeyboardAndMouse: public Controller{
 public:

@@ -8,8 +8,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Controllers/Controller.hpp"
-#include "Views/Renderer.hpp"
+class Renderer;
+class Controller;
 
 void OnResizeCallback(GLFWwindow* window, int w, int h);
 // Our prototypes for OpenGL functions used throughout the program, mainly the callbacks to handle user input

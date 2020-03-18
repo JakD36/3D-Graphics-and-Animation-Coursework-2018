@@ -2,8 +2,12 @@
 
 #include <vector>
 #include "Camera.hpp"
-
+#include "../Utils/ProfileService.h"
 #include "../Shaders/ShaderManager.h"
+#include "Buffers.h"
+#include "../Lights/Lights.hpp"
+#include "../GameObject/GameObject.hpp"
+#include "../Scenes/SceneGraph.hpp"
 
 using namespace std;
 

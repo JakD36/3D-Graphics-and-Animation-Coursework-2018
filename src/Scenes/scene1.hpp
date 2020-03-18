@@ -10,8 +10,9 @@
 #define Scene1_hpp
 
 #include "SceneGraph.hpp"
-#include "../GameObject/GameObject.hpp"
 #include <GL/glew.h>
+
+class GameObject;
 
 /*
  The first scene of this project,

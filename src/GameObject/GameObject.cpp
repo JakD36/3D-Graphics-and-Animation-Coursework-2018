@@ -11,6 +11,10 @@
 #include "../Lights/Lights.hpp"
 #include "../ResourceManager/ResourceService.hpp"
 #include <glm/gtx/transform.hpp>
+#include "../Mesh/Mesh.hpp"
+#include "../Material/Material.hpp"
+#include "../Texture/Texture.hpp"
+#include "../Views/Camera.hpp"
 
 using namespace std;
 

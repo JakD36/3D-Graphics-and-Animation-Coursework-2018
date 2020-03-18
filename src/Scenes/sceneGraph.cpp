@@ -7,6 +7,10 @@
 //
 
 #include "SceneGraph.hpp"
+#include "../GameObject/GameObject.hpp"
+#include "../Utils/VectorUtils.hpp"
+#include "../Utils/ProfileService.h"
+#include "../Views/Camera.hpp"
 
 using namespace std;
 

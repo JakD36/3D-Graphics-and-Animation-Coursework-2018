@@ -12,12 +12,11 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <vector>
-#include "../GameObject/GameObject.hpp"
-#include "../Utils/VectorUtils.hpp"
-#include "../Utils/ProfileService.h"
-#include "../Views/Camera.hpp"
+
 #include "../Lights/Lights.hpp"
 
+class Camera;
+class GameObject;
 
 /** Abstract class for each scene to be based on
  Each scene should Contain the objects and lights for the scene

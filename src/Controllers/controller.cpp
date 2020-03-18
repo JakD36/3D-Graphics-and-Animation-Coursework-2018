@@ -8,6 +8,7 @@
 
 #include "Controller.hpp"
 #include "../Views/Camera.hpp"
+#include "../Scenes/SceneGraph.hpp"
 
 
 Controller::Controller(GLFWwindow* window, SceneGraph* model) noexcept{ // FIX: Add defensive programming make sure pointer is not null

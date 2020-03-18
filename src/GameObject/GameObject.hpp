@@ -12,10 +12,11 @@
 #include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include "../Mesh/Mesh.hpp"
-#include "../Material/Material.hpp"
-#include "../Texture/Texture.hpp"
-#include "../Views/Camera.hpp"
+
+class Mesh;
+class Material;
+class Texture;
+class Camera;
 
 class GameObject {
 public:
