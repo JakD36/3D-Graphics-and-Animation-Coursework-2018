@@ -8,11 +8,10 @@
 #include "OpenGLSetup.h"
 #include "OpenGLCallbacks.h"
 #include "Utils/ProfileService.h"
-#include <string>
 
 using namespace std;
 
-void InitOpenGL(){
+GLFWwindow* InitOpenGL(int windowWidth, int windowHeight){
     ProfilerService* profilerService = ProfilerService::GetInstance();
     int profiler = profilerService->StartTimer("Init OpenGL");
 
@@ -25,49 +24,44 @@ void InitOpenGL(){
 
     // Start a window using GLFW
     string title = "My OpenGL Application";
-    window = glfwCreateWindow(windowWidth, windowHeight, title.c_str(), NULL, NULL);
-    if (!window) {                                      // Window or OpenGL context creation failed
+    GLFWwindow* p_window = glfwCreateWindow(windowWidth, windowHeight, title.c_str(), NULL, NULL);
+    if (!p_window) {                                      // Window or OpenGL context creation failed
         printf("Could not initialise GLFW...\n");
-        EndProgram();
+        EndProgram(p_window);
     }
 
-    glfwMakeContextCurrent(window);                     // making the OpenGL context current
+    glfwMakeContextCurrent(p_window);                     // making the OpenGL context current
 
     // Start GLEW (note: always initialise GLEW after creating your window context.)
-    glewExperimental = GL_TRUE;                         // hack: catching them all - forcing newest debug callback (glDebugMessageCallback)
+    glewExperimental = GL_TRUE; // hack: catching them all - forcing newest debug callback (glDebugMessageCallback)
     GLenum errGLEW = glewInit();
-    if (GLEW_OK != errGLEW) {                           // Problems starting GLEW?
+    if (GLEW_OK != errGLEW) { // Problems starting GLEW?
         printf("Could not initialise GLEW...\n");
-        EndProgram();
+        EndProgram(p_window);
     }
 
     SetupOpenglDebug();
 
     // Setup all the message loop callbacks.
-    glfwSetWindowSizeCallback(window, OnResizeCallback);            // Set callback for resize
-    glfwSetKeyCallback(window, OnKeyCallback);                      // Set Callback for keys
-    glfwSetMouseButtonCallback(window, OnMouseButtonCallback);      // Set callback for mouse click
-    glfwSetCursorPosCallback(window, OnMouseMoveCallback);          // Set callback for mouse move
-    glfwSetScrollCallback(window, OnMouseWheelCallback);            // Set callback for mouse wheel.
+    glfwSetWindowSizeCallback(p_window, OnResizeCallback);            // Set callback for resize
+    glfwSetKeyCallback(p_window, OnKeyCallback);                      // Set Callback for keys
+    glfwSetMouseButtonCallback(p_window, OnMouseButtonCallback);      // Set callback for mouse click
+    glfwSetCursorPosCallback(p_window, OnMouseMoveCallback);          // Set callback for mouse move
+    glfwSetScrollCallback(p_window, OnMouseWheelCallback);            // Set callback for mouse wheel.
 
-    // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Set mouse cursor.
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
+    glfwSetInputMode(p_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
 
     glfwSwapInterval(1);    // Ony render when synced (V SYNC each 1 frame)
     glfwWindowHint(GLFW_SAMPLES, 32);
     glfwWindowHint(GLFW_STEREO, GL_FALSE);
 
     profilerService->StopTimer(profiler);
+    return p_window;
 }
 
-void EndProgram() {
-    ProfilerService* profilerService = ProfilerService::GetInstance();
-    int profiler = profilerService->StartTimer("End glfw");
-
-    glfwMakeContextCurrent(window);             // destroys window handler
-    glfwTerminate();                            // destroys all windows and releases resources.
-
-    profilerService->StopTimer(profiler);
+void EndProgram(GLFWwindow* p_window) {
+    glfwMakeContextCurrent(p_window); // destroys window handler
+    glfwTerminate(); // destroys all windows and releases resources.
 }
 
 void HintsGLFW() {

@@ -7,6 +7,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <memory>
 
 class Renderer;
 class Controller;
@@ -20,12 +21,7 @@ void OnMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
 void ErrorCallbackGLFW(int error, const char* description);
 void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam);
 
-// Global variables
-extern GLFWwindow* window;
-extern int windowWidth;
-extern int windowHeight;
-
-extern Renderer* myView; // is global to be accessible through callbacks
-extern Controller* myController; // myController is global to be accessible through the callbacks
+extern std::unique_ptr<Renderer> s_view; // is global to be accessible through callbacks
+extern std::unique_ptr<Controller> s_controller; // s_controller is global to be accessible through the callbacks
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_OPENGLCALLBACKS_H

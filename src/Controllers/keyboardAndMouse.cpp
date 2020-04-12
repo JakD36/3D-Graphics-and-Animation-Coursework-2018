@@ -48,7 +48,6 @@ void KeyboardAndMouse::OnMouseMove(GLFWwindow* window, double x, double y) noexc
     }
 }
 
-
 void KeyboardAndMouse::OnMouseButton(GLFWwindow* window, int button, int action, int mods) noexcept{
     // On left click activate primary action
     if(button == GLFW_MOUSE_BUTTON_LEFT){

@@ -7,7 +7,6 @@
 
 class ProfilerService{
     private:
-
         enum class Status{
             EMPTY,
             RECORDING,

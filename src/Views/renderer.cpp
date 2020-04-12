@@ -21,10 +21,6 @@ void Renderer::SetViewport(float x, float y, float width, float height) noexcept
 void Renderer::SetWindowDimensions(int windowWidth, int windowHeight) noexcept{
     this->m_windowWidth = windowWidth;
     this->m_windowHeight = windowHeight;
-    
-    // Update viewport so its size is appropriate for the new window!
-    int width, height;
-    glfwGetFramebufferSize(p_window, &width, &height);
 }
 
 // Initialise the Renderer for this viewport
@@ -47,16 +43,14 @@ Renderer::Renderer(GLFWwindow* window) noexcept {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-//    m_framebuffer = new TwoPassFramebuffer(frameWidth, frameHeight);
-    m_framebuffer = new SinglePassFramebuffer();
+//    m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
+    m_framebuffer = make_unique<SinglePassFramebuffer>();
 
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
 
 Renderer::~Renderer() noexcept
 {
-    delete m_framebuffer;
-    m_framebuffer = NULL;
 }
 
 void Renderer::Render(SceneGraph* scene) noexcept{
@@ -94,21 +88,21 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
 
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
-    vector<GameObject*> Objs = scene->GetObjs();
-    LightStruct* p_lights = scene->GetLights();
-    LightStruct lights[LIGHTSN];
+    vector<GameObject*> objs = scene->GetObjs();
+    LightData* p_lights = scene->GetLights();
+    LightData lights[k_lightCount];
 
-    for(int n = 0; n < LIGHTSN; n++){
+    for(int n = 0; n < k_lightCount; n++){
         lights[n] = *(p_lights + n);
     }
 
-    vector<ProgramInfo>* programs = ShaderManager::GetInstance()->GetShaderPrograms();
+    vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
 
-    for(int i = 0, n = programs->size(); i < n; ++i)
+    for(int i = 0, n = programs.size(); i < n; ++i)
     {
-        GLuint index = glGetUniformBlockIndex((*programs)[i].program,"lightBlock");
+        GLuint index = glGetUniformBlockIndex(programs[i].program,"lightBlock");
         if(index != GL_INVALID_INDEX)
-            glUniformBlockBinding((*programs)[i].program, index, 0);
+            glUniformBlockBinding(programs[i].program, index, 0);
     }
 
     lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
@@ -122,8 +116,8 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     glm::vec3 camPos = camera->GetPosition();
     glm::mat4 projMatrix = camera->GetCachedProjMat();
 
-    for(int n = 0;n<Objs.size();n++)
+    for(int n = 0, objCount = objs.size();n < objCount; ++n)
     {
-        Objs[n]->Render(*camera);
+        objs[n]->Render(*camera);
     }
 }

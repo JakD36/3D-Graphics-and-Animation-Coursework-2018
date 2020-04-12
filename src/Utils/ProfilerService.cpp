@@ -3,7 +3,6 @@
 #include <GLFW/glfw3.h>
 #include "../../Include/DearImgui/imgui.h"
 
-
 using namespace std;
 
 ImVec2 add(ImVec2 a, ImVec2 b) noexcept { return ImVec2(a.x + b.x, a.y + b.y); }
@@ -32,19 +31,18 @@ int ProfilerService::StartTimer(string identifier) noexcept{
     m_storage[m_index].Length = -2.0;
     m_storage[m_index].Status = Status::RECORDING;
     
-    int minusIndex = m_index - 1;
-    int prevIndex =  minusIndex < 0 ? PROFILE_SIZE - 1 : minusIndex;
-    
+//    int minusIndex = m_index - 1;
+//    int prevIndex =  minusIndex < 0 ? PROFILE_SIZE - 1 : minusIndex;
+
     m_storage[m_index].Depth = m_nextDepth++;
 
     int tmp = m_index;
-    do{
+    while(true)
+    {
         m_index = (++m_index) % PROFILE_SIZE;
         if(m_storage[m_index].Length >= -1.0) // TODO: Change to safer method of stepping forward
             break;
-    }while(true);
-    
-    
+    }
     return tmp;
 }
 
@@ -56,8 +54,7 @@ void ProfilerService::StopTimer(int timer) noexcept{
 
 void ProfilerService::Draw() noexcept{
     int profiler = ProfilerService::GetInstance()->StartTimer("Draw Profiler");
-    
-    
+
     ImGui::Begin("Profiler",NULL);
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImVec2 canvasSize = ImGui::GetContentRegionAvail();

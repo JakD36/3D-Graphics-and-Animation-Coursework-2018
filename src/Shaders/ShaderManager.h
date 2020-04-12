@@ -61,7 +61,7 @@ public:
 
     /// Updates the shaders and relinks the programs to use the new shaders
     void RecompileAllProgramShaders();
-    std::vector<ProgramInfo>* GetShaderPrograms();
+    std::vector<ProgramInfo> GetShaderPrograms();
 };
 
 #endif

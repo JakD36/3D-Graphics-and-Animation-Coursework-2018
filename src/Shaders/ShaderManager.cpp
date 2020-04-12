@@ -236,7 +236,7 @@ void ShaderManager::RecompileAllProgramShaders()
     profilerInstance->StopTimer(profiler);
 }
 
-vector<ProgramInfo>* ShaderManager::GetShaderPrograms()
+vector<ProgramInfo> ShaderManager::GetShaderPrograms()
 {
-    return &m_programs;
+    return m_programs;
 }

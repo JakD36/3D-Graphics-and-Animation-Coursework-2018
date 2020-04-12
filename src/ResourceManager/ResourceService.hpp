@@ -3,13 +3,16 @@
 
 #include <unordered_map>
 #include <string>
+#include <gsl/pointers>
+
+using gsl::owner;
 
 // TODO move away from resource manager for all types
 
 template <class T>
 struct Resource
 {
-    T* ptr;
+    owner<T*> ptr;
     int count;
 };
 
@@ -36,7 +39,7 @@ public:
 
     T* Request(string key) noexcept
     {
-        T* p_resource = NULL;    
+        T* p_resource = NULL;
         auto result = m_resourceDirectory.find(key);
         if (result != m_resourceDirectory.end())
         {
@@ -61,7 +64,7 @@ public:
         if (result != m_resourceDirectory.end())
         {
             T* resource = result->second.ptr;
-            
+
             if(--result.count <= 0)
             {
                 delete resource;
@@ -70,7 +73,5 @@ public:
         }    
     }
 };
-
-
 
 #endif // ResourceService_hpp

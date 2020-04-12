@@ -12,7 +12,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-
+#include <memory>
 #include "../Lights/Lights.hpp"
 
 class FramebufferBase;
@@ -26,7 +26,7 @@ class Renderer{
 private:
     GLFWwindow*       p_window; // The window the viewport is rendering to
 
-    FramebufferBase* m_framebuffer;
+    std::unique_ptr<FramebufferBase> m_framebuffer;
     LightUniformBuffer m_lightUbo;
 
     int m_windowWidth, m_windowHeight; // The current windows width and height

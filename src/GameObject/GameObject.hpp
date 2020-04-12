@@ -26,7 +26,7 @@ public:
     
     GameObject(Mesh*, Material*, Texture*, GLuint) noexcept;
     GameObject(std::string mesh, std::string mat, std::string tex, GLuint) noexcept;
-    
+
     Mesh* m_mesh;
     Texture* m_texture;
     Material* m_material;

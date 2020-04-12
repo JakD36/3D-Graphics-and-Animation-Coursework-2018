@@ -5,15 +5,15 @@
 #include <glm/glm.hpp>
 
 enum class LightType {point,spot};    // Tells program if light is a point or spot light
-const int LIGHTSN = 4;          // Number of the lights in the scene, defines the length of the array
+const int k_lightCount = 4;          // Number of the lights in the scene, defines the length of the array
 
-const int lightStructByteSize = 96;
+const int k_lightStructByteSize = 96;
 
-// TODO: Reorganise LightStruct to reduce the amount of padding required
+// TODO: Reorganise LightData to reduce the amount of padding required
 
 static glm::vec3 ia = glm::vec3(0.0f,1.0f,0.2f);        // Ambient Intensity, a static variable that is the same for all lights and used only the once
 
-struct LightStruct{             // Struct to store details on each light
+struct LightData{             // Struct to store details on each light
 public:
     int lightOn = true;        // Allows us to be able switch lights on and off
     LightType type = LightType::point; // 0 is point light, 1 is spotlight. Default is point
@@ -48,7 +48,7 @@ public:
     LightUniformBuffer() noexcept;
     ~LightUniformBuffer() noexcept;
 
-    void UpdateData(LightStruct* lights) noexcept;
+    void UpdateData(const LightData* lights) noexcept;
 };
 
 #endif

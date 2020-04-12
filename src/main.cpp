@@ -6,7 +6,7 @@
 #define GLEW_STATIC
 #endif
 
-// OpenGL - GLEW, GLFW and GLM
+// OpenGL - glew, glfw and glm
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -23,50 +23,53 @@
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
 
 #include "Utils/ProfileService.h"
+#include <gsl/pointers>
 
 using namespace std;
+using gsl::owner;
 
-// Global variables
-GLFWwindow*             window;                     // Window the app will be displayed in
-int                     windowWidth = (int)(240.0f*16.0f/9.0f); // width of the window
-int                     windowHeight = 240;         // height of the window
-
-Renderer* myView; // is global to be accessible through callbacks
-Controller* myController; // myController is global to be accessible through the callbacks
+unique_ptr<Renderer> s_view; // is global to be accessible through callbacks
+unique_ptr<Controller> s_controller; // s_controller is global to be accessible through the callbacks
 
 int main(int argc, char *argv[])
 {
     ProfilerService* profilerInstance = ProfilerService::GetInstance();
-    int profiler = profilerInstance->StartTimer("main");
+    int mainProfile = profilerInstance->StartTimer("main");
 
-    InitOpenGL(); // Initialise OpenGL window,
+    int windowWidth = (int)(240.0f*16.0f/9.0f); // width of the window
+    int windowHeight = 240; // height of the window
+    owner<GLFWwindow*> p_window = InitOpenGL(windowWidth, windowHeight); // Initialise OpenGL window,
 
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
-    Scene1 scene; // Initialise the scene i.e the model
+    Scene1 scene;
 
-    myView = new Renderer(window); // Initialise our rendering object, with the scene it will render and the camera it will be using
+    s_view = make_unique<Renderer>(p_window); // Initialise our rendering object, with the scene it will render and the camera it will be using
 
     // Was Looking into creating multiple views, using multiple Renderer objects, this is easily achieved
     int framebufferWidth, framebufferHeight;
-    glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-    myView->SetViewport(0, 0, framebufferWidth, framebufferHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
-    
-    myController = new KeyboardAndMouse(window,&scene); // Initialise the controller, is provided reference to the model and the view so it can access both
+    glfwGetFramebufferSize(p_window, &framebufferWidth, &framebufferHeight);
+    s_view->SetViewport(0, 0, framebufferWidth, framebufferHeight); // Provide the framebuffer sizes, on retina its 2x in x and y
+
+    s_controller = make_unique<KeyboardAndMouse>(p_window, &scene); // Initialise the controller, is provided reference to the model and the view so it can access both
     
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO& io = ImGui::GetIO();
     ImGui::StyleColorsDark();
     // Setup Platform/Renderer bindings
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplGlfw_InitForOpenGL(p_window, true);
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
     ShaderManager* smInstance = ShaderManager::GetInstance();
 
+    double prevTime = glfwGetTime();
     do { // run until the window is closed
-        int profiler = profilerInstance->StartTimer("mainloop");
+        int gameLoopProfile = profilerInstance->StartTimer("mainloop");
+
         double currentTime = glfwGetTime();
+        double deltaTime = currentTime - prevTime;
+        prevTime = currentTime;
 
         smInstance->Update();
 
@@ -79,38 +82,33 @@ int main(int argc, char *argv[])
 
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
 
-        scene.Update(currentTime);              // update (physics, animation, structures, etc)
+        scene.Update(deltaTime);
 
 //        ImGui::Begin("Debug",NULL);
-//        string debug = to_string(myView->GetCamera()->GetForward().x) + ", " + to_string(myView->GetCamera()->GetForward().y) + ", " + to_string(myView->GetCamera()->GetForward().z);
+//        string debug = to_string(s_view->GetCamera()->GetForward().x) + ", " + to_string(s_view->GetCamera()->GetForward().y) + ", " + to_string(s_view->GetCamera()->GetForward().z);
 //        ImGui::Text(debug.c_str());
 //        ImGui::End();
 
-        myView->Render(&scene);
+        s_view->Render(&scene);
 
         { // Render ImGui
             profilerInstance->Draw();
-            int profiler2 = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
+            int debugRenderProfile = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-            profilerInstance->StopTimer(profiler2);
+            profilerInstance->StopTimer(debugRenderProfile);
         }
        
         { // Perform Swap Buffer
-            int profiler3 = profilerInstance->StartTimer("Swap Buffer");
-            glfwSwapBuffers(window);                // swap buffers (avoid flickering and tearing)
-            profilerInstance->StopTimer(profiler3);
+            int swapBufferProfile = profilerInstance->StartTimer("Swap Buffer");
+            glfwSwapBuffers(p_window); // swap buffers (avoid flickering and tearing)
+            profilerInstance->StopTimer(swapBufferProfile);
         }
 
-        profilerInstance->StopTimer(profiler);
-    } while (glfwWindowShouldClose(window) != GL_TRUE);
-    
-    // Make sure to remove any items from the heap, get rid of dangling pointers
-    delete myController;
-    myController = NULL;
-    delete myView;
-    myView = NULL;
+        profilerInstance->StopTimer(gameLoopProfile);
+    } while (glfwWindowShouldClose(p_window) != GL_TRUE);
 
-    profilerInstance->StopTimer(profiler);
+    profilerInstance->StopTimer(mainProfile);
+    EndProgram(p_window);
     return 0;
 }

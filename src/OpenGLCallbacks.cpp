@@ -9,25 +9,22 @@ void OnResizeCallback(GLFWwindow* window, int w, int h) {
     ProfilerService* profilerService = ProfilerService::GetInstance();
     int profiler = profilerService->StartTimer("On resize callback");
 
-    windowWidth = w;
-    windowHeight = h;
-
     // Call methods of the renderers used
-    myView->SetWindowDimensions(w, h);
+    s_view->SetWindowDimensions(w, h);
 
     profilerService->StopTimer(profiler);
 }
 
 void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    myController->OnKey(window, key, scancode, action, mods);
+    s_controller->OnKey(window, key, scancode, action, mods);
 }
 
 void OnMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-    myController->OnMouseButton(window, button, action, mods);
+    s_controller->OnMouseButton(window, button, action, mods);
 }
 
 void OnMouseMoveCallback(GLFWwindow* window, double x, double y) {
-    myController->OnMouseMove(window, x, y ); // So we can swap out the controller and will have no effect on the callback
+    s_controller->OnMouseMove(window, x, y ); // So we can swap out the controller and will have no effect on the callback
 }
 
 void OnMouseWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
