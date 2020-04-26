@@ -17,12 +17,11 @@ class Mesh;
 class Material;
 class Texture;
 class Camera;
+class Transform;
 
 class GameObject {
 public:
-    glm::vec3 m_position  = glm::vec3(0.f,0.f,0.f);
-    glm::vec3 m_rotation  = glm::vec3(0.f,0.f,0.f);
-    glm::vec3 m_scale     = glm::vec3(1.f,1.f,1.f);
+    Transform* m_transform;
     
     GameObject(Mesh*, Material*, Texture*, GLuint) noexcept;
     GameObject(std::string mesh, std::string mat, std::string tex, GLuint) noexcept;

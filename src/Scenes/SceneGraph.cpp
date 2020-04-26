@@ -15,11 +15,13 @@
 #include <fstream>
 #include <cstdio>
 #include "../Shaders/ShaderManager.h"
+#include "../Transform.h"
 
 using namespace std;
 
 SceneGraph::SceneGraph() noexcept{
-    m_playerPosition = glm::vec3(0.0f,1.6f,0.0f);
+    m_playerTransform = new Transform();
+    m_playerTransform->m_localPosition = glm::vec3(0.0f,1.6f,0.0f);
     p_camera = new Camera();
 }
 
@@ -35,7 +37,7 @@ std::array<LightData,k_lightCount> SceneGraph::GetLights() noexcept{
 }
 
 glm::vec3 SceneGraph::GetPlayerPosition() noexcept{
-    return m_playerPosition;
+    return m_playerTransform->m_localPosition;
 }
 
 Camera* SceneGraph::GetCamera() noexcept
@@ -69,13 +71,13 @@ void SceneGraph::Deserialise(std::string filepath)
             m_objs.push_back(GameObject(object["mesh"],object["material"],object["texture"],program));
 
             nlohmann::json position = object["position"];
-            m_objs[initialCount+i].m_position = glm::vec3(position["x"],position["y"],position["z"]);
+            m_objs[initialCount+i].m_transform->m_localPosition = glm::vec3(position["x"],position["y"],position["z"]);
 
             nlohmann::json rotation = object["rotation"];
-            m_objs[initialCount+i].m_rotation = glm::vec3(rotation["x"],rotation["y"],rotation["z"]);
+            m_objs[initialCount+i].m_transform->m_localRotation = glm::quat(glm::vec3(glm::radians((float)rotation["x"]),glm::radians((float)rotation["y"]),glm::radians((float)rotation["z"])));
 
             nlohmann::json scale = object["scale"];
-            m_objs[initialCount+i].m_scale = glm::vec3(scale["x"],scale["y"],scale["z"]);
+            m_objs[initialCount+i].m_transform->m_localScale = glm::vec3(scale["x"],scale["y"],scale["z"]);
             string str = "Key: %s\n"
                          "Mesh: %s\n"
                          "material: %s\n"

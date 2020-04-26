@@ -15,10 +15,11 @@
 #include "../Material/Material.hpp"
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"
-
+#include "../Transform.h"
 using namespace std;
 
 GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram) noexcept{
+    m_transform = new Transform();
     m_mesh = mesh;
     m_material = mat;
     m_texture = tex;
@@ -27,6 +28,7 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderPro
 }
 
 GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram) noexcept{
+    m_transform = new Transform();
     int profiler = ProfilerService::GetInstance()->StartTimer("GO Init");
 
     m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
@@ -71,14 +73,11 @@ void GameObject::Render(Camera camera) noexcept{
     // TRS is done in reverse is a quirk of this specific method of creating the model matrix in OpenGL
     // Order of rotations is incredibly important and was discovered through trial and error
     // Concatenate matrices
-    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), m_position);
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    modelMatrix = glm::scale(modelMatrix, m_scale);
+
+    glm::mat4 m = m_transform->BuildModelMatrix();
     
-    glm::mat4 mvp = camera.ProjectionMatrix() * camera.BuildViewMat() * modelMatrix;
-    glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
+    glm::mat4 mvp = camera.ProjectionMatrix() * camera.BuildViewMat() * m;
+    glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &m[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 
     glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);

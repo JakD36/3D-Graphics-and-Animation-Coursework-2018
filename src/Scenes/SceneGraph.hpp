@@ -19,6 +19,7 @@
 
 class Camera;
 class GameObject;
+class Transform;
 
 class SceneGraph{
 protected:
@@ -29,7 +30,7 @@ protected:
     std::vector<GameObject> m_objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
 
     gsl::owner<Camera*> p_camera;
-    glm::vec3 m_playerPosition;
+    Transform* m_playerTransform;
 public:
     SceneGraph() noexcept;
     virtual ~SceneGraph() noexcept;
