@@ -1,6 +1,51 @@
 {
   "objects": [
     {
+      "key" : "torch",
+      "mesh": "Set/newTorch.obj",
+      "material": "Materials/newTorch.mtl",
+      "texture": "Textures/newTorchCol.ktx",
+      "vert": "Shaders/vs.glsl",
+      "frag": "Shaders/fs.glsl",
+      "position": {"x": 0, "y": 0, "z": 0},
+      "rotation": {"x": 0, "y": 0, "z": 0},
+      "scale": {"x": 1, "y": 1, "z": 1}
+    },
+    {
+      "key" : "bulb",
+      "mesh": "Set/bulb.obj",
+      "material": "Materials/bulb.mtl",
+      "texture": "Textures/bulb.ktx",
+      "vert": "Shaders/vs_light.glsl",
+      "frag": "Shaders/fs_light.glsl",
+      "position": {"x": 0, "y": 0, "z": 0},
+      "rotation": {"x": 0, "y": 0, "z": 0},
+      "scale": {"x": 1, "y": 1, "z": 1}
+    },
+    {
+      "key" : "wire",
+      "mesh": "Set/wire.obj",
+      "material": "Materials/wire.mtl",
+      "texture": "Textures/wire.ktx",
+      "vert": "Shaders/vs.glsl",
+      "frag": "Shaders/fs.glsl",
+      "position": {"x": 0, "y": 0, "z": 0},
+      "rotation": {"x": 0, "y": 0, "z": 0},
+      "scale": {"x": 1, "y": 1, "z": 1}
+    },
+    {
+      "key" : "lamp",
+      "mesh": "Set/lamp.obj",
+      "material": "Materials/lamp.mtl",
+      "texture": "Textures/lamp.ktx",
+      "vert": "Shaders/vs.glsl",
+      "frag": "Shaders/fs.glsl",
+      "position": {"x": 2.4, "y": 1.025, "z": 1.6},
+      "rotation": {"x": 0, "y": 120, "z": 0},
+      "scale": {"x": 1, "y": 1, "z": 1}
+    },
+    {
+      "key" : "frontWall",
       "mesh": "Set/front.obj",
       "material": "Materials/front.mtl",
       "texture": "Textures/front.ktx",
@@ -11,6 +56,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "backWall",
       "mesh": "Set/back.obj",
       "material": "Materials/back.mtl",
       "texture": "Textures/back.ktx",
@@ -21,6 +67,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "roof",
       "mesh": "Set/roof.obj",
       "material": "Materials/roof.mtl",
       "texture": "Textures/roof.ktx",
@@ -31,6 +78,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "beam_1",
       "mesh": "Set/beam.obj",
       "material": "Materials/beam.mtl",
       "texture": "Textures/beam.ktx",
@@ -41,6 +89,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "beam_2",
       "mesh": "Set/beam.obj",
       "material": "Materials/beam.mtl",
       "texture": "Textures/beam.ktx",
@@ -51,6 +100,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "beam_3",
       "mesh": "Set/beam.obj",
       "material": "Materials/beam.mtl",
       "texture": "Textures/beam.ktx",
@@ -61,6 +111,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_1",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -71,6 +122,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_2",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -81,6 +133,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_3",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -91,6 +144,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_4",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -101,6 +155,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_5",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -111,6 +166,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_6",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -121,6 +177,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_7",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -131,6 +188,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_8",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -141,6 +199,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_9",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -151,6 +210,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_10",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -161,6 +221,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_11",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -171,6 +232,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_12",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -181,6 +243,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_13",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -191,6 +254,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_14",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -201,6 +265,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_15",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -211,6 +276,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_16",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -221,6 +287,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "plank_17",
       "mesh": "Set/plank.obj",
       "material": "Materials/plank.mtl",
       "texture": "Textures/plank.ktx",
@@ -231,6 +298,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "floor",
       "mesh": "Set/floor.obj",
       "material": "Materials/floor.mtl",
       "texture": "Textures/floor.ktx",
@@ -241,6 +309,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "wall_1",
       "mesh": "Set/wall.obj",
       "material": "Materials/wall.mtl",
       "texture": "Textures/wall.ktx",
@@ -251,6 +320,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "wall_2",
       "mesh": "Set/wall.obj",
       "material": "Materials/wall.mtl",
       "texture": "Textures/wall.ktx",
@@ -261,6 +331,7 @@
       "scale": {"x": 1, "y": 1, "z": 1}
     },
     {
+      "key" : "table",
       "mesh": "Set/table.obj",
       "material": "Materials/table.mtl",
       "texture": "Textures/table.ktx",
@@ -269,17 +340,41 @@
       "position": {"x": 1.8, "y": 1, "z": 1.8},
       "rotation": {"x": 0, "y": 45, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
-    },
-    {
-      "mesh": "Set/wall.obj",
-      "material": "Materials/wall.mtl",
-      "texture": "Textures/wall.ktx",
-      "vert": "Shaders/vs.glsl",
-      "frag": "Shaders/fs.glsl",
-      "position": {"x": 3, "y": 1.25, "z": 0},
-      "rotation": {"x": 0, "y": 180, "z": 0},
-      "scale": {"x": 1, "y": 1, "z": 1}
     }
   ],
-  "lights" : []
+  "lights" : [
+    {
+      "key": "ceiling",
+      "type": 0,
+      "position": {"x": 0,"y": 2,"z": 0},
+      "direction": {"x": 0,"y": 0,"z": 0},
+      "id": {"r": 5,"g": 5,"b": 5},
+      "is": {"r": 5,"g": 5,"b": 5}
+    },
+    {
+      "key": "red",
+      "type": 0,
+      "position": {"x": -1.7,"y": 1.5,"z": -2.8},
+      "direction": {"x": 0,"y": 0,"z": 0},
+      "id": {"r": 1.5,"g": 0,"b": 0},
+      "is": {"r": 0.5,"g": 0,"b": 0}
+    }
+    ,
+    {
+      "key": "torch",
+      "type": 1,
+      "position": {"x": 0, "y": 1, "z": 0},
+      "direction": {"x": 0, "y": 0, "z": 1},
+      "id": {"r": 7, "g": 7, "b": 7},
+      "is": {"r": 5, "g": 5, "b": 5}
+    },
+    {
+      "key": "lamp",
+      "type": 1,
+      "position": {"x": 0,"y": 1,"z": 1},
+      "direction": {"x": -0.5,"y": -0.3,"z": 0.3},
+      "id": {"r": 5,"g": 5,"b": 5},
+      "is": {"r": 1,"g": 1,"b": 1}
+    }
+  ]
 }

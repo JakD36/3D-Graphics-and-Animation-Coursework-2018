@@ -43,8 +43,8 @@ Renderer::Renderer(GLFWwindow* window) noexcept {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-//    m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
-    m_framebuffer = make_unique<SinglePassFramebuffer>();
+    m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
+//    m_framebuffer = make_unique<SinglePassFramebuffer>();
 
     ProfilerService::GetInstance()->StopTimer(profiler);
 }
@@ -88,7 +88,8 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
 
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
-    vector<GameObject*> objs = scene->GetObjs();
+    vector<GameObject>& objs = scene->GetObjs();
+
     array<LightData,k_lightCount> lights = scene->GetLights();
 
     vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
@@ -113,6 +114,6 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
 
     std::for_each(begin(objs),end(objs),[&](auto obj)
     {
-        obj->Render(*camera);
+        obj.Render(*camera);
     });
 }

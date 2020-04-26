@@ -22,8 +22,12 @@ class GameObject;
 
 class SceneGraph{
 protected:
+    std::vector<std::string> m_lightKeys;
     std::array<LightData,k_lightCount> m_lights;
-    std::vector<gsl::owner<GameObject*>> m_objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
+
+    std::vector<std::string> m_objectKeys;
+    std::vector<GameObject> m_objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
+
     gsl::owner<Camera*> p_camera;
     glm::vec3 m_playerPosition;
 public:
@@ -31,7 +35,7 @@ public:
     virtual ~SceneGraph() noexcept;
     virtual void Update(double deltaTime) noexcept = 0;
     
-    std::vector<GameObject*> GetObjs() noexcept;
+    std::vector<GameObject>& GetObjs() noexcept;
     Camera* GetCamera() noexcept;
     std::array<LightData,k_lightCount> GetLights() noexcept;
     glm::vec3 GetPlayerPosition() noexcept;

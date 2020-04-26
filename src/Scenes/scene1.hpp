@@ -16,7 +16,7 @@ class GameObject;
 
 class Scene1: public SceneGraph{
 private:
-    GameObject *m_bulb, *m_wire, *m_torch;
+    int m_bulb, m_wire, m_torch, m_torchLight, m_bulbLight;
     
     // Swinging light
     float m_lightRadius = 0.25f;
