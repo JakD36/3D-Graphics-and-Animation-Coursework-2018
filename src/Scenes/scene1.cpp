@@ -7,7 +7,7 @@
 //
 
 #include "Scene1.hpp"
-#include "../Utils/ProfileService.h"
+#include "../Utils/ProfilerService.h"
 #include <glm/gtx/quaternion.hpp>
 #include "../Shaders/ShaderManager.h"
 #include <GLFW/glfw3.h>
@@ -20,184 +20,17 @@ Scene1::Scene1() noexcept{
     int profiler = ProfilerService::GetInstance()->StartTimer("Scene Initialisation");
     double startTime = glfwGetTime(); // So we can see how long it takes for all models to load
 
+    Deserialise("Set/room.json");
+
     ShaderManager* shaderManager = ShaderManager::GetInstance();
     GLuint baseProgram = shaderManager->RequestProgram("Shaders/vs.glsl","Shaders/fs.glsl");
 
+    // Dynamic objects
+
     m_torch = new GameObject("Set/newTorch.obj","Materials/newTorch.mtl","Textures/newTorchCol.ktx",baseProgram);
-    m_torch->m_position = m_playerPosition + glm::quat(glm::vec3(glm::radians(m_pitchOffset),glm::radians(m_yawOffset),0.0f)) * glm::vec3(0.0f,0.0f,m_sphereRadius);//Utils::Spherical2Cartesian(m_sphereRadius,m_yawOffset,-m_pitchOffset);
+    m_torch->m_position = m_playerPosition + glm::quat(glm::vec3(glm::radians(m_pitchOffset),glm::radians(m_yawOffset),0.0f)) * glm::vec3(0.0f,0.0f,m_sphereRadius);
     m_objs.push_back(m_torch);
 
-    // Front of room
-    m_objs.push_back(new GameObject("Set/front.obj", "Materials/front.mtl", "Textures/front.ktx", baseProgram));
-    
-    // Back wall
-    GameObject* go = new GameObject("Set/back.obj","Materials/back.mtl","Textures/back.ktx",baseProgram);
-    go->m_rotation.y = 180.f;
-    go->m_position = glm::vec3(0.0f,2.0f,3.0f);
-    m_objs.push_back(go);
-    
-    // Roof
-    go = new GameObject("Set/roof.obj","Materials/roof.mtl","Textures/roof.ktx",baseProgram);
-    go->m_position.y = 2.5f;
-    m_objs.push_back(go);
-    
-    // Beams
-    go = new GameObject("Set/beam.obj","Materials/beam.mtl","Textures/beam.ktx",baseProgram);
-    go->m_position = glm::vec3(0.0f,2.61f,0.0f);
-    go->m_rotation = glm::vec3(0.0f,0.0f,0.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    go = new GameObject("Set/beam.obj","Materials/beam.mtl","Textures/beam.ktx",baseProgram);
-    go->m_position = glm::vec3(0.0f,2.61f,-1.5f);
-    go->m_rotation = glm::vec3(0.0f,0.0f,0.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    go = new GameObject("Set/beam.obj","Materials/beam.mtl","Textures/beam.ktx",baseProgram);
-    go->m_position = glm::vec3(0.0f,2.61f,1.5f);
-    go->m_rotation = glm::vec3(0.0f,0.0f,0.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Planks
-    // Plank 1
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(2.2f,1.5f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,5.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 2
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(2.f,1.3f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,1.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 3
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.65f,1.6f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,2.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 4
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.4f,1.5f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,-5.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 5
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.1f,1.3f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,1.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 6
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(0.8f,1.55f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,-12.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 7
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(0.5f,1.55f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,-1.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 8
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(0.1f,1.55f,-3.f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,6.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 9
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(0.6f,1.7f,-2.85f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,80.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 10
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.f,1.15f,-2.85f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,110.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 11
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.8f,1.65f,-2.85f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,60.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 12
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.4f,1.85f,-3.2f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,85.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 13
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(-1.4f,1.55f,-3.2f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,95.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 14
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(-1.4f,1.2f,-3.2f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,90.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 15
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(-1.4f,0.85f,-3.2f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,80.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 16
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(1.4f,0.5f,-3.2f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,100.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Plank 17
-    go = new GameObject("Set/plank.obj","Materials/plank.mtl","Textures/plank.ktx",baseProgram);
-    go->m_position = glm::vec3(-1.4f,0.2f,-3.2f);
-    go->m_rotation = glm::vec3(90.0f,0.0f,95.0f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Floor
-    m_objs.push_back(new GameObject("Set/floor.obj", "Materials/floor.mtl", "Textures/floor.ktx", baseProgram));
-    
-    // Wall
-    // Wall 1
-    go = new GameObject("Set/wall.obj","Materials/wall.mtl","Textures/wall.ktx",baseProgram);
-    go->m_position = glm::vec3(3.0f,1.25f,0.f);
-    go->m_rotation = glm::vec3(0.0f,180.0f,0.f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
-    // Wall 2
-    go = new GameObject("Set/wall.obj","Materials/wall.mtl","Textures/wall.ktx",baseProgram);
-    go->m_position = glm::vec3(-3.0f,1.25f,0.f);
-    go->m_rotation = glm::vec3(0.0f,0.0f,0.f);
-    go->m_scale = glm::vec3(1.f,1.f,1.f);
-    m_objs.push_back(go);
-    
     //Lightbulb
     GLuint lightProgram = shaderManager->RequestProgram("Shaders/vs_light.glsl","Shaders/fs_light.glsl");
     m_bulb = new GameObject("Set/bulb.obj","Materials/bulb.mtl","Textures/bulb.ktx",lightProgram);
@@ -206,12 +39,6 @@ Scene1::Scene1() noexcept{
     // Wire
     m_wire = new GameObject("Set/wire.obj","Materials/wire.mtl","Textures/wire.ktx",baseProgram);
     m_objs.push_back(m_wire);
-    
-    // Table 
-    go = new GameObject("Set/table.obj","Materials/table.mtl","Textures/table.ktx",baseProgram);
-    go->m_position = glm::vec3(1.8f,1.0f,1.8f);
-    go->m_rotation.y = 45.f;
-    m_objs.push_back(go);
 
     // Lamp
     GameObject* lamp = new GameObject("Set/lamp.obj","Materials/lamp.mtl","Textures/lamp.ktx",baseProgram);
