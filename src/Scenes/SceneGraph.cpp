@@ -53,7 +53,7 @@ void SceneGraph::Deserialise(std::string filepath)
         file >> js;
         int objectCount = js["objects"].size();
         int initialCount = m_objs.size();
-//        if(m_objs.capacity() < objectCount + initialCount)
+//        if(m_objs.capacity() < objectCount + initialCount) // Error missing copy constructor or default constructor?
 //        {
 //            m_objs.resize(initialCount + objectCount);
 //            m_objectKeys.resize(initialCount + objectCount);

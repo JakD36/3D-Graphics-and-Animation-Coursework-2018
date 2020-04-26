@@ -45,7 +45,7 @@ Scene1::Scene1() noexcept{
         else if(m_lightKeys[i] == "lamp")
             lampLightHandle = i;
     }
-    
+
     m_objs[m_torch].m_position = m_playerPosition + glm::quat(glm::vec3(glm::radians(m_pitchOffset),glm::radians(m_yawOffset),0.0f)) * glm::vec3(0.0f,0.0f,m_sphereRadius);
 
     m_lights[lampLightHandle].position = m_objs[lampHandle].m_position + glm::vec3(0.0f,0.5f,0.0f);
