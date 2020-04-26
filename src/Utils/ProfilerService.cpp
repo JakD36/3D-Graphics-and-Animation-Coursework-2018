@@ -1,4 +1,4 @@
-#include "ProfileService.h"
+#include "ProfilerService.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "../../Include/DearImgui/imgui.h"

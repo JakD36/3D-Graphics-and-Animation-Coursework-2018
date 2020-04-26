@@ -22,7 +22,8 @@
 #include "../Include/DearImgui/imgui_impl_glfw.h"
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
 
-#include "Utils/ProfileService.h"
+#include "Utils/ProfilerService.h"
+#include "Utils/ProfileTag.h"
 #include <gsl/pointers>
 
 using namespace std;
@@ -33,11 +34,9 @@ unique_ptr<Controller> s_controller; // s_controller is global to be accessible 
 
 int main(int argc, char *argv[])
 {
-    ProfilerService* profilerInstance = ProfilerService::GetInstance();
-    int mainProfile = profilerInstance->StartTimer("main");
-
     int windowWidth = (int)(240.0f*16.0f/9.0f); // width of the window
     int windowHeight = 240; // height of the window
+
     owner<GLFWwindow*> p_window = InitOpenGL(windowWidth, windowHeight); // Initialise OpenGL window,
 
     // Using a Model view controller pattern, allows for the addition of new controllers, scenes or even a change in the Renderer
@@ -62,9 +61,9 @@ int main(int argc, char *argv[])
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
     ShaderManager* smInstance = ShaderManager::GetInstance();
-
+    ProfilerService* profilerInstance = ProfilerService::GetInstance();
     double prevTime = glfwGetTime();
-    do { // run until the window is closed
+    while (glfwWindowShouldClose(p_window) != GL_TRUE){ // run until the window is closed
         int gameLoopProfile = profilerInstance->StartTimer("mainloop");
 
         double currentTime = glfwGetTime();
@@ -81,15 +80,9 @@ int main(int argc, char *argv[])
         // ImGui::ShowDemoWindow(&show_demo_window);
 
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
-
         scene.Update(deltaTime);
-
-//        ImGui::Begin("Debug",NULL);
-//        string debug = to_string(s_view->GetCamera()->GetForward().x) + ", " + to_string(s_view->GetCamera()->GetForward().y) + ", " + to_string(s_view->GetCamera()->GetForward().z);
-//        ImGui::Text(debug.c_str());
-//        ImGui::End();
-
         s_view->Render(&scene);
+
 
         { // Render ImGui
             profilerInstance->Draw();
@@ -106,9 +99,8 @@ int main(int argc, char *argv[])
         }
 
         profilerInstance->StopTimer(gameLoopProfile);
-    } while (glfwWindowShouldClose(p_window) != GL_TRUE);
+    }
 
-    profilerInstance->StopTimer(mainProfile);
     EndProgram(p_window);
     return 0;
 }

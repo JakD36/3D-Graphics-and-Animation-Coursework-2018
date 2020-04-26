@@ -37,6 +37,7 @@ Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept
     m_farClipPlane = 1000.0f;
     m_aspect = 16.0f/9.0f;
     m_projMatrix =  glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
+    m_projMatrixDirty = false;
 }
 
 Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec) noexcept
@@ -52,6 +53,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec) noexc
     m_farClipPlane = 1000.0f;
     m_aspect = 16.0f/9.0f;
     m_projMatrix =  glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
+    m_projMatrixDirty = false;
 }
 
 // Accessors
@@ -68,14 +70,16 @@ glm::mat4 Camera::BuildViewMat() noexcept
     return glm::lookAt(m_position, m_position + m_forward, m_up);
 }
 
-void Camera::BuildProjectionMat() noexcept
+glm::mat4 Camera::ProjectionMatrix() noexcept
 {
-    m_projMatrix = glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
-}
-
-glm::mat4 Camera::GetCachedProjMat() noexcept
-{
-    return m_projMatrix;
+    if(m_projMatrixDirty)
+    {
+        m_projMatrix = glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
+    }
+    else
+    {
+        return m_projMatrix;
+    }
 }
 
 void Camera::SetPosition(glm::vec3 newPosition) noexcept{

@@ -2,8 +2,8 @@
 // Created by Jack Davidson on 10/03/2020.
 //
 
-#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BUFFERS_H
-#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BUFFERS_H
+#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_FRAMEBUFFER_H
+#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_FRAMEBUFFER_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -71,4 +71,4 @@ public:
     virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept;
 };
 
-#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BUFFERS_H
+#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_FRAMEBUFFER_H

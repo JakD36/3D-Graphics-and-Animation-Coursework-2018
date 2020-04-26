@@ -7,7 +7,7 @@
 //
 
 #include "GameObject.hpp"
-#include "../Utils/ProfileService.h"
+#include "../Utils/ProfilerService.h"
 #include "../Lights/Lights.hpp"
 #include "../ResourceManager/ResourceService.hpp"
 #include <glm/gtx/transform.hpp>
@@ -77,7 +77,7 @@ void GameObject::Render(Camera camera) noexcept{
     modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
     modelMatrix = glm::scale(modelMatrix, m_scale);
     
-    glm::mat4 mvp = camera.GetCachedProjMat() * camera.BuildViewMat() * modelMatrix;
+    glm::mat4 mvp = camera.ProjectionMatrix() * camera.BuildViewMat() * modelMatrix;
     glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &modelMatrix[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 

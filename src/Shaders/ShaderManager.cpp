@@ -2,7 +2,7 @@
 #include <sys/stat.h>
 
 #include "ShaderUtils.h"
-#include "../Utils/ProfileService.h"
+#include "../Utils/ProfilerService.h"
 
 using namespace std;
 
@@ -175,6 +175,7 @@ void ShaderManager::RecompileAllProgramShaders()
         bool found = false;
         int shaderCount = m_shaderInfo.size();
         int searchIndex;
+        
         for(searchIndex = 0; searchIndex < shaderCount; ++searchIndex)
         {
             if(m_shaderInfo[searchIndex].path == vertPath){

@@ -40,16 +40,16 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
 
         src/ResourceManager/ResourceService.hpp
 
-        src/Scenes/scene1.cpp
-        src/Scenes/scene1.hpp
-        src/Scenes/sceneGraph.cpp
-        src/Scenes/sceneGraph.hpp
+        src/Scenes/Scene1.cpp
+        src/Scenes/Scene1.hpp
+        src/Scenes/SceneGraph.cpp
+        src/Scenes/SceneGraph.hpp
 
         src/Texture/Texture.cpp
         src/Texture/Texture.hpp
 
         src/Utils/ProfilerService.cpp
-        src/Utils/ProfileService.h
+        src/Utils/ProfilerService.h
         src/Utils/VectorUtils.hpp
 
         src/Views/camera.cpp
@@ -63,11 +63,11 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Shaders/ShaderUtils.h
         src/Shaders/ShaderUtils.cpp
         src/Utils/VectorUtils.cpp
-        src/Views/Buffers.cpp
-        src/Views/Buffers.h
+        src/Views/FrameBuffer.cpp
+        src/Views/FrameBuffer.h
         src/Lights/Lights.cpp
         src/OpenGLCallbacks.h
-        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h)
+        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

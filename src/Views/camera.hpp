@@ -13,17 +13,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-/*
- Camara class
- containing the cameras position and direction it is facing 
-*/
 class Camera{
 protected:
-    glm::vec3 m_position;                 // Position of the camera in the world space
+    glm::vec3 m_position;
     glm::quat m_rotation;
     glm::vec3 m_up;
 
-    glm::vec3 m_forward;                    // Direction the camera is facing
+    glm::vec3 m_forward;
 
     float m_closeClipPlane;
     float m_farClipPlane;
@@ -31,6 +27,7 @@ protected:
     float m_aspect;
 
     glm::mat4 m_projMatrix;
+    bool m_projMatrixDirty;
 
 public:
     Camera() noexcept;
@@ -46,7 +43,7 @@ public:
 
     glm::mat4 BuildViewMat() noexcept;
     void BuildProjectionMat() noexcept;
-    glm::mat4 GetCachedProjMat() noexcept;
+    glm::mat4 ProjectionMatrix() noexcept;
 };
 
 

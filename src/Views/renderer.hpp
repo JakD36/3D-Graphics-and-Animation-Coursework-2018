@@ -34,7 +34,7 @@ private:
     GLint m_viewportX, m_viewportY; // Position of bottom left of viewport in x and y
     GLsizei m_viewportWidth, m_viewportHeight; // Width and height of the viewport
     
-    glm::vec4 m_clearColour = glm::vec4( 0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
+    const glm::vec4 k_clearColour = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
     
 public:
     Renderer(GLFWwindow* window) noexcept; // Requires a camera to view the scene, a window to render to, and a scene to draw

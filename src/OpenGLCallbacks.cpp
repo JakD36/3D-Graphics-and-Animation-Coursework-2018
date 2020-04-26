@@ -1,6 +1,6 @@
 #include "OpenGLCallbacks.h"
 #include <cstdio>
-#include "Utils/ProfileService.h"
+#include "Utils/ProfilerService.h"
 #include "Views/Renderer.hpp"
 #include "Controllers/Controller.hpp"
 

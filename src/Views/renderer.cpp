@@ -2,9 +2,9 @@
 
 #include <vector>
 #include "Camera.hpp"
-#include "../Utils/ProfileService.h"
+#include "../Utils/ProfilerService.h"
 #include "../Shaders/ShaderManager.h"
-#include "Buffers.h"
+#include "FrameBuffer.h"
 #include "../Lights/Lights.hpp"
 #include "../GameObject/GameObject.hpp"
 #include "../Scenes/SceneGraph.hpp"
@@ -74,7 +74,7 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     glEnable(GL_SCISSOR_TEST);
     glScissor(viewportX, viewportY, viewportWidth, viewportHeight);
 
-    glClearBufferfv(GL_COLOR, 0, &m_clearColour[0]);
+    glClearBufferfv(GL_COLOR, 0, &k_clearColour[0]);
     static const GLfloat one = 1.0f;
 
     glEnable(GL_DEPTH_TEST);
@@ -89,12 +89,7 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     // Render each object
     // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
     vector<GameObject*> objs = scene->GetObjs();
-    LightData* p_lights = scene->GetLights();
-    LightData lights[k_lightCount];
-
-    for(int n = 0; n < k_lightCount; n++){
-        lights[n] = *(p_lights + n);
-    }
+    array<LightData,k_lightCount> lights = scene->GetLights();
 
     vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
 
@@ -111,13 +106,13 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     lights[3].spotCutOff = glm::cos(glm::radians(15.0f));
     lights[3].spotOuterCutOff = glm::cos(glm::radians(20.0f));
 
-    m_lightUbo.UpdateData(lights);
+    m_lightUbo.UpdateData(lights.data());
 
     glm::vec3 camPos = camera->GetPosition();
-    glm::mat4 projMatrix = camera->GetCachedProjMat();
+    glm::mat4 projMatrix = camera->ProjectionMatrix();
 
-    for(int n = 0, objCount = objs.size();n < objCount; ++n)
+    std::for_each(begin(objs),end(objs),[&](auto obj)
     {
-        objs[n]->Render(*camera);
-    }
+        obj->Render(*camera);
+    });
 }
