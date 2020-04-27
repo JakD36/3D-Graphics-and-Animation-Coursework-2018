@@ -8,15 +8,15 @@ using namespace std;
 
 ShaderManager::ShaderManager()
 {
-    ProfilerService* profilerInstance = ProfilerService::GetInstance();
-    int profiler = profilerInstance->StartTimer("ShaderManager Constructor");
+    PROFILE(profiler,"ShaderManager Constructor");
     m_defaultVertShader = CompileShader(GL_VERTEX_SHADER, k_defaultVert);
     m_defaultFragShader = CompileShader(GL_FRAGMENT_SHADER, k_defaultFrag);
-    profilerInstance->StopTimer(profiler);
+    ENDPROFILE(profiler);
 }
 
 int ShaderManager::FindShader(string id)
 {
+    PROFILE(p,"Find Shader");
     int count = m_shaderInfo.size();
     for(int i = 0; i < count; ++i)
     {
@@ -24,24 +24,26 @@ int ShaderManager::FindShader(string id)
             return i;
     }
 
+    ENDPROFILE(p);
     return -1;
 }
 
 int ShaderManager::FindProgram(string id)
 {
+    PROFILE(p,"Find Program");
     int count = m_shaderInfo.size();
     for(int i = 0; i < count; ++i)
     {
         if(m_programs[i].path == id)
             return i;
     }
+    ENDPROFILE(p);
     return -1;
 }
 
 void ShaderManager::Update()
 {
-    ProfilerService* profilerInstance = ProfilerService::GetInstance();
-    int profiler = profilerInstance->StartTimer("ShaderManager Update");
+    PROFILE(p,"ShaderManager Update");
 
     int shaderCount = m_shaderInfo.size();
     bool recompileRequired = false;
@@ -61,13 +63,12 @@ void ShaderManager::Update()
     {
         RecompileAllProgramShaders();
     }
-    profilerInstance->StopTimer(profiler);
+    ENDPROFILE(p);
 }
 
 GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
 {
-    ProfilerService* profilerInstance = ProfilerService::GetInstance();
-    int profiler = profilerInstance->StartTimer("ShaderManager Request Program");
+    PROFILE(p,"ShaderManager Request Program");
 
     // Program
     string programName = vertPath + "+" + fragPath;
@@ -144,7 +145,7 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
         LinkProgram(program, m_defaultVertShader, m_defaultFragShader);
     }
 
-    profilerInstance->StopTimer(profiler);
+    ENDPROFILE(p);
     return program;
 }
 
@@ -158,8 +159,7 @@ ShaderManager* ShaderManager::GetInstance()
 
 void ShaderManager::RecompileAllProgramShaders()
 {
-    ProfilerService* profilerInstance = ProfilerService::GetInstance();
-    int profiler = profilerInstance->StartTimer("ShaderManager Recompile shaders");
+    PROFILE(p,"ShaderManager Recompile shaders");
     int programCount = m_programs.size();
     for(int i = 0; i < programCount; ++i)
     {
@@ -234,7 +234,7 @@ void ShaderManager::RecompileAllProgramShaders()
 
         LinkProgram(program,vert,frag);
     }
-    profilerInstance->StopTimer(profiler);
+    ENDPROFILE(p);
 }
 
 vector<ProgramInfo> ShaderManager::GetShaderPrograms()

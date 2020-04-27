@@ -78,11 +78,6 @@ void SceneGraph::Deserialise(std::string filepath)
 
             nlohmann::json scale = object["scale"];
             m_objs[initialCount+i].m_transform->m_localScale = glm::vec3(scale["x"],scale["y"],scale["z"]);
-            string str = "Key: %s\n"
-                         "Mesh: %s\n"
-                         "material: %s\n"
-                         "texture: %s\n\n";
-            printf(str.c_str(),((string)object["key"]).c_str(),((string)object["mesh"]).c_str(),((string)object["material"]).c_str(),((string)object["texture"]).c_str());
         }
 
         int lightCount = js["lights"].size();
@@ -113,5 +108,4 @@ void SceneGraph::Deserialise(std::string filepath)
     {
         printf("Error: file %s could not be opened.\n",filepath.c_str());
     }
-    printf("Finished Scene Deserialisation.\n%d Objects read in\n%d lights read in\n",m_objs.size(),m_lights.size());
 }

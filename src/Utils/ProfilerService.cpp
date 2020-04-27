@@ -53,7 +53,7 @@ void ProfilerService::StopTimer(int timer) noexcept{
 }
 
 void ProfilerService::Draw() noexcept{
-    int profiler = ProfilerService::GetInstance()->StartTimer("Draw Profiler");
+    PROFILE(p,"Draw Profiler");
 
     ImGui::Begin("Profiler",NULL);
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -135,5 +135,5 @@ void ProfilerService::Draw() noexcept{
     }
     ImGui::EndChild();
     ImGui::End();
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(p);
 }

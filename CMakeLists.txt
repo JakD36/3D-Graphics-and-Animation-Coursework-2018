@@ -67,7 +67,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Views/FrameBuffer.h
         src/Lights/Lights.cpp
         src/OpenGLCallbacks.h
-        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h)
+        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/LogUtils.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

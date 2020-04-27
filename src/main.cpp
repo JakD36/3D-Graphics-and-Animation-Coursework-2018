@@ -25,6 +25,7 @@
 #include "Utils/ProfilerService.h"
 #include "Utils/ProfileTag.h"
 #include <gsl/pointers>
+#include "Utils/LogUtils.h"
 
 using namespace std;
 using gsl::owner;
@@ -34,6 +35,8 @@ unique_ptr<Controller> s_controller; // s_controller is global to be accessible 
 
 int main(int argc, char *argv[])
 {
+    LOG(("Help me %s\n","dog"));
+
     int windowWidth = (int)(240.0f*16.0f/9.0f); // width of the window
     int windowHeight = 240; // height of the window
 
@@ -61,10 +64,9 @@ int main(int argc, char *argv[])
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
     ShaderManager* smInstance = ShaderManager::GetInstance();
-    ProfilerService* profilerInstance = ProfilerService::GetInstance();
     double prevTime = glfwGetTime();
     while (glfwWindowShouldClose(p_window) != GL_TRUE){ // run until the window is closed
-        int gameLoopProfile = profilerInstance->StartTimer("mainloop");
+        PROFILE(gameLoopProfile,"mainloop");
 
         double currentTime = glfwGetTime();
         double deltaTime = currentTime - prevTime;
@@ -83,22 +85,21 @@ int main(int argc, char *argv[])
         scene.Update(deltaTime);
         s_view->Render(&scene);
 
-
         { // Render ImGui
-            profilerInstance->Draw();
-            int debugRenderProfile = ProfilerService::GetInstance()->StartTimer("Imgui Draw");
+            ProfilerService::GetInstance()->Draw();
+            PROFILE(debugRenderProfile,"Imgui Draw");
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-            profilerInstance->StopTimer(debugRenderProfile);
+            ENDPROFILE(debugRenderProfile);
         }
        
         { // Perform Swap Buffer
-            int swapBufferProfile = profilerInstance->StartTimer("Swap Buffer");
+            PROFILE(swapBufferProfile,"Swap Buffer");
             glfwSwapBuffers(p_window); // swap buffers (avoid flickering and tearing)
-            profilerInstance->StopTimer(swapBufferProfile);
+            ENDPROFILE(swapBufferProfile);
         }
 
-        profilerInstance->StopTimer(gameLoopProfile);
+        ENDPROFILE(gameLoopProfile);
     }
 
     EndProgram(p_window);

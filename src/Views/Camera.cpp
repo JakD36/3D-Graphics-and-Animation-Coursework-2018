@@ -9,6 +9,7 @@
 #include "Camera.hpp"
 #include <glm/gtx/transform.hpp>
 #include "../Utils/VectorUtils.hpp"
+#include "../Utils/LogUtils.h"
 
 // Constructors
 Camera::Camera() noexcept{
@@ -26,6 +27,7 @@ Camera::Camera() noexcept{
 }
 
 Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept{
+    assertm(upVec!=glm::vec3(),"Camera Up was provided a zero vector.");
     m_position = position;
     m_rotation = rotation;
     m_up = upVec;
@@ -42,6 +44,7 @@ Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept
 
 Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec) noexcept
 {
+    assertm(upVec!=glm::vec3(),"Camera Up was provided a zero vector.");
     m_position = position;
     m_rotation = glm::quat(eulerAngles);
     m_up = upVec;

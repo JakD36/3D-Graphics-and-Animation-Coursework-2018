@@ -28,8 +28,8 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderPro
 }
 
 GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram) noexcept{
+    PROFILE(profiler,"GO Init");
     m_transform = new Transform();
-    int profiler = ProfilerService::GetInstance()->StartTimer("GO Init");
 
     m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
     m_material = ResourceService<Material>::GetInstance()->Request(materialPath);
@@ -37,13 +37,13 @@ GameObject::GameObject(string meshPath, string materialPath, string texturePath,
 
     m_program = shaderProgram;
 
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(profiler);
 }
 
 
 
 void GameObject::Render(Camera camera) noexcept{
-    int profiler = ProfilerService::GetInstance()->StartTimer("GO Render");
+    PROFILE(profiler,"GO Render");
 
     // For each model Object
     glUseProgram(m_program);
@@ -81,5 +81,5 @@ void GameObject::Render(Camera camera) noexcept{
     glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 
     glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(profiler);
 }

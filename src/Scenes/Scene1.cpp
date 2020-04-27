@@ -18,7 +18,7 @@
 using namespace std;
 
 Scene1::Scene1() noexcept{
-    int profiler = ProfilerService::GetInstance()->StartTimer("Scene Initialisation");
+    PROFILE(p,"Scene Initialisation");
     double startTime = glfwGetTime(); // So we can see how long it takes for all models to load
     
     Deserialise("Set/room.json");
@@ -54,11 +54,11 @@ Scene1::Scene1() noexcept{
 
     cout<<"Time to load "<<glfwGetTime()-startTime<<endl;   // Just a nice thing to know
 
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(p)
 }
 
 void Scene1::Update(double deltaTime) noexcept{
-    int profiler = ProfilerService::GetInstance()->StartTimer("Scene Update");
+    PROFILE(p,"Scene Update");
     
     // Swinging light
     double ay = (-9.81/m_lightRadius)*cos(glm::radians(m_lightPitch)); // this is the equation for the acceleration acting upon the light
@@ -80,7 +80,7 @@ void Scene1::Update(double deltaTime) noexcept{
     
     m_lights[m_torchLight].position = m_playerTransform->m_localPosition + glm::vec3(0.0f,0.0f,1.0f)/3.0f; // we can update the position of the torch light based on the direction of the camera
 
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(p);
 }
 
 Scene1::~Scene1() noexcept {}

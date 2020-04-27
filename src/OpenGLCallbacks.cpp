@@ -6,13 +6,10 @@
 
 // callback functions call the methods of the controller or Renderer, so that functionality can be swapped as need be by changing the object
 void OnResizeCallback(GLFWwindow* window, int w, int h) {
-    ProfilerService* profilerService = ProfilerService::GetInstance();
-    int profiler = profilerService->StartTimer("On resize callback");
-
+    PROFILE(profiler,"On Resize Callback");
     // Call methods of the renderers used
     s_view->SetWindowDimensions(w, h);
-
-    profilerService->StopTimer(profiler);
+    ENDPROFILE(profiler);
 }
 
 void OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

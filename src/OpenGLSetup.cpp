@@ -12,8 +12,7 @@
 using namespace std;
 
 GLFWwindow* InitOpenGL(int windowWidth, int windowHeight){
-    ProfilerService* profilerService = ProfilerService::GetInstance();
-    int profiler = profilerService->StartTimer("Init OpenGL");
+    PROFILE(p,"Init OpenGL");
 
     if (!glfwInit()) {                                  // Checking for GLFW
         printf("Could not initialise GLFW...\n");
@@ -55,7 +54,7 @@ GLFWwindow* InitOpenGL(int windowWidth, int windowHeight){
     glfwWindowHint(GLFW_SAMPLES, 32);
     glfwWindowHint(GLFW_STEREO, GL_FALSE);
 
-    profilerService->StopTimer(profiler);
+    ENDPROFILE(p);
     return p_window;
 }
 
@@ -65,8 +64,7 @@ void EndProgram(GLFWwindow* p_window) {
 }
 
 void HintsGLFW() {
-    ProfilerService* profilerService = ProfilerService::GetInstance();
-    int profiler = profilerService->StartTimer("HintsGLFW");
+    PROFILE(p,"HintsGLFW");
 
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);            // Create context in debug mode - for debug message callback
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.1
@@ -76,12 +74,11 @@ void HintsGLFW() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    profilerService->StopTimer(profiler);
+    ENDPROFILE(p);
 }
 
 void SetupOpenglDebug() {
-    ProfilerService* profilerService = ProfilerService::GetInstance();
-    int profiler = profilerService->StartTimer("Debug GL");
+    PROFILE(p,"Debug GL");
 
     //Output some debugging information
     printf("VENDOR %s\n",(char *)glGetString(GL_VENDOR));
@@ -99,5 +96,5 @@ void SetupOpenglDebug() {
     {
         printf("OpenGL Debug Output not available\n");
     }
-    profilerService->StopTimer(profiler);
+    ENDPROFILE(p);
 }

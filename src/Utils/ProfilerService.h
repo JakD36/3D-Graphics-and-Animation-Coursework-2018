@@ -5,6 +5,14 @@
 
 #define PROFILE_SIZE 36000
 
+#ifndef NDEBUG
+#define PROFILE(timer,title) int timer = ProfilerService::GetInstance()->StartTimer(title);
+#define ENDPROFILE(timer) ProfilerService::GetInstance()->StopTimer(timer);
+#else
+#define PROFILE(timer,title) //Used only when ifndef NDEBUG
+#define ENDPROFILE(timer) //Used only when ifndef NDEBUG
+#endif
+
 class ProfilerService{
     private:
         enum class Status{

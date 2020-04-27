@@ -25,7 +25,7 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight) noexcept{
 
 // Initialise the Renderer for this viewport
 Renderer::Renderer(GLFWwindow* window) noexcept {
-    int profiler = ProfilerService::GetInstance()->StartTimer("Renderer Initialisation");
+    PROFILE(profiler,"Renderer Initialisation");
 
     p_window = window;
 
@@ -46,7 +46,7 @@ Renderer::Renderer(GLFWwindow* window) noexcept {
     m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
 //    m_framebuffer = make_unique<SinglePassFramebuffer>();
 
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(profiler);
 }
 
 Renderer::~Renderer() noexcept
@@ -54,7 +54,7 @@ Renderer::~Renderer() noexcept
 }
 
 void Renderer::Render(SceneGraph* scene) noexcept{
-    int profiler = ProfilerService::GetInstance()->StartTimer("Render");
+    PROFILE(profiler,"Render");
 
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
@@ -63,11 +63,12 @@ void Renderer::Render(SceneGraph* scene) noexcept{
     RenderScene(scene,0, 0, frameWidth, frameHeight);
     m_framebuffer->PostRender(m_viewportX, m_viewportY, m_viewportWidth, m_viewportHeight);
 
-    ProfilerService::GetInstance()->StopTimer(profiler);
+    ENDPROFILE(profiler);
 }
 
 void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight) noexcept
 {
+    PROFILE(profiler,"Render Scene");
     // Convert all our projected coordinates to screen coordinates for the texture
     glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
@@ -116,4 +117,5 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     {
         obj.Render(*camera);
     });
+    ENDPROFILE(profiler);
 }
