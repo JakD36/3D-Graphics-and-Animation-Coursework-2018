@@ -144,6 +144,8 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath)
 
         output.push_back(GameObjectRenderPass{
             program,
+            pass["cull"] == "front",
+            pass["cull"] == "back",
             textures,
             uniformf,
             uniform3fv,
@@ -173,7 +175,7 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderPro
     m_program = shaderProgram;
 }
 
-GameObject::GameObject(string renderPass, string meshPath, string materialPath, string texturePath, GLuint shaderProgram, Transform* parent) noexcept{
+GameObject::GameObject(string renderPass, string meshPath, Transform* parent) noexcept{
     PROFILE(profiler,"GO Init");
 
     m_transform = new Transform(parent);
@@ -204,10 +206,10 @@ void GameObject::Render(Camera camera) noexcept{
 
         glBindVertexArray(m_mesh->m_vao);
 
-        glUniformMatrix4fv(glGetUniformLocation(m_program,"modelMatrix"), 1, GL_FALSE, &m[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"modelMatrix"), 1, GL_FALSE, &m[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 
-        glUniform3fv(glGetUniformLocation(m_program,"viewPosition"),1,&camera.GetPosition()[0]); // The camera position
+        glUniform3fv(glGetUniformLocation(pass.m_program,"viewPosition"),1,&camera.GetPosition()[0]); // The camera position
 
         for(int j = 0; j < pass.m_textures.size(); ++j)
         {
@@ -229,6 +231,17 @@ void GameObject::Render(Camera camera) noexcept{
         for(int j = 0; j < pass.m_uniform4fv.size(); ++j)
         {
             glUniform4fv(pass.m_uniform4fv[j].m_location, 1, &pass.m_uniform4fv[j].m_value[0]);
+        }
+
+        if(pass.cullBack)
+        {
+            glEnable(GL_CULL_FACE);
+            glCullFace(GL_BACK);
+        }
+        else if(pass.cullFront)
+        {
+            glEnable(GL_CULL_FACE);
+            glCullFace(GL_FRONT);
         }
 
         glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);

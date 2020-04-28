@@ -1,6 +1,23 @@
 {
   "pass": [
     {
+      "cull": "front",
+      "shader": {
+        "vert": "Shaders/vs_outline.glsl",
+        "frag": "Shaders/fs_outline.glsl"
+      },
+      "material": {
+        "file": "Materials/newTorch.mtl"
+      },
+      "textures": [],
+      "float" : [
+        {"key": "thickness", "value": 2}
+      ],
+      "vec3": [],
+      "vec4": []
+    },
+    {
+      "cull": "back",
       "shader": {
         "vert": "Shaders/vs.glsl",
         "frag": "Shaders/fs.glsl"

@@ -1,6 +1,7 @@
 {
   "pass": [
     {
+      "cull": "back",
       "shader": {
         "vert": "Shaders/vs.glsl",
         "frag": "Shaders/fs.glsl"

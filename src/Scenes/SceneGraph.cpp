@@ -68,8 +68,7 @@ void SceneGraph::Deserialise(std::string filepath)
 
         m_objectKeys.push_back(object["key"]);
 
-        GLuint program = shaderManager->RequestProgram(object["vert"],object["frag"]);
-        m_objs.push_back(GameObject(object["render"],object["mesh"],object["material"],object["texture"],program));
+        m_objs.push_back(GameObject(object["render"],object["mesh"]));
 
         nlohmann::json position = object["position"];
         m_objs[initialCount+i].m_transform->m_localPosition = glm::vec3(position["x"],position["y"],position["z"]);
