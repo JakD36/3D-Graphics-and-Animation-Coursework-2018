@@ -234,9 +234,7 @@ void GameObject::Render(Camera camera) noexcept{
             glUniform4fv(pass.m_uniform4fv[j].m_location, 1, &pass.m_uniform4fv[j].m_value[0]);
         }
 
-        glUniform1f(glGetUniformLocation(pass.m_program,"cutoff"), abs(sin(glfwGetTime()*2)));
-
-        if(pass.cullBack)
+        if(pass.cullBack) // TODO: Implement properly
         {
             glCullFace(GL_BACK);
             glEnable(GL_CULL_FACE);
