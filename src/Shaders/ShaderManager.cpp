@@ -21,7 +21,10 @@ int ShaderManager::FindShader(string id)
     for(int i = 0; i < count; ++i)
     {
         if(m_shaderInfo[i].path == id)
+        {
+            ENDPROFILE(p);
             return i;
+        }
     }
 
     ENDPROFILE(p);
@@ -35,7 +38,10 @@ int ShaderManager::FindProgram(string id)
     for(int i = 0; i < count; ++i)
     {
         if(m_programs[i].path == id)
+        {
+            ENDPROFILE(p);
             return i;
+        }
     }
     ENDPROFILE(p);
     return -1;
@@ -75,6 +81,7 @@ GLuint ShaderManager::RequestProgram(string vertPath, string fragPath)
     int result = FindProgram(programName);
     if(result >= 0)
     {
+        ENDPROFILE(p);
         return m_programs[result].program;
     }
 

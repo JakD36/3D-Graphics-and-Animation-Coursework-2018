@@ -39,7 +39,7 @@ public:
 
     T* Request(string key) noexcept
     {
-        T* p_resource = NULL;
+        T* p_resource = nullptr;
         auto result = m_resourceDirectory.find(key);
         if (result != m_resourceDirectory.end())
         {

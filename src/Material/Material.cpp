@@ -7,6 +7,7 @@
 //
 
 #include "Material.hpp"
+#include "../Utils/DebugUtils.h"
 #include <iostream>
 
 using namespace std;
@@ -18,8 +19,10 @@ Material::Material(string materialName)
     char line[256];                     // Line limited to 256 characters, more than enough space
     
     pfile = fopen(materialName.c_str(),"r");    // open the file with read access
-    
-    if(pfile == NULL){ // if the file doesnt open when using fopen
+
+    assertm(pfile != nullptr,("Could not find file " + materialName));
+
+    if(pfile == nullptr){ // if the file doesnt open when using fopen
         cout<<"Could not find file >> "<<materialName<<endl; // print error and name of file that failed to open
     }
     else{

@@ -8,6 +8,7 @@
 
 #include <GL/glew.h>
 #include "Mesh.hpp"
+#include "../Utils/DebugUtils.h"
 #include <iostream>
 #include <glm/glm.hpp>
 
@@ -40,7 +41,7 @@ Mesh::Mesh(string meshName) noexcept{
 
 std::vector<float> Mesh::Load(string meshName) noexcept{
     // Variables
-    FILE* pfile = NULL; // using stdio and fscanf which means formatted scan file
+    FILE* pfile = nullptr; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
     char line[256];     // char array of size 256 for storing each line of the file (limited to lines of 256 in length which could be an issue)
     
@@ -58,8 +59,10 @@ std::vector<float> Mesh::Load(string meshName) noexcept{
     
     vector<float> interleavedData;
     pfile = fopen(meshName.c_str(),"r"); // open the file with read access
-    
-    if(pfile == NULL){ // if the file doesnt open when using fopen
+
+    assertm(pfile!= nullptr,("Could not find file " + meshName));
+
+    if(pfile == nullptr){ // if the file doesnt open when using fopen
         cout<<"Could not find file >> "<<meshName<<endl; // print error and name of file that failed to open
         return interleavedData; // exit function as it has failed
     }

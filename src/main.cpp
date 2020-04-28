@@ -25,7 +25,7 @@
 #include "Utils/ProfilerService.h"
 #include "Utils/ProfileTag.h"
 #include <gsl/pointers>
-#include "Utils/LogUtils.h"
+#include "Utils/DebugUtils.h"
 
 using namespace std;
 using gsl::owner;
@@ -35,10 +35,11 @@ unique_ptr<Controller> s_controller; // s_controller is global to be accessible 
 
 int main(int argc, char *argv[])
 {
-    LOG(("Help me %s\n","dog"));
+    DEBUGLOG(("Help me %s\n","dog"));
 
-    int windowWidth = (int)(240.0f*16.0f/9.0f); // width of the window
-    int windowHeight = 240; // height of the window
+    int windowHeight = 320; // height of the window
+    int windowWidth = (int)(windowHeight * 16.0f/9.0f); // width of the window
+
 
     owner<GLFWwindow*> p_window = InitOpenGL(windowWidth, windowHeight); // Initialise OpenGL window,
 

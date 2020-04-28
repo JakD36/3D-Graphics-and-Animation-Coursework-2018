@@ -7,6 +7,7 @@
 //
 
 #include "Texture.hpp"
+#include "../Utils/DebugUtils.h"
 #include <iostream>
 #include <vector>
 #include <GL/glew.h>
@@ -19,6 +20,8 @@ Texture::Texture(string texturePath) noexcept
 {
     glGenTextures(1, m_texture);
     gli::texture tex = gli::load(texturePath);
+
+    assertm(!tex.empty(),("Could not find file " + texturePath));
     if(tex.empty()){
         cout<<"Unable to load file "+texturePath <<endl;
     }

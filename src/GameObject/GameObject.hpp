@@ -12,6 +12,7 @@
 #include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <gsl/pointers>
 
 class Mesh;
 class Material;
@@ -21,10 +22,11 @@ class Transform;
 
 class GameObject {
 public:
-    Transform* m_transform;
-    
-    GameObject(Mesh*, Material*, Texture*, GLuint) noexcept;
-    GameObject(std::string mesh, std::string mat, std::string tex, GLuint) noexcept;
+    GameObject(const GameObject &go) noexcept;
+    GameObject(Mesh*, Material*, Texture*, GLuint, Transform* parent = nullptr) noexcept;
+    GameObject(std::string mesh, std::string mat, std::string tex, GLuint, Transform* parent = nullptr) noexcept;
+
+    gsl::owner<Transform*> m_transform;
 
     Mesh* m_mesh;
     Texture* m_texture;

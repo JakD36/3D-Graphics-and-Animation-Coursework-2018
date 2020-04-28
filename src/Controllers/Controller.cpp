@@ -39,11 +39,13 @@ GLfloat Controller::GetSensitivity() noexcept{
     return m_sensitivity;
 }
 void Controller::ToggleCursor() noexcept{
-    if(m_aimInput){
+    if(m_aimInput)
+    {
         m_aimInput = false;
         glfwSetInputMode(p_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);    // Remove curser for FPS cam
     }
-    else{
+    else
+    {
         m_aimInput = true;
         glfwSetInputMode(p_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);    // Remove curser for FPS cam
     }

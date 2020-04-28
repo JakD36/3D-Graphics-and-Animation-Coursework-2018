@@ -11,6 +11,8 @@
 
 class Transform {
 public:
+    Transform();
+    Transform(Transform* parent);
     Transform* m_parent;
 
     glm::vec3 m_localPosition  = glm::vec3(0.f,0.f,0.f);

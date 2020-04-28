@@ -5,6 +5,13 @@
 #include "Transform.h"
 #include <glm/gtx/transform.hpp>
 
+Transform::Transform() : m_parent(nullptr) {}
+
+Transform::Transform(Transform* parent)
+{
+    m_parent = parent;
+}
+
 glm::vec3 Transform::Position()
 {
     if(m_parent != NULL)

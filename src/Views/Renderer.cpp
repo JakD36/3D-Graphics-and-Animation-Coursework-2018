@@ -88,11 +88,8 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     glm::mat4 viewMatrix = camera->BuildViewMat();
 
     // Render each object
-    // As we have put pointers to every object, we can use polymorphism to call the setupRender and the render methods of each object, which do differnet things depending on if its an instanced object or single use.
     vector<GameObject>& objs = scene->GetObjs();
-
     array<LightData,k_lightCount> lights = scene->GetLights();
-
     vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
 
     for(int i = 0, n = programs.size(); i < n; ++i)

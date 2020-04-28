@@ -16,10 +16,22 @@
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"
 #include "../Transform.h"
+#include "../Utils/DebugUtils.h"
+
 using namespace std;
 
-GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram) noexcept{
-    m_transform = new Transform();
+GameObject::GameObject(const GameObject &go) noexcept
+{
+    m_transform = new Transform(go.m_transform);
+    m_mesh = go.m_mesh;
+    m_material = go.m_material;
+    m_texture = go.m_texture;
+
+    m_program = go.m_program;
+}
+
+GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram, Transform* parent) noexcept{
+    m_transform = new Transform(parent);
     m_mesh = mesh;
     m_material = mat;
     m_texture = tex;
@@ -27,9 +39,9 @@ GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderPro
     m_program = shaderProgram;
 }
 
-GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram) noexcept{
+GameObject::GameObject(string meshPath, string materialPath, string texturePath, GLuint shaderProgram, Transform* parent) noexcept{
     PROFILE(profiler,"GO Init");
-    m_transform = new Transform();
+    m_transform = new Transform(parent);
 
     m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
     m_material = ResourceService<Material>::GetInstance()->Request(materialPath);
@@ -44,6 +56,10 @@ GameObject::GameObject(string meshPath, string materialPath, string texturePath,
 
 void GameObject::Render(Camera camera) noexcept{
     PROFILE(profiler,"GO Render");
+
+    assertm(m_mesh != nullptr,"Mesh Cannot be null");
+    assertm(m_material != nullptr,"Material Cannot be null");
+    assertm(m_texture != nullptr,"Texture Cannot be null");
 
     // For each model Object
     glUseProgram(m_program);
