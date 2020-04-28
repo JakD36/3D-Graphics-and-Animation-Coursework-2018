@@ -49,63 +49,59 @@ void SceneGraph::Deserialise(std::string filepath)
 {
     nlohmann::json js;
     fstream file(filepath);
-    if(file.is_open())
+
+    assert(file.is_open());
+
+    ShaderManager* shaderManager = ShaderManager::GetInstance();
+    file >> js;
+    int objectCount = js["objects"].size();
+    int initialCount = m_objs.size();
+    if(m_objs.capacity() < objectCount + initialCount) // Error missing copy constructor or default constructor?
     {
-        ShaderManager* shaderManager = ShaderManager::GetInstance();
-        file >> js;
-        int objectCount = js["objects"].size();
-        int initialCount = m_objs.size();
-        if(m_objs.capacity() < objectCount + initialCount) // Error missing copy constructor or default constructor?
-        {
-            m_objs.reserve(initialCount + objectCount);
-            m_objectKeys.reserve(initialCount + objectCount);
-        }
-
-        for(int i = 0; i < objectCount; ++i)
-        {
-            nlohmann::json object = js["objects"][i];
-
-            m_objectKeys.push_back(object["key"]);
-
-            GLuint program = shaderManager->RequestProgram(object["vert"],object["frag"]);
-            m_objs.push_back(GameObject(object["mesh"],object["material"],object["texture"],program));
-
-            nlohmann::json position = object["position"];
-            m_objs[initialCount+i].m_transform->m_localPosition = glm::vec3(position["x"],position["y"],position["z"]);
-
-            nlohmann::json rotation = object["rotation"];
-            m_objs[initialCount+i].m_transform->m_localRotation = glm::quat(glm::vec3(glm::radians((float)rotation["x"]),glm::radians((float)rotation["y"]),glm::radians((float)rotation["z"])));
-
-            nlohmann::json scale = object["scale"];
-            m_objs[initialCount+i].m_transform->m_localScale = glm::vec3(scale["x"],scale["y"],scale["z"]);
-        }
-
-        int lightCount = js["lights"].size();
-        for(int i = 0; i < lightCount && k_lightCount; ++i)
-        {
-            nlohmann::json light = js["lights"][i];
-            m_lightKeys.push_back(light["key"]);
-
-            m_lights[i].type = light["type"]; // So we have an enum for point and spot lights that lets us know which light we are dealing with
-
-            if(m_lights[i].type == LightType::spot)
-            {
-                nlohmann::json direction = light["direction"];
-                m_lights[i].direction = glm::vec3(direction["x"],direction["y"],direction["z"]);
-            }
-
-            nlohmann::json position = light["position"];
-            m_lights[i].position = glm::vec3(position["x"],position["y"],position["z"]);
-
-            nlohmann::json id = light["id"];
-            m_lights[i].id = glm::vec3(id["r"],id["g"],id["b"]);
-
-            nlohmann::json is = light["is"];
-            m_lights[i].is = glm::vec3(is["r"],is["g"],is["b"]);
-        }
+        m_objs.reserve(initialCount + objectCount);
+        m_objectKeys.reserve(initialCount + objectCount);
     }
-    else
+
+    for(int i = 0; i < objectCount; ++i)
     {
-        printf("Error: file %s could not be opened.\n",filepath.c_str());
+        nlohmann::json object = js["objects"][i];
+
+        m_objectKeys.push_back(object["key"]);
+
+        GLuint program = shaderManager->RequestProgram(object["vert"],object["frag"]);
+        m_objs.push_back(GameObject(object["render"],object["mesh"],object["material"],object["texture"],program));
+
+        nlohmann::json position = object["position"];
+        m_objs[initialCount+i].m_transform->m_localPosition = glm::vec3(position["x"],position["y"],position["z"]);
+
+        nlohmann::json rotation = object["rotation"];
+        m_objs[initialCount+i].m_transform->m_localRotation = glm::quat(glm::vec3(glm::radians((float)rotation["x"]),glm::radians((float)rotation["y"]),glm::radians((float)rotation["z"])));
+
+        nlohmann::json scale = object["scale"];
+        m_objs[initialCount+i].m_transform->m_localScale = glm::vec3(scale["x"],scale["y"],scale["z"]);
+    }
+
+    int lightCount = js["lights"].size();
+    for(int i = 0; i < lightCount && k_lightCount; ++i)
+    {
+        nlohmann::json light = js["lights"][i];
+        m_lightKeys.push_back(light["key"]);
+
+        m_lights[i].type = light["type"]; // So we have an enum for point and spot lights that lets us know which light we are dealing with
+
+        if(m_lights[i].type == LightType::spot)
+        {
+            nlohmann::json direction = light["direction"];
+            m_lights[i].direction = glm::vec3(direction["x"],direction["y"],direction["z"]);
+        }
+
+        nlohmann::json position = light["position"];
+        m_lights[i].position = glm::vec3(position["x"],position["y"],position["z"]);
+
+        nlohmann::json id = light["id"];
+        m_lights[i].id = glm::vec3(id["r"],id["g"],id["b"]);
+
+        nlohmann::json is = light["is"];
+        m_lights[i].is = glm::vec3(is["r"],is["g"],is["b"]);
     }
 }

@@ -1,0 +1,30 @@
+{
+  "pass": [
+    {
+      "shader": {
+        "vert": "Shaders/vs_light.glsl",
+        "frag": "Shaders/fs_light.glsl"
+      },
+      "material": {
+        "file": "Materials/bulb.mtl"
+      },
+      "textures": [
+        {"file": "Textures/bulb.ktx", "key": "tex"}
+      ],
+      "float" : [
+        {"key": "shininess"},
+        {"key": "lightConstant", "value": 0.25},
+        {"key": "lightLinear", "value": 0.7},
+        {"key": "lightQuadratic", "value": 1}
+      ],
+      "vec3": [
+        {"key": "ka"},
+        {"key": "kd"},
+        {"key": "ks"}
+      ],
+      "vec4": [
+        {"key": "ia"}
+      ]
+    }
+  ]
+}
