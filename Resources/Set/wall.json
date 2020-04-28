@@ -4,19 +4,21 @@
       "cull": "back",
       "shader": {
         "vert": "Shaders/vs.glsl",
-        "frag": "Shaders/fs.glsl"
+        "frag": "Shaders/fs_dissolve.glsl"
       },
       "material": {
         "file": "Materials/wall.mtl"
       },
       "textures": [
-        {"file": "Textures/wall.ktx", "key": "tex"}
+        {"file": "Textures/wall.ktx", "key": "tex"},
+        {"file": "Textures/perlin512.ktx", "key": "noise"}
       ],
       "float" : [
         {"key": "shininess"},
         {"key": "lightConstant", "value": 0.25},
         {"key": "lightLinear", "value": 0.7},
-        {"key": "lightQuadratic", "value": 1}
+        {"key": "lightQuadratic", "value": 1},
+        {"key": "cutoff", "value": 0.5}
       ],
       "vec3": [
         {"key": "ka"},

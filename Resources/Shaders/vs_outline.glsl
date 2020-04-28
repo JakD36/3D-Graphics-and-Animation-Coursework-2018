@@ -9,5 +9,5 @@ uniform float thickness;
 
 void main(void)
 {
-    gl_Position = mvp * position + thickness * normals;
+    gl_Position = mvp * (position + thickness * normals);
 }

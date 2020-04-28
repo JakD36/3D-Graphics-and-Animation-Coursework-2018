@@ -19,6 +19,7 @@
 #include "../Utils/DebugUtils.h"
 #include <fstream>
 #include <json.hpp>
+#include <GLFW/glfw3.h>
 #include "../Shaders/ShaderManager.h"
 
 using namespace std;
@@ -215,7 +216,7 @@ void GameObject::Render(Camera camera) noexcept{
         {
             glActiveTexture(GL_TEXTURE0+j);
             glBindTexture(GL_TEXTURE_2D,pass.m_textures[j].m_texture);
-            glUniform1i(pass.m_textures[j].m_location, 0);
+            glUniform1i(pass.m_textures[j].m_location, j);
         }
 
         for(int j = 0; j < pass.m_uniformf.size(); ++j)
@@ -233,15 +234,17 @@ void GameObject::Render(Camera camera) noexcept{
             glUniform4fv(pass.m_uniform4fv[j].m_location, 1, &pass.m_uniform4fv[j].m_value[0]);
         }
 
+        glUniform1f(glGetUniformLocation(pass.m_program,"cutoff"), abs(sin(glfwGetTime()*2)));
+
         if(pass.cullBack)
         {
-            glEnable(GL_CULL_FACE);
             glCullFace(GL_BACK);
+            glEnable(GL_CULL_FACE);
         }
         else if(pass.cullFront)
         {
-            glEnable(GL_CULL_FACE);
             glCullFace(GL_FRONT);
+            glEnable(GL_CULL_FACE);
         }
 
         glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);
