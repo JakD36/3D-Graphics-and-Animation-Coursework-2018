@@ -4,13 +4,14 @@
       "cull": "back",
       "shader": {
         "vert": "Shaders/vs.glsl",
-        "frag": "Shaders/fs.glsl"
+        "frag": "Shaders/fs_normal.glsl"
       },
       "material": {
         "file": "Materials/front.mtl"
       },
       "textures": [
-        {"file": "Textures/front.ktx", "key": "tex"}
+        {"file": "Textures/brickwall.ktx", "key": "tex"},
+        {"file": "Textures/brickwall_normal.ktx", "key": "normal"}
       ],
       "float" : [
         {"key": "shininess"},

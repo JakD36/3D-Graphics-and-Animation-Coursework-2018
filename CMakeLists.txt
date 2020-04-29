@@ -77,10 +77,12 @@ if(APPLE)
     find_library( COREVIDEO_FW CoreVideo )
     find_library( GLEW GLEW Frameworks)
     find_library( GLFW glfw3 Frameworks)
+    find_library( ASSIMP assimp Frameworks)
 
     target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
             ${GLFW}
             ${GLEW}
+            ${ASSIMP}
             ${COCOA_FW}
             ${OPENGL_FW}
             ${IOKIT_FW}

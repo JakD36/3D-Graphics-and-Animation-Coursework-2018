@@ -22,7 +22,7 @@ public:
     GLuint          m_vao; 
 
     std::vector<float> Load(std::string meshName) noexcept;
-
+    std::vector<float> LoadAssimp(std::string meshName) noexcept;
     Mesh(std::string meshName) noexcept;
     ~Mesh() noexcept;
 };

@@ -12,15 +12,22 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 using namespace std;
+
+
 
 Mesh::Mesh(string meshName) noexcept{
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
     
     glGenBuffers(1,&m_buffer); // Generate the buffer to store the vertices, uvs and normals
-    
-    vector<float> interleavedData = Load(meshName);
+
+    vector<float> og = Load(meshName);
+    vector<float> interleavedData = LoadAssimp(meshName);
  
     // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
@@ -37,6 +44,51 @@ Mesh::Mesh(string meshName) noexcept{
 
     glVertexAttribPointer(2, 3 , GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 5));
     glEnableVertexAttribArray(2);
+}
+
+std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
+{
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile(meshName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    vector<float> interleavedData;
+    vector<int> indices;
+    for(int i = 0; i < scene->mMeshes[0]->mNumFaces; ++i)
+    {
+        auto face = scene->mMeshes[0]->mFaces[i];
+        for(int j = 0; j < face.mNumIndices; ++j)
+        {
+            indices.push_back(face.mIndices[j]);
+        }
+    }
+    interleavedData.reserve(8 * indices.size());
+    for(int i = 0; i < indices.size(); ++i)
+    {
+        auto vert = scene->mMeshes[0]->mVertices[indices[i]];
+        interleavedData.push_back(vert.x);
+        interleavedData.push_back(vert.y);
+        interleavedData.push_back(vert.z);
+
+        auto uvs = scene->mMeshes[0]->mTextureCoords[0][indices[i]];
+        interleavedData.push_back(uvs.x);
+        interleavedData.push_back(uvs.y);
+
+        auto normals = scene->mMeshes[0]->mNormals[indices[i]];
+        interleavedData.push_back(normals.x);
+        interleavedData.push_back(normals.y);
+        interleavedData.push_back(normals.z);
+
+//        auto bitTangents = scene->mMeshes[0]->mBitangents[indices[i]];
+//        interleavedData.push_back(bitTangents.x);
+//        interleavedData.push_back(bitTangents.y);
+//        interleavedData.push_back(bitTangents.z);
+//
+//        auto tangents = scene->mMeshes[0]->mBitangents[indices[i]];
+//        interleavedData.push_back(tangents.x);
+//        interleavedData.push_back(tangents.y);
+//        interleavedData.push_back(tangents.z);
+    }
+    m_vertCount = indices.size();
+    return interleavedData;
 }
 
 std::vector<float> Mesh::Load(string meshName) noexcept{
