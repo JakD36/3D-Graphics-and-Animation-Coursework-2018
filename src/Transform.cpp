@@ -32,7 +32,6 @@ glm::quat Transform::Rotation()
 
 glm::mat4 Transform::BuildModelMatrix()
 {
-
     glm::mat4 s = glm::scale(glm::mat4(1.f), m_localScale);
     glm::mat4 r = glm::toMat4(Rotation());
     glm::mat4 t = glm::translate(glm::mat4(1.f),Position());

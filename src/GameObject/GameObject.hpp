@@ -54,8 +54,7 @@ struct GameObjectRenderPass // TODO: Handle using previous render in next
 {
 public:
     GLuint m_program;
-    bool cullFront;
-    bool cullBack;
+    GLenum m_cullFace;
     std::vector<TextureShaderParam> m_textures; // location, key, texture
     std::vector<Uniformf> m_uniformf; // location, key, val
     std::vector<Uniform3fv> m_uniform3fv; // location, key, val
@@ -64,7 +63,7 @@ public:
 
 class GameObject {
 private:
-    std::vector<GameObjectRenderPass> BuildRenderPass(std::string filepath);
+    std::vector<GameObjectRenderPass> BuildRenderPass(std::string filepath, std::string meshpath);
 public:
     GameObject(const GameObject &go) noexcept;
     GameObject(Mesh*, Material*, Texture*, GLuint program, Transform* parent = nullptr) noexcept;

@@ -106,6 +106,6 @@ void Scene1::UseSecondary() noexcept{
 void Scene1::Turn(GLfloat yaw, GLfloat pitch) noexcept{
     m_playerTransform->m_localRotation = glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f));
 
-    m_lights[m_torchLight].direction = glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f)) * glm::vec3(0.0f,0.0f,1.0f);
+    m_lights[m_torchLight].direction = glm::normalize(glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f)) * glm::vec3(0.0f,0.0f,1.0f));
 }
 

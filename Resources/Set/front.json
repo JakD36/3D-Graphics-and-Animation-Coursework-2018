@@ -1,9 +1,16 @@
 {
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS",
+    "TANGENTS",
+    "BITTANGENTS"
+  ],
   "pass": [
     {
       "cull": "back",
       "shader": {
-        "vert": "Shaders/vs.glsl",
+        "vert": "Shaders/vs_normal.glsl",
         "frag": "Shaders/fs_normal.glsl"
       },
       "material": {
@@ -11,7 +18,7 @@
       },
       "textures": [
         {"file": "Textures/brickwall.ktx", "key": "tex"},
-        {"file": "Textures/brickwall_normal.ktx", "key": "normal"}
+        {"file": "Textures/brickwall_normal.ktx", "key": "normalMap"}
       ],
       "float" : [
         {"key": "shininess"},

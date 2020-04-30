@@ -13,17 +13,28 @@
 #include <string>
 #include <vector>
 
+enum class VertexAttrib
+{
+    POSITION,
+    UV,
+    NORMALS,
+    TANGENT,
+    BITTANGENT,
+    COLOUR
+};
+
 class Mesh{
-    
 public:
     int m_vertCount;
 
     GLuint          m_buffer;                      // Buffer to store the vertices, uvs and the normals for the model
-    GLuint          m_vao; 
+    GLuint          m_vao;
+
+    std::vector<VertexAttrib> m_attribs;
 
     std::vector<float> Load(std::string meshName) noexcept;
     std::vector<float> LoadAssimp(std::string meshName) noexcept;
-    Mesh(std::string meshName) noexcept;
+    Mesh(std::string meshName, std::vector<VertexAttrib>) noexcept;
     ~Mesh() noexcept;
 };
 

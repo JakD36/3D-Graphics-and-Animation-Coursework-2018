@@ -24,7 +24,7 @@
 
 using namespace std;
 
-vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath)
+vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string meshpath)
 {
     nlohmann::json js;
     fstream file(filepath);
@@ -32,6 +32,26 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath)
     file >> js;
 
     ShaderManager* sm = ShaderManager::GetInstance();
+
+    vector<VertexAttrib> attribs;
+    auto attribStrs = js["vertexAttributes"];
+    for(int i = 0; i < attribStrs.size();++i)
+    {
+        if(attribStrs[i] == "POSITION")
+            attribs.push_back(VertexAttrib::POSITION);
+        else if(attribStrs[i] == "UV")
+            attribs.push_back(VertexAttrib::UV);
+        else if(attribStrs[i] == "NORMALS")
+            attribs.push_back(VertexAttrib::NORMALS);
+        else if(attribStrs[i] == "TANGENT")
+            attribs.push_back(VertexAttrib::TANGENT);
+        else if(attribStrs[i] == "BITTANGENT")
+            attribs.push_back(VertexAttrib::BITTANGENT);
+        else if(attribStrs[i] == "COLOUR")
+            attribs.push_back(VertexAttrib::COLOUR);
+    }
+
+    m_mesh = new Mesh(meshpath,attribs);
 
     nlohmann::json passes = js["pass"];
     vector<GameObjectRenderPass> output(passes.size());
@@ -142,11 +162,19 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath)
                 });
             }
         }
+        GLenum cull;
+        if(pass["cull"] == "front")
+        {
+            cull = GL_FRONT;
+        }
+        else if(pass["cull"] == "back")
+        {
+            cull = GL_BACK;
+        }
 
         output.push_back(GameObjectRenderPass{
             program,
-            pass["cull"] == "front",
-            pass["cull"] == "back",
+            cull,
             textures,
             uniformf,
             uniform3fv,
@@ -181,9 +209,8 @@ GameObject::GameObject(string renderPass, string meshPath, Transform* parent) no
 
     m_transform = new Transform(parent);
 
-    m_mesh = ResourceService<Mesh>::GetInstance()->Request(meshPath);
-
-    m_renderPass = BuildRenderPass(renderPass);
+//    ResourceService<Mesh>::GetInstance()->Request(meshPath);
+    m_renderPass = BuildRenderPass(renderPass, meshPath);
 
     ENDPROFILE(profiler);
 }
@@ -196,7 +223,8 @@ void GameObject::Render(Camera camera) noexcept{
     assertm(m_texture != nullptr,"Texture Cannot be null");
 
     glm::mat4 m = m_transform->BuildModelMatrix();
-    glm::mat4 mvp = camera.ProjectionMatrix() * camera.BuildViewMat() * m;
+    glm::mat4 mv = camera.BuildViewMat() * m;
+    glm::mat4 mvp = camera.ProjectionMatrix() * mv;
 
     assertm(m_renderPass.size() > 0,"No RenderPasses have been defined...");
 
@@ -208,6 +236,7 @@ void GameObject::Render(Camera camera) noexcept{
         glBindVertexArray(m_mesh->m_vao);
 
         glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"modelMatrix"), 1, GL_FALSE, &m[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"mv"), 1, GL_FALSE, &mv[0][0]);
         glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
 
         glUniform3fv(glGetUniformLocation(pass.m_program,"viewPosition"),1,&camera.GetPosition()[0]); // The camera position
@@ -234,16 +263,8 @@ void GameObject::Render(Camera camera) noexcept{
             glUniform4fv(pass.m_uniform4fv[j].m_location, 1, &pass.m_uniform4fv[j].m_value[0]);
         }
 
-        if(pass.cullBack) // TODO: Implement properly
-        {
-            glCullFace(GL_BACK);
-            glEnable(GL_CULL_FACE);
-        }
-        else if(pass.cullFront)
-        {
-            glCullFace(GL_FRONT);
-            glEnable(GL_CULL_FACE);
-        }
+        glCullFace(pass.m_cullFace);
+        glEnable(GL_CULL_FACE);
 
         glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);
     }
