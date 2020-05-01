@@ -321,11 +321,10 @@ std::vector<float> Mesh::Load(string meshName) noexcept{
             float r = 1.0f / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
             glm::vec3 tangent = glm::normalize((E1 * deltaUv2.y - E2 * deltaUv1.y)*r);
 
-            tangent = glm::normalize(tangent - normals[i] * glm::dot(normals[i], tangent)); // Make sure that the tangent is orthogonal, 90 degrees to normal
+            tangent = glm::normalize(tangent - normals[i] * glm::dot(normals[i], tangent)); // Makes sure that the tangent is orthogonal, 90 degrees to normal
 
             glm::vec3 bitangent = glm::normalize(glm::cross(tangent,normals[i]));
-//            glm::vec3 bitangent = glm::normalize((E2 * deltaUv1.x - E1 * deltaUv2.x)*r);
-
+            
             // Same Tangent and bit tangent for all 3 verts!
             tangents.push_back(tangent);
             tangents.push_back(tangent);

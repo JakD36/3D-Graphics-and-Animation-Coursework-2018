@@ -49,6 +49,9 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string
             attribs.push_back(VertexAttrib::BITANGENT);
         else if(attribStrs[i] == "COLOUR")
             attribs.push_back(VertexAttrib::COLOUR);
+        else
+            assertm(false,"Undefined attribute string found!");
+
     }
 
     m_mesh = new Mesh(meshpath,attribs);

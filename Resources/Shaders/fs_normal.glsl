@@ -124,6 +124,7 @@ void main(void)
 
     vec3 normalsTex = texture(normalMap,fs_in.tc).rgb;
     vec3 normal = normalize(fs_in.TBN * (normalsTex * 2.0 - vec3(1.0)));
+    // normal = fs_in.normals;
 
     Lighting light1 = CalculateLighting(lights[0], fs_in.fragPos.xyz, normal);
     Lighting light2 = CalculateLighting(lights[1], fs_in.fragPos.xyz, normal);
