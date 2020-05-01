@@ -1,4 +1,9 @@
 {
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ],
   "pass": [
     {
       "cull": "front",

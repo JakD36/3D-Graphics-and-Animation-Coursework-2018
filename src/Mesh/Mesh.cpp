@@ -55,7 +55,7 @@ Mesh::Mesh(string meshName, std::vector<VertexAttrib> attrib) noexcept{
 std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
 {
     Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(meshName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_GenSmoothNormals);
+    const aiScene *scene = importer.ReadFile(meshName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace );
     vector<float> interleavedData;
     vector<int> indices;
     for(int i = 0; i < scene->mMeshes[0]->mNumFaces; ++i)
@@ -69,41 +69,42 @@ std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
     interleavedData.reserve(8 * indices.size());
     for(int i = 0; i < indices.size(); ++i)
     {
-        switch(m_attribs[i])
-        {
-            case VertexAttrib::POSITION: {
-                auto vert = scene->mMeshes[0]->mVertices[indices[i]];
-                interleavedData.push_back(vert.x);
-                interleavedData.push_back(vert.y);
-                interleavedData.push_back(vert.z);
-                break;
-            }
-            case VertexAttrib::UV: {
-                auto uvs = scene->mMeshes[0]->mTextureCoords[0][indices[i]];
-                interleavedData.push_back(uvs.x);
-                interleavedData.push_back(uvs.y);
-                break;
-            }
-            case VertexAttrib::NORMALS: {
-                auto normals = scene->mMeshes[0]->mNormals[indices[i]];
-                interleavedData.push_back(normals.x);
-                interleavedData.push_back(normals.y);
-                interleavedData.push_back(normals.z);
-                break;
-            }
-            case VertexAttrib::TANGENT: {
-                auto bitTangents = scene->mMeshes[0]->mBitangents[indices[i]];
-                interleavedData.push_back(bitTangents.x);
-                interleavedData.push_back(bitTangents.y);
-                interleavedData.push_back(bitTangents.z);
-                break;
-            }
-            case VertexAttrib::BITTANGENT: {
-                auto tangents = scene->mMeshes[0]->mBitangents[indices[i]];
-                interleavedData.push_back(tangents.x);
-                interleavedData.push_back(tangents.y);
-                interleavedData.push_back(tangents.z);
-                break;
+        for(int j = 0; j < m_attribs.size(); ++j) {
+            switch (m_attribs[j]) {
+                case VertexAttrib::POSITION: {
+                    auto vert = scene->mMeshes[0]->mVertices[indices[i]];
+                    interleavedData.push_back(vert.x);
+                    interleavedData.push_back(vert.y);
+                    interleavedData.push_back(vert.z);
+                    break;
+                }
+                case VertexAttrib::UV: {
+                    auto uvs = scene->mMeshes[0]->mTextureCoords[0][indices[i]];
+                    interleavedData.push_back(uvs.x);
+                    interleavedData.push_back(uvs.y);
+                    break;
+                }
+                case VertexAttrib::NORMALS: {
+                    auto normals = scene->mMeshes[0]->mNormals[indices[i]];
+                    interleavedData.push_back(normals.x);
+                    interleavedData.push_back(normals.y);
+                    interleavedData.push_back(normals.z);
+                    break;
+                }
+                case VertexAttrib::TANGENT: {
+                    auto bitTangents = scene->mMeshes[0]->mBitangents[indices[i]];
+                    interleavedData.push_back(bitTangents.x);
+                    interleavedData.push_back(bitTangents.y);
+                    interleavedData.push_back(bitTangents.z);
+                    break;
+                }
+                case VertexAttrib::BITTANGENT: {
+                    auto tangents = scene->mMeshes[0]->mBitangents[indices[i]];
+                    interleavedData.push_back(tangents.x);
+                    interleavedData.push_back(tangents.y);
+                    interleavedData.push_back(tangents.z);
+                    break;
+                }
             }
         }
     }
