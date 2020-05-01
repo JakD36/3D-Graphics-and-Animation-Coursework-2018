@@ -3,8 +3,8 @@
     "POSITION",
     "UV",
     "NORMALS",
-    "TANGENTS",
-    "BITTANGENTS"
+    "TANGENT",
+    "BITANGENT"
   ],
   "pass": [
     {

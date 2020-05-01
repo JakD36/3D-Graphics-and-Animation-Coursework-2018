@@ -55,7 +55,7 @@ Mesh::Mesh(string meshName, std::vector<VertexAttrib> attrib) noexcept{
 std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
 {
     Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(meshName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace );
+    const aiScene *scene = importer.ReadFile(meshName, aiProcess_Triangulate | aiProcess_CalcTangentSpace );
     vector<float> interleavedData;
     vector<int> indices;
     for(int i = 0; i < scene->mMeshes[0]->mNumFaces; ++i)
@@ -92,17 +92,17 @@ std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
                     break;
                 }
                 case VertexAttrib::TANGENT: {
-                    auto bitTangents = scene->mMeshes[0]->mBitangents[indices[i]];
-                    interleavedData.push_back(bitTangents.x);
-                    interleavedData.push_back(bitTangents.y);
-                    interleavedData.push_back(bitTangents.z);
-                    break;
-                }
-                case VertexAttrib::BITTANGENT: {
-                    auto tangents = scene->mMeshes[0]->mBitangents[indices[i]];
+                    auto tangents = scene->mMeshes[0]->mTangents[indices[i]];
                     interleavedData.push_back(tangents.x);
                     interleavedData.push_back(tangents.y);
                     interleavedData.push_back(tangents.z);
+                    break;
+                }
+                case VertexAttrib::BITANGENT: {
+                    auto bitangents = scene->mMeshes[0]->mBitangents[indices[i]];
+                    interleavedData.push_back(bitangents.x);
+                    interleavedData.push_back(bitangents.y);
+                    interleavedData.push_back(bitangents.z);
                     break;
                 }
             }
@@ -127,7 +127,7 @@ std::vector<float> Mesh::Load(string meshName) noexcept{
     int matches;
     
     unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-    vector<glm::vec3> verts, normals, tangents, bitTangents;
+    vector<glm::vec3> verts, normals, tangents, bitangents;
     vector<glm::vec2> uvs;
     
     vector<float> interleavedData;
@@ -320,15 +320,19 @@ std::vector<float> Mesh::Load(string meshName) noexcept{
 
             float r = 1.0f / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
             glm::vec3 tangent = glm::normalize((E1 * deltaUv2.y - E2 * deltaUv1.y)*r);
-            glm::vec3 bitangent = glm::normalize((E2 * deltaUv1.x - E1 * deltaUv2.x)*r);
+
+            tangent = glm::normalize(tangent - normals[i] * glm::dot(normals[i], tangent)); // Make sure that the tangent is orthogonal, 90 degrees to normal
+
+            glm::vec3 bitangent = glm::normalize(glm::cross(tangent,normals[i]));
+//            glm::vec3 bitangent = glm::normalize((E2 * deltaUv1.x - E1 * deltaUv2.x)*r);
 
             // Same Tangent and bit tangent for all 3 verts!
             tangents.push_back(tangent);
             tangents.push_back(tangent);
             tangents.push_back(tangent);
-            bitTangents.push_back(bitangent);
-            bitTangents.push_back(bitangent);
-            bitTangents.push_back(bitangent);
+            bitangents.push_back(bitangent);
+            bitangents.push_back(bitangent);
+            bitangents.push_back(bitangent);
         }
 
         for(int i = 0; i < verts.size(); ++i)
@@ -356,10 +360,10 @@ std::vector<float> Mesh::Load(string meshName) noexcept{
                         interleavedData.push_back(tangents[i].y);
                         interleavedData.push_back(tangents[i].z);
                         break;
-                    case VertexAttrib::BITTANGENT:
-                        interleavedData.push_back(bitTangents[i].x);
-                        interleavedData.push_back(bitTangents[i].y);
-                        interleavedData.push_back(bitTangents[i].z);
+                    case VertexAttrib::BITANGENT:
+                        interleavedData.push_back(bitangents[i].x);
+                        interleavedData.push_back(bitangents[i].y);
+                        interleavedData.push_back(bitangents[i].z);
                         break;
                     case VertexAttrib::COLOUR:
                         // TODO: ???

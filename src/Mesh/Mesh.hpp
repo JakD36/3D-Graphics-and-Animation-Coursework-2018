@@ -19,7 +19,7 @@ enum class VertexAttrib
     UV,
     NORMALS,
     TANGENT,
-    BITTANGENT,
+    BITANGENT,
     COLOUR
 };
 

@@ -2,21 +2,23 @@
   "vertexAttributes": [
     "POSITION",
     "UV",
-    "NORMALS"
+    "NORMALS",
+    "TANGENT",
+    "BITANGENT"
   ],
   "pass": [
     {
       "cull": "back",
       "shader": {
-        "vert": "Shaders/vs.glsl",
-        "frag": "Shaders/fs_dissolve.glsl"
+        "vert": "Shaders/vs_normal.glsl",
+        "frag": "Shaders/fs_normal.glsl"
       },
       "material": {
         "file": "Materials/wall.mtl"
       },
       "textures": [
         {"file": "Textures/wall.ktx", "key": "tex"},
-        {"file": "Textures/perlin512.ktx", "key": "noise"}
+        {"file": "Textures/NormalMap.ktx", "key": "normalMap"}
       ],
       "float" : [
         {"key": "shininess"},

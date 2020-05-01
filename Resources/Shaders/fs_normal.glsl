@@ -7,6 +7,7 @@ in VS_OUT
     vec2 tc;
     vec4 fragPos;
     mat3 TBN;
+    vec3 normals;
 } fs_in;
 
 uniform sampler2D tex;
@@ -133,6 +134,5 @@ void main(void)
     vec3 totalSpecular = light1.specular + light2.specular + light3.specular + light4.specular;
     vec3 totalLight = ambient + totalDiffuse + totalSpecular;
 
-    color = vec4(texture(tex, fs_in.tc).rgb,1.0);
     color = vec4(totalLight * texture(tex, fs_in.tc).rgb,1.0);
 }

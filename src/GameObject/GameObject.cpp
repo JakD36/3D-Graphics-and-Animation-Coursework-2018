@@ -45,8 +45,8 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string
             attribs.push_back(VertexAttrib::NORMALS);
         else if(attribStrs[i] == "TANGENT")
             attribs.push_back(VertexAttrib::TANGENT);
-        else if(attribStrs[i] == "BITTANGENT")
-            attribs.push_back(VertexAttrib::BITTANGENT);
+        else if(attribStrs[i] == "BITANGENT")
+            attribs.push_back(VertexAttrib::BITANGENT);
         else if(attribStrs[i] == "COLOUR")
             attribs.push_back(VertexAttrib::COLOUR);
     }
