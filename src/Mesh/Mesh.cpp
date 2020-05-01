@@ -105,6 +105,11 @@ std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
                     interleavedData.push_back(bitangents.z);
                     break;
                 }
+                case VertexAttrib::COLOUR:
+                {
+                    assertm(false,"Undefined attribute");
+                    break;
+                }
             }
         }
     }
