@@ -42,7 +42,7 @@ protected:
 public:
     SceneGraph() noexcept;
     virtual ~SceneGraph() noexcept;
-    virtual void Update(double deltaTime) noexcept = 0;
+    virtual void Update(double deltaTime) noexcept;
     
     std::vector<GameObject>& GetObjs() noexcept;
     Camera* GetCamera() noexcept;

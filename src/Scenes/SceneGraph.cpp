@@ -46,6 +46,11 @@ Camera* SceneGraph::GetCamera() noexcept
     return p_camera;
 }
 
+void SceneGraph::Update(double deltaTime) noexcept
+{
+    UpdateFile();
+}
+
 void SceneGraph::UpdateFile() noexcept
 {
     struct stat buf;
@@ -53,6 +58,7 @@ void SceneGraph::UpdateFile() noexcept
 
     if(m_fileInfo.lastModified != buf.st_mtime)
     {
+        printf("Reloading Scene!\n");
         m_fileInfo.lastModified = buf.st_mtime;
         m_objs.clear();
         m_objectKeys.clear();

@@ -45,6 +45,7 @@ Scene1::Scene1() noexcept{
 }
 
 void Scene1::Update(double deltaTime) noexcept{
+    SceneGraph::Update(deltaTime);
     PROFILE(p,"Scene Update");
     
     // Swinging light
