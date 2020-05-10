@@ -21,14 +21,18 @@
 #include "../Include/DearImgui/imgui.h"
 #include "../Include/DearImgui/imgui_impl_glfw.h"
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
+#include "Utils/imgui_impl_glm.h"
 
 #include "Utils/ProfilerService.h"
 #include "Utils/ProfileTag.h"
 #include <gsl/pointers>
 #include "Utils/DebugUtils.h"
+#include "GameObject/GameObject.hpp"
 
 using namespace std;
 using gsl::owner;
+
+void ShaderTool(vector<GameObject>& objs);
 
 unique_ptr<Renderer> s_view; // is global to be accessible through callbacks
 unique_ptr<Controller> s_controller; // s_controller is global to be accessible through the callbacks
@@ -84,6 +88,7 @@ int main(int argc, char *argv[])
 
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
         scene.Update(deltaTime);
+        ShaderTool(scene.GetObjs());
         s_view->Render(&scene);
 
         { // Render ImGui
@@ -105,4 +110,43 @@ int main(int argc, char *argv[])
 
     EndProgram(p_window);
     return 0;
+}
+
+
+void ShaderTool(vector<GameObject>& objs)
+{
+    ImGui::Begin("Shader Tool",NULL);
+    if(ImGui::TreeNode("GameObjects"))
+    {
+        for(int i = 0; i < objs.size(); ++i)
+        {
+            auto &rp = objs[i].m_renderPass;
+            if(ImGui::TreeNode(objs[i].m_name.c_str()))
+            {
+                for(int j = 0; j < rp.size();++j)
+                {
+                    if(ImGui::TreeNode(("Pass " + to_string(j)).c_str()))
+                    {
+                        auto &pass = rp[j];
+                        for(int k = 0; k < pass.m_uniformf.size();++k)
+                        {
+                            ImGui::SliderFloat(pass.m_uniformf[k].m_key.c_str(), &pass.m_uniformf[k].m_value,0,5);
+                        }
+                        for(int k = 0; k < pass.m_uniform3fv.size();++k)
+                        {
+                            ImGui::InputFloat3(pass.m_uniform3fv[k].m_key.c_str(), pass.m_uniform3fv[k].m_value);
+                        }
+                        for(int k = 0; k < pass.m_uniform4fv.size();++k)
+                        {
+                            ImGui::InputFloat4(pass.m_uniform4fv[k].m_key.c_str(), pass.m_uniform4fv[k].m_value);
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+                ImGui::TreePop();
+            }
+        }
+        ImGui::TreePop();
+    }
+    ImGui::End();
 }
