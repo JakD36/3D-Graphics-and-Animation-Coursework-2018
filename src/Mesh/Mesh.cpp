@@ -18,15 +18,13 @@
 
 using namespace std;
 
-Mesh::Mesh(string meshName, std::vector<VertexAttrib> attrib) noexcept{
+Mesh::Mesh(string meshName, int attrib) noexcept{
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
     
     glGenBuffers(1,&m_buffer); // Generate the buffer to store the vertices, uvs and normals
 
-    m_attribs = attrib;
-
-    vector<float> interleavedData = Load(meshName);
+    vector<float> interleavedData = Load(meshName,attrib);
 //    vector<float> interleavedData = LoadAssimp(meshName);
  
     // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
@@ -38,21 +36,24 @@ Mesh::Mesh(string meshName, std::vector<VertexAttrib> attrib) noexcept{
                  GL_STATIC_DRAW);
 
     int total = 0;
-    for(int i = 0; i < m_attribs.size(); ++i)
+    for(int i = 0; i < 6; ++i)
     {
-        total += size[(int)m_attribs[i]];
+        total += size[i] * ((attrib & (1 << i)) > 0 ? 1 : 0);
     }
 
     int offset = 0;
-    for(int i = 0; i < m_attribs.size(); ++i)
+    for(int i = 0; i < 6; ++i)
     {
-        glVertexAttribPointer(i, size[(int)m_attribs[i]] , GL_FLOAT, GL_FALSE, sizeof(float) * total, (void*)(sizeof(float) * offset));
-        glEnableVertexAttribArray(i);
-        offset += size[(int)m_attribs[i]];
+        if((attrib & (1 << i)) > 0)
+        {
+            glVertexAttribPointer(i, size[i] , GL_FLOAT, GL_FALSE, sizeof(float) * total, (void*)(sizeof(float) * offset));
+            glEnableVertexAttribArray(i);
+            offset += size[i];
+        }
     }
 }
 
-std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
+std::vector<float> Mesh::LoadAssimp(string meshName, int attribs) noexcept
 {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(meshName, aiProcess_Triangulate | aiProcess_CalcTangentSpace );
@@ -69,55 +70,46 @@ std::vector<float> Mesh::LoadAssimp(string meshName) noexcept
     interleavedData.reserve(8 * indices.size());
     for(int i = 0; i < indices.size(); ++i)
     {
-        for(int j = 0; j < m_attribs.size(); ++j) {
-            switch (m_attribs[j]) {
-                case VertexAttrib::POSITION: {
-                    auto vert = scene->mMeshes[0]->mVertices[indices[i]];
-                    interleavedData.push_back(vert.x);
-                    interleavedData.push_back(vert.y);
-                    interleavedData.push_back(vert.z);
-                    break;
-                }
-                case VertexAttrib::UV: {
-                    auto uvs = scene->mMeshes[0]->mTextureCoords[0][indices[i]];
-                    interleavedData.push_back(uvs.x);
-                    interleavedData.push_back(uvs.y);
-                    break;
-                }
-                case VertexAttrib::NORMALS: {
-                    auto normals = scene->mMeshes[0]->mNormals[indices[i]];
-                    interleavedData.push_back(normals.x);
-                    interleavedData.push_back(normals.y);
-                    interleavedData.push_back(normals.z);
-                    break;
-                }
-                case VertexAttrib::TANGENT: {
-                    auto tangents = scene->mMeshes[0]->mTangents[indices[i]];
-                    interleavedData.push_back(tangents.x);
-                    interleavedData.push_back(tangents.y);
-                    interleavedData.push_back(tangents.z);
-                    break;
-                }
-                case VertexAttrib::BITANGENT: {
-                    auto bitangents = scene->mMeshes[0]->mBitangents[indices[i]];
-                    interleavedData.push_back(bitangents.x);
-                    interleavedData.push_back(bitangents.y);
-                    interleavedData.push_back(bitangents.z);
-                    break;
-                }
-                case VertexAttrib::COLOUR:
-                {
-                    assertm(false,"Undefined attribute");
-                    break;
-                }
-            }
+        if((attribs & (int)VertexAttrib::POSITION) > 0)
+        {
+            auto vert = scene->mMeshes[0]->mVertices[indices[i]];
+            interleavedData.push_back(vert.x);
+            interleavedData.push_back(vert.y);
+            interleavedData.push_back(vert.z);
+        }
+        if((attribs & (int)VertexAttrib::UV) > 0)
+        {
+            auto uvs = scene->mMeshes[0]->mTextureCoords[0][indices[i]];
+            interleavedData.push_back(uvs.x);
+            interleavedData.push_back(uvs.y);
+        }
+        if((attribs & (int)VertexAttrib::NORMALS) > 0)
+        {
+            auto normals = scene->mMeshes[0]->mNormals[indices[i]];
+            interleavedData.push_back(normals.x);
+            interleavedData.push_back(normals.y);
+            interleavedData.push_back(normals.z);
+        }
+        if((attribs & (int)VertexAttrib::TANGENT) > 0)
+        {
+            auto tangents = scene->mMeshes[0]->mTangents[indices[i]];
+            interleavedData.push_back(tangents.x);
+            interleavedData.push_back(tangents.y);
+            interleavedData.push_back(tangents.z);
+        }
+        if((attribs & (int)VertexAttrib::BITANGENT) > 0)
+        {
+            auto bitangents = scene->mMeshes[0]->mBitangents[indices[i]];
+            interleavedData.push_back(bitangents.x);
+            interleavedData.push_back(bitangents.y);
+            interleavedData.push_back(bitangents.z);
         }
     }
     m_vertCount = indices.size();
     return interleavedData;
 }
 // TODO: Calculate Bit tangents and tangents myself!
-std::vector<float> Mesh::Load(string meshName) noexcept{
+std::vector<float> Mesh::Load(string meshName, int attribs) noexcept{
     // Variables
     FILE* pfile = nullptr; // using stdio and fscanf which means formatted scan file
     int result;         // for taking output of fscanf function
@@ -341,38 +333,34 @@ std::vector<float> Mesh::Load(string meshName) noexcept{
 
         for(int i = 0; i < verts.size(); ++i)
         {
-            for(int j = 0; j < m_attribs.size(); ++j)
+            if((attribs & (int)VertexAttrib::POSITION) > 0)
             {
-                switch(m_attribs[j])
-                {
-                    case VertexAttrib::POSITION:
-                        interleavedData.push_back(verts[i].x);
-                        interleavedData.push_back(verts[i].y);
-                        interleavedData.push_back(verts[i].z);
-                        break;
-                    case VertexAttrib::UV:
-                        interleavedData.push_back(uvs[i].x);
-                        interleavedData.push_back(uvs[i].y);
-                        break;
-                    case VertexAttrib::NORMALS:
-                        interleavedData.push_back(normals[i].x);
-                        interleavedData.push_back(normals[i].y);
-                        interleavedData.push_back(normals[i].z);
-                        break;
-                    case VertexAttrib::TANGENT:
-                        interleavedData.push_back(tangents[i].x);
-                        interleavedData.push_back(tangents[i].y);
-                        interleavedData.push_back(tangents[i].z);
-                        break;
-                    case VertexAttrib::BITANGENT:
-                        interleavedData.push_back(bitangents[i].x);
-                        interleavedData.push_back(bitangents[i].y);
-                        interleavedData.push_back(bitangents[i].z);
-                        break;
-                    case VertexAttrib::COLOUR:
-                        // TODO: ???
-                        break;
-                }
+                interleavedData.push_back(verts[i].x);
+                interleavedData.push_back(verts[i].y);
+                interleavedData.push_back(verts[i].z);
+            }
+            if((attribs & (int)VertexAttrib::UV) > 0)
+            {
+                interleavedData.push_back(uvs[i].x);
+                interleavedData.push_back(uvs[i].y);
+            }
+            if((attribs & (int)VertexAttrib::NORMALS) > 0)
+            {
+                interleavedData.push_back(normals[i].x);
+                interleavedData.push_back(normals[i].y);
+                interleavedData.push_back(normals[i].z);
+            }
+            if((attribs & (int)VertexAttrib::TANGENT) > 0)
+            {
+                interleavedData.push_back(tangents[i].x);
+                interleavedData.push_back(tangents[i].y);
+                interleavedData.push_back(tangents[i].z);
+            }
+            if((attribs & (int)VertexAttrib::BITANGENT) > 0)
+            {
+                interleavedData.push_back(bitangents[i].x);
+                interleavedData.push_back(bitangents[i].y);
+                interleavedData.push_back(bitangents[i].z);
             }
         }
         m_vertCount = verts.size() * 3;

@@ -66,7 +66,7 @@ void EndProgram(GLFWwindow* p_window) {
 void HintsGLFW() {
     PROFILE(p,"HintsGLFW");
 
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);            // Create context in debug mode - for debug message callback
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE); // Create context in debug mode - for debug message callback
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // On windows machine course uses version 4.5 on mac i need to use 4.1
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1 );
 

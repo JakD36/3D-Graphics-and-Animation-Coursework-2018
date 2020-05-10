@@ -16,7 +16,7 @@ class GameObject;
 
 class Scene1: public SceneGraph{
 private:
-    int m_bulb, m_wire, m_torch, m_torchLight, m_bulbLight;
+    int m_bulb, m_wire, m_torch, m_torchLight, m_bulbLight, m_lampHandle, m_lampLightHandle;
     
     // Swinging light
     float m_lightRadius = 0.25f;
@@ -36,5 +36,6 @@ public:
     virtual void UsePrimary() noexcept;
     virtual void UseSecondary() noexcept;
     virtual void Turn(GLfloat yaw, GLfloat pitch) noexcept;
+    virtual void UpdateHandles() noexcept;
 };
 #endif /* Scene1_hpp */

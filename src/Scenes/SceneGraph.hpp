@@ -21,13 +21,21 @@ class Camera;
 class GameObject;
 class Transform;
 
+struct FileInfo
+{
+    std::string path;
+    time_t lastModified;
+};
+
 class SceneGraph{
 protected:
+    FileInfo m_fileInfo;
+
     std::vector<std::string> m_lightKeys;
     std::array<LightData,k_lightCount> m_lights;
 
     std::vector<std::string> m_objectKeys;
-    std::vector<GameObject> m_objs;  // This is a vector of pointers to the objects in the scene, this allows us to render everything in the scene by adding to this vector of objects no matter if its a modelObject single or instanced.
+    std::vector<GameObject> m_objs;
 
     gsl::owner<Camera*> p_camera;
     Transform* m_playerTransform;
@@ -45,6 +53,8 @@ public:
     virtual void UseSecondary() noexcept = 0;
     virtual void Turn(GLfloat yaw, GLfloat pitch) noexcept = 0;
 
+    void UpdateFile() noexcept;
+    virtual void UpdateHandles() noexcept = 0;
     void Deserialise(std::string file);
 };
 

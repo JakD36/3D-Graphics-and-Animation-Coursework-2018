@@ -33,25 +33,24 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string
 
     ShaderManager* sm = ShaderManager::GetInstance();
 
-    vector<VertexAttrib> attribs;
+    int attribs = 0;
     auto attribStrs = js["vertexAttributes"];
     for(int i = 0; i < attribStrs.size();++i)
     {
         if(attribStrs[i] == "POSITION")
-            attribs.push_back(VertexAttrib::POSITION);
+            attribs |= (int)VertexAttrib::POSITION;
         else if(attribStrs[i] == "UV")
-            attribs.push_back(VertexAttrib::UV);
+            attribs |= (int)VertexAttrib::UV;
         else if(attribStrs[i] == "NORMALS")
-            attribs.push_back(VertexAttrib::NORMALS);
+            attribs |= (int)VertexAttrib::NORMALS;
         else if(attribStrs[i] == "TANGENT")
-            attribs.push_back(VertexAttrib::TANGENT);
+            attribs |= (int)VertexAttrib::TANGENT;
         else if(attribStrs[i] == "BITANGENT")
-            attribs.push_back(VertexAttrib::BITANGENT);
+            attribs |= (int)VertexAttrib::BITANGENT;
         else if(attribStrs[i] == "COLOUR")
-            attribs.push_back(VertexAttrib::COLOUR);
+            attribs |= (int)VertexAttrib::COLOUR;
         else
             assertm(false,"Undefined attribute string found!");
-
     }
 
     m_mesh = new Mesh(meshpath,attribs);
@@ -198,21 +197,11 @@ GameObject::GameObject(const GameObject &go) noexcept
     m_renderPass = go.m_renderPass;
 }
 
-GameObject::GameObject(Mesh* mesh, Material* mat, Texture* tex, GLuint shaderProgram, Transform* parent) noexcept{
-    m_transform = new Transform(parent);
-    m_mesh = mesh;
-    m_material = mat;
-    m_texture = tex;
-    
-    m_program = shaderProgram;
-}
-
 GameObject::GameObject(string renderPass, string meshPath, Transform* parent) noexcept{
     PROFILE(profiler,"GO Init");
 
     m_transform = new Transform(parent);
 
-//    ResourceService<Mesh>::GetInstance()->Request(meshPath);
     m_renderPass = BuildRenderPass(renderPass, meshPath);
 
     ENDPROFILE(profiler);

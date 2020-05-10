@@ -15,12 +15,12 @@
 
 enum class VertexAttrib
 {
-    POSITION,
-    UV,
-    NORMALS,
-    TANGENT,
-    BITANGENT,
-    COLOUR
+    POSITION = 1 << 0,
+    UV = 1 << 1,
+    NORMALS = 1 << 2,
+    TANGENT = 1 << 3,
+    BITANGENT = 1 << 4,
+    COLOUR = 1 << 5
 };
 
 class Mesh{
@@ -30,11 +30,9 @@ public:
     GLuint          m_buffer;                      // Buffer to store the vertices, uvs and the normals for the model
     GLuint          m_vao;
 
-    std::vector<VertexAttrib> m_attribs;
-
-    std::vector<float> Load(std::string meshName) noexcept;
-    std::vector<float> LoadAssimp(std::string meshName) noexcept;
-    Mesh(std::string meshName, std::vector<VertexAttrib>) noexcept;
+    std::vector<float> Load(std::string meshName, int vertexAttribFlags) noexcept;
+    std::vector<float> LoadAssimp(std::string meshName, int vertexAttribFlags) noexcept;
+    Mesh(std::string meshName, int vertexAttribFlags) noexcept;
     ~Mesh() noexcept;
 };
 

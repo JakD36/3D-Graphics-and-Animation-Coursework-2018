@@ -12,6 +12,7 @@
 #include "../Shaders/ShaderManager.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <sys/stat.h>
 #include "../GameObject/GameObject.hpp"
 #include "../Transform.h"
 
@@ -20,37 +21,23 @@ using namespace std;
 Scene1::Scene1() noexcept{
     PROFILE(p,"Scene Initialisation");
     double startTime = glfwGetTime(); // So we can see how long it takes for all models to load
-    
-    Deserialise("Set/room.json");
+
+    string filepath = "Set/room.json";
+
+    m_fileInfo.path = filepath;
+    struct stat buf;
+    stat(filepath.c_str(),&buf);
+    m_fileInfo.lastModified = buf.st_mtime;
+
+    Deserialise(filepath);
 
     // Dynamic objects
-    int lampHandle = -1, lampLightHandle = -1;
-    for(int i = 0, count = m_objectKeys.size(); i < count; ++i)
-    {
-        if(m_objectKeys[i] == "torch")
-            m_torch = i;
-        else if(m_objectKeys[i] == "bulb")
-            m_bulb = i;
-        else if(m_objectKeys[i] == "wire")
-            m_wire = i;
-        else if(m_objectKeys[i] == "lamp")
-            lampHandle = i;
-    }
-
-    for(int i = 0, count = m_lightKeys.size(); i < count; ++i)
-    {
-        if(m_lightKeys[i] == "ceiling")
-            m_bulbLight = i;
-        else if(m_lightKeys[i] == "torch")
-            m_torchLight = i;
-        else if(m_lightKeys[i] == "lamp")
-            lampLightHandle = i;
-    }
+    UpdateHandles();
 
     m_objs[m_torch].m_transform->m_parent = m_playerTransform;
     m_objs[m_torch].m_transform->m_localPosition = glm::quat(glm::vec3(glm::radians(m_pitchOffset),glm::radians(m_yawOffset),0.0f)) * glm::vec3(0.0f,0.0f,m_sphereRadius);
 
-    m_lights[lampLightHandle].position = m_objs[lampHandle].m_transform->m_localPosition + glm::vec3(0.0f,0.5f,0.0f);
+    m_lights[m_lampLightHandle].position = m_objs[m_lampHandle].m_transform->m_localPosition + glm::vec3(0.0f,0.5f,0.0f);
 
     cout<<"Time to load "<<glfwGetTime()-startTime<<endl;   // Just a nice thing to know
 
@@ -107,5 +94,30 @@ void Scene1::Turn(GLfloat yaw, GLfloat pitch) noexcept{
     m_playerTransform->m_localRotation = glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f));
 
     m_lights[m_torchLight].direction = glm::normalize(glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f)) * glm::vec3(0.0f,0.0f,1.0f));
+}
+
+void Scene1::UpdateHandles() noexcept
+{
+    for(int i = 0, count = m_objectKeys.size(); i < count; ++i)
+    {
+        if(m_objectKeys[i] == "torch")
+            m_torch = i;
+        else if(m_objectKeys[i] == "bulb")
+            m_bulb = i;
+        else if(m_objectKeys[i] == "wire")
+            m_wire = i;
+        else if(m_objectKeys[i] == "lamp")
+            m_lampHandle = i;
+    }
+
+    for(int i = 0, count = m_lightKeys.size(); i < count; ++i)
+    {
+        if(m_lightKeys[i] == "ceiling")
+            m_bulbLight = i;
+        else if(m_lightKeys[i] == "torch")
+            m_torchLight = i;
+        else if(m_lightKeys[i] == "lamp")
+            m_lampLightHandle = i;
+    }
 }
 

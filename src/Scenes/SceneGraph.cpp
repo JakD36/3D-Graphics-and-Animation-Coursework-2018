@@ -16,6 +16,7 @@
 #include <cstdio>
 #include "../Shaders/ShaderManager.h"
 #include "../Transform.h"
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -45,6 +46,24 @@ Camera* SceneGraph::GetCamera() noexcept
     return p_camera;
 }
 
+void SceneGraph::UpdateFile() noexcept
+{
+    struct stat buf;
+    stat(m_fileInfo.path.c_str(),&buf);
+
+    if(m_fileInfo.lastModified != buf.st_mtime)
+    {
+        m_fileInfo.lastModified = buf.st_mtime;
+        m_objs.clear();
+        m_objectKeys.clear();
+
+        m_lightKeys.clear();
+        m_lights.fill(LightData());
+        Deserialise(m_fileInfo.path);
+        UpdateHandles();
+    }
+}
+
 void SceneGraph::Deserialise(std::string filepath)
 {
     nlohmann::json js;
@@ -52,7 +71,6 @@ void SceneGraph::Deserialise(std::string filepath)
 
     assert(file.is_open());
 
-    ShaderManager* shaderManager = ShaderManager::GetInstance();
     file >> js;
     int objectCount = js["objects"].size();
     int initialCount = m_objs.size();
