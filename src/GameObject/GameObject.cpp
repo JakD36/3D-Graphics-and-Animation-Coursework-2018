@@ -20,6 +20,7 @@
 #include <fstream>
 #include <json.hpp>
 #include <GLFW/glfw3.h>
+#include <sys/stat.h>
 #include "../Shaders/ShaderManager.h"
 
 using namespace std;
@@ -195,13 +196,20 @@ GameObject::GameObject(const GameObject &go) noexcept
 
     m_program = go.m_program;
     m_renderPass = go.m_renderPass;
+    m_fileInfo = go.m_fileInfo;
+    m_meshPath = go.m_meshPath;
 }
 
 GameObject::GameObject(string renderPass, string meshPath, Transform* parent) noexcept{
     PROFILE(profiler,"GO Init");
 
-    m_transform = new Transform(parent);
+    m_fileInfo.path = renderPass;
+    struct stat buf;
+    stat(m_fileInfo.path.c_str(),&buf);
+    m_fileInfo.lastModified = buf.st_mtime;
 
+    m_transform = new Transform(parent);
+    m_meshPath = meshPath;
     m_renderPass = BuildRenderPass(renderPass, meshPath);
 
     ENDPROFILE(profiler);
@@ -264,4 +272,18 @@ void GameObject::Render(Camera camera) noexcept{
     ENDPROFILE(profiler);
 }
 
+void GameObject::UpdateFile() noexcept
+{
+    struct stat buf;
+    stat(m_fileInfo.path.c_str(),&buf);
 
+    if(m_fileInfo.lastModified != buf.st_mtime)
+    {
+        printf("Reloading GameObject!\n");
+        m_fileInfo.lastModified = buf.st_mtime;
+        delete m_mesh;
+
+        m_renderPass.clear();
+        m_renderPass = BuildRenderPass(m_fileInfo.path,m_meshPath);
+    }
+}

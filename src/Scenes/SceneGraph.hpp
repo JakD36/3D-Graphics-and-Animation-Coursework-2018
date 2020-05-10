@@ -21,14 +21,13 @@ class Camera;
 class GameObject;
 class Transform;
 
-struct FileInfo
-{
-    std::string path;
-    time_t lastModified;
-};
-
 class SceneGraph{
 protected:
+    struct FileInfo
+    {
+        std::string path;
+        time_t lastModified;
+    };
     FileInfo m_fileInfo;
 
     std::vector<std::string> m_lightKeys;

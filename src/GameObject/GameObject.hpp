@@ -25,11 +25,18 @@ class Transform;
 
 class GameObject {
 private:
+    struct FileInfo
+    {
+        std::string path;
+        time_t lastModified;
+    };
+    FileInfo m_fileInfo;
+    std::string m_meshPath;
     std::vector<GameObjectRenderPass> BuildRenderPass(std::string filepath, std::string meshpath);
 public:
     GameObject(const GameObject &go) noexcept;
     GameObject(std::string renderPass, std::string mesh, Transform* parent = nullptr) noexcept;
-
+    void UpdateFile() noexcept;
     std::vector<GameObjectRenderPass> m_renderPass;
 
     gsl::owner<Transform*> m_transform;
