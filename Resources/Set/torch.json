@@ -1,4 +1,5 @@
 {
+  "name": "Torch",
   "vertexAttributes": [
     "POSITION",
     "UV",

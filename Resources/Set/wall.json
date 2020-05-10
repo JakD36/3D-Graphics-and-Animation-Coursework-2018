@@ -1,4 +1,5 @@
 {
+  "name": "Wall",
   "vertexAttributes": [
     "POSITION",
     "UV",
@@ -17,8 +18,8 @@
         "file": "Materials/wall.mtl"
       },
       "textures": [
-        {"file": "Textures/wall.ktx", "key": "tex"},
-        {"file": "Textures/NormalMap.ktx", "key": "normalMap"}
+        {"file": "Textures/brickwall.ktx", "key": "tex"},
+        {"file": "Textures/brickwall_normal.ktx", "key": "normalMap"}
       ],
       "float" : [
         {"key": "shininess"},

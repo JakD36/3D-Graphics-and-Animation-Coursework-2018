@@ -1,4 +1,5 @@
 {
+  "name": "Beam",
   "vertexAttributes": [
     "POSITION",
     "UV",

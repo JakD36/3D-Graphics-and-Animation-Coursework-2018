@@ -38,7 +38,7 @@ public:
     GameObject(std::string renderPass, std::string mesh, Transform* parent = nullptr) noexcept;
     void UpdateFile() noexcept;
     std::vector<GameObjectRenderPass> m_renderPass;
-
+    std::string m_name;
     gsl::owner<Transform*> m_transform;
 
     Mesh* m_mesh;

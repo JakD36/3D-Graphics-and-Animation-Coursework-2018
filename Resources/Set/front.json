@@ -1,4 +1,5 @@
 {
+  "name": "Front wall",
   "vertexAttributes": [
     "POSITION",
     "UV",
@@ -10,15 +11,14 @@
     {
       "cull": "back",
       "shader": {
-        "vert": "Shaders/vs_normal.glsl",
-        "frag": "Shaders/fs_normal.glsl"
+        "vert": "Shaders/vs.glsl",
+        "frag": "Shaders/fs.glsl"
       },
       "material": {
         "file": "Materials/front.mtl"
       },
       "textures": [
-        {"file": "Textures/brickwall.ktx", "key": "tex"},
-        {"file": "Textures/brickwall_normal.ktx", "key": "normalMap"}
+        {"file": "Textures/front.ktx", "key": "tex"}
       ],
       "float" : [
         {"key": "shininess"},

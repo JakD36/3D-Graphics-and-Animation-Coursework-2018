@@ -41,6 +41,8 @@ uniform float lightConstant;
 uniform float lightLinear;
 uniform float lightQuadratic;
 
+uniform vec4 debugColour;
+
 uniform vec4 ia;
 uniform vec3 ka;
 uniform vec3 kd;

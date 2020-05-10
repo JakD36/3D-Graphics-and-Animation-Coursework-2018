@@ -1,4 +1,5 @@
 {
+  "name": "Bulb",
   "vertexAttributes": [
     "POSITION",
     "UV",

@@ -1,4 +1,5 @@
 {
+  "name": "Floor",
   "vertexAttributes": [
     "POSITION",
     "UV",

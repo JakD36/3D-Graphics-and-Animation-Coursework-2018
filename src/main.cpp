@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 {
     DEBUGLOG(("Help me %s\n","dog"));
 
-    int windowHeight = 320; // height of the window
+    int windowHeight = 580; // height of the window
     int windowWidth = (int)(windowHeight * 16.0f/9.0f); // width of the window
 
 
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
         ImGui::NewFrame();
 
         // bool show_demo_window = true;
-        // ImGui::ShowDemoWindow(&show_demo_window);
+//         ImGui::ShowDemoWindow(&show_demo_window);
 
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
         scene.Update(deltaTime);

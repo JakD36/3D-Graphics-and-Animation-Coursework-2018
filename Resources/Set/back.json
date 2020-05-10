@@ -1,4 +1,5 @@
 {
+  "name": "Back Wall",
   "vertexAttributes": [
     "POSITION",
     "UV",

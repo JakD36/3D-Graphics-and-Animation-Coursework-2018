@@ -25,12 +25,17 @@
 
 using namespace std;
 
+// TODO: need to treat Render passes like shaders as these values are shared across every gameobjec that uses it
+// TODO: Handle errors in the json parsing and report the mistake to allow for adding values without worrying about one mistake crashing application
+
 vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string meshpath)
 {
     nlohmann::json js;
     fstream file(filepath);
     assertm(file.is_open(),"RenderPass Json file did not open.");
     file >> js;
+
+    m_name = js["name"];
 
     ShaderManager* sm = ShaderManager::GetInstance();
 
@@ -57,7 +62,8 @@ vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string
     m_mesh = new Mesh(meshpath,attribs);
 
     nlohmann::json passes = js["pass"];
-    vector<GameObjectRenderPass> output(passes.size());
+    vector<GameObjectRenderPass> output;
+    output.reserve(passes.size());
 
     for(int i = 0; i < passes.size(); ++i)
     {
@@ -198,6 +204,7 @@ GameObject::GameObject(const GameObject &go) noexcept
     m_renderPass = go.m_renderPass;
     m_fileInfo = go.m_fileInfo;
     m_meshPath = go.m_meshPath;
+    m_name = go.m_name;
 }
 
 GameObject::GameObject(string renderPass, string meshPath, Transform* parent) noexcept{

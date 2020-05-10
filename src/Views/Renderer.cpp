@@ -1,6 +1,7 @@
 #include "Renderer.hpp"
 
 #include <vector>
+#include <DearImgui/imgui.h>
 #include "Camera.hpp"
 #include "../Utils/ProfilerService.h"
 #include "../Shaders/ShaderManager.h"
@@ -109,6 +110,46 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
 
     glm::vec3 camPos = camera->GetPosition();
     glm::mat4 projMatrix = camera->ProjectionMatrix();
+
+
+    ImGui::Begin("Shader Tool",NULL);
+    if(ImGui::TreeNode("GameObjects"))
+    {
+        for(int i = 0; i < objs.size(); ++i)
+        {
+            auto &rp = objs[i].m_renderPass;
+            if(ImGui::TreeNode(objs[i].m_name.c_str()))
+            {
+                for(int j = 0; j < rp.size();++j)
+                {
+                    if(ImGui::TreeNode(("Pass " + to_string(j)).c_str()))
+                    {
+                        auto &pass = rp[j];
+                        for(int k = 0; k < pass.m_uniformf.size();++k)
+                        {
+                            ImGui::SliderFloat(pass.m_uniformf[k].m_key.c_str(), &pass.m_uniformf[k].m_value,0,5);
+                        }
+                        for(int k = 0; k < pass.m_uniform3fv.size();++k)
+                        {
+                            float tmp[3] = {pass.m_uniform3fv[k].m_value.x,pass.m_uniform3fv[k].m_value.y,pass.m_uniform3fv[k].m_value.z};
+                            ImGui::InputFloat3(pass.m_uniform3fv[k].m_key.c_str(), tmp);
+                            pass.m_uniform3fv[k].m_value = {tmp[0],tmp[1],tmp[2]};
+                        }
+                        for(int k = 0; k < pass.m_uniform4fv.size();++k)
+                        {
+                            float tmp[4] = {pass.m_uniform4fv[k].m_value.x,pass.m_uniform4fv[k].m_value.y,pass.m_uniform4fv[k].m_value.z,pass.m_uniform4fv[k].m_value.w};
+                            ImGui::InputFloat4(pass.m_uniform4fv[k].m_key.c_str(), tmp);
+                            pass.m_uniform4fv[k].m_value = {tmp[0],tmp[1],tmp[2],tmp[3]};
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+                ImGui::TreePop();
+            }
+        }
+        ImGui::TreePop();
+    }
+    ImGui::End();
 
     std::for_each(begin(objs),end(objs),[&](auto obj)
     {

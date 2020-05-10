@@ -1,4 +1,5 @@
 {
+  "name": "Table",
   "vertexAttributes": [
     "POSITION",
     "UV",
