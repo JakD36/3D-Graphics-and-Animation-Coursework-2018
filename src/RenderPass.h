@@ -2,13 +2,17 @@
 // Created by Jack Davidson on 02/05/2020.
 //
 
-#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_GAMEOBJECTRENDERPASS_H
-#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_GAMEOBJECTRENDERPASS_H
+#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERPASS_H
+#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERPASS_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
+#include <json.hpp>
+
+class Mesh;
+class GameObject;
 
 struct TextureShaderParam
 {
@@ -39,7 +43,7 @@ struct Uniform4fv
     glm::vec4 m_value;
 };
 
-struct GameObjectRenderPass
+class RenderPass
 {
 public:
     GLuint m_program;
@@ -51,6 +55,8 @@ public:
     std::vector<Uniformf> m_uniformf;
     std::vector<Uniform3fv> m_uniform3fv;
     std::vector<Uniform4fv> m_uniform4fv;
+
+    RenderPass(nlohmann::json passJson);
 };
 
-#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_GAMEOBJECTRENDERPASS_H
+#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERPASS_H

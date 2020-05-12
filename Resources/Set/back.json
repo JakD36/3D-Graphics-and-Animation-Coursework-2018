@@ -1,10 +1,5 @@
 {
   "name": "Back Wall",
-  "vertexAttributes": [
-    "POSITION",
-    "UV",
-    "NORMALS"
-  ],
   "pass": [
     {
       "cull": "back",

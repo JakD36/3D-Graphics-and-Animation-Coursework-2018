@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/newTorch.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}

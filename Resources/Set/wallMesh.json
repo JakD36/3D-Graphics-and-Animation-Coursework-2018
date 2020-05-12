@@ -1,0 +1,10 @@
+{
+  "filepath": "Set/wall.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS",
+    "TANGENT",
+    "BITANGENT"
+  ]
+}

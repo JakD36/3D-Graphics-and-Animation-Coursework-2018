@@ -19,15 +19,17 @@
 #include "Shaders/ShaderManager.h"
 
 #include "../Include/DearImgui/imgui.h"
-#include "../Include/DearImgui/imgui_impl_glfw.h"
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
-#include "Utils/imgui_impl_glm.h"
+#include "../Include/DearImgui/imgui_impl_glfw.h"
 
 #include "Utils/ProfilerService.h"
 #include "Utils/ProfileTag.h"
 #include <gsl/pointers>
 #include "Utils/DebugUtils.h"
 #include "GameObject/GameObject.hpp"
+
+#include "Utils/ShaderEditor.h"
+#include "Views/RenderTaskManager.h"
 
 using namespace std;
 using gsl::owner;
@@ -69,6 +71,8 @@ int main(int argc, char *argv[])
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
     ShaderManager* smInstance = ShaderManager::GetInstance();
+    RenderTaskManager* rtmInstance = RenderTaskManager::GetInstance();
+
     double prevTime = glfwGetTime();
     while (glfwWindowShouldClose(p_window) != GL_TRUE){ // run until the window is closed
         PROFILE(gameLoopProfile,"mainloop");
@@ -78,17 +82,18 @@ int main(int argc, char *argv[])
         prevTime = currentTime;
 
         smInstance->Update();
+        rtmInstance->TryUpdateFiles();
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
         // bool show_demo_window = true;
-//         ImGui::ShowDemoWindow(&show_demo_window);
+        // ImGui::ShowDemoWindow(&show_demo_window);
 
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
         scene.Update(deltaTime);
-        ShaderTool(scene.GetObjs());
+        ShaderEditorWindow(scene.GetObjs());
         s_view->Render(&scene);
 
         { // Render ImGui
@@ -110,43 +115,4 @@ int main(int argc, char *argv[])
 
     EndProgram(p_window);
     return 0;
-}
-
-
-void ShaderTool(vector<GameObject>& objs)
-{
-    ImGui::Begin("Shader Tool",NULL);
-    if(ImGui::TreeNode("GameObjects"))
-    {
-        for(int i = 0; i < objs.size(); ++i)
-        {
-            auto &rp = objs[i].m_renderPass;
-            if(ImGui::TreeNode(objs[i].m_name.c_str()))
-            {
-                for(int j = 0; j < rp.size();++j)
-                {
-                    if(ImGui::TreeNode(("Pass " + to_string(j)).c_str()))
-                    {
-                        auto &pass = rp[j];
-                        for(int k = 0; k < pass.m_uniformf.size();++k)
-                        {
-                            ImGui::SliderFloat(pass.m_uniformf[k].m_key.c_str(), &pass.m_uniformf[k].m_value,0,5);
-                        }
-                        for(int k = 0; k < pass.m_uniform3fv.size();++k)
-                        {
-                            ImGui::InputFloat3(pass.m_uniform3fv[k].m_key.c_str(), pass.m_uniform3fv[k].m_value);
-                        }
-                        for(int k = 0; k < pass.m_uniform4fv.size();++k)
-                        {
-                            ImGui::InputFloat4(pass.m_uniform4fv[k].m_key.c_str(), pass.m_uniform4fv[k].m_value);
-                        }
-                        ImGui::TreePop();
-                    }
-                }
-                ImGui::TreePop();
-            }
-        }
-        ImGui::TreePop();
-    }
-    ImGui::End();
 }

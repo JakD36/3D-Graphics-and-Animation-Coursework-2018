@@ -10,214 +10,35 @@
 #include "../Utils/ProfilerService.h"
 #include "../Lights/Lights.hpp"
 #include "../ResourceManager/ResourceService.hpp"
-#include <glm/gtx/transform.hpp>
 #include "../Mesh/Mesh.hpp"
 #include "../Material/Material.hpp"
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"
 #include "../Transform.h"
 #include "../Utils/DebugUtils.h"
-#include <fstream>
-#include <json.hpp>
-#include <GLFW/glfw3.h>
 #include <sys/stat.h>
-#include "../Shaders/ShaderManager.h"
+#include "../Views/RenderTaskManager.h"
 
 using namespace std;
 
 // TODO: need to treat Render passes like shaders as these values are shared across every gameobjec that uses it
 // TODO: Handle errors in the json parsing and report the mistake to allow for adding values without worrying about one mistake crashing application
 
-vector<GameObjectRenderPass> GameObject::BuildRenderPass(string filepath, string meshpath)
-{
-    nlohmann::json js;
-    fstream file(filepath);
-    assertm(file.is_open(),"RenderPass Json file did not open.");
-    file >> js;
-
-    m_name = js["name"];
-
-    ShaderManager* sm = ShaderManager::GetInstance();
-
-    int attribs = 0;
-    auto attribStrs = js["vertexAttributes"];
-    for(int i = 0; i < attribStrs.size();++i)
-    {
-        if(attribStrs[i] == "POSITION")
-            attribs |= (int)VertexAttrib::POSITION;
-        else if(attribStrs[i] == "UV")
-            attribs |= (int)VertexAttrib::UV;
-        else if(attribStrs[i] == "NORMALS")
-            attribs |= (int)VertexAttrib::NORMALS;
-        else if(attribStrs[i] == "TANGENT")
-            attribs |= (int)VertexAttrib::TANGENT;
-        else if(attribStrs[i] == "BITANGENT")
-            attribs |= (int)VertexAttrib::BITANGENT;
-        else if(attribStrs[i] == "COLOUR")
-            attribs |= (int)VertexAttrib::COLOUR;
-        else
-            assertm(false,"Undefined attribute string found!");
-    }
-
-    m_mesh = new Mesh(meshpath,attribs);
-
-    nlohmann::json passes = js["pass"];
-    vector<GameObjectRenderPass> output;
-    output.reserve(passes.size());
-
-    for(int i = 0; i < passes.size(); ++i)
-    {
-        auto pass = passes[i];
-        auto shaders = pass["shader"];
-        GLuint program = sm->RequestProgram(shaders["vert"],shaders["frag"]);
-
-        std::vector<TextureShaderParam> textures;
-
-        auto texArrayJs = pass["textures"];
-        for(int i = 0; i < texArrayJs.size(); ++i)
-        {
-            auto texJs = texArrayJs[i];
-            m_texture = ResourceService<Texture>::GetInstance()->Request(texJs["file"]);
-            textures.push_back(TextureShaderParam
-            {
-                glGetUniformLocation(program,((string)texJs["key"]).c_str()) ,
-                texJs["key"],
-                m_texture->m_texture[0]
-            });
-        }
-        auto matJs = pass["material"];
-        m_material = ResourceService<Material>::GetInstance()->Request(matJs["file"]);
-
-        vector<Uniformf> uniformf;
-        auto floats = pass["float"];
-        for(int i = 0; i < floats.size(); ++i)
-        {
-            auto f = floats[i];
-            if(f["key"] == "shininess")
-            {
-                uniformf.push_back(Uniformf{
-                    glGetUniformLocation(program,((string)f["key"]).c_str()),
-                    f["key"],
-                    m_material->m_shininess
-                });
-            }
-            else{
-                uniformf.push_back(Uniformf{
-                        glGetUniformLocation(program,((string)f["key"]).c_str()),
-                        f["key"],
-                        f["value"]
-                });
-            }
-        }
-
-        vector<Uniform3fv> uniform3fv;
-        auto vec3s = pass["vec3"];
-        for(int i = 0; i < vec3s.size(); ++i)
-        {
-            auto v = vec3s[i];
-            if(v["key"] == "ka")
-            {
-                uniform3fv.push_back(Uniform3fv{
-                        glGetUniformLocation(program,((string)v["key"]).c_str()),
-                        v["key"],
-                        m_material->m_ka
-                });
-            }
-            else if(v["key"] == "kd")
-            {
-                uniform3fv.push_back(Uniform3fv{
-                        glGetUniformLocation(program,((string)v["key"]).c_str()),
-                        v["key"],
-                        m_material->m_kd
-                });
-            }
-            else if(v["key"] == "ks")
-            {
-                uniform3fv.push_back(Uniform3fv{
-                        glGetUniformLocation(program,((string)v["key"]).c_str()),
-                        v["key"],
-                        m_material->m_ks
-                });
-            }
-            else{
-                auto vec = v["value"];
-                uniform3fv.push_back(Uniform3fv{
-                        glGetUniformLocation(program,((string)v["key"]).c_str()),
-                        v["key"],
-                        glm::vec3(vec["x"],vec["y"],vec["z"])
-                });
-            }
-        }
-
-        vector<Uniform4fv> uniform4fv;
-        auto vec4s = pass["vec4"];
-        for(int i = 0; i < vec4s.size(); ++i)
-        {
-            auto v = vec4s[i];
-            if(v["key"] == "ia")
-            {
-                uniform4fv.push_back(Uniform4fv{
-                        glGetUniformLocation(program,((string)v["key"]).c_str()),
-                        v["key"],
-                        glm::vec4(ia,1.f)
-                });
-            }
-            else{
-                auto vec = v["value"];
-                uniform4fv.push_back(Uniform4fv{
-                        glGetUniformLocation(program,((string)v["key"]).c_str()),
-                        v["key"],
-                        glm::vec4(vec["x"],vec["y"],vec["z"],vec["w"])
-                });
-            }
-        }
-        GLenum cull;
-        if(pass["cull"] == "front")
-        {
-            cull = GL_FRONT;
-        }
-        else if(pass["cull"] == "back")
-        {
-            cull = GL_BACK;
-        }
-
-        output.push_back(GameObjectRenderPass{
-            program,
-            cull,
-            textures,
-            uniformf,
-            uniform3fv,
-            uniform4fv
-        });
-    }
-    return output;
-}
-
 GameObject::GameObject(const GameObject &go) noexcept
 {
     m_transform = new Transform(go.m_transform);
     m_mesh = go.m_mesh;
-    m_material = go.m_material;
-    m_texture = go.m_texture;
 
-    m_program = go.m_program;
-    m_renderPass = go.m_renderPass;
-    m_fileInfo = go.m_fileInfo;
-    m_meshPath = go.m_meshPath;
-    m_name = go.m_name;
+    m_renderTask = go.m_renderTask;
 }
 
-GameObject::GameObject(string renderPass, string meshPath, Transform* parent) noexcept{
+GameObject::GameObject(string renderPass, string meshMethadata, Transform* parent) noexcept{
     PROFILE(profiler,"GO Init");
 
-    m_fileInfo.path = renderPass;
-    struct stat buf;
-    stat(m_fileInfo.path.c_str(),&buf);
-    m_fileInfo.lastModified = buf.st_mtime;
-
     m_transform = new Transform(parent);
-    m_meshPath = meshPath;
-    m_renderPass = BuildRenderPass(renderPass, meshPath);
+    m_renderTask = RenderTaskManager::GetInstance()->RequestRenderTask(renderPass);
+
+    m_mesh = new Mesh(meshMethadata);
 
     ENDPROFILE(profiler);
 }
@@ -226,18 +47,14 @@ void GameObject::Render(Camera camera) noexcept{
     PROFILE(profiler,"GO Render");
 
     assertm(m_mesh != nullptr,"Mesh Cannot be null");
-    assertm(m_material != nullptr,"Material Cannot be null");
-    assertm(m_texture != nullptr,"Texture Cannot be null");
 
     glm::mat4 m = m_transform->BuildModelMatrix();
     glm::mat4 mv = camera.BuildViewMat() * m;
     glm::mat4 mvp = camera.ProjectionMatrix() * mv;
 
-    assertm(m_renderPass.size() > 0,"No RenderPasses have been defined...");
-
-    for(int i = 0; i < m_renderPass.size(); ++i)
+    for(int i = 0; i < m_renderTask->m_passes.size(); ++i)
     {
-        GameObjectRenderPass& pass = m_renderPass[i];
+        RenderPass& pass = m_renderTask->m_passes[i];
         glUseProgram(pass.m_program);
 
         glBindVertexArray(m_mesh->m_vao);
@@ -277,20 +94,4 @@ void GameObject::Render(Camera camera) noexcept{
     }
 
     ENDPROFILE(profiler);
-}
-
-void GameObject::UpdateFile() noexcept
-{
-    struct stat buf;
-    stat(m_fileInfo.path.c_str(),&buf);
-
-    if(m_fileInfo.lastModified != buf.st_mtime)
-    {
-        printf("Reloading GameObject!\n");
-        m_fileInfo.lastModified = buf.st_mtime;
-        delete m_mesh;
-
-        m_renderPass.clear();
-        m_renderPass = BuildRenderPass(m_fileInfo.path,m_meshPath);
-    }
 }

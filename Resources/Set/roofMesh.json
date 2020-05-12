@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/roof.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}

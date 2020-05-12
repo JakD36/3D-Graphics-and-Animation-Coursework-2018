@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/floor.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}

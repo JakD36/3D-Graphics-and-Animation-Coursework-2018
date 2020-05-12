@@ -3,7 +3,7 @@
     {
       "key" : "torch",
       "render" : "Set/torch.json",
-      "mesh": "Set/newTorch.obj",
+      "mesh": "Set/newTorchMesh.json",
       "position": {"x": 0, "y": 0, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -11,7 +11,7 @@
     {
       "key" : "bulb",
       "render" : "Set/bulb.json",
-      "mesh": "Set/bulb.obj",
+      "mesh": "Set/bulbMesh.json",
       "position": {"x": 0, "y": 0, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -19,7 +19,7 @@
     {
       "key" : "wire",
       "render" : "Set/wire.json",
-      "mesh": "Set/wire.obj",
+      "mesh": "Set/wireMesh.json",
       "position": {"x": 0, "y": 0, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -27,7 +27,7 @@
     {
       "key" : "lamp",
       "render" : "Set/lamp.json",
-      "mesh": "Set/lamp.obj",
+      "mesh": "Set/lampMesh.json",
       "position": {"x": 2.4, "y": 1.025, "z": 1.6},
       "rotation": {"x": 0, "y": 120, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -35,7 +35,7 @@
     {
       "key" : "frontWall",
       "render" : "Set/front.json",
-      "mesh": "Set/front.obj",
+      "mesh": "Set/frontMesh.json",
       "position": {"x": 0, "y": 0, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -43,7 +43,7 @@
     {
       "key" : "backWall",
       "render" : "Set/back.json",
-      "mesh": "Set/back.obj",
+      "mesh": "Set/backMesh.json",
       "position": {"x": 0, "y": 2, "z": 3},
       "rotation": {"x": 0, "y": 180, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -51,7 +51,7 @@
     {
       "key" : "roof",
       "render" : "Set/roof.json",
-      "mesh": "Set/roof.obj",
+      "mesh": "Set/roofMesh.json",
       "position": {"x": 0, "y": 2.5, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -59,7 +59,7 @@
     {
       "key" : "beam_1",
       "render" : "Set/beam.json",
-      "mesh": "Set/beam.obj",
+      "mesh": "Set/beamMesh.json",
       "position": {"x": 0, "y": 2.61, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -67,7 +67,7 @@
     {
       "key" : "beam_2",
       "render" : "Set/beam.json",
-      "mesh": "Set/beam.obj",
+      "mesh": "Set/beamMesh.json",
       "position": {"x": 0, "y": 2.61, "z": -1.5},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -75,7 +75,7 @@
     {
       "key" : "beam_3",
       "render" : "Set/beam.json",
-      "mesh": "Set/beam.obj",
+      "mesh": "Set/beamMesh.json",
       "position": {"x": 0, "y": 2.61, "z": 1.5},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -83,7 +83,7 @@
     {
       "key" : "plank_1",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 2.2, "y": 1.5, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": 5},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -91,7 +91,7 @@
     {
       "key" : "plank_2",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 2, "y": 1.3, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": 1},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -99,7 +99,7 @@
     {
       "key" : "plank_3",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1.65, "y": 1.6, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": 2},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -107,7 +107,7 @@
     {
       "key" : "plank_4",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1.4, "y": 1.5, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": -5},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -115,7 +115,7 @@
     {
       "key" : "plank_5",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1.1, "y": 1.3, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": 1},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -123,7 +123,7 @@
     {
       "key" : "plank_6",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 0.8, "y": 1.55, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": -12},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -131,7 +131,7 @@
     {
       "key" : "plank_7",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 0.5, "y": 1.55, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": -1},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -139,7 +139,7 @@
     {
       "key" : "plank_8",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 0.1, "y": 1.55, "z": -3},
       "rotation": {"x": 90, "y": 0, "z": 6},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -147,7 +147,7 @@
     {
       "key" : "plank_9",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 0.6, "y": 1.7, "z": -2.85},
       "rotation": {"x": 90, "y": 0, "z": 80},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -155,7 +155,7 @@
     {
       "key" : "plank_10",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1, "y": 1.15, "z": -2.85},
       "rotation": {"x": 90, "y": 0, "z": 110},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -163,7 +163,7 @@
     {
       "key" : "plank_11",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1.8, "y": 1.65, "z": -2.85},
       "rotation": {"x": 90, "y": 0, "z": 60},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -171,7 +171,7 @@
     {
       "key" : "plank_12",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1.4, "y": 1.85, "z": -3.2},
       "rotation": {"x": 90, "y": 0, "z": 85},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -179,7 +179,7 @@
     {
       "key" : "plank_13",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": -1.4, "y": 1.55, "z": -3.2},
       "rotation": {"x": 90, "y": 0, "z": 95},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -187,7 +187,7 @@
     {
       "key" : "plank_14",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": -1.4, "y": 1.2, "z": -3.2},
       "rotation": {"x": 90, "y": 0, "z": 90},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -195,7 +195,7 @@
     {
       "key" : "plank_15",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": -1.4, "y": 0.85, "z": -3.2},
       "rotation": {"x": 90, "y": 0, "z": 80},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -203,7 +203,7 @@
     {
       "key" : "plank_16",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": 1.4, "y": 0.5, "z": -3.2},
       "rotation": {"x": 90, "y": 0, "z": 100},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -211,7 +211,7 @@
     {
       "key" : "plank_17",
       "render" : "Set/plank.json",
-      "mesh": "Set/plank.obj",
+      "mesh": "Set/plankMesh.json",
       "position": {"x": -1.4, "y": 0.2, "z": -3.2},
       "rotation": {"x": 90, "y": 0, "z": 95},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -219,7 +219,7 @@
     {
       "key" : "floor",
       "render" : "Set/floor.json",
-      "mesh": "Set/floor.obj",
+      "mesh": "Set/floorMesh.json",
       "position": {"x": 0, "y": 0, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -227,7 +227,7 @@
     {
       "key" : "wall_1",
       "render" : "Set/wall.json",
-      "mesh": "Set/wall.obj",
+      "mesh": "Set/wallMesh.json",
       "position": {"x": 3, "y": 1.25, "z": 0},
       "rotation": {"x": 0, "y": 180, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -235,7 +235,7 @@
     {
       "key" : "wall_2",
       "render" : "Set/wall.json",
-      "mesh": "Set/wall.obj",
+      "mesh": "Set/wallMesh.json",
       "position": {"x": -3, "y": 1.25, "z": 0},
       "rotation": {"x": 0, "y": 0, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}
@@ -243,7 +243,7 @@
     {
       "key" : "table",
       "render" : "Set/table.json",
-      "mesh": "Set/table.obj",
+      "mesh": "Set/tableMesh.json",
       "position": {"x": 1.8, "y": 1, "z": 1.8},
       "rotation": {"x": 0, "y": 45, "z": 0},
       "scale": {"x": 1, "y": 1, "z": 1}

@@ -49,10 +49,6 @@ Camera* SceneGraph::GetCamera() noexcept
 void SceneGraph::Update(double deltaTime) noexcept
 {
     UpdateFile();
-    for(int i = 0; i < m_objs.size(); ++i)
-    {
-        m_objs[i].UpdateFile();
-    }
 }
 
 void SceneGraph::UpdateFile() noexcept

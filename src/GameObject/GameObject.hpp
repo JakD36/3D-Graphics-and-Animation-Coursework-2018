@@ -15,36 +15,24 @@
 #include <gsl/pointers>
 #include <vector>
 #include <tuple>
-#include "../GameObjectRenderPass.h"
+#include "../RenderPass.h"
 
 class Mesh;
 class Material;
 class Texture;
 class Camera;
 class Transform;
+class RenderTask;
 
 class GameObject {
 private:
-    struct FileInfo
-    {
-        std::string path;
-        time_t lastModified;
-    };
-    FileInfo m_fileInfo;
-    std::string m_meshPath;
-    std::vector<GameObjectRenderPass> BuildRenderPass(std::string filepath, std::string meshpath);
 public:
     GameObject(const GameObject &go) noexcept;
     GameObject(std::string renderPass, std::string mesh, Transform* parent = nullptr) noexcept;
-    void UpdateFile() noexcept;
-    std::vector<GameObjectRenderPass> m_renderPass;
-    std::string m_name;
     gsl::owner<Transform*> m_transform;
 
+    RenderTask* m_renderTask;
     Mesh* m_mesh;
-    Texture* m_texture;
-    Material* m_material;
-    GLuint m_program;
     
     void Render(Camera camera) noexcept;
 };

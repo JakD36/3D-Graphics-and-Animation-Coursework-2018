@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/wire.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/bulb.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}

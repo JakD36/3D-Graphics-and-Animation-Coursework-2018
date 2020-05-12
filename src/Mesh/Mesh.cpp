@@ -15,17 +15,45 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <json.hpp>
+#include <fstream>
 
 using namespace std;
 
-Mesh::Mesh(string meshName, int attrib) noexcept{
+Mesh::Mesh(string metadataFilepath) noexcept{
+
+    m_attributeFlags = 0;
+
+    nlohmann::json js;
+    std::fstream file(metadataFilepath);
+    assertm(file.is_open(),("RenderPass Json file did not open. "));
+    file >> js;
+
+    auto attribStrs = js["vertexAttributes"];
+    for(int i = 0; i < attribStrs.size();++i)
+    {
+        if(attribStrs[i] == "POSITION")
+            m_attributeFlags |= (int)VertexAttrib::POSITION;
+        else if(attribStrs[i] == "UV")
+            m_attributeFlags |= (int)VertexAttrib::UV;
+        else if(attribStrs[i] == "NORMALS")
+            m_attributeFlags |= (int)VertexAttrib::NORMALS;
+        else if(attribStrs[i] == "TANGENT")
+            m_attributeFlags |= (int)VertexAttrib::TANGENT;
+        else if(attribStrs[i] == "BITANGENT")
+            m_attributeFlags |= (int)VertexAttrib::BITANGENT;
+        else if(attribStrs[i] == "COLOUR")
+            m_attributeFlags |= (int)VertexAttrib::COLOUR;
+        else
+            assertm(false,"Undefined attribute string found!");
+    }
+
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
     
     glGenBuffers(1,&m_buffer); // Generate the buffer to store the vertices, uvs and normals
 
-    vector<float> interleavedData = Load(meshName,attrib);
-//    vector<float> interleavedData = LoadAssimp(meshName);
+    vector<float> interleavedData = Load(js["filepath"],m_attributeFlags);
  
     // For debug we can uncomment to see how many vertices, UVs and Normals are in each object
     const int size[]{3,2,3,3,3,3};
@@ -38,13 +66,13 @@ Mesh::Mesh(string meshName, int attrib) noexcept{
     int total = 0;
     for(int i = 0; i < 6; ++i)
     {
-        total += size[i] * ((attrib & (1 << i)) > 0 ? 1 : 0);
+        total += size[i] * ((m_attributeFlags & (1 << i)) > 0 ? 1 : 0);
     }
 
     int offset = 0;
     for(int i = 0; i < 6; ++i)
     {
-        if((attrib & (1 << i)) > 0)
+        if((m_attributeFlags & (1 << i)) > 0)
         {
             glVertexAttribPointer(i, size[i] , GL_FLOAT, GL_FALSE, sizeof(float) * total, (void*)(sizeof(float) * offset));
             glEnableVertexAttribArray(i);
@@ -108,7 +136,7 @@ std::vector<float> Mesh::LoadAssimp(string meshName, int attribs) noexcept
     m_vertCount = indices.size();
     return interleavedData;
 }
-// TODO: Calculate Bit tangents and tangents myself!
+
 std::vector<float> Mesh::Load(string meshName, int attribs) noexcept{
     // Variables
     FILE* pfile = nullptr; // using stdio and fscanf which means formatted scan file

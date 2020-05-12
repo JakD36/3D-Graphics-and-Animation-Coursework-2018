@@ -27,12 +27,14 @@ class Mesh{
 public:
     int m_vertCount;
 
+    int m_attributeFlags;
+
     GLuint          m_buffer;                      // Buffer to store the vertices, uvs and the normals for the model
     GLuint          m_vao;
 
     std::vector<float> Load(std::string meshName, int vertexAttribFlags) noexcept;
     std::vector<float> LoadAssimp(std::string meshName, int vertexAttribFlags) noexcept;
-    Mesh(std::string meshName, int vertexAttribFlags) noexcept;
+    Mesh(std::string metadataFilepath) noexcept;
     ~Mesh() noexcept;
 };
 

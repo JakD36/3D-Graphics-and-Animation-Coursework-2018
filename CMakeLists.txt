@@ -67,7 +67,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Views/FrameBuffer.h
         src/Lights/Lights.cpp
         src/OpenGLCallbacks.h
-        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/DebugUtils.h src/GameObjectRenderPass.h Include/DearImgui/imgui_impl_glm.h)
+        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/DebugUtils.h src/RenderPass.h src/Utils/imgui_impl_glm.h src/Utils/ShaderEditor.cpp src/Utils/ShaderEditor.h src/Views/RenderTask.cpp src/Views/RenderTask.h src/Views/RenderTaskManager.cpp src/Views/RenderTaskManager.h src/RenderPass.cpp)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

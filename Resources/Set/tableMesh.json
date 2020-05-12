@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/table.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}

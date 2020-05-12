@@ -1,0 +1,8 @@
+{
+  "filepath": "Set/front.obj",
+  "vertexAttributes": [
+    "POSITION",
+    "UV",
+    "NORMALS"
+  ]
+}
