@@ -1,31 +1,28 @@
 #ifndef ResourceService_hpp
 #define ResourceService_hpp
 
-#include <unordered_map>
+#include <vector>
 #include <string>
 #include <gsl/pointers>
-
-using gsl::owner;
-
-// TODO move away from resource manager for all types
+#include <memory>
 
 template <class T>
 struct Resource
 {
-    owner<T*> ptr;
-    int count;
-};
+    std::string m_key;
+    time_t m_lastModified;
+    std::unique_ptr<T> m_data;
+    int m_count;
 
-using namespace std;
+    void ResetIfModified();
+};
 
 template <class T>
 class ResourceService
 {
 private:
     ResourceService<T>(){};
-    
-    unordered_map<string, Resource<T>> m_resourceDirectory;
-    
+    std::vector<Resource<T>> m_resources;
     inline static ResourceService<T>* m_instance = NULL;
 public:
     
@@ -37,40 +34,38 @@ public:
         return m_instance;
     }
 
-    T* Request(string key) noexcept
+    T* Request(std::string key) noexcept
     {
-        T* p_resource = nullptr;
-        auto result = m_resourceDirectory.find(key);
-        if (result != m_resourceDirectory.end())
+        for(int i = 0; i < m_resources.size(); ++i)
         {
-            p_resource = result->second.ptr;
-            result->second.count++;
+            if(m_resources[i].m_key == key)
+            {
+                return m_resources[i].m_data.get();
+            }
         }
-        else
-        {
-            Resource<T> resource;
-            resource.ptr = new T(key);
-            resource.count = 0;
-            m_resourceDirectory.insert({key,resource});
+        Resource<T> resource;
+        resource.m_key = key;
 
-            p_resource = resource.ptr;
-        }
-        return p_resource;
+        resource.ptr = make_unique<T>(key);
+        resource.count = 0;
+        auto ptr = resource.ptr.get();
+        m_resources.push_back({key,resource});
+        return ptr;
     }
     
-    void Dispose(string key) noexcept
+    void Dispose(std::string key) noexcept
     {
-        auto result = m_resourceDirectory.find(key);
-        if (result != m_resourceDirectory.end())
+        for(int i = 0; i < m_resources.size(); ++i)
         {
-            T* resource = result->second.ptr;
-
-            if(--result.count <= 0)
+            if(m_resources[i].m_key == key)
             {
-                delete resource;
-                m_resourceDirectory.erase(key);
+                if(--m_resources[i].m_count <= 0)
+                {
+                    m_resources.erase(i);
+                    return;
+                }
             }
-        }    
+        }
     }
 };
 

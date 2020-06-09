@@ -16,8 +16,8 @@
 #include <vector>
 #include <tuple>
 #include "../RenderPass.h"
+#include "../Mesh/Mesh.h"
 
-class Mesh;
 class Material;
 class Texture;
 class Camera;
@@ -32,7 +32,7 @@ public:
     gsl::owner<Transform*> m_transform;
 
     RenderTask* m_renderTask;
-    Mesh* m_mesh;
+    Mesh m_mesh;
     
     void Render(Camera camera) noexcept;
 };

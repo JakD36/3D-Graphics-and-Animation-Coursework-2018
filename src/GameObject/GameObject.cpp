@@ -9,14 +9,9 @@
 #include "GameObject.hpp"
 #include "../Utils/ProfilerService.h"
 #include "../Lights/Lights.hpp"
-#include "../ResourceManager/ResourceService.hpp"
-#include "../Mesh/Mesh.hpp"
-#include "../Material/Material.hpp"
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"
 #include "../Transform.h"
-#include "../Utils/DebugUtils.h"
-#include <sys/stat.h>
 #include "../Views/RenderTaskManager.h"
 
 using namespace std;
@@ -24,29 +19,23 @@ using namespace std;
 // TODO: need to treat Render passes like shaders as these values are shared across every gameobjec that uses it
 // TODO: Handle errors in the json parsing and report the mistake to allow for adding values without worrying about one mistake crashing application
 
-GameObject::GameObject(const GameObject &go) noexcept
+GameObject::GameObject(const GameObject &go) noexcept : m_mesh(go.m_mesh)
 {
     m_transform = new Transform(go.m_transform);
-    m_mesh = go.m_mesh;
-
     m_renderTask = go.m_renderTask;
 }
 
-GameObject::GameObject(string renderPass, string meshMethadata, Transform* parent) noexcept{
+GameObject::GameObject(string renderPass, string meshMethadata, Transform* parent) noexcept : m_mesh(meshMethadata){
     PROFILE(profiler,"GO Init");
 
     m_transform = new Transform(parent);
     m_renderTask = RenderTaskManager::GetInstance()->RequestRenderTask(renderPass);
-
-    m_mesh = new Mesh(meshMethadata);
 
     ENDPROFILE(profiler);
 }
 
 void GameObject::Render(Camera camera) noexcept{
     PROFILE(profiler,"GO Render");
-
-    assertm(m_mesh != nullptr,"Mesh Cannot be null");
 
     glm::mat4 m = m_transform->BuildModelMatrix();
     glm::mat4 mv = camera.BuildViewMat() * m;
@@ -57,7 +46,7 @@ void GameObject::Render(Camera camera) noexcept{
         RenderPass& pass = m_renderTask->m_passes[i];
         glUseProgram(pass.m_program);
 
-        glBindVertexArray(m_mesh->m_vao);
+        glBindVertexArray(m_mesh.GetVao());
 
         glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"modelMatrix"), 1, GL_FALSE, &m[0][0]);
         glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"mv"), 1, GL_FALSE, &mv[0][0]);
@@ -90,7 +79,7 @@ void GameObject::Render(Camera camera) noexcept{
         glCullFace(pass.m_cullFace);
         glEnable(GL_CULL_FACE);
 
-        glDrawArrays(GL_TRIANGLES, 0, m_mesh->m_vertCount);
+        glDrawArrays(GL_TRIANGLES, 0, m_mesh.GetVertCount());
     }
 
     ENDPROFILE(profiler);

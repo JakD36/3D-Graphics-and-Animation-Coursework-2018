@@ -5,7 +5,6 @@
 #include <json.hpp>
 #include <fstream>
 #include "RenderTask.h"
-#include "../Mesh/Mesh.hpp"
 #include "../Utils/DebugUtils.h"
 
 RenderTask::RenderTask(){}

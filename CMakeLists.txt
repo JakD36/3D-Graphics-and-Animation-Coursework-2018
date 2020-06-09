@@ -35,8 +35,8 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Material/Material.cpp
         src/Material/Material.hpp
 
-        src/Mesh/Mesh.cpp
-        src/Mesh/Mesh.hpp
+        src/Mesh/MeshResource.cpp
+        src/Mesh/MeshResource.hpp
 
         src/ResourceManager/ResourceService.hpp
 
@@ -67,7 +67,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Views/FrameBuffer.h
         src/Lights/Lights.cpp
         src/OpenGLCallbacks.h
-        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/DebugUtils.h src/RenderPass.h src/Utils/imgui_impl_glm.h src/Utils/ShaderEditor.cpp src/Utils/ShaderEditor.h src/Views/RenderTask.cpp src/Views/RenderTask.h src/Views/RenderTaskManager.cpp src/Views/RenderTaskManager.h src/RenderPass.cpp)
+        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/DebugUtils.h src/RenderPass.h src/Utils/imgui_impl_glm.h src/Utils/ShaderEditor.cpp src/Utils/ShaderEditor.h src/Views/RenderTask.cpp src/Views/RenderTask.h src/Views/RenderTaskManager.cpp src/Views/RenderTaskManager.h src/RenderPass.cpp src/ResourceManager/SparseVector.cpp src/ResourceManager/SparseVector.h src/ResourceManager/MeshManager.cpp src/ResourceManager/MeshManager.h src/Mesh/Mesh.cpp src/Mesh/Mesh.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

@@ -11,7 +11,6 @@
 #include <vector>
 #include <json.hpp>
 
-class Mesh;
 class GameObject;
 
 struct TextureShaderParam

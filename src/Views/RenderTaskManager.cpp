@@ -64,12 +64,9 @@ void RenderTaskManager::TryUpdateFiles() noexcept
 
 std::vector<RenderTask*> RenderTaskManager::GetRenderTasks()
 {
-    std::vector<RenderTask*> output;
+    std::vector<RenderTask*> output(m_renderTaskInfo.size());
     output.reserve(m_renderTaskInfo.size());
-//    transform(begin(m_renderTaskInfo),end(m_renderTaskInfo),begin(output),[](auto &x){return x->m_renderTask.get();});
-    for(int i = 0; i < m_renderTaskInfo.size();++i)
-    {
-        output.push_back(m_renderTaskInfo[i]->m_renderTask.get());
-    }
+    transform(begin(m_renderTaskInfo),end(m_renderTaskInfo),
+            begin(output),[](auto &x){return x->m_renderTask.get();});
     return output;
 }
