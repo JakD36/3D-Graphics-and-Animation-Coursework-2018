@@ -29,7 +29,6 @@
 #include "GameObject/GameObject.hpp"
 
 #include "Utils/ShaderEditor.h"
-#include "Views/RenderTaskManager.h"
 
 using namespace std;
 using gsl::owner;
@@ -71,7 +70,6 @@ int main(int argc, char *argv[])
     ImGui_ImplOpenGL3_Init("#version 410 core");
 
     ShaderManager* smInstance = ShaderManager::GetInstance();
-    RenderTaskManager* rtmInstance = RenderTaskManager::GetInstance();
 
     double prevTime = glfwGetTime();
     while (glfwWindowShouldClose(p_window) != GL_TRUE){ // run until the window is closed
@@ -82,7 +80,6 @@ int main(int argc, char *argv[])
         prevTime = currentTime;
 
         smInstance->Update();
-        rtmInstance->TryUpdateFiles();
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();

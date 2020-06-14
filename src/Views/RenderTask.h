@@ -5,17 +5,20 @@
 #ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERTASK_H
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERTASK_H
 
-#include <vector>
-#include "../RenderPass.h"
+#include "RenderTaskResource.h"
 
 class RenderTask
 {
+private:
+    size_t m_key;
+    ResourceManager<RenderTaskResource>* m_manager;
 public:
-    std::string m_name;
-    std::vector<RenderPass> m_passes;
-    RenderTask();
     RenderTask(std::string filepath);
-    void Reset(std::string filepath);
+    RenderTask(const RenderTask &cp);
+    ~RenderTask();
+
+    size_t size();
+    RenderPass& operator[](const size_t& index) noexcept;
 };
 
 

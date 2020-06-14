@@ -12,24 +12,21 @@
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"
 #include "../Transform.h"
-#include "../Views/RenderTaskManager.h"
 
 using namespace std;
 
 // TODO: need to treat Render passes like shaders as these values are shared across every gameobjec that uses it
 // TODO: Handle errors in the json parsing and report the mistake to allow for adding values without worrying about one mistake crashing application
 
-GameObject::GameObject(const GameObject &go) noexcept : m_mesh(go.m_mesh)
+GameObject::GameObject(const GameObject &go) noexcept : m_mesh(go.m_mesh), m_renderTask(go.m_renderTask)
 {
     m_transform = new Transform(go.m_transform);
-    m_renderTask = go.m_renderTask;
 }
 
-GameObject::GameObject(string renderPass, string meshMethadata, Transform* parent) noexcept : m_mesh(meshMethadata){
+GameObject::GameObject(string renderPass, string meshMethadata, Transform* parent) noexcept : m_mesh(meshMethadata), m_renderTask(renderPass){
     PROFILE(profiler,"GO Init");
 
     m_transform = new Transform(parent);
-    m_renderTask = RenderTaskManager::GetInstance()->RequestRenderTask(renderPass);
 
     ENDPROFILE(profiler);
 }
@@ -41,9 +38,9 @@ void GameObject::Render(Camera camera) noexcept{
     glm::mat4 mv = camera.BuildViewMat() * m;
     glm::mat4 mvp = camera.ProjectionMatrix() * mv;
 
-    for(int i = 0; i < m_renderTask->m_passes.size(); ++i)
+    for(int i = 0; i < m_renderTask.size(); ++i)
     {
-        RenderPass& pass = m_renderTask->m_passes[i];
+        RenderPass& pass = m_renderTask[i];
         glUseProgram(pass.m_program);
 
         glBindVertexArray(m_mesh.GetVao());

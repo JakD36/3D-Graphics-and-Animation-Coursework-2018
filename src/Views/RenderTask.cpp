@@ -2,30 +2,33 @@
 // Created by Jack Davidson on 10/05/2020.
 //
 
-#include <json.hpp>
-#include <fstream>
+
 #include "RenderTask.h"
-#include "../Utils/DebugUtils.h"
 
-RenderTask::RenderTask(){}
-
-RenderTask::RenderTask(std::string filepath){Reset(filepath);}
-
-void RenderTask::Reset(std::string filepath)
+RenderTask::RenderTask(std::string filepath)
 {
-    m_passes.clear();
+    m_manager = ResourceManager<RenderTaskResource>::GetInstance();
+    m_key = m_manager->Request(filepath);
+}
 
-    nlohmann::json js;
-    std::fstream file(filepath);
-    assertm(file.is_open(),"RenderPass Json file did not open.");
-    file >> js;
+RenderTask::RenderTask(const RenderTask &cp)
+{
+    m_manager = cp.m_manager;
+    m_key = cp.m_key;
+    ++m_manager->m_data.At(m_key).m_count;
+}
 
-    m_name = js["name"];
+RenderTask::~RenderTask()
+{
+    m_manager->Dispose(m_key);
+}
 
-    nlohmann::json passes = js["pass"];
-    m_passes.reserve(passes.size());
-    for(int i = 0; i < passes.size(); ++i)
-    {
-        m_passes.push_back(RenderPass(passes[i]));
-    }
+size_t RenderTask::size()
+{
+    m_manager->m_data[m_key].m_passes.size();
+}
+
+RenderPass & RenderTask::operator[](const size_t &index) noexcept
+{
+    return m_manager->m_data[m_key].m_passes[index];
 }

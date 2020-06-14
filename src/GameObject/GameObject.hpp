@@ -17,12 +17,12 @@
 #include <tuple>
 #include "../RenderPass.h"
 #include "../Mesh/Mesh.h"
+#include "../Views/RenderTask.h"
 
 class Material;
 class Texture;
 class Camera;
 class Transform;
-class RenderTask;
 
 class GameObject {
 private:
@@ -31,7 +31,7 @@ public:
     GameObject(std::string renderPass, std::string mesh, Transform* parent = nullptr) noexcept;
     gsl::owner<Transform*> m_transform;
 
-    RenderTask* m_renderTask;
+    RenderTask m_renderTask;
     Mesh m_mesh;
     
     void Render(Camera camera) noexcept;
