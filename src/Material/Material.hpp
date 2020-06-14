@@ -9,18 +9,23 @@
 #ifndef Material_hpp
 #define Material_hpp
 
-#include <GL/glew.h>
-#include <glm/glm.hpp>
+#include "../ResourceManager/ResourceManager.h"
 #include <string>
+#include "MaterialResource.h"
 
 class Material{
 public:
-    glm::vec3 m_ka;                                   // Ambient material constant
-    glm::vec3 m_kd;                                   // Diffraction material constant
-    glm::vec3 m_ks;                                   // Specular material constant
-    GLfloat m_shininess;                              // Shininess constant of material
-    
+    size_t m_key;
+    ResourceManager<MaterialResource>* m_manager;
+
     Material(std::string materialName);
+    Material(const Material &cp);
+    ~Material();
+
+    glm::vec3 GetAmbient();
+    glm::vec3 GetDiffuse();
+    glm::vec3 GetSpecular();
+    GLfloat GetShininess();
 };
 
 #endif /* Material_hpp */

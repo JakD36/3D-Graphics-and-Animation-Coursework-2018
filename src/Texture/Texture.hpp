@@ -11,12 +11,19 @@
 
 #include <string>
 #include <GL/glew.h>
+#include "TextureResource.h"
+#include "../ResourceManager/ResourceManager.h"
 
 class Texture{
+private:
+    size_t m_key;
+    ResourceManager<TextureResource>* m_manager;
 public:
-    Texture(std::string texturePath) noexcept;
-    ~Texture() noexcept;
-    GLuint m_texture[1];
+    Texture(std::string filepath);
+    Texture(const Texture &cp);
+    ~Texture();
+
+    GLuint* GetTexture();
 };
 
 

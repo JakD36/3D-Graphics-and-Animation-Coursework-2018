@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <string>
+#include "../Resource.h"
 
 enum class VertexAttrib
 {
@@ -24,11 +25,8 @@ enum class VertexAttrib
     COLOUR = 1 << 5
 };
 
-class MeshResource{
+class MeshResource : public Resource{
 public:
-    std::string m_key;
-    int m_count;
-
     int m_vertCount;
     int m_attributeFlags;
 

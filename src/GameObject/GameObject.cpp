@@ -57,7 +57,7 @@ void GameObject::Render(Camera camera) noexcept{
         for(int j = 0; j < pass.m_textures.size(); ++j)
         {
             glActiveTexture(GL_TEXTURE0+j);
-            glBindTexture(GL_TEXTURE_2D,pass.m_textures[j].m_texture);
+            glBindTexture(GL_TEXTURE_2D,pass.m_textures[j].m_texture.GetTexture()[0]);
             glUniform1i(pass.m_textures[j].m_location, j);
         }
 

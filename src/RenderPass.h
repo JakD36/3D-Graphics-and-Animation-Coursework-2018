@@ -10,15 +10,14 @@
 #include <string>
 #include <vector>
 #include <json.hpp>
+#include "Texture/Texture.hpp"
 
 class GameObject;
 
 struct TextureShaderParam
 {
     GLint m_location;
-    std::string m_key;
-    GLuint m_texture;
-    // Texture
+    Texture m_texture;
 };
 
 struct Uniformf

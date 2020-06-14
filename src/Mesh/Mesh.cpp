@@ -6,7 +6,7 @@
 
 Mesh::Mesh(std::string filepath)
 {
-    m_manager = MeshManager::GetInstance();
+    m_manager = ResourceManager<MeshResource>::GetInstance();
     m_key = m_manager->Request(filepath);
 }
 

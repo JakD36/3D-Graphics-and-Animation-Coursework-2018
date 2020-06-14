@@ -4,10 +4,12 @@
 
 #include "RenderPass.h"
 #include "Shaders/ShaderManager.h"
-#include "ResourceManager/ResourceService.hpp"
 #include "Texture/Texture.hpp"
 #include "Material/Material.hpp"
 #include "Lights/Lights.hpp"
+#include <string>
+
+using namespace std;
 
 RenderPass::RenderPass(nlohmann::json pass)
 {
@@ -19,16 +21,15 @@ RenderPass::RenderPass(nlohmann::json pass)
     for(int i = 0; i < texArrayJs.size(); ++i)
     {
         auto texJs = texArrayJs[i];
-        auto texture = ResourceService<Texture>::GetInstance()->Request(texJs["file"]);
+        auto texture = Texture(texJs["file"]);
         m_textures.push_back(TextureShaderParam
         {
             glGetUniformLocation(m_program,((string)texJs["key"]).c_str()) ,
-            texJs["key"],
-            texture->m_texture[0]
+            texture
         });
     }
     auto matJs = pass["material"];
-    Material *material = ResourceService<Material>::GetInstance()->Request(matJs["file"]);
+    Material material = Material(matJs["file"]);
 
     auto floats = pass["float"];
     for(int i = 0; i < floats.size(); ++i)
@@ -39,7 +40,7 @@ RenderPass::RenderPass(nlohmann::json pass)
             m_uniformf.push_back(Uniformf{
                     glGetUniformLocation(m_program,((string)f["key"]).c_str()),
                     f["key"],
-                    material->m_shininess
+                    material.GetShininess()
             });
         }
         else{
@@ -60,7 +61,7 @@ RenderPass::RenderPass(nlohmann::json pass)
             m_uniform3fv.push_back(Uniform3fv{
                     glGetUniformLocation(m_program,((string)v["key"]).c_str()),
                     v["key"],
-                    material->m_ka
+                    material.GetAmbient()
             });
         }
         else if(v["key"] == "kd")
@@ -68,7 +69,7 @@ RenderPass::RenderPass(nlohmann::json pass)
             m_uniform3fv.push_back(Uniform3fv{
                     glGetUniformLocation(m_program,((string)v["key"]).c_str()),
                     v["key"],
-                    material->m_kd
+                    material.GetDiffuse()
             });
         }
         else if(v["key"] == "ks")
@@ -76,7 +77,7 @@ RenderPass::RenderPass(nlohmann::json pass)
             m_uniform3fv.push_back(Uniform3fv{
                     glGetUniformLocation(m_program,((string)v["key"]).c_str()),
                     v["key"],
-                    material->m_ks
+                    material.GetSpecular()
             });
         }
         else{

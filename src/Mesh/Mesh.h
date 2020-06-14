@@ -6,13 +6,14 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_MESH_H
 
 
-#include "../ResourceManager/MeshManager.h"
+#include "../ResourceManager/ResourceManager.h"
+#include "MeshResource.hpp"
 #include <string>
 
 class Mesh {
 private:
     size_t m_key;
-    MeshManager* m_manager;
+    ResourceManager<MeshResource>* m_manager;
 public:
     Mesh(std::string filepath);
     Mesh(const Mesh &cp); // Copy

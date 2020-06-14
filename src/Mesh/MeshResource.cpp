@@ -20,7 +20,7 @@
 
 using namespace std;
 
-MeshResource::MeshResource(string metadataFilepath) noexcept{
+MeshResource::MeshResource(string metadataFilepath) noexcept  : Resource(metadataFilepath){
 
     m_attributeFlags = 0;
 
