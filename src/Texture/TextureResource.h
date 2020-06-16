@@ -11,9 +11,16 @@
 #include <GL/glew.h>
 
 class TextureResource : public Resource {
+private:
+    TextureResource(TextureResource &cp);
+    TextureResource& operator=(TextureResource &cp);
 public :
     TextureResource(std::string texturePath) noexcept;
     ~TextureResource() noexcept;
+
+    TextureResource(TextureResource &&mv);
+    TextureResource& operator=(TextureResource &&mv);
+
     GLuint m_texture[1];
 };
 

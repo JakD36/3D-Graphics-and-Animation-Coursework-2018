@@ -52,5 +52,25 @@ TextureResource::TextureResource(string texturePath) noexcept  : Resource(textur
 
 TextureResource::~TextureResource() noexcept
 {
-//    glDeleteTextures(1,m_texture); // TODO: Fix currently as soon as we copy our resource into our sparse vector we call the destructor and delete the texture
+    glDeleteTextures(1,m_texture); // TODO: Fix currently as soon as we copy our resource into our sparse vector we call the destructor and delete the texture
 }
+
+TextureResource::TextureResource(TextureResource &&mv) : Resource(mv.m_key){
+    *this = std::move(mv);
+}
+TextureResource& TextureResource::operator=(TextureResource &&mv){
+
+    m_key = mv.m_key;
+    m_lastModified = mv.m_lastModified;
+    m_count = mv.m_count;
+    mv.m_key = "";
+    mv.m_lastModified = 0;
+    mv.m_count = 0;
+
+    m_texture[0] = mv.m_texture[0];
+    mv.m_texture[0] = 0;
+    return *this;
+}
+
+TextureResource::TextureResource(TextureResource &cp) : Resource(cp.m_key){}
+TextureResource& TextureResource::operator=(TextureResource &cp){}

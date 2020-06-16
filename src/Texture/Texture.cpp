@@ -29,3 +29,10 @@ Texture::~Texture(){
 GLuint* Texture::GetTexture(){
     return m_manager->m_data.At(m_key).m_texture;
 }
+
+Texture& Texture::operator=(const Texture &cp){
+    m_manager = cp.m_manager;
+    m_key = cp.m_key;
+    ++m_manager->m_data.At(m_key).m_count;
+    return *this;
+}

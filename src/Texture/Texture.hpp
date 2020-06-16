@@ -21,6 +21,7 @@ private:
 public:
     Texture(std::string filepath);
     Texture(const Texture &cp);
+    Texture& operator=(const Texture &cp);
     ~Texture();
 
     GLuint* GetTexture();

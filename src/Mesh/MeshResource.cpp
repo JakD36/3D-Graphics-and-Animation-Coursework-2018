@@ -412,6 +412,13 @@ MeshResource::MeshResource(MeshResource &&mv) : Resource(mv.m_key){
 }
 
 MeshResource& MeshResource::operator=(MeshResource&& mv) noexcept{
+    m_key = mv.m_key;
+    m_lastModified = mv.m_lastModified;
+    m_count = mv.m_count;
+    mv.m_key = "";
+    mv.m_lastModified = 0;
+    mv.m_count = 0;
+
     m_attributeFlags = mv.m_attributeFlags;
     m_vertCount = mv.m_vertCount;
     m_vao = mv.m_vao;
