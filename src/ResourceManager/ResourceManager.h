@@ -23,18 +23,18 @@ public:
         }
         return m_instance;
     }
+
     int Request(std::string filepath){
         for(int i = 0; i < m_data.size(); ++i)
         {
             if(m_data[i].m_key == filepath){
                 ++m_data[i].m_count;
-                return i;
+                return m_data.KeyAt(i);
             }
         }
-        int index = m_data.size();
-        m_data.Add(T(filepath));
-        ++m_data[index].m_count;
-        return index;
+        size_t key = m_data.Add(std::move(T(filepath)));
+        ++m_data.At(key).m_count;
+        return key;
     }
 
     void Dispose(int key){

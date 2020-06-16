@@ -8,6 +8,7 @@ Mesh::Mesh(std::string filepath)
 {
     m_manager = ResourceManager<MeshResource>::GetInstance();
     m_key = m_manager->Request(filepath);
+//    ++m_manager->m_data.At(m_key).m_count;
 }
 
 Mesh::Mesh(const Mesh &cp)
@@ -15,6 +16,14 @@ Mesh::Mesh(const Mesh &cp)
     m_manager = cp.m_manager;
     m_key = cp.m_key;
     ++m_manager->m_data.At(m_key).m_count;
+}
+
+Mesh& Mesh::operator=(const Mesh &cp)
+{
+    m_manager = cp.m_manager;
+    m_key = cp.m_key;
+    ++m_manager->m_data.At(m_key).m_count;
+    return *this;
 }
 
 Mesh::~Mesh(){

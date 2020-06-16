@@ -23,7 +23,7 @@ glm::vec3 Transform::Position()
 
 glm::quat Transform::Rotation()
 {
-    if(m_parent != NULL)
+    if(m_parent != nullptr)
     {
         return m_parent->Rotation() * m_localRotation;
     }

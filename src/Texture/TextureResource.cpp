@@ -52,5 +52,5 @@ TextureResource::TextureResource(string texturePath) noexcept  : Resource(textur
 
 TextureResource::~TextureResource() noexcept
 {
-    glDeleteTextures(1,m_texture);
+//    glDeleteTextures(1,m_texture); // TODO: Fix currently as soon as we copy our resource into our sparse vector we call the destructor and delete the texture
 }

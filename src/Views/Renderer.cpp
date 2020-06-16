@@ -111,7 +111,7 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     glm::vec3 camPos = camera->GetPosition();
     glm::mat4 projMatrix = camera->ProjectionMatrix();
 
-    std::for_each(begin(objs),end(objs),[&](auto obj)
+    std::for_each(begin(objs),end(objs),[&](GameObject &obj) // TODO: Verify why when this copies it causes the entire mesh line up to be deleted
     {
         obj.Render(*camera);
     });

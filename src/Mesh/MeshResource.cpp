@@ -403,3 +403,24 @@ MeshResource::~MeshResource() noexcept
     glDeleteBuffers(1,&m_buffer);
     glDeleteVertexArrays(1,&m_vao);
 }
+
+MeshResource::MeshResource(const MeshResource &cp) : Resource(cp.m_key){} // TODO: ADD
+MeshResource& MeshResource::operator=(const MeshResource &cp) noexcept{} // TODO: ADD
+
+MeshResource::MeshResource(MeshResource &&mv) : Resource(mv.m_key){
+    *this = std::move(mv);
+}
+
+MeshResource& MeshResource::operator=(MeshResource&& mv) noexcept{
+    m_attributeFlags = mv.m_attributeFlags;
+    m_vertCount = mv.m_vertCount;
+    m_vao = mv.m_vao;
+    m_buffer = mv.m_buffer;
+
+    mv.m_buffer = 0;
+    mv.m_vao = 0;
+    mv.m_attributeFlags = 0;
+    mv.m_vertCount = 0;
+
+    return *this;
+}

@@ -25,7 +25,12 @@ enum class VertexAttrib
     COLOUR = 1 << 5
 };
 
+
+/// File based mesh information, only changed external to application
 class MeshResource : public Resource{
+private:
+    MeshResource(const MeshResource &cp);
+    MeshResource& operator=(const MeshResource &cp) noexcept;
 public:
     int m_vertCount;
     int m_attributeFlags;
@@ -36,7 +41,11 @@ public:
     std::vector<float> Load(std::string meshName, int vertexAttribFlags) noexcept;
     std::vector<float> LoadAssimp(std::string meshName, int vertexAttribFlags) noexcept;
     MeshResource(std::string metadataFilepath) noexcept;
+    MeshResource(MeshResource &&mv);
+    MeshResource& operator=(MeshResource&& mv) noexcept;
     ~MeshResource() noexcept;
+
+
 };
 
 #endif /* Mesh_hpp */

@@ -25,7 +25,7 @@ RenderTask::~RenderTask()
 
 size_t RenderTask::size()
 {
-    m_manager->m_data[m_key].m_passes.size();
+    return m_manager->m_data[m_key].m_passes.size();
 }
 
 RenderPass & RenderTask::operator[](const size_t &index) noexcept

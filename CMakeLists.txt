@@ -65,7 +65,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Views/FrameBuffer.h
         src/Lights/Lights.cpp
         src/OpenGLCallbacks.h
-        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/DebugUtils.h src/RenderPass.h src/Utils/imgui_impl_glm.h src/Utils/ShaderEditor.cpp src/Utils/ShaderEditor.h src/Views/RenderTask.cpp src/Views/RenderTask.h src/RenderPass.cpp src/ResourceManager/SparseVector.cpp src/ResourceManager/SparseVector.h src/ResourceManager/ResourceManager.cpp src/ResourceManager/ResourceManager.h src/Mesh/Mesh.cpp src/Mesh/Mesh.h src/Resource.h src/Material/MaterialResource.cpp src/Material/MaterialResource.h src/Texture/TextureResource.cpp src/Texture/TextureResource.h src/Resource.cpp src/Views/RenderTaskResource.cpp src/Views/RenderTaskResource.h)
+        src/OpenGLCallbacks.cpp src/OpenGLSetup.cpp src/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Utils/ProfileTag.cpp src/Utils/ProfileTag.h src/Transform.cpp src/Transform.h src/Utils/DebugUtils.h src/RenderPass.h src/Utils/imgui_impl_glm.h src/Utils/ShaderEditor.cpp src/Utils/ShaderEditor.h src/Views/RenderTask.cpp src/Views/RenderTask.h src/RenderPass.cpp src/ResourceManager/SparseVector.h src/ResourceManager/ResourceManager.h src/Mesh/Mesh.cpp src/Mesh/Mesh.h src/Resource.h src/Material/MaterialResource.cpp src/Material/MaterialResource.h src/Texture/TextureResource.cpp src/Texture/TextureResource.h src/Resource.cpp src/Views/RenderTaskResource.cpp src/Views/RenderTaskResource.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

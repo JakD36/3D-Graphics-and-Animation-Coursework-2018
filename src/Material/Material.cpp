@@ -22,6 +22,25 @@ Material::Material(const Material &cp){
     ++m_manager->m_data.At(m_key).m_count;
 }
 
+Material& Material::operator=(const Material &cp){
+    m_manager = cp.m_manager;
+    m_key = cp.m_key;
+    ++m_manager->m_data.At(m_key).m_count;
+    return *this;
+}
+
+Material::Material(Material &&mv)
+{
+    *this = std::move(mv);
+}
+
+Material& Material::operator=(Material &&mv)
+{
+    m_manager = nullptr;
+    m_key = -1;
+    return *this;
+}
+
 Material::~Material(){
     m_manager->Dispose(m_key);
 }

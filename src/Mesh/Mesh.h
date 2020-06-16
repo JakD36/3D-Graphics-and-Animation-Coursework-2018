@@ -17,6 +17,7 @@ private:
 public:
     Mesh(std::string filepath);
     Mesh(const Mesh &cp); // Copy
+    Mesh& operator=(const Mesh &cp);
     ~Mesh();
 
     GLuint GetVao();

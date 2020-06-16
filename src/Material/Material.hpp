@@ -20,7 +20,12 @@ public:
 
     Material(std::string materialName);
     Material(const Material &cp);
+    Material& operator=(const Material &cp);
     ~Material();
+
+    Material(Material &&mv);
+    Material& operator=(Material &&cp);
+
 
     glm::vec3 GetAmbient();
     glm::vec3 GetDiffuse();
