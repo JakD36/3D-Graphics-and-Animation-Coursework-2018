@@ -8,6 +8,6 @@
 #include "../GameObject/GameObject.hpp"
 #include <vector>
 
-void ShaderEditorWindow(std::vector<GameObject>& objs);
+void ShaderEditorWindow();
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_SHADEREDITOR_H

@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 
         glfwPollEvents(); // From the GLFW documentation - Processes only those events that have already been received and then returns immediately.
         scene.Update(deltaTime);
-        ShaderEditorWindow(scene.GetObjs());
+        ShaderEditorWindow();
         s_view->Render(&scene);
 
         { // Render ImGui

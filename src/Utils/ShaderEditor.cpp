@@ -7,12 +7,12 @@
 #include "../Include/DearImgui/imgui.h"
 #include "imgui_impl_glm.h"
 
-void ShaderEditorWindow(std::vector<GameObject>& objs)
+void ShaderEditorWindow()
 {
     ImGui::Begin("Shader Tool",NULL);
     if(ImGui::TreeNode("GameObjects"))
     {
-        auto tasks = ResourceManager<RenderTaskResource>::GetInstance()->m_data;
+        auto &tasks = ResourceManager<RenderTaskResource>::GetInstance()->m_data;
         for(int i = 0; i < tasks.size(); ++i)
         {
             if(ImGui::TreeNode(tasks[i].m_name.c_str()))
