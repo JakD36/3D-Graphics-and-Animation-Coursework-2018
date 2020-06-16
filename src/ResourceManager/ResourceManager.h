@@ -7,6 +7,7 @@
 
 #include "SparseVector.h"
 #include <string>
+#include <sys/stat.h>
 
 template <class T>
 class ResourceManager {
