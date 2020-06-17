@@ -2,23 +2,11 @@
 // Created by Jack Davidson on 10/03/2020.
 //
 
-#include "FrameBuffer.h"
+#include <DearImgui/imgui.h>
+#include "TwoPassFramebuffer.h"
 #include "../Shaders/ShaderManager.h"
 
 using namespace std;
-
-FramebufferBase::FramebufferBase() noexcept : m_framebuffer(0) {};
-FramebufferBase::~FramebufferBase() noexcept {};
-
-SinglePassFramebuffer::SinglePassFramebuffer() noexcept : m_framebuffer(0) {};
-SinglePassFramebuffer::~SinglePassFramebuffer() noexcept {};
-
-void SinglePassFramebuffer::RenderTo() const  noexcept
-{
-    glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
-}
-void SinglePassFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const  noexcept { }
-
 
 void TwoPassFramebuffer::RenderTo() const noexcept
 {

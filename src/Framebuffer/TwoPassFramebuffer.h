@@ -2,36 +2,12 @@
 // Created by Jack Davidson on 10/03/2020.
 //
 
-#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_FRAMEBUFFER_H
-#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_FRAMEBUFFER_H
+#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_TWOPASSFRAMEBUFFER_H
+#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_TWOPASSFRAMEBUFFER_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-
-class FramebufferBase
-{
-protected:
-    GLuint m_framebuffer;
-public:
-    FramebufferBase() noexcept;
-    virtual ~FramebufferBase() noexcept;
-
-    virtual void RenderTo() const noexcept = 0;
-    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept = 0;
-    // TODO: Consider a post scene render call, so we specify internally where we are rendering and then render the scene as normal before calling the post render
-};
-
-class SinglePassFramebuffer : public FramebufferBase
-{
-protected:
-    GLuint m_framebuffer;
-public:
-    SinglePassFramebuffer() noexcept;
-    virtual ~SinglePassFramebuffer() noexcept;
-
-    virtual void RenderTo() const noexcept;
-    virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept;
-};
+#include "FramebufferBase.h"
 
 class TwoPassFramebuffer : public FramebufferBase
 {
@@ -71,4 +47,4 @@ public:
     virtual void PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const noexcept;
 };
 
-#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_FRAMEBUFFER_H
+#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_TWOPASSFRAMEBUFFER_H

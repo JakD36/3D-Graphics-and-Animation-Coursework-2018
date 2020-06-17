@@ -5,7 +5,8 @@
 #include "Camera.hpp"
 #include "../Utils/ProfilerService.h"
 #include "../Shaders/ShaderManager.h"
-#include "FrameBuffer.h"
+#include "../Framebuffer/TwoPassFramebuffer.h"
+#include "../Framebuffer/ImGuiFramebuffer.h"
 #include "../Lights/Lights.hpp"
 #include "../GameObject/GameObject.hpp"
 #include "../Scenes/SceneGraph.hpp"
@@ -44,7 +45,8 @@ Renderer::Renderer(GLFWwindow* window) noexcept {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-    m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
+//    m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
+    m_framebuffer = make_unique<ImGuiFramebuffer>(frameWidth, frameHeight);
 //    m_framebuffer = make_unique<SinglePassFramebuffer>();
 
     ENDPROFILE(profiler);
