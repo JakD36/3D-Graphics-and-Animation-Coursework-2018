@@ -6,6 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERTASK_H
 
 #include "RenderTaskResource.h"
+#include <string>
 
 class RenderTask
 {
@@ -19,6 +20,8 @@ public:
 
     size_t size();
     RenderPass& operator[](const size_t& index) noexcept;
+
+    std::string GetName();
 };
 
 

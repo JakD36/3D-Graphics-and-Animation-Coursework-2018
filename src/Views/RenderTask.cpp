@@ -32,3 +32,8 @@ RenderPass & RenderTask::operator[](const size_t &index) noexcept
 {
     return m_manager->m_data[m_key].m_passes[index];
 }
+
+std::string RenderTask::GetName()
+{
+    return m_manager->m_data[m_key].m_name;
+}

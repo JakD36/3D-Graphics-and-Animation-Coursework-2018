@@ -32,7 +32,7 @@ GameObject::GameObject(string renderPass, string meshMethadata, Transform* paren
 }
 
 void GameObject::Render(Camera camera) noexcept{
-    PROFILE(profiler,"GO Render");
+    PROFILE(profiler,"Render " + m_renderTask.GetName());
 
     glm::mat4 m = m_transform->BuildModelMatrix();
     glm::mat4 mv = camera.BuildViewMat() * m;
