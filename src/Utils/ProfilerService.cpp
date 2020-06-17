@@ -26,30 +26,39 @@ ProfilerService* ProfilerService::GetInstance() noexcept{
 }
 
 int ProfilerService::StartTimer(string identifier) noexcept{
-    m_storage[m_index].Identifier = identifier;
-    m_storage[m_index].Start = glfwGetTime();
-    m_storage[m_index].Length = -2.0;
-    m_storage[m_index].Status = Status::RECORDING;
-    
+    if(m_recording)
+    {
+        m_storage[m_index].Identifier = identifier;
+        m_storage[m_index].Start = glfwGetTime();
+        m_storage[m_index].Length = -2.0;
+        m_storage[m_index].Status = Status::RECORDING;
+
 //    int minusIndex = m_index - 1;
 //    int prevIndex =  minusIndex < 0 ? PROFILE_SIZE - 1 : minusIndex;
 
-    m_storage[m_index].Depth = m_nextDepth++;
+        m_storage[m_index].Depth = m_nextDepth++;
 
-    int tmp = m_index;
-    while(true)
-    {
-        m_index = (++m_index) % PROFILE_SIZE;
-        if(m_storage[m_index].Length >= -1.0) // TODO: Change to safer method of stepping forward
-            break;
+        int tmp = m_index;
+        while(true)
+        {
+            m_index = (++m_index) % PROFILE_SIZE;
+            if(m_storage[m_index].Length >= -1.0) // TODO: Change to safer method of stepping forward
+                break;
+        }
+        return tmp;
     }
-    return tmp;
+    else{
+        return -1;
+    }
 }
 
 void ProfilerService::StopTimer(int timer) noexcept{
-    m_storage[timer].Length = glfwGetTime() - m_storage[timer].Start;
-    --m_nextDepth;
-    m_storage[timer].Status = Status::COMPLETE;
+    if(timer >= 0)
+    {
+        m_storage[timer].Length = glfwGetTime() - m_storage[timer].Start;
+        --m_nextDepth;
+        m_storage[timer].Status = Status::COMPLETE;
+    }
 }
 
 void ProfilerService::Draw() noexcept{
@@ -77,6 +86,21 @@ void ProfilerService::Draw() noexcept{
         m_windowTime = m_maxRewindTime;
         m_canvasWidth = canvasSize.x * (m_maxRewindTime / m_windowTime);
     }
+    ImGui::SameLine();
+
+    if(m_recording)
+    {
+        if(ImGui::Button("Pause")){
+            m_recording = false;
+            m_recordEndTime = glfwGetTime();
+        }
+    }
+    else{
+        if(ImGui::Button("Continue")){
+            m_recording = true;
+        }
+    }
+
 
     if(m_canvasWidth >= 0)
         ImGui::SetNextWindowContentWidth(m_canvasWidth);
@@ -97,7 +121,7 @@ void ProfilerService::Draw() noexcept{
     //! Text padding from the top-left
     ImVec2 textPad(3.0f, 3.0f);
 
-    double startTime = glfwGetTime() - m_maxRewindTime;
+    double startTime = (m_recording ?  glfwGetTime() : m_recordEndTime) - m_maxRewindTime;
     
     for(int n = 0; n < PROFILE_SIZE; ++n){
         if(m_storage[n].Status == Status::COMPLETE){

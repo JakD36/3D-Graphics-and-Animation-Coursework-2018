@@ -39,7 +39,7 @@ void ImGuiFramebuffer::RenderTo() const  noexcept
     glBindFramebuffer(GL_FRAMEBUFFER,m_framebuffer); // Rendering to framebuffer 1
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,m_framebufferTexture,0);
 
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 void ImGuiFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidth, int viewportHeight) const  noexcept
@@ -49,6 +49,6 @@ void ImGuiFramebuffer::PostRender(int viewportX, int viewportY, int viewportWidt
     ImGui::End();
 
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }

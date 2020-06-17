@@ -39,6 +39,9 @@ class ProfilerService{
         float m_canvasWidth;
         ProfileData m_storage[PROFILE_SIZE];
 
+        bool m_recording = true;
+        float m_recordEndTime;
+
     public:
         static ProfilerService* GetInstance() noexcept;
         
