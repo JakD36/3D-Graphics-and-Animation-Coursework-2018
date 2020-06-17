@@ -124,11 +124,11 @@ void ProfilerService::Draw() noexcept{
     double startTime = (m_recording ?  glfwGetTime() : m_recordEndTime) - m_maxRewindTime;
     
     for(int n = 0; n < PROFILE_SIZE; ++n){
-        if(m_storage[n].Status == Status::COMPLETE && m_storage[n].Start + m_storage[n].Length > startTime){
-            float width = canvasSize.x * m_storage[n].Length / m_windowTime; 
+        float timePercentOffset = (-startTime + m_storage[n].Start) / m_windowTime;
+        float xOffset = canvasSize.x * timePercentOffset;
+        float width = canvasSize.x * m_storage[n].Length / m_windowTime;
+        if(m_storage[n].Status == Status::COMPLETE && timePercentOffset + width> 0.f){
             if(width > 1){
-                float xOffset = canvasSize.x * (-startTime + m_storage[n].Start) / m_windowTime;
-
                 ImVec2 topLeft(
                             canvasPos.x + xOffset + barSpacing,
                             canvasPos.y + (m_storage[n].Depth * rowHeight));
