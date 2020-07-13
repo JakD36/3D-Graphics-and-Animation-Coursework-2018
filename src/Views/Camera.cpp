@@ -79,10 +79,7 @@ glm::mat4 Camera::ProjectionMatrix() noexcept
     {
         m_projMatrix = glm::perspective(m_fov, m_aspect, m_closeClipPlane, m_farClipPlane);
     }
-    else
-    {
-        return m_projMatrix;
-    }
+    return m_projMatrix;
 }
 
 void Camera::SetPosition(glm::vec3 newPosition) noexcept{
