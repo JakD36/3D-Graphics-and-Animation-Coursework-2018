@@ -35,14 +35,14 @@ private:
                                 "void main(void)\n"
                                 "{\n"
                                 "    gl_Position = mvp * position;\n"
-                                "}";
+                                "}\0";
 
     const char* k_defaultFrag = "#version 410 core\n"
                                 "out vec4 color;\n"
                                 "void main(void)\n"
                                 "{\n"
                                 "    color = vec4(1,0,1,1);\n"
-                                "}";
+                                "}\0";
 
     inline static ShaderManager* m_instance = NULL;
     ShaderManager();
