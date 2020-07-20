@@ -1,7 +1,7 @@
 #include "ProfilerService.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../../Include/DearImgui/imgui.h"
+#include "DearImgui/imgui.h"
 
 using namespace std;
 

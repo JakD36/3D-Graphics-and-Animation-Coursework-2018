@@ -7,7 +7,7 @@
 //
 
 #include "Scene1.hpp"
-#include "../Utils/ProfilerService.h"
+#include "../Profiling/ProfilerService.h"
 #include <glm/gtx/quaternion.hpp>
 #include "../Shaders/ShaderManager.h"
 #include <GLFW/glfw3.h>

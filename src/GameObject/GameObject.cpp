@@ -7,7 +7,7 @@
 //
 
 #include "GameObject.hpp"
-#include "../Utils/ProfilerService.h"
+#include "../Profiling/ProfilerService.h"
 #include "../Lights/Lights.hpp"
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"

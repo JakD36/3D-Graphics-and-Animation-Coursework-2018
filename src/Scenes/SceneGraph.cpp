@@ -9,7 +9,7 @@
 #include "SceneGraph.hpp"
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
-#include "../Utils/ProfilerService.h"
+#include "../Profiling/ProfilerService.h"
 #include "../Views/Camera.hpp"
 #include <json.hpp>
 #include <fstream>

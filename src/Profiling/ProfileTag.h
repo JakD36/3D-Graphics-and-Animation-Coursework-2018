@@ -8,6 +8,8 @@
 #include <string>
 class ProfilerService;
 
+/// A wrapper to starting and stopping the profiler timer via RAII
+///
 class ProfileTag {
 private:
     ProfilerService* p_service;

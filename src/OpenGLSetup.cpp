@@ -7,7 +7,7 @@
 
 #include "OpenGLSetup.h"
 #include "OpenGLCallbacks.h"
-#include "Utils/ProfilerService.h"
+#include "Profiling/ProfilerService.h"
 
 using namespace std;
 

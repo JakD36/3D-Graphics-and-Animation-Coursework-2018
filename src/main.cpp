@@ -22,8 +22,8 @@
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
 #include "../Include/DearImgui/imgui_impl_glfw.h"
 
-#include "Utils/ProfilerService.h"
-#include "Utils/ProfileTag.h"
+#include "Profiling/ProfilerService.h"
+#include "Profiling/ProfileTag.h"
 #include <gsl/pointers>
 #include "Utils/DebugUtils.h"
 #include "GameObject/GameObject.hpp"

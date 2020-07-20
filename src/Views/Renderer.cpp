@@ -3,7 +3,7 @@
 #include <vector>
 #include <DearImgui/imgui.h>
 #include "Camera.hpp"
-#include "../Utils/ProfilerService.h"
+#include "../Profiling/ProfilerService.h"
 #include "../Shaders/ShaderManager.h"
 #include "../Framebuffer/TwoPassFramebuffer.h"
 #include "../Framebuffer/ImGuiFramebuffer.h"
