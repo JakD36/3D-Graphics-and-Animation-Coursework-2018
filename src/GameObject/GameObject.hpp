@@ -29,6 +29,7 @@ private:
 public:
     GameObject(const GameObject &go) noexcept;
     GameObject(std::string renderPass, std::string mesh, Transform* parent = nullptr) noexcept;
+    ~GameObject();
     gsl::owner<Transform*> m_transform;
 
     RenderTask m_renderTask;

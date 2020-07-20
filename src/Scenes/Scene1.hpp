@@ -30,7 +30,7 @@ private:
     float m_pitchOffset = 20;
 public:
     Scene1() noexcept;
-    virtual ~Scene1() noexcept;
+    ~Scene1() noexcept;
     virtual void Update(double deltaTime) noexcept;
 
     virtual void UsePrimary() noexcept;

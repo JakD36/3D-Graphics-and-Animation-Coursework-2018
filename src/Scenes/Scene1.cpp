@@ -71,7 +71,8 @@ void Scene1::Update(double deltaTime) noexcept{
     ENDPROFILE(p);
 }
 
-Scene1::~Scene1() noexcept {}
+Scene1::~Scene1() noexcept{
+}
 
 void Scene1::UsePrimary() noexcept{
     if(m_lights[m_torchLight].lightOn){

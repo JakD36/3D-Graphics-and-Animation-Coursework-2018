@@ -10,9 +10,6 @@
 
 #define MEM_PROFILE_SIZE 1800
 
-void* operator new(size_t size);
-void operator delete(void* memory, size_t size);
-
 class MemoryProfiler {
 private:
     const float k_graphSize = 150.f;
@@ -45,6 +42,9 @@ public:
     void Draw();
     void Clear();
     void* operator new(size_t size);
+
+    size_t m_newCalls;
+    size_t m_deleteCalls;
 };
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_MEMORYPROFILER_H

@@ -31,6 +31,11 @@ GameObject::GameObject(string renderPass, string meshMethadata, Transform* paren
     ENDPROFILE(profiler);
 }
 
+GameObject::~GameObject()
+{
+//    delete m_transform; // TODO: Fix memory leak in transform hierarchy
+}
+
 void GameObject::Render(Camera camera) noexcept{
     PROFILE(profiler,"Render " + m_renderTask.GetName());
 

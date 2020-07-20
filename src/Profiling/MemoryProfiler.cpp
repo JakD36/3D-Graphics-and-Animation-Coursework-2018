@@ -11,13 +11,43 @@ using namespace std;
 void* operator new(size_t size)
 {
     MemoryProfiler::GetInstance()->Allocate(size);
+    ++MemoryProfiler::GetInstance()->m_newCalls;
     return malloc(size);
+}
+
+void* operator new[](size_t size)
+{
+    MemoryProfiler::GetInstance()->Allocate(size);
+    ++MemoryProfiler::GetInstance()->m_newCalls;
+    return malloc(size);
+}
+
+void operator delete(void* memory)
+{
+    ++MemoryProfiler::GetInstance()->m_deleteCalls;
+    free(memory);
+}
+
+void operator delete[](void* memory)
+{
+    ++MemoryProfiler::GetInstance()->m_deleteCalls;
+    free(memory);
 }
 
 void operator delete(void* memory, size_t size)
 {
     MemoryProfiler::GetInstance()->Free(size);
-    return free(memory);
+
+    ++MemoryProfiler::GetInstance()->m_deleteCalls;
+    free(memory);
+}
+
+void operator delete[](void* memory, size_t size)
+{
+    MemoryProfiler::GetInstance()->Free(size);
+
+    ++MemoryProfiler::GetInstance()->m_deleteCalls;
+    free(memory);
 }
 
 MemoryProfiler * MemoryProfiler::GetInstance() {
@@ -84,7 +114,8 @@ void MemoryProfiler::Draw() {
         drawIndex--;
     }
     float scale = 1.05f * maxVal;
-
+    ImGui::Text("New = %zu",m_newCalls);
+    ImGui::Text("Delete = %zu",m_deleteCalls);
     ImGui::PlotLines("Memory", m_drawArray, MEM_PROFILE_SIZE, 0, 0, 0.0f, scale, ImVec2(0,150));
 }
 

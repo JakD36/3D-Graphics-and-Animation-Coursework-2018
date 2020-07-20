@@ -27,6 +27,8 @@ SceneGraph::SceneGraph() noexcept{
 }
 
 SceneGraph::~SceneGraph() noexcept{
+    delete m_playerTransform;
+    delete p_camera;
 }
 
 vector<GameObject>& SceneGraph::GetObjs() noexcept{
