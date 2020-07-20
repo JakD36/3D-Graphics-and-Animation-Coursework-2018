@@ -8,29 +8,43 @@
 #include <cstdlib>
 #include <cstdio>
 
-#define MEM_PROFILE_SIZE 36000
+#define MEM_PROFILE_SIZE 1800
 
 void* operator new(size_t size);
 void operator delete(void* memory, size_t size);
 
 class MemoryProfiler {
 private:
-    inline static MemoryProfiler* m_instance = nullptr;
+    const float k_graphSize = 150.f;
 
-    size_t m_allocMemory[MEM_PROFILE_SIZE];
+    MemoryProfiler();
+    inline static MemoryProfiler *m_instance = nullptr;
+    float m_memArray[MEM_PROFILE_SIZE];
+    float m_drawArray[MEM_PROFILE_SIZE];
 
     size_t m_totalMemory;
     size_t m_totalFreedMemory;
 
     size_t m_frameIndex = 0;
 public:
-    MemoryProfiler();
+    enum class SizeType
+    {
+        BYTES,
+        KILOBYTES,
+        MEGABYTES
+    };
+
+    static MemoryProfiler* GetInstance();
     void Allocate(size_t size);
     void Free(size_t size);
 
     void NextFrame();
-};
 
-static MemoryProfiler s_memoryProfiler;
+    SizeType m_sizeType;
+
+    void Draw();
+    void Clear();
+    void* operator new(size_t size);
+};
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_MEMORYPROFILER_H

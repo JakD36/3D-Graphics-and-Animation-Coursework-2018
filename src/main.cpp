@@ -30,6 +30,8 @@
 
 #include "Utils/ShaderEditor.h"
 #include "Material/MaterialResource.h"
+#include "Profiling/MemoryProfiler.h"
+#include "Profiling/ProfilerWindow.h"
 
 using namespace std;
 using gsl::owner;
@@ -47,7 +49,6 @@ int main(int argc, char *argv[])
 
     int windowHeight = 580; // height of the window
     int windowWidth = (int)(windowHeight * 16.0f/9.0f); // width of the window
-
 
     owner<GLFWwindow*> p_window = InitOpenGL(windowWidth, windowHeight); // Initialise OpenGL window,
 
@@ -108,7 +109,7 @@ int main(int argc, char *argv[])
 
 
         { // Render ImGui
-            ProfilerService::GetInstance()->Draw();
+            DrawProfiler();
             PROFILE(debugRenderProfile,"Imgui Draw");
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -122,6 +123,7 @@ int main(int argc, char *argv[])
         }
 
         ENDPROFILE(gameLoopProfile);
+        MemoryProfiler::GetInstance()->NextFrame();
     }
 
     EndProgram(p_window);
