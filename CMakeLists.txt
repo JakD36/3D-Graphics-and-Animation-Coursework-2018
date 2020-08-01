@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(Include)
 
+SET (CMAKE_CXX_FLAGS "-fsized-deallocation")
+
 add_executable(3D_Graphics_and_Animation_Coursework_2018
         Include/DearImgui/imgui.cpp
         Include/DearImgui/imgui_demo.cpp
