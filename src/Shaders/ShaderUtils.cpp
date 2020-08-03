@@ -141,11 +141,11 @@ void LinkProgram(const GLuint program, const GLuint vert, const GLuint frag)
 }
 
 std::string LoadShader(std::string filepath) {
-    std::ifstream file; // input filestream
+
     std::string line;
     std::string output = "";
 
-    file.open(filepath);
+    std::ifstream file(filepath,std::ios::in);
 
     if(file){
         while (getline(file, line)) {
