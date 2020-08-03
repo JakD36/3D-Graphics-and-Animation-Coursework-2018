@@ -5,7 +5,7 @@
 #include "RenderTaskResource.h"
 #include <json.hpp>
 #include <fstream>
-#include "../Utils/DebugUtils.h"
+#include "../../Utils/DebugUtils.h"
 
 RenderTaskResource::RenderTaskResource(std::string filepath) : Resource(filepath) {Reset(filepath);}
 

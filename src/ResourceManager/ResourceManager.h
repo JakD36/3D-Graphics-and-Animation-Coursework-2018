@@ -5,7 +5,7 @@
 #ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RESOURCEMANAGER_H
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RESOURCEMANAGER_H
 
-#include "SparseVector.h"
+#include "../Utils/Collections/SparseVector.h"
 #include <string>
 #include <sys/stat.h>
 

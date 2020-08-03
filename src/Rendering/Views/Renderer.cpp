@@ -3,13 +3,13 @@
 #include <vector>
 #include <DearImgui/imgui.h>
 #include "Camera.hpp"
-#include "../Profiling/ProfilerService.h"
+#include "../../Profiling/ProfilerService.h"
 #include "../Shaders/ShaderManager.h"
 #include "../Framebuffer/TwoPassFramebuffer.h"
 #include "../Framebuffer/ImGuiFramebuffer.h"
 #include "../Lights/Lights.hpp"
-#include "../GameObject/GameObject.hpp"
-#include "../Scenes/SceneGraph.hpp"
+#include "../../GameObject/GameObject.hpp"
+#include "../../Scenes/SceneGraph.hpp"
 
 using namespace std;
 

@@ -6,7 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_SPARSEVECTOR_H
 
 #include <vector>
-#include "../Utils/DebugUtils.h"
+#include "../DebugUtils.h"
 
 template <class T>
 class SparseVector {

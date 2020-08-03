@@ -7,7 +7,7 @@
 //
 
 #include "Controller.hpp"
-#include "../Views/Camera.hpp"
+#include "../Rendering/Views/Camera.hpp"
 #include "../Scenes/SceneGraph.hpp"
 
 

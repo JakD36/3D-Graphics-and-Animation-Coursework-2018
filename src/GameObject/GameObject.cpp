@@ -8,9 +8,9 @@
 
 #include "GameObject.hpp"
 #include "../Profiling/ProfilerService.h"
-#include "../Lights/Lights.hpp"
-#include "../Texture/Texture.hpp"
-#include "../Views/Camera.hpp"
+#include "../Rendering/Lights/Lights.hpp"
+#include "../Rendering/Texture/Texture.hpp"
+#include "../Rendering/Views/Camera.hpp"
 #include "Transform.h"
 
 using namespace std;

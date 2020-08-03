@@ -6,7 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_MATERIALRESOURCE_H
 
 
-#include "../ResourceManager/Resource.h"
+#include "../../ResourceManager/Resource.h"
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <string>

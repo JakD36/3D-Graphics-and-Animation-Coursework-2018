@@ -3,7 +3,7 @@
 //
 
 #include "MaterialResource.h"
-#include "../Utils/DebugUtils.h"
+#include "../../Utils/DebugUtils.h"
 #include <iostream>
 
 using namespace std;

@@ -8,8 +8,8 @@
 
 #include "Camera.hpp"
 #include <glm/gtx/transform.hpp>
-#include "../Utils/VectorUtils.hpp"
-#include "../Utils/DebugUtils.h"
+#include "../../Utils/VectorUtils.hpp"
+#include "../../Utils/DebugUtils.h"
 
 // Constructors
 Camera::Camera() noexcept{

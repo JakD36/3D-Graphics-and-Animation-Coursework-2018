@@ -8,7 +8,7 @@
 
 #include <GL/glew.h>
 #include "MeshResource.hpp"
-#include "../Utils/DebugUtils.h"
+#include "../../Utils/DebugUtils.h"
 #include <iostream>
 #include <glm/glm.hpp>
 

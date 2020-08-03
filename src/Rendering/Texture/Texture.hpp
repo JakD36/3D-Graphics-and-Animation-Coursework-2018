@@ -12,7 +12,7 @@
 #include <string>
 #include <GL/glew.h>
 #include "TextureResource.h"
-#include "../ResourceManager/ResourceManager.h"
+#include "../../ResourceManager/ResourceManager.h"
 
 class Texture{
 private:

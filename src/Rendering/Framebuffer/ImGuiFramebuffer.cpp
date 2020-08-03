@@ -5,9 +5,9 @@
 #include <vector>
 #include "ImGuiFramebuffer.h"
 
-#include "../Include/DearImgui/imgui.h"
-#include "../Include/DearImgui/imgui_impl_opengl3.h"
-#include "../Include/DearImgui/imgui_impl_glfw.h"
+#include "DearImgui/imgui.h"
+#include "DearImgui/imgui_impl_opengl3.h"
+#include "DearImgui/imgui_impl_glfw.h"
 
 
 

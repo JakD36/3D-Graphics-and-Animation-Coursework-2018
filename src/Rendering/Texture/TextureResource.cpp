@@ -4,7 +4,7 @@
 
 #include "TextureResource.h"
 
-#include "../Utils/DebugUtils.h"
+#include "../../Utils/DebugUtils.h"
 #include <iostream>
 #include <vector>
 #include <GL/glew.h>

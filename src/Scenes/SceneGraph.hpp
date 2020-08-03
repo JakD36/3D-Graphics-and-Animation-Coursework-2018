@@ -13,7 +13,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <gsl/pointers>
-#include "../Lights/Lights.hpp"
+#include "../Rendering/Lights/Lights.hpp"
 #include <array>
 #include <string>
 

@@ -9,7 +9,7 @@
 #ifndef Material_hpp
 #define Material_hpp
 
-#include "../ResourceManager/ResourceManager.h"
+#include "../../ResourceManager/ResourceManager.h"
 #include <string>
 #include "MaterialResource.h"
 

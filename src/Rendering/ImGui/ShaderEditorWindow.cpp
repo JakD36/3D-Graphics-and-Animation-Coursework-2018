@@ -2,9 +2,9 @@
 // Created by Jack Davidson on 10/05/2020.
 //
 
-#include "ShaderEditor.h"
+#include "ShaderEditorWindow.h"
 
-#include "../Include/DearImgui/imgui.h"
+#include "DearImgui/imgui.h"
 #include "imgui_impl_glm.h"
 
 void ShaderEditorWindow()

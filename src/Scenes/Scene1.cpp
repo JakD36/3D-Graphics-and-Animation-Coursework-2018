@@ -9,7 +9,7 @@
 #include "Scene1.hpp"
 #include "../Profiling/ProfilerService.h"
 #include <glm/gtx/quaternion.hpp>
-#include "../Shaders/ShaderManager.h"
+#include "../Rendering/Shaders/ShaderManager.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <sys/stat.h>

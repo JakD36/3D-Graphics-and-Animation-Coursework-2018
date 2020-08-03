@@ -32,42 +32,42 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/GameObject/GameObject.cpp
         src/GameObject/GameObject.hpp
 
-        src/Lights/Lights.hpp
+        src/Rendering/Lights/Lights.hpp
 
-        src/Material/Material.cpp
-        src/Material/Material.hpp
+        src/Rendering/Material/Material.cpp
+        src/Rendering/Material/Material.hpp
 
-        src/Mesh/MeshResource.cpp
-        src/Mesh/MeshResource.hpp
+        src/Rendering/Mesh/MeshResource.cpp
+        src/Rendering/Mesh/MeshResource.hpp
 
         src/Scenes/Scene1.cpp
         src/Scenes/Scene1.hpp
         src/Scenes/SceneGraph.cpp
         src/Scenes/SceneGraph.hpp
 
-        src/Texture/Texture.cpp
-        src/Texture/Texture.hpp
+        src/Rendering/Texture/Texture.cpp
+        src/Rendering/Texture/Texture.hpp
 
         src/Profiling/ProfilerService.cpp
         src/Profiling/ProfilerService.h
         src/Utils/VectorUtils.hpp
 
-        src/Views/camera.cpp
-        src/Views/camera.hpp
-        src/Views/Renderer.cpp
-        src/Views/Renderer.hpp
+        src/Rendering/Views/camera.cpp
+        src/Rendering/Views/camera.hpp
+        src/Rendering/Views/Renderer.cpp
+        src/Rendering/Views/Renderer.hpp
 
         src/main.cpp
-        src/Shaders/ShaderManager.cpp
-        src/Shaders/ShaderManager.h
-        src/Shaders/ShaderUtils.h
-        src/Shaders/ShaderUtils.cpp
+        src/Rendering/Shaders/ShaderManager.cpp
+        src/Rendering/Shaders/ShaderManager.h
+        src/Rendering/Shaders/ShaderUtils.h
+        src/Rendering/Shaders/ShaderUtils.cpp
         src/Utils/VectorUtils.cpp
-        src/Framebuffer/TwoPassFramebuffer.cpp
-        src/Framebuffer/TwoPassFramebuffer.h
-        src/Lights/Lights.cpp
+        src/Rendering/Framebuffer/TwoPassFramebuffer.cpp
+        src/Rendering/Framebuffer/TwoPassFramebuffer.h
+        src/Rendering/Lights/Lights.cpp
         src/OpenGL/OpenGLCallbacks.h
-        src/OpenGL/OpenGLCallbacks.cpp src/OpenGL/OpenGLSetup.cpp src/OpenGL/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Profiling/ProfileTag.cpp src/Profiling/ProfileTag.h src/GameObject/Transform.cpp src/GameObject/Transform.h src/Utils/DebugUtils.h src/Views/RenderPass.h src/Utils/imgui_impl_glm.h src/Utils/ShaderEditor.cpp src/Utils/ShaderEditor.h src/Views/RenderTask.cpp src/Views/RenderTask.h src/Views/RenderPass.cpp src/ResourceManager/SparseVector.h src/ResourceManager/ResourceManager.h src/Mesh/Mesh.cpp src/Mesh/Mesh.h src/ResourceManager/Resource.h src/Material/MaterialResource.cpp src/Material/MaterialResource.h src/Texture/TextureResource.cpp src/Texture/TextureResource.h src/ResourceManager/Resource.cpp src/Views/RenderTaskResource.cpp src/Views/RenderTaskResource.h src/Framebuffer/FramebufferBase.cpp src/Framebuffer/FramebufferBase.h src/Framebuffer/SinglePassFramebuffer.cpp src/Framebuffer/SinglePassFramebuffer.h src/Framebuffer/ImGuiFramebuffer.cpp src/Framebuffer/ImGuiFramebuffer.h src/Profiling/MemoryProfiler.cpp src/Profiling/MemoryProfiler.h src/Profiling/ProfilerWindow.cpp src/Profiling/ProfilerWindow.h)
+        src/OpenGL/OpenGLCallbacks.cpp src/OpenGL/OpenGLSetup.cpp src/OpenGL/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Profiling/ProfileTag.cpp src/Profiling/ProfileTag.h src/GameObject/Transform.cpp src/GameObject/Transform.h src/Utils/DebugUtils.h src/Rendering/Views/RenderPass.h src/Rendering/ImGui/imgui_impl_glm.h src/Rendering/ImGui/ShaderEditorWindow.cpp src/Rendering/ImGui/ShaderEditorWindow.h src/Rendering/Views/RenderTask.cpp src/Rendering/Views/RenderTask.h src/Rendering/Views/RenderPass.cpp src/Utils/Collections/SparseVector.h src/ResourceManager/ResourceManager.h src/Rendering/Mesh/Mesh.cpp src/Rendering/Mesh/Mesh.h src/ResourceManager/Resource.h src/Rendering/Material/MaterialResource.cpp src/Rendering/Material/MaterialResource.h src/Rendering/Texture/TextureResource.cpp src/Rendering/Texture/TextureResource.h src/ResourceManager/Resource.cpp src/Rendering/Views/RenderTaskResource.cpp src/Rendering/Views/RenderTaskResource.h src/Rendering/Framebuffer/FramebufferBase.cpp src/Rendering/Framebuffer/FramebufferBase.h src/Rendering/Framebuffer/SinglePassFramebuffer.cpp src/Rendering/Framebuffer/SinglePassFramebuffer.h src/Rendering/Framebuffer/ImGuiFramebuffer.cpp src/Rendering/Framebuffer/ImGuiFramebuffer.h src/Profiling/MemoryProfiler.cpp src/Profiling/MemoryProfiler.h src/Profiling/ProfilerWindow.cpp src/Profiling/ProfilerWindow.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

@@ -15,9 +15,9 @@
 #include <gsl/pointers>
 #include <vector>
 #include <tuple>
-#include "../Views/RenderPass.h"
-#include "../Mesh/Mesh.h"
-#include "../Views/RenderTask.h"
+#include "../Rendering/Views/RenderPass.h"
+#include "../Rendering/Mesh/Mesh.h"
+#include "../Rendering/Views/RenderTask.h"
 
 class Material;
 class Texture;

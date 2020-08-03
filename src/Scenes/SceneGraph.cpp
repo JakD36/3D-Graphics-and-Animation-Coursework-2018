@@ -10,11 +10,11 @@
 #include "../GameObject/GameObject.hpp"
 #include "../Utils/VectorUtils.hpp"
 #include "../Profiling/ProfilerService.h"
-#include "../Views/Camera.hpp"
+#include "../Rendering/Views/Camera.hpp"
 #include <json.hpp>
 #include <fstream>
 #include <cstdio>
-#include "../Shaders/ShaderManager.h"
+#include "../Rendering/Shaders/ShaderManager.h"
 #include "../GameObject/Transform.h"
 #include <sys/stat.h>
 

@@ -6,7 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_MESH_H
 
 
-#include "../ResourceManager/ResourceManager.h"
+#include "../../ResourceManager/ResourceManager.h"
 #include "MeshResource.hpp"
 #include <string>
 

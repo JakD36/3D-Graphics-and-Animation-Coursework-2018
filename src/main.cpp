@@ -15,8 +15,8 @@
 #include "Scenes/Scene1.hpp"
 #include "Controllers/Controller.hpp"
 #include "Controllers/KeyboardAndMouse.hpp"
-#include "Views/Renderer.hpp"
-#include "Shaders/ShaderManager.h"
+#include "Rendering/Views/Renderer.hpp"
+#include "Rendering/Shaders/ShaderManager.h"
 
 #include "../Include/DearImgui/imgui.h"
 #include "../Include/DearImgui/imgui_impl_opengl3.h"
@@ -27,8 +27,8 @@
 #include "Utils/DebugUtils.h"
 #include "GameObject/GameObject.hpp"
 
-#include "Utils/ShaderEditor.h"
-#include "Material/MaterialResource.h"
+#include "Rendering/ImGui/ShaderEditorWindow.h"
+#include "Rendering/Material/MaterialResource.h"
 #include "Profiling/MemoryProfiler.h"
 #include "Profiling/ProfilerWindow.h"
 
