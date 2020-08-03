@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 #include <string>
-#include "../Resource.h"
+#include "../ResourceManager/Resource.h"
 
 enum class VertexAttrib
 {

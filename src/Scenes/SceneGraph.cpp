@@ -15,7 +15,7 @@
 #include <fstream>
 #include <cstdio>
 #include "../Shaders/ShaderManager.h"
-#include "../Transform.h"
+#include "../GameObject/Transform.h"
 #include <sys/stat.h>
 
 using namespace std;

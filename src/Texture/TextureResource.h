@@ -6,7 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_TEXTURERESOURCE_H
 
 
-#include "../Resource.h"
+#include "../ResourceManager/Resource.h"
 #include <string>
 #include <GL/glew.h>
 

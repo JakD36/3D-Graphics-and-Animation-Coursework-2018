@@ -12,5 +12,6 @@ GLFWwindow* InitOpenGL(int windowWidth, int windowHeight);
 void HintsGLFW();
 void SetupOpenglDebug();
 void EndProgram(GLFWwindow* window);
+void SetImGuiStyle();
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_OPENGLSETUP_H

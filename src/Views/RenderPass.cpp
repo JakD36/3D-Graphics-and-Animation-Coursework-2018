@@ -3,10 +3,10 @@
 //
 
 #include "RenderPass.h"
-#include "Shaders/ShaderManager.h"
-#include "Texture/Texture.hpp"
-#include "Material/Material.hpp"
-#include "Lights/Lights.hpp"
+#include "../Shaders/ShaderManager.h"
+#include "../Texture/Texture.hpp"
+#include "../Material/Material.hpp"
+#include "../Lights/Lights.hpp"
 #include <string>
 
 using namespace std;

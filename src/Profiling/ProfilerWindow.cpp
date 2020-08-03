@@ -8,7 +8,7 @@
 #include "ProfilerService.h"
 #include "MemoryProfiler.h"
 
-void DrawProfiler()
+void DrawProfilerWindow()
 {
     if(ImGui::Begin("Profiler"))
     {

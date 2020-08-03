@@ -11,7 +11,7 @@
 #include "../Lights/Lights.hpp"
 #include "../Texture/Texture.hpp"
 #include "../Views/Camera.hpp"
-#include "../Transform.h"
+#include "Transform.h"
 
 using namespace std;
 

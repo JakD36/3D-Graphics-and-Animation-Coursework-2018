@@ -14,7 +14,7 @@
 #include <iostream>
 #include <sys/stat.h>
 #include "../GameObject/GameObject.hpp"
-#include "../Transform.h"
+#include "../GameObject/Transform.h"
 
 using namespace std;
 

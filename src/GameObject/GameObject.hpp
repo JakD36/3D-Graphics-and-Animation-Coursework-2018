@@ -15,7 +15,7 @@
 #include <gsl/pointers>
 #include <vector>
 #include <tuple>
-#include "../RenderPass.h"
+#include "../Views/RenderPass.h"
 #include "../Mesh/Mesh.h"
 #include "../Views/RenderTask.h"
 

@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 #include <json.hpp>
-#include "Texture/Texture.hpp"
+#include "../Texture/Texture.hpp"
 
 class GameObject;
 
