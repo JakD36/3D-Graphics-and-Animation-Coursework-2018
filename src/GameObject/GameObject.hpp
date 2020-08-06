@@ -10,12 +10,7 @@
 #define GameObject_hpp
 
 #include <string>
-#include <GL/glew.h>
-#include <glm/glm.hpp>
 #include <gsl/pointers>
-#include <vector>
-#include <tuple>
-#include "../Rendering/Views/RenderPass.h"
 #include "../Rendering/Mesh/Mesh.h"
 #include "../Rendering/Views/RenderTask.h"
 
