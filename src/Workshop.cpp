@@ -20,6 +20,12 @@ Workshop::Workshop() {
 Workshop::~Workshop() {}
 
 void Workshop::OnEvent(WindowEvent &event) {
+    if(((int)event.GetType() & (int)WindowEventType::WINDOW_CLOSE) > 0)
+    {
+        m_running = false;
+        return;
+    }
+
     if(((int)event.GetType() & (int)WindowEventType::RENDERER_EVENTS) > 0)
     {
         printf("Window Event occurred");

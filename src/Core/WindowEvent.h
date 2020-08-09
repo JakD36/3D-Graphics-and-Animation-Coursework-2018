@@ -7,6 +7,7 @@
 
 enum class WindowEventType
 {
+
     WINDOW_RESIZE = 1 << 0,
     FRAMEBUFFER_RESIZE = 1 << 1,
     KEY_PRESSED = 1 << 2,
@@ -14,6 +15,8 @@ enum class WindowEventType
     MOUSE_MOVE = 1 << 4,
     MOUSE_BUTTON_PRESSED = 1 << 5,
     MOUSE_BUTTON_RELEASED = 1 << 6,
+
+    WINDOW_CLOSE = 1 << 7,
 
 
     RENDERER_EVENTS = WINDOW_RESIZE | FRAMEBUFFER_RESIZE,
@@ -54,15 +57,22 @@ public:
     WindowEventType GetType() const final {return WindowEventType::FRAMEBUFFER_RESIZE;};
 };
 
-class MouseMove : public WindowEvent
+class MouseMoveEvent : public WindowEvent
 {
 private:
     int m_x,m_y;
 public:
-    MouseMove(float x, float y) : m_x(x), m_y(y);
+    MouseMoveEvent(float x, float y) : m_x(x), m_y(y) {};
     int GetX() {return m_x;};
     int GetY() {return m_y;};
     WindowEventType GetType() const final {return WindowEventType::MOUSE_MOVE;};
+};
+
+class WindowCloseEvent : public WindowEvent
+{
+public:
+    WindowCloseEvent() {};
+    WindowEventType GetType() const final {return WindowEventType::WINDOW_CLOSE;};
 };
 
 

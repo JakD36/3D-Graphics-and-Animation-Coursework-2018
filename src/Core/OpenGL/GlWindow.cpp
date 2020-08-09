@@ -105,7 +105,13 @@ void SetupOpenGLCallbacks(GLFWwindow* window)
 
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double x, double y){
         auto& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-        MouseMove event(x, y);
+        MouseMoveEvent event(x, y);
+        windowData.m_eventHandler(event);
+    });
+
+    glfwSetWindowCloseCallback(window, [](GLFWwindow* window){
+        auto& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+        WindowCloseEvent event;
         windowData.m_eventHandler(event);
     });
 }
