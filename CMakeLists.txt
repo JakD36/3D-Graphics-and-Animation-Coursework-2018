@@ -66,8 +66,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Rendering/Framebuffer/TwoPassFramebuffer.cpp
         src/Rendering/Framebuffer/TwoPassFramebuffer.h
         src/Rendering/Lights/Lights.cpp
-        src/OpenGL/OpenGLCallbacks.h
-        src/OpenGL/OpenGLCallbacks.cpp src/OpenGL/OpenGLSetup.cpp src/OpenGL/OpenGLSetup.h src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Profiling/ProfileTag.cpp src/Profiling/ProfileTag.h src/GameObject/Transform.cpp src/GameObject/Transform.h src/Utils/DebugUtils.h src/Rendering/Views/RenderPass.h src/Rendering/ImGui/imgui_impl_glm.h src/Rendering/ImGui/ShaderEditorWindow.cpp src/Rendering/ImGui/ShaderEditorWindow.h src/Rendering/Views/RenderTask.cpp src/Rendering/Views/RenderTask.h src/Rendering/Views/RenderPass.cpp src/Utils/Collections/SparseVector.h src/ResourceManager/ResourceManager.h src/Rendering/Mesh/Mesh.cpp src/Rendering/Mesh/Mesh.h src/ResourceManager/Resource.h src/Rendering/Material/MaterialResource.cpp src/Rendering/Material/MaterialResource.h src/Rendering/Texture/TextureResource.cpp src/Rendering/Texture/TextureResource.h src/ResourceManager/Resource.cpp src/Rendering/Views/RenderTaskResource.cpp src/Rendering/Views/RenderTaskResource.h src/Rendering/Framebuffer/FramebufferBase.cpp src/Rendering/Framebuffer/FramebufferBase.h src/Rendering/Framebuffer/SinglePassFramebuffer.cpp src/Rendering/Framebuffer/SinglePassFramebuffer.h src/Rendering/Framebuffer/ImGuiFramebuffer.cpp src/Rendering/Framebuffer/ImGuiFramebuffer.h src/Profiling/MemoryProfiler.cpp src/Profiling/MemoryProfiler.h src/Profiling/ProfilerWindow.cpp src/Profiling/ProfilerWindow.h)
+        src/FSM/FSM.cpp src/FSM/FSM.h src/FSM/Flowstate.cpp src/FSM/Flowstate.h src/Profiling/ProfileTag.cpp src/Profiling/ProfileTag.h src/GameObject/Transform.cpp src/GameObject/Transform.h src/Utils/DebugUtils.h src/Rendering/Views/RenderPass.h src/Rendering/ImGui/imgui_impl_glm.h src/Rendering/ImGui/ShaderEditorWindow.cpp src/Rendering/ImGui/ShaderEditorWindow.h src/Rendering/Views/RenderTask.cpp src/Rendering/Views/RenderTask.h src/Rendering/Views/RenderPass.cpp src/Utils/Collections/SparseVector.h src/ResourceManager/ResourceManager.h src/Rendering/Mesh/Mesh.cpp src/Rendering/Mesh/Mesh.h src/ResourceManager/Resource.h src/Rendering/Material/MaterialResource.cpp src/Rendering/Material/MaterialResource.h src/Rendering/Texture/TextureResource.cpp src/Rendering/Texture/TextureResource.h src/ResourceManager/Resource.cpp src/Rendering/Views/RenderTaskResource.cpp src/Rendering/Views/RenderTaskResource.h src/Rendering/Framebuffer/FramebufferBase.cpp src/Rendering/Framebuffer/FramebufferBase.h src/Rendering/Framebuffer/SinglePassFramebuffer.cpp src/Rendering/Framebuffer/SinglePassFramebuffer.h src/Rendering/Framebuffer/ImGuiFramebuffer.cpp src/Rendering/Framebuffer/ImGuiFramebuffer.h src/Profiling/MemoryProfiler.cpp src/Profiling/MemoryProfiler.h src/Profiling/ProfilerWindow.cpp src/Profiling/ProfilerWindow.h src/Core/OpenGL/GlWindow.cpp src/Core/OpenGL/GlWindow.h src/Core/Application/Application.h src/Core/Application/Window.h src/Workshop.cpp src/Workshop.h src/Core/WindowEvent.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )
@@ -101,3 +100,24 @@ if(WIN32)
             ${OPENGL_LIBRARIES}
             )
 endif()
+
+#target_precompile_headers(3D_Graphics_and_Animation_Coursework_2018
+##        PUBLIC
+##        project_header.h
+#        PRIVATE
+#        <functional>
+#        <iostream>
+#        <thread>
+#        <algorithm>
+#        <string>
+#        <array>
+#        <set>
+#        <deque>
+#        <map>
+#        <unordered_set>
+#        <unordered_map>
+#        <vector>
+#        <memory>
+#        [["GL/glew.h"]]
+#        [["glm/glm.hpp"]]
+#        )

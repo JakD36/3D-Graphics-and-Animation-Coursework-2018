@@ -25,13 +25,11 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight) noexcept{
     this->m_windowHeight = windowHeight;
 }
 
-// Initialise the Renderer for this viewport
 Renderer::Renderer(GLFWwindow* window) noexcept {
     PROFILE(profiler,"Renderer Initialisation");
 
     p_window = window;
 
-    // Grab the window dimensions for the current window, saves passing too many arguments to the constructor
     glfwGetWindowSize(p_window, &m_windowWidth, &m_windowHeight);
 
     // On high DPI, there are a higher number of pixels in the window than the length of the window, so we need to use the frameWidth and height,
