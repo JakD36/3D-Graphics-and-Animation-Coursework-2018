@@ -5,7 +5,7 @@
 #ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_WINDOWEVENT_H
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_WINDOWEVENT_H
 
-enum class WindowEventType
+enum class WindowEventType : unsigned long
 {
 
     WINDOW_RESIZE = 1 << 0,

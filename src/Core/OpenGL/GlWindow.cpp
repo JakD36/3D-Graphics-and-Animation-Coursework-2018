@@ -2,6 +2,8 @@
 // Created by Jack Davidson on 07/08/2020.
 //
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "GlWindow.h"
 #include "../../Utils/DebugUtils.h"
 #include "../WindowEvent.h"

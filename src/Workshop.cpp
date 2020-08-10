@@ -20,15 +20,22 @@ Workshop::Workshop() {
 Workshop::~Workshop() {}
 
 void Workshop::OnEvent(WindowEvent &event) {
-    if(((int)event.GetType() & (int)WindowEventType::WINDOW_CLOSE) > 0)
+    if(((unsigned long)event.GetType() & (unsigned long)WindowEventType::WINDOW_CLOSE) > 0)
     {
         m_running = false;
         return;
     }
 
-    if(((int)event.GetType() & (int)WindowEventType::RENDERER_EVENTS) > 0)
+    if(((unsigned long)event.GetType() & ((unsigned long)WindowEventType::KEY_EVENTS | (unsigned long)WindowEventType::MOUSE_EVENTS)) > 0)
     {
-        printf("Window Event occurred");
+        printf("Send to FlowState stack or Layer system\n");
+        return;
+    }
+
+    if(((unsigned long)event.GetType() & (unsigned long)WindowEventType::RENDERER_EVENTS) > 0)
+    {
+        printf("Send to renderer\n");
+        return;
     };
 }
 

@@ -5,11 +5,10 @@
 #ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_GLWINDOW_H
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_GLWINDOW_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include <string>
 #include "../Application/Window.h"
+
+class GLFWwindow;
 
 struct WindowData
 {
