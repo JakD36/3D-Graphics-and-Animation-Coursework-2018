@@ -105,11 +105,46 @@ void SetupOpenGLCallbacks(GLFWwindow* window)
     });
 
     glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
-
+        switch(action)
+        {
+            case GLFW_PRESS:
+            {
+                auto& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+                KeyPressedEvent event(key);
+                windowData.m_eventHandler(event);
+                break;
+            }
+            case GLFW_RELEASE:
+            {
+                auto& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+                KeyReleasedEvent event(key);
+                windowData.m_eventHandler(event);
+                break;
+            }
+            // TODO: Could handle the key being held down by using the GLFW_REPEAT, but instead going to update the keystatus, in input class
+            default:
+                break;
+        }
     });
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods){
-        // Update Input System
+        switch(action)
+        {
+            case GLFW_PRESS:
+            {
+                auto& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+                MouseButtonPressedEvent event(button);
+                windowData.m_eventHandler(event);
+                break;
+            }
+            case GLFW_RELEASE:
+            {
+                auto& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+                MouseButtonReleasedEvent event(button);
+                windowData.m_eventHandler(event);
+                break;
+            }
+        }
     });
 
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double x, double y){

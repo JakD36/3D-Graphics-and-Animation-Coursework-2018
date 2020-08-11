@@ -5,6 +5,7 @@
 #include "Workshop.h"
 #include "Core/OpenGL/GlWindow.h"
 #include "Core/WindowEvent.h"
+#include "Core/Input/Input.h"
 #include <cstdio>
 
 Application* CreateApplication() noexcept
@@ -13,7 +14,7 @@ Application* CreateApplication() noexcept
 }
 
 Workshop::Workshop() {
-    m_window = std::make_unique<GlWindow>("Workshop",1031,580);
+    m_window = std::make_unique<GlWindow>("Workshop",800,450);
     m_window->RegisterEventListener([this] (WindowEvent& event){ this->OnEvent(event); });
 }
 
@@ -26,9 +27,9 @@ void Workshop::OnEvent(WindowEvent &event) {
         return;
     }
 
-    if(((unsigned long)event.GetType() & ((unsigned long)WindowEventType::KEY_EVENTS | (unsigned long)WindowEventType::MOUSE_EVENTS)) > 0)
+    if( ((unsigned long)event.GetType() & ((unsigned long)WindowEventType::KEY_EVENTS | (unsigned long)WindowEventType::MOUSE_EVENTS)) > 0)
     {
-        printf("Send to FlowState stack or Layer system\n");
+        Input::OnEvent(event);
         return;
     }
 
@@ -40,8 +41,30 @@ void Workshop::OnEvent(WindowEvent &event) {
 }
 
 void Workshop::Run() {
+    // Initialise
+
+    // Renderer
+    // Scene
+    // ImGui
+    // ResourceSystem
+
     while(m_running)
     {
+        float dt = m_window->GetDeltaTime();
+        // ResourceSystem->Update();
+
+        // GUI->Update();
+        if(Input::GetKeyDown(KEY_SPACE))
+            printf("Space Pressed\n");
+        if(Input::GetKey(KEY_SPACE))
+            printf("Space Held\n");
+        if(Input::GetKeyUp(KEY_SPACE))
+            printf("Space Released\n");
+
+        // Render
+
+        // Update Systems
+        Input::Update();
         m_window->Update();
     }
 }

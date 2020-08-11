@@ -5,6 +5,8 @@
 #ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_WINDOWEVENT_H
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_WINDOWEVENT_H
 
+#include <glm/glm.hpp>
+
 enum class WindowEventType : unsigned long
 {
 
@@ -60,12 +62,51 @@ public:
 class MouseMoveEvent : public WindowEvent
 {
 private:
-    int m_x,m_y;
+    glm::vec2 m_pos;
 public:
-    MouseMoveEvent(float x, float y) : m_x(x), m_y(y) {};
-    int GetX() {return m_x;};
-    int GetY() {return m_y;};
+    MouseMoveEvent(float x, float y) : m_pos(x,y) {};
+    glm::vec2 GetPos() {return m_pos;};
     WindowEventType GetType() const final {return WindowEventType::MOUSE_MOVE;};
+};
+
+class MouseButtonPressedEvent : public WindowEvent
+{
+private:
+    int m_keyCode;
+public:
+    MouseButtonPressedEvent(int keyCode) : m_keyCode(keyCode) {};
+    int GetKeyCode() {return m_keyCode;};
+    WindowEventType GetType() const final {return WindowEventType::MOUSE_BUTTON_PRESSED;};
+};
+
+class MouseButtonReleasedEvent : public WindowEvent
+{
+private:
+    int m_keyCode;
+public:
+    MouseButtonReleasedEvent(int keyCode) : m_keyCode(keyCode) {};
+    int GetKeyCode() {return m_keyCode;};
+    WindowEventType GetType() const final {return WindowEventType::MOUSE_BUTTON_RELEASED;};
+};
+
+class KeyPressedEvent : public WindowEvent
+{
+private:
+    int m_keyCode;
+public:
+    KeyPressedEvent(int keyCode) : m_keyCode(keyCode) {};
+    int GetKeyCode() {return m_keyCode;};
+    WindowEventType GetType() const final {return WindowEventType::KEY_PRESSED;};
+};
+
+class KeyReleasedEvent : public WindowEvent
+{
+private:
+    int m_keyCode;
+public:
+    KeyReleasedEvent(int keyCode) : m_keyCode(keyCode) {};
+    int GetKeyCode() {return m_keyCode;};
+    WindowEventType GetType() const final {return WindowEventType::KEY_RELEASED;};
 };
 
 class WindowCloseEvent : public WindowEvent
