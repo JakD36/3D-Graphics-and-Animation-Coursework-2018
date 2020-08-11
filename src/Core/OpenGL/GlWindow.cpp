@@ -60,14 +60,17 @@ GlWindow::GlWindow(std::string title, int width, int height)
     glfwWindowHint(GLFW_STEREO, GL_FALSE);
 
     ++s_windowCount;
+    m_lastTime = glfwGetTime();
 }
 
 void GlWindow::Update()
 {
-    while (glfwWindowShouldClose(m_window) != GL_TRUE){
-        glfwPollEvents();
-        glfwSwapBuffers(m_window);
-    }
+    glfwPollEvents();
+    glfwSwapBuffers(m_window);
+
+    float currentTime = glfwGetTime();
+    m_deltaTime = currentTime - m_lastTime;
+    m_lastTime = currentTime;
 }
 
 GlWindow::~GlWindow()
@@ -81,6 +84,10 @@ GlWindow::~GlWindow()
 void GlWindow::RegisterEventListener(std::function<void(WindowEvent& event)> func)
 {
     m_windowData.m_eventHandler = func;
+}
+
+float GlWindow::GetDeltaTime() {
+    return m_deltaTime;
 }
 
 void SetupOpenGLCallbacks(GLFWwindow* window)

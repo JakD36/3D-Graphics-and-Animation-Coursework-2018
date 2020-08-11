@@ -21,11 +21,12 @@ private:
     inline static unsigned int s_windowCount = 0;
     GLFWwindow* m_window;
     WindowData m_windowData;
+    float m_deltaTime,m_lastTime;
 public:
     GlWindow(std::string title, int width, int height);
     void RegisterEventListener(std::function<void(WindowEvent& event)> func) final;
     void Update() final;
-
+    float GetDeltaTime() final;
     ~GlWindow() final;
 };
 

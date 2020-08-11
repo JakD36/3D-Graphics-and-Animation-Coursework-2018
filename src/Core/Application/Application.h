@@ -15,9 +15,7 @@ class Application {
 protected:
     inline static Application* s_instance = nullptr;
     bool m_running = true;
-
     std::unique_ptr<Window> m_window;
-
 
     Application() {
         assertm(s_instance == nullptr,"Application already exists")
