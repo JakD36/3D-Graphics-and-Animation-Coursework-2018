@@ -7,6 +7,7 @@
 
 #include "MouseCodes.h"
 #include "KeyCodes.h"
+#include "../EnumBitmask.h"
 #include <glm/glm.hpp>
 
 class WindowEvent;
@@ -37,5 +38,7 @@ public:
     static bool GetMouseButtonUp(int code);
     static bool GetMouseButton(int code);
 };
+
+ENABLE_BITMASK_OPERATORS(Input::Status)
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_INPUT_H

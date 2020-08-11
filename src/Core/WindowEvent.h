@@ -6,6 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_WINDOWEVENT_H
 
 #include <glm/glm.hpp>
+#include "EnumBitmask.h"
 
 enum class WindowEventType : unsigned long
 {
@@ -25,6 +26,8 @@ enum class WindowEventType : unsigned long
     KEY_EVENTS = KEY_PRESSED | KEY_RELEASED,
     MOUSE_EVENTS = MOUSE_MOVE | MOUSE_BUTTON_RELEASED | MOUSE_BUTTON_PRESSED,
 };
+
+ENABLE_BITMASK_OPERATORS(WindowEventType)
 
 #define EVENT_CLASS_TYPE(type) static MsgType GetStaticType() { return MsgType::type; }\
                     virtual MsgType GetEventType() const override { return GetStaticType(); }\

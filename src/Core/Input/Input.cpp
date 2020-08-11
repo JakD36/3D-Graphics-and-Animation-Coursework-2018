@@ -12,7 +12,7 @@ void Input::Update()
 {
     for (Status& status : s_keyStatus)
     {
-        if(((unsigned long)status & (unsigned long)Status::UP) > 0)
+        if((status & Status::UP) > 0)
         {
             status = Status::NONE;
         }
@@ -23,7 +23,7 @@ void Input::Update()
     }
     for (Status& status : s_mouseStatus)
     {
-        if(((unsigned long)status & (unsigned long)Status::UP) > 0)
+        if((status & Status::UP) > 0)
         {
             status = Status::NONE;
         }
@@ -47,8 +47,8 @@ void Input::OnEvent(WindowEvent& event)
         case WindowEventType::KEY_RELEASED:
         {
             KeyReleasedEvent keyEvent = static_cast<KeyReleasedEvent&>(event);
-            char current = (char)s_keyStatus[keyEvent.GetKeyCode()];
-            s_keyStatus[keyEvent.GetKeyCode()] = (Status)((current & (char)Status::DOWN) | (char)Status::UP);
+            Status& current = s_keyStatus[keyEvent.GetKeyCode()];
+            s_keyStatus[keyEvent.GetKeyCode()] = ((current & Status::DOWN) | Status::UP);
             break;
         }
         case WindowEventType::MOUSE_BUTTON_PRESSED:
@@ -60,7 +60,7 @@ void Input::OnEvent(WindowEvent& event)
         case WindowEventType::MOUSE_BUTTON_RELEASED:
         {
              MouseButtonReleasedEvent mouseEvent = static_cast<MouseButtonReleasedEvent&>(event);
-            s_mouseStatus[mouseEvent.GetKeyCode()] = (Status)((char)s_mouseStatus[mouseEvent.GetKeyCode()] | (char)Status::UP);
+            s_mouseStatus[mouseEvent.GetKeyCode()] = (s_mouseStatus[mouseEvent.GetKeyCode()] | Status::UP);
             break;
         }
         case WindowEventType::MOUSE_MOVE:
@@ -75,25 +75,25 @@ void Input::OnEvent(WindowEvent& event)
 }
 
 bool Input::GetKeyDown(int code) {
-    return ((unsigned long)s_keyStatus[code] & (unsigned long)Status::DOWN) > 0;
+    return (s_keyStatus[code] & Status::DOWN) > 0;
 }
 
 bool Input::GetKeyUp(int code) {
-    return ((unsigned long)s_keyStatus[code] & (unsigned long)Status::UP) > 0;
+    return (s_keyStatus[code] & Status::UP) > 0;
 }
 
 bool Input::GetKey(int code) {
-    return ((unsigned long)s_keyStatus[code] & ((unsigned long)Status::DOWN | (unsigned long)Status::HELD)) > 0;
+    return (s_keyStatus[code] & (Status::DOWN | Status::HELD)) > 0;
 }
 
 bool Input::GetMouseButtonDown(int code) {
-    return ((unsigned long)s_mouseStatus[code] & (unsigned long)Status::DOWN) > 0;
+    return (s_mouseStatus[code] & Status::DOWN) > 0;
 }
 
 bool Input::GetMouseButtonUp(int code) {
-    return ((unsigned long)s_mouseStatus[code] & (unsigned long)Status::UP) > 0;
+    return (s_mouseStatus[code] & Status::UP) > 0;
 }
 
 bool Input::GetMouseButton(int code) {
-    return ((unsigned long)s_mouseStatus[code] & ((unsigned long)Status::DOWN | (unsigned long)Status::HELD)) > 0;
+    return (s_mouseStatus[code] & (Status::DOWN | Status::HELD)) > 0;
 }
