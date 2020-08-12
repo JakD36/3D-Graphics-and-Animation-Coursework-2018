@@ -19,6 +19,10 @@ public:
     virtual void RegisterEventListener(std::function<void(WindowEvent& event)> func) = 0;
     virtual void Update() = 0;
     virtual float GetDeltaTime() = 0;
+    virtual void* GetNativeWindow() = 0;
+
+    virtual void SetVSync(bool enabled) = 0;
+    virtual void SetCursor(bool enabled) = 0;
 };
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_WINDOW_H

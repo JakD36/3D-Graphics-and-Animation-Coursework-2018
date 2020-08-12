@@ -90,6 +90,20 @@ float GlWindow::GetDeltaTime() {
     return m_deltaTime;
 }
 
+void* GlWindow::GetNativeWindow(){
+    return m_window;
+}
+
+void GlWindow::SetVSync(bool enabled)
+{
+    glfwSwapInterval(enabled);
+}
+
+void GlWindow::SetCursor(bool enabled)
+{
+    glfwSetInputMode(m_window, GLFW_CURSOR, enabled ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
+}
+
 void SetupOpenGLCallbacks(GLFWwindow* window)
 {
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height){

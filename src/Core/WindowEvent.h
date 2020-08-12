@@ -92,7 +92,7 @@ public:
     WindowEventType GetType() const final {return WindowEventType::MOUSE_BUTTON_RELEASED;};
 };
 
-class KeyPressedEvent : public WindowEvent
+class KeyPressedEvent : public WindowEvent // TODO: Capture the modifiers
 {
 private:
     int m_keyCode;

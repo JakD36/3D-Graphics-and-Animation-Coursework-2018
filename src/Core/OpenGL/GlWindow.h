@@ -24,10 +24,14 @@ private:
     float m_deltaTime,m_lastTime;
 public:
     GlWindow(std::string title, int width, int height);
+    ~GlWindow() final;
     void RegisterEventListener(std::function<void(WindowEvent& event)> func) final;
     void Update() final;
     float GetDeltaTime() final;
-    ~GlWindow() final;
+    void* GetNativeWindow() final;
+
+    void SetVSync(bool enabled) final;
+    void SetCursor(bool enabled) final;
 };
 
 
