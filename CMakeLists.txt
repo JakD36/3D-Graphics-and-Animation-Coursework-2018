@@ -74,9 +74,9 @@ if(APPLE)
     find_library( IOKIT_FW IOKit )
     find_library( COREFOUNDATION_FW CoreFoundation )
     find_library( COREVIDEO_FW CoreVideo )
-    find_library( GLEW GLEW Frameworks)
-    find_library( GLFW glfw3 Frameworks)
-    find_library( ASSIMP assimp Frameworks)
+    find_library( GLEW GLEW Libraries)
+    find_library( GLFW glfw3 Libraries)
+    find_library( ASSIMP assimp Libraries)
 
     target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
             ${GLFW}
@@ -90,8 +90,8 @@ if(APPLE)
 endif()
 
 if(WIN32)
-    find_library( GLEW_S glew32s Frameworks)
-    find_library( GLFW glfw3 Frameworks)
+    find_library( GLEW_S glew32s Libraries)
+    find_library( GLFW glfw3 Libraries)
     find_package(OpenGL REQUIRED)
 
     target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
