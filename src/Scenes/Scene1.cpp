@@ -16,6 +16,7 @@
 #include "../GameObject/GameObject.hpp"
 #include "../GameObject/Transform.h"
 #include "../Core/Input/Input.h"
+#include "../Rendering/Views/Camera.hpp"
 
 using namespace std;
 
@@ -54,7 +55,14 @@ void Scene1::Update(double deltaTime) noexcept{
         m_lights[m_bulbLight].lightOn = !m_lights[m_bulbLight].lightOn;
     }
 
-
+    glm::vec2 mousePos = Input::GetMousePosition();
+    glm::vec2 offset = (m_lastMousePos - mousePos) * 0.05f;
+    m_lastMousePos = mousePos;
+    m_cameraEuler += offset;
+    if(m_cameraEuler.y > 89.0f) m_cameraEuler.y = 89.0f;
+    if(m_cameraEuler.y < -89.0f) m_cameraEuler.y = -89.0f;
+    Turn(m_cameraEuler.x, m_cameraEuler.y);
+    p_camera->SetDirection(m_cameraEuler.x, m_cameraEuler.y);
 
     // Swinging light
     double ay = (-9.81/m_lightRadius)*cos(glm::radians(m_lightPitch)); // this is the equation for the acceleration acting upon the light

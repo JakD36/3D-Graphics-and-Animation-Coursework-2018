@@ -37,6 +37,8 @@ public:
     static bool GetMouseButtonDown(int code);
     static bool GetMouseButtonUp(int code);
     static bool GetMouseButton(int code);
+
+    static glm::vec2 GetMousePosition();
 };
 
 ENABLE_BITMASK_OPERATORS(Input::Status)

@@ -13,8 +13,6 @@
 #include "../Include/DearImgui/imgui_impl_glfw.h"
 
 #include "Scenes/Scene1.hpp"
-#include "Controllers/Controller.hpp"
-#include "Controllers/KeyboardAndMouse.hpp"
 #include "Rendering/Views/Renderer.hpp"
 #include "Rendering/Shaders/ShaderManager.h"
 
@@ -74,9 +72,7 @@ void Workshop::Run() {
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
     view->SetViewport(framebufferWidth * 0.25f, framebufferHeight * 0.25f, framebufferWidth * 0.5f, framebufferHeight* 0.5f); // Provide the framebuffer sizes, on retina its 2x in x and y
-
-    auto controller = std::make_unique<KeyboardAndMouse>(window, &scene); // Initialise the controller, is provided reference to the model and the view so it can access both
-
+    
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

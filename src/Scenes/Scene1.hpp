@@ -28,6 +28,9 @@ private:
     float m_sphereRadius = 0.4;
     float m_yawOffset = 30;
     float m_pitchOffset = 20;
+
+    glm::vec2 m_lastMousePos = glm::vec2(0.0f,0.0f);
+    glm::vec2 m_cameraEuler;
 public:
     Scene1() noexcept;
     ~Scene1() noexcept;

@@ -97,3 +97,7 @@ bool Input::GetMouseButtonUp(int code) {
 bool Input::GetMouseButton(int code) {
     return (s_mouseStatus[code] & (Status::DOWN | Status::HELD)) > 0;
 }
+
+glm::vec2 Input::GetMousePosition() {
+    return s_mousePos;
+}
