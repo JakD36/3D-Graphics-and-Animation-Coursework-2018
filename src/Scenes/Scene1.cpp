@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include "../GameObject/GameObject.hpp"
 #include "../GameObject/Transform.h"
+#include "../Core/Input/Input.h"
 
 using namespace std;
 
@@ -47,7 +48,14 @@ Scene1::Scene1() noexcept{
 void Scene1::Update(double deltaTime) noexcept{
     SceneGraph::Update(deltaTime);
     PROFILE(p,"Scene Update");
-    
+
+    if(Input::GetMouseButtonDown(0))
+    {
+        m_lights[m_bulbLight].lightOn = !m_lights[m_bulbLight].lightOn;
+    }
+
+
+
     // Swinging light
     double ay = (-9.81/m_lightRadius)*cos(glm::radians(m_lightPitch)); // this is the equation for the acceleration acting upon the light
     m_lightPitch += m_v * deltaTime + 0.5 * ay * pow(deltaTime, 2); // this is the equation for angular motion
