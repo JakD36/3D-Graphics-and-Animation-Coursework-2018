@@ -10,6 +10,7 @@
 #include "../Lights/Lights.hpp"
 #include "../../GameObject/GameObject.hpp"
 #include "../../Scenes/SceneGraph.hpp"
+#include "../Framebuffer/SinglePassFramebuffer.h"
 
 using namespace std;
 

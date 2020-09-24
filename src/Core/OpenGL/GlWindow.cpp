@@ -61,6 +61,7 @@ GlWindow::GlWindow(std::string title, int width, int height)
 
     ++s_windowCount;
     m_lastTime = glfwGetTime();
+    m_deltaTime = 0.0f;
 }
 
 void GlWindow::Update()
