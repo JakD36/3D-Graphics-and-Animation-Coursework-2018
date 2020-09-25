@@ -81,7 +81,7 @@ void GameObject::Render(Camera camera) noexcept{
         glCullFace(pass.m_cullFace);
         glEnable(GL_CULL_FACE);
 
-        glDrawArrays(GL_TRIANGLES, 0, m_mesh.GetVertCount());
+        glDrawElements(GL_TRIANGLES, m_mesh.GetVertCount(), GL_UNSIGNED_INT, 0);
     }
 
     ENDPROFILE(profiler);

@@ -15,7 +15,7 @@ struct WindowData
     std::function<void(WindowEvent&  event)> m_eventHandler;
 };
 
-class GlWindow : public Window{
+class GlWindow final : public Window{
 private:
     GlWindow();
     inline static unsigned int s_windowCount = 0;

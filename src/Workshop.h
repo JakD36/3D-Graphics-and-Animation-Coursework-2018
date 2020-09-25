@@ -8,7 +8,7 @@
 
 #include "Core/Application/Application.h"
 
-class Workshop : public Application{
+class Workshop final : public Application{
 public:
     Workshop();
     ~Workshop() final;

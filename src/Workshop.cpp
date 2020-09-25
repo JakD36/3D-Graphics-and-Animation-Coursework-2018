@@ -72,7 +72,7 @@ void Workshop::Run() {
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
     view->SetViewport(framebufferWidth * 0.25f, framebufferHeight * 0.25f, framebufferWidth * 0.5f, framebufferHeight* 0.5f); // Provide the framebuffer sizes, on retina its 2x in x and y
-    
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -104,6 +104,14 @@ void Workshop::Run() {
             static bool enabled = true;
             enabled = !enabled;
             m_window->SetCursor(enabled);
+        }
+
+
+        if(Input::GetKeyDown(KEY_SPACE))
+        {
+            static bool enabled = true;
+            enabled = !enabled;
+            m_window->SetVSync(enabled);
         }
 
         smInstance->Update();

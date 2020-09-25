@@ -6,8 +6,8 @@
 //  Copyright © 2019 Jack Davidson. All rights reserved.
 //
 
-#ifndef Mesh_hpp
-#define Mesh_hpp
+#ifndef MeshResource_hpp
+#define MeshResource_hpp
 
 #include <GL/glew.h>
 #include <string>
@@ -35,17 +35,15 @@ public:
     int m_vertCount;
     int m_attributeFlags;
 
-    GLuint          m_buffer; // Buffer to store the vertices, uvs and the normals for the model
-    GLuint          m_vao;
+    GLuint m_vao;
+    GLuint m_buffer; // Buffer to store the vertices, uvs and the normals for the model
+    GLuint m_indexBuffer;
 
-    std::vector<float> Load(std::string meshName, int vertexAttribFlags) noexcept;
-    std::vector<float> LoadAssimp(std::string meshName, int vertexAttribFlags) noexcept;
+    void Load(std::string meshName, int attribs, std::vector<float> &interleavedData, std::vector<int> &indices) noexcept;
     MeshResource(std::string metadataFilepath) noexcept;
     MeshResource(MeshResource &&mv);
     MeshResource& operator=(MeshResource&& mv) noexcept;
     ~MeshResource() noexcept;
-
-
 };
 
 #endif /* Mesh_hpp */
