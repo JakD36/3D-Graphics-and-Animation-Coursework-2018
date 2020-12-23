@@ -43,45 +43,20 @@ void GameObject::Render(Camera camera) noexcept{
     glm::mat4 mv = camera.BuildViewMat() * m;
     glm::mat4 mvp = camera.ProjectionMatrix() * mv;
 
+    m_mesh.Bind();
+
     for(int i = 0; i < m_renderTask.size(); ++i)
     {
         RenderPass& pass = m_renderTask[i];
-        glUseProgram(pass.m_program);
+        pass.Bind();
 
-        glBindVertexArray(m_mesh.GetVao());
+        pass.SetMatrix4x4("modelMatrix",m);
+        pass.SetMatrix4x4("mv",mv);
+        pass.SetMatrix4x4("mvp",mvp);
 
-        glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"modelMatrix"), 1, GL_FALSE, &m[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"mv"), 1, GL_FALSE, &mv[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(pass.m_program,"mvp"), 1, GL_FALSE, &mvp[0][0]);
+        pass.SetCameraPosition(camera.GetPosition());
 
-        glUniform3fv(glGetUniformLocation(pass.m_program,"viewPosition"),1,&camera.GetPosition()[0]); // The camera position
-
-        for(int j = 0; j < pass.m_textures.size(); ++j)
-        {
-            glActiveTexture(GL_TEXTURE0+j);
-            glBindTexture(GL_TEXTURE_2D,pass.m_textures[j].m_texture.GetTexture()[0]);
-            glUniform1i(pass.m_textures[j].m_location, j);
-        }
-
-        for(int j = 0; j < pass.m_uniformf.size(); ++j)
-        {
-            glUniform1f(pass.m_uniformf[j].m_location, pass.m_uniformf[j].m_value);
-        }
-
-        for(int j = 0; j < pass.m_uniform3fv.size(); ++j)
-        {
-            glUniform3fv(pass.m_uniform3fv[j].m_location, 1, &pass.m_uniform3fv[j].m_value[0]);
-        }
-
-        for(int j = 0; j < pass.m_uniform4fv.size(); ++j)
-        {
-            glUniform4fv(pass.m_uniform4fv[j].m_location, 1, &pass.m_uniform4fv[j].m_value[0]);
-        }
-
-        glCullFace(pass.m_cullFace);
-        glEnable(GL_CULL_FACE);
-
-        glDrawElements(GL_TRIANGLES, m_mesh.GetVertCount(), GL_UNSIGNED_INT, 0);
+        m_mesh.Draw();
     }
 
     ENDPROFILE(profiler);

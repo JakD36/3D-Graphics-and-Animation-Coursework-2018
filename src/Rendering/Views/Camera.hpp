@@ -9,7 +9,6 @@
 #ifndef Camera_hpp
 #define Camera_hpp
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
@@ -38,7 +37,7 @@ public:
     glm::vec3 GetForward() noexcept;
 
     void SetPosition(glm::vec3 newPosition) noexcept;
-    void SetDirection(GLfloat yaw, GLfloat pitch) noexcept;
+    void SetDirection(float yaw, float pitch) noexcept;
     void LookAt(glm::vec3 target) noexcept;
 
     glm::mat4 BuildViewMat() noexcept;

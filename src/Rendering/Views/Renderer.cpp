@@ -94,11 +94,18 @@ void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int 
     array<LightData,k_lightCount> lights = scene->GetLights();
     vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
 
+
+    // For each camera
     for(int i = 0, n = programs.size(); i < n; ++i)
     {
+        // Link lighting
         GLuint index = glGetUniformBlockIndex(programs[i].program,"lightBlock");
         if(index != GL_INVALID_INDEX)
             glUniformBlockBinding(programs[i].program, index, 0);
+
+        // Link Time
+
+        // Link camera position
     }
 
     lights[2].spotCutOff = glm::cos(glm::radians(15.0f));

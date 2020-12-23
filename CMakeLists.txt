@@ -144,23 +144,29 @@ if(WIN32)
             )
 endif()
 
-#target_precompile_headers(3D_Graphics_and_Animation_Coursework_2018
-##        PUBLIC
-##        project_header.h
-#        PRIVATE
-#        <functional>
-#        <iostream>
-#        <thread>
-#        <algorithm>
-#        <string>
-#        <array>
-#        <set>
-#        <deque>
-#        <map>
-#        <unordered_set>
-#        <unordered_map>
-#        <vector>
-#        <memory>
-#        [["GL/glew.h"]]
-#        [["glm/glm.hpp"]]
-#        )
+target_precompile_headers(3D_Graphics_and_Animation_Coursework_2018
+#        PUBLIC
+#        project_header.h
+        PRIVATE
+        <functional>
+        <iostream>
+        <thread>
+        <algorithm>
+        <string>
+        <array>
+        <set>
+        <deque>
+        <map>
+        <unordered_set>
+        <unordered_map>
+        <vector>
+        <memory>
+        [["GL/glew.h"]]
+        [["glm/glm.hpp"]]
+        [["GLFW/glfw3.h"]]
+        [["gli/gli.hpp"]]
+        [["json.hpp"]]
+        [["assimp/Importer.hpp"]]
+        [["assimp/scene.h"]]
+        [["DearImgui/imgui.h"]]
+        )

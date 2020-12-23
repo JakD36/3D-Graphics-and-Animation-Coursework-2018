@@ -94,7 +94,7 @@ void Camera::LookAt(glm::vec3 target) noexcept // TODO: Fix the calculation of t
     m_forward = fd * m_rotation;
 }
 
-void Camera::SetDirection(GLfloat yaw, GLfloat pitch) noexcept{
+void Camera::SetDirection(float yaw, float pitch) noexcept{
 
     m_forward = glm::quat(glm::vec3(glm::radians(pitch),glm::radians(yaw),0.0f)) * glm::vec3(0.0f,0.0f,1.0f);
 }

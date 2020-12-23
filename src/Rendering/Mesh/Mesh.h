@@ -20,8 +20,11 @@ public:
     Mesh& operator=(const Mesh &cp);
     ~Mesh();
 
-    GLuint GetVao();
     int GetVertCount();
+
+    void Bind();
+    void Unbind();
+    void Draw();
 };
 
 

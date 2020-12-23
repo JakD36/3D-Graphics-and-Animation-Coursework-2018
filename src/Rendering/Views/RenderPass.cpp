@@ -121,3 +121,43 @@ RenderPass::RenderPass(nlohmann::json pass)
         m_cullFace = GL_BACK;
     }
 }
+
+void RenderPass::Bind()
+{
+    glUseProgram(m_program);
+
+    for(int j = 0; j < m_textures.size(); ++j)
+    {
+        glActiveTexture(GL_TEXTURE0+j);
+        glBindTexture(GL_TEXTURE_2D,m_textures[j].m_texture.GetTexture()[0]);
+        glUniform1i(m_textures[j].m_location, j);
+    }
+
+    for(int j = 0; j < m_uniformf.size(); ++j)
+    {
+        glUniform1f(m_uniformf[j].m_location, m_uniformf[j].m_value);
+    }
+
+    for(int j = 0; j < m_uniform3fv.size(); ++j)
+    {
+        glUniform3fv(m_uniform3fv[j].m_location, 1, &m_uniform3fv[j].m_value[0]);
+    }
+
+    for(int j = 0; j < m_uniform4fv.size(); ++j)
+    {
+        glUniform4fv(m_uniform4fv[j].m_location, 1, &m_uniform4fv[j].m_value[0]);
+    }
+
+    glCullFace(m_cullFace);
+    glEnable(GL_CULL_FACE);
+}
+
+void RenderPass::SetCameraPosition(glm::vec3 position)
+{
+    glUniform3fv(glGetUniformLocation(m_program,"viewPosition"),1,&position[0]); // The camera position
+}
+
+void RenderPass::SetMatrix4x4(std::string name, glm::mat4 &mat)
+{
+    glUniformMatrix4fv(glGetUniformLocation(m_program,name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}

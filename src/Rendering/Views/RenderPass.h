@@ -45,9 +45,6 @@ class RenderPass
 {
 public:
     GLuint m_program;
-    // GLuint m_vao; // use Mesh object
-    // int m_vertCount;// use Mesh object
-    //bool m_enableCullFace;
     GLenum m_cullFace;
     std::vector<TextureShaderParam> m_textures;
     std::vector<Uniformf> m_uniformf;
@@ -55,6 +52,11 @@ public:
     std::vector<Uniform4fv> m_uniform4fv;
 
     RenderPass(nlohmann::json passJson);
+
+    void Bind();
+
+    void SetCameraPosition(glm::vec3 position);
+    void SetMatrix4x4(std::string name, glm::mat4 &mat);
 };
 
 #endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_RENDERPASS_H

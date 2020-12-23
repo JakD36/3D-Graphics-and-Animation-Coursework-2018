@@ -30,12 +30,23 @@ Mesh::~Mesh(){
     m_manager->Dispose(m_key);
 }
 
-GLuint Mesh::GetVao()
-{
-    return m_manager->m_data.At(m_key).m_vao;
-}
-
 int Mesh::GetVertCount()
 {
     return m_manager->m_data.At(m_key).m_vertCount;
 }
+
+void Mesh::Bind()
+{
+    glBindVertexArray(m_manager->m_data.At(m_key).m_vao);
+}
+
+void Mesh::Unbind()
+{
+    glBindVertexArray(0);
+}
+
+void Mesh::Draw()
+{
+    glDrawElements(GL_TRIANGLES, GetVertCount(), GL_UNSIGNED_INT, 0);
+}
+
