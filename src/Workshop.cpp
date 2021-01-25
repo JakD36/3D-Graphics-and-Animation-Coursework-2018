@@ -126,7 +126,7 @@ void Workshop::Run() {
 
         scene.Update(dt);
         ShaderEditorWindow();
-        view->Render(&scene);
+        view->Render(window,&scene);
 
         { // Render ImGui
             DrawProfilerWindow();

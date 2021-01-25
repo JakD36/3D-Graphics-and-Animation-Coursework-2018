@@ -109,7 +109,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Core/Input/KeyCodes.h
         src/Core/Input/MouseCodes.h
         src/Core/Input/Input.cpp
-        src/Core/EnumBitmask.h)
+        src/Core/EnumBitmask.h src/Rendering/RenderCommands/RenderCommand.cpp src/Rendering/RenderCommands/RenderCommand.h src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginRenderCommand.h src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp src/Rendering/RenderCommands/Commands/EndRenderCommand.h src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp src/Rendering/RenderCommands/Commands/BlitRenderCommand.h src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )

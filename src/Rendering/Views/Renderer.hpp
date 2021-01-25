@@ -43,7 +43,7 @@ public:
     void SetWindowDimensions(int windowWidth, int windowHeight) noexcept; // Used to update the Renderer the window has changed size
     void SetViewport(float x, float y, float width, float height) noexcept;
 
-    void Render(SceneGraph* scene) noexcept;
+    void Render(GLFWwindow* window,SceneGraph* scene) noexcept;
     void RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight) noexcept;
 };
 
