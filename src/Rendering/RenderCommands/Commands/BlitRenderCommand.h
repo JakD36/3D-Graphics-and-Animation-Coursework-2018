@@ -6,6 +6,7 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BLITRENDERCOMMAND_H
 
 #include "../RenderCommand.h"
+#include "../../RenderTarget.h"
 
 class BlitRenderCommand final: public RenderCommand
 {

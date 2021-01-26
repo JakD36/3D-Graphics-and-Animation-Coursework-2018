@@ -6,6 +6,8 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_BEGINWITHRTRENDERCOMMAND_H
 
 #include "../RenderCommand.h"
+#include "../../RenderTarget.h"
+
 
 class BeginWithRtRenderCommand : public RenderCommand
 {

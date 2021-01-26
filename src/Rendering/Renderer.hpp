@@ -13,7 +13,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <memory>
-#include "../Lights/Lights.hpp"
+#include "Lights/Lights.hpp"
 
 class SceneGraph;
 
@@ -24,25 +24,16 @@ class SceneGraph;
 class Renderer{
 private:
     GLFWwindow*       p_window; // The window the viewport is rendering to
-    
     LightUniformBuffer m_lightUbo;
-
     int m_windowWidth, m_windowHeight; // The current windows width and height
     
-    GLint m_viewportX, m_viewportY; // Position of bottom left of viewport in x and y
-    GLsizei m_viewportWidth, m_viewportHeight; // Width and height of the viewport
-    
-    const glm::vec4 k_clearColour = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f ); // our background colour will be black
-    
 public:
-    Renderer(GLFWwindow* window) noexcept; // Requires a camera to view the scene, a window to render to, and a scene to draw
+    Renderer(GLFWwindow* window) noexcept;
     ~Renderer() noexcept;
 
-    void SetWindowDimensions(int windowWidth, int windowHeight) noexcept; // Used to update the Renderer the window has changed size
     void SetViewport(float x, float y, float width, float height) noexcept;
 
     void Render(GLFWwindow* window,SceneGraph* scene) noexcept;
-    void RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight) noexcept;
 };
 
 #endif /* Renderer_hpp */

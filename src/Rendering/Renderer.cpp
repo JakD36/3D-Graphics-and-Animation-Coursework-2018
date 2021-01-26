@@ -3,36 +3,19 @@
 #include <memory>
 #include <vector>
 #include <DearImgui/imgui.h>
-#include "Camera.hpp"
-#include "../../Profiling/ProfilerService.h"
-#include "../Shaders/ShaderManager.h"
-#include "../Lights/Lights.hpp"
-#include "../../GameObject/GameObject.hpp"
-#include "../../Scenes/SceneGraph.hpp"
+#include "Views/Camera.hpp"
+#include "../Profiling/ProfilerService.h"
+#include "Shaders/ShaderManager.h"
+#include "Lights/Lights.hpp"
+#include "../GameObject/GameObject.hpp"
+#include "../Scenes/SceneGraph.hpp"
 
-#include "../RenderCommands/RenderCommand.h"
-#include "../RenderCommands/Commands/BeginRenderCommand.h"
-#include "../RenderCommands/Commands/EndRenderCommand.h"
-#include "../RenderCommands/Commands/BlitRenderCommand.h"
-#include "../RenderCommands/Commands/SetRenderTargetRenderCommand.h"
-#include "../RenderCommands/Commands/BeginWithRtRenderCommand.h"
-
+#include "RenderCommands/RenderCommands.h"
+#include "RenderTarget.h"
 
 #include <thread>
 
 using namespace std;
-
-void Renderer::SetViewport(float x, float y, float width, float height) noexcept{
-    m_viewportX = x;
-    m_viewportY = y;
-    m_viewportWidth = width;
-    m_viewportHeight = height;
-}
-
-void Renderer::SetWindowDimensions(int windowWidth, int windowHeight) noexcept{
-    this->m_windowWidth = windowWidth;
-    this->m_windowHeight = windowHeight;
-}
 
 Renderer::Renderer(GLFWwindow* window) noexcept {
     PROFILE(profiler,"Renderer Initialisation");
@@ -64,6 +47,33 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
 
+    // Set Environment variables
+    Camera* camera = scene->GetCamera();
+    glm::vec3 camPos = camera->GetPosition();
+    glm::mat4 viewMatrix = camera->BuildViewMat();
+    glm::mat4 projMatrix = camera->ProjectionMatrix();
+    array<LightData,k_lightCount> lights = scene->GetLights();
+
+    vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
+    for(int i = 0, n = programs.size(); i < n; ++i)
+    {
+        // Link lighting
+        GLuint index = glGetUniformBlockIndex(programs[i].program,"lightBlock");
+        if(index != GL_INVALID_INDEX)
+            glUniformBlockBinding(programs[i].program, index, 0);
+
+        // Link Time
+
+        // Link camera position
+    }
+    // Update lights
+    lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
+    lights[2].spotOuterCutOff = glm::cos(glm::radians(20.0f));
+
+    lights[3].spotCutOff = glm::cos(glm::radians(15.0f));
+    lights[3].spotOuterCutOff = glm::cos(glm::radians(20.0f));
+    m_lightUbo.UpdateData(lights.data());
+
     // TEST CODE
     RenderTarget rt(RenderTarget::Type::CUSTOM, {frameWidth,frameHeight});
     RenderTarget bkBuffer(RenderTarget::Type::BACK_BUFFER, {frameWidth,frameHeight});
@@ -72,7 +82,8 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
 //    renderQueue.push_back(std::move(std::unique_ptr<BeginRenderCommand>(new BeginRenderCommand({0,0},{frameWidth,frameHeight},{1,1,0,1}))));
 //    renderQueue.push_back(std::move(std::unique_ptr<SetRenderTargetRenderCommand>(new SetRenderTargetRenderCommand(rt,1))));
     renderQueue.push_back(std::move(std::unique_ptr<BeginWithRtRenderCommand>(new BeginWithRtRenderCommand(rt))));
-    renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCommand>(new DrawMeshCommand())));
+//    renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCommand>(new DrawMeshCommand())));
+    renderQueue.push_back(std::move(std::unique_ptr<DrawRenderers>(new DrawRenderers())));
 //    renderQueue.push_back(std::move(std::unique_ptr<BlitRenderCommand>(new BlitRenderCommand(rt,bkBuffer,1))));
     renderQueue.push_back(std::move(std::unique_ptr<EndRenderCommand>(new EndRenderCommand())));
 
@@ -222,6 +233,17 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
                     glDrawArrays(GL_TRIANGLES, 0, 6);
                 }
                     break;
+                case RenderCommand::Type::DRAW_RENDERERS:
+                {
+                    vector<GameObject>& objs = scene->GetObjs();
+                    // frustum culling
+
+                    std::for_each(begin(objs),end(objs),[&](GameObject &obj) // TODO: Verify why when this copies it causes the entire mesh line up to be deleted
+                    {
+                        obj.Render(*camera);
+                    });
+                }
+                    break;
                 case RenderCommand::Type::SET_RENDER_TARGET:
                 {
                     auto setRt = static_cast<const SetRenderTargetRenderCommand*>(cmd.get());
@@ -236,59 +258,12 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
     },window,std::move(renderQueue));
     render.join();
 
+    // Set the framebuffer to the imgui window
     ImGui::Begin("Viewport",NULL);
     ImGui::Image((void*)rt.m_colourAttachment, ImVec2(rt.m_resolution.x * 0.25f, rt.m_resolution.y * 0.25f), ImVec2(0,1), ImVec2(1,0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
     ImGui::End();
 
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-//    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT);
 
-    ENDPROFILE(profiler);
-}
-
-void Renderer::RenderScene(SceneGraph *scene, int viewportX, int viewportY, int viewportWidth, int viewportHeight) noexcept
-{
-    PROFILE(profiler,"Render Scene");
-
-    // For each camera
-
-    // Set Environment variables
-    Camera* camera = scene->GetCamera();
-    glm::vec3 camPos = camera->GetPosition();
-    glm::mat4 viewMatrix = camera->BuildViewMat();
-    glm::mat4 projMatrix = camera->ProjectionMatrix();
-    array<LightData,k_lightCount> lights = scene->GetLights();
-
-    vector<ProgramInfo> programs = ShaderManager::GetInstance()->GetShaderPrograms();
-    for(int i = 0, n = programs.size(); i < n; ++i)
-    {
-        // Link lighting
-        GLuint index = glGetUniformBlockIndex(programs[i].program,"lightBlock");
-        if(index != GL_INVALID_INDEX)
-            glUniformBlockBinding(programs[i].program, index, 0);
-
-        // Link Time
-
-        // Link camera position
-    }
-    // Update lights
-    lights[2].spotCutOff = glm::cos(glm::radians(15.0f));
-    lights[2].spotOuterCutOff = glm::cos(glm::radians(20.0f));
-
-    lights[3].spotCutOff = glm::cos(glm::radians(15.0f));
-    lights[3].spotOuterCutOff = glm::cos(glm::radians(20.0f));
-    m_lightUbo.UpdateData(lights.data());
-
-
-    // Render each object
-    // Get all the meshes
-    vector<GameObject>& objs = scene->GetObjs();
-    // frustum culling
-
-    std::for_each(begin(objs),end(objs),[&](GameObject &obj) // TODO: Verify why when this copies it causes the entire mesh line up to be deleted
-    {
-        obj.Render(*camera);
-    });
     ENDPROFILE(profiler);
 }

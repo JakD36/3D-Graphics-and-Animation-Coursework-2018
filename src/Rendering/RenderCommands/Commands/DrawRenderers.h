@@ -1,0 +1,14 @@
+//
+// Created by Jack Davidson on 26/01/2021.
+//
+
+#ifndef INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_DRAWRENDERERS_H
+#define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_DRAWRENDERERS_H
+
+class DrawRenderers : public RenderCommand
+{
+public:
+    DrawRenderers() : RenderCommand(Type::DRAW_RENDERERS,1){}
+};
+
+#endif //INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_DRAWRENDERERS_H

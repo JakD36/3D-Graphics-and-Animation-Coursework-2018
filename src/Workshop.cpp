@@ -13,7 +13,7 @@
 #include "../Include/DearImgui/imgui_impl_glfw.h"
 
 #include "Scenes/Scene1.hpp"
-#include "Rendering/Views/Renderer.hpp"
+#include "Rendering/Renderer.hpp"
 #include "Rendering/Shaders/ShaderManager.h"
 
 #include "Profiling/ProfilerService.h"
@@ -70,8 +70,6 @@ void Workshop::Run() {
 
     int framebufferWidth, framebufferHeight;
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-
-    view->SetViewport(framebufferWidth * 0.25f, framebufferHeight * 0.25f, framebufferWidth * 0.5f, framebufferHeight* 0.5f); // Provide the framebuffer sizes, on retina its 2x in x and y
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();

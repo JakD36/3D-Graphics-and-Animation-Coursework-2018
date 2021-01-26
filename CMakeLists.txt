@@ -49,8 +49,8 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
 
         src/Rendering/Views/camera.cpp
         src/Rendering/Views/camera.hpp
-        src/Rendering/Views/Renderer.cpp
-        src/Rendering/Views/Renderer.hpp
+        src/Rendering/Renderer.cpp
+        src/Rendering/Renderer.hpp
 
         src/main.cpp
         src/Rendering/Shaders/ShaderManager.cpp
@@ -101,7 +101,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Core/Input/KeyCodes.h
         src/Core/Input/MouseCodes.h
         src/Core/Input/Input.cpp
-        src/Core/EnumBitmask.h src/Rendering/RenderCommands/RenderCommand.cpp src/Rendering/RenderCommands/RenderCommand.h src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginRenderCommand.h src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp src/Rendering/RenderCommands/Commands/EndRenderCommand.h src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp src/Rendering/RenderCommands/Commands/BlitRenderCommand.h src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h)
+        src/Core/EnumBitmask.h src/Rendering/RenderCommands/RenderCommand.cpp src/Rendering/RenderCommands/RenderCommand.h src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginRenderCommand.h src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp src/Rendering/RenderCommands/Commands/EndRenderCommand.h src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp src/Rendering/RenderCommands/Commands/BlitRenderCommand.h src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h src/Rendering/RenderCommands/RenderCommands.h src/Rendering/RenderCommands/Commands/DrawMeshCommand.h src/Rendering/RenderCommands/Commands/DrawRenderers.h src/Rendering/RenderTarget.cpp src/Rendering/RenderTarget.h)
 
 if(APPLE)
     find_library( COCOA_FW Cocoa )
