@@ -58,8 +58,6 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Rendering/Shaders/ShaderUtils.h
         src/Rendering/Shaders/ShaderUtils.cpp
         src/Utils/VectorUtils.cpp
-        src/Rendering/Framebuffer/TwoPassFramebuffer.cpp
-        src/Rendering/Framebuffer/TwoPassFramebuffer.h
         src/Rendering/Lights/Lights.cpp
         src/FSM/FSM.cpp
         src/FSM/FSM.h
@@ -89,12 +87,6 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/ResourceManager/Resource.cpp
         src/Rendering/Views/RenderTaskResource.cpp
         src/Rendering/Views/RenderTaskResource.h
-        src/Rendering/Framebuffer/FramebufferBase.cpp
-        src/Rendering/Framebuffer/FramebufferBase.h
-        src/Rendering/Framebuffer/SinglePassFramebuffer.cpp
-        src/Rendering/Framebuffer/SinglePassFramebuffer.h
-        src/Rendering/Framebuffer/ImGuiFramebuffer.cpp
-        src/Rendering/Framebuffer/ImGuiFramebuffer.h
         src/Profiling/MemoryProfiler.cpp
         src/Profiling/MemoryProfiler.h
         src/Profiling/ProfilerWindow.cpp

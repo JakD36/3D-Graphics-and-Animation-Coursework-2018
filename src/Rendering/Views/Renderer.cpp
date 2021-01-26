@@ -6,12 +6,9 @@
 #include "Camera.hpp"
 #include "../../Profiling/ProfilerService.h"
 #include "../Shaders/ShaderManager.h"
-#include "../Framebuffer/TwoPassFramebuffer.h"
-#include "../Framebuffer/ImGuiFramebuffer.h"
 #include "../Lights/Lights.hpp"
 #include "../../GameObject/GameObject.hpp"
 #include "../../Scenes/SceneGraph.hpp"
-#include "../Framebuffer/SinglePassFramebuffer.h"
 
 #include "../RenderCommands/RenderCommand.h"
 #include "../RenderCommands/Commands/BeginRenderCommand.h"
@@ -39,7 +36,6 @@ void Renderer::SetWindowDimensions(int windowWidth, int windowHeight) noexcept{
 
 Renderer::Renderer(GLFWwindow* window) noexcept {
     PROFILE(profiler,"Renderer Initialisation");
-
     p_window = window;
 
     glfwGetWindowSize(p_window, &m_windowWidth, &m_windowHeight);
@@ -55,10 +51,6 @@ Renderer::Renderer(GLFWwindow* window) noexcept {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-//    m_framebuffer = make_unique<TwoPassFramebuffer>(frameWidth, frameHeight);
-    m_framebuffer = make_unique<ImGuiFramebuffer>(frameWidth, frameHeight);
-//    m_framebuffer = make_unique<SinglePassFramebuffer>();
-
     ENDPROFILE(profiler);
 }
 
@@ -71,30 +63,28 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
 
     int frameWidth, frameHeight;
     glfwGetFramebufferSize(p_window, &frameWidth, &frameHeight);
-//
-//    m_framebuffer->RenderTo();
-//    RenderScene(scene,0, 0, frameWidth, frameHeight);
-//    m_framebuffer->PostRender(m_viewportX, m_viewportY, m_viewportWidth, m_viewportHeight);
 
+    // TEST CODE
     RenderTarget rt(RenderTarget::Type::CUSTOM, {frameWidth,frameHeight});
     RenderTarget bkBuffer(RenderTarget::Type::BACK_BUFFER, {frameWidth,frameHeight});
 
     vector<unique_ptr<RenderCommand>> renderQueue;
 //    renderQueue.push_back(std::move(std::unique_ptr<BeginRenderCommand>(new BeginRenderCommand({0,0},{frameWidth,frameHeight},{1,1,0,1}))));
-//    renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCommand>(new DrawMeshCommand())));
+//    renderQueue.push_back(std::move(std::unique_ptr<SetRenderTargetRenderCommand>(new SetRenderTargetRenderCommand(rt,1))));
     renderQueue.push_back(std::move(std::unique_ptr<BeginWithRtRenderCommand>(new BeginWithRtRenderCommand(rt))));
     renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCommand>(new DrawMeshCommand())));
-    renderQueue.push_back(std::move(std::unique_ptr<BlitRenderCommand>(new BlitRenderCommand(rt,bkBuffer,1))));
+//    renderQueue.push_back(std::move(std::unique_ptr<BlitRenderCommand>(new BlitRenderCommand(rt,bkBuffer,1))));
     renderQueue.push_back(std::move(std::unique_ptr<EndRenderCommand>(new EndRenderCommand())));
 
     ShaderManager* shaderManager = ShaderManager::GetInstance();
     auto framebufferProg = shaderManager->RequestProgram("Shaders/vs_display.glsl","Shaders/fs_display.glsl");
     auto testProg = shaderManager->RequestProgram("Shaders/dvert.glsl","Shaders/dfrag.glsl");
 
+    // Execute Commands on a different thread!
     thread render([=](GLFWwindow *widow, vector<unique_ptr<RenderCommand>> renderQueue){
         glfwMakeContextCurrent(window);
 
-        auto framebuffer = 0;
+        RenderTarget tmpRT;
 
         for(const auto& cmd : renderQueue)
         {
@@ -234,9 +224,9 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
                     break;
                 case RenderCommand::Type::SET_RENDER_TARGET:
                 {
-//                    auto setRt = static_cast<const SetRenderTargetRenderCommand*>(cmd.get());
-//                    tmp = setRt->m_rt;
-//                    framebuffer = tmp.m_framebuffer;
+                    auto setRt = static_cast<const SetRenderTargetRenderCommand*>(cmd.get());
+                    tmpRT = setRt->m_rt;
+                    tmpRT.Bind();
                 }
                     break;
             }
@@ -245,6 +235,14 @@ void Renderer::Render(GLFWwindow* window, SceneGraph* scene) noexcept{
         renderQueue.clear();
     },window,std::move(renderQueue));
     render.join();
+
+    ImGui::Begin("Viewport",NULL);
+    ImGui::Image((void*)rt.m_colourAttachment, ImVec2(rt.m_resolution.x * 0.25f, rt.m_resolution.y * 0.25f), ImVec2(0,1), ImVec2(1,0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
+    ImGui::End();
+
+    glBindFramebuffer(GL_FRAMEBUFFER,0);
+//    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+//    glClear(GL_COLOR_BUFFER_BIT);
 
     ENDPROFILE(profiler);
 }

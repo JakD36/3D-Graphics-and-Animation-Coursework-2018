@@ -23,8 +23,13 @@ public:
     GLuint m_colourAttachment;
     GLuint m_depthAttachment;
 
-
     glm::ivec2 m_resolution;
+
+    RenderTarget()
+    {
+        m_type = Type::BACK_BUFFER;
+        m_resolution = {480,320};
+    }
 
     RenderTarget(Type type, glm::ivec2 size)
     {

@@ -15,7 +15,6 @@
 #include <memory>
 #include "../Lights/Lights.hpp"
 
-class FramebufferBase;
 class SceneGraph;
 
 ///
@@ -25,8 +24,7 @@ class SceneGraph;
 class Renderer{
 private:
     GLFWwindow*       p_window; // The window the viewport is rendering to
-
-    std::unique_ptr<FramebufferBase> m_framebuffer;
+    
     LightUniformBuffer m_lightUbo;
 
     int m_windowWidth, m_windowHeight; // The current windows width and height
