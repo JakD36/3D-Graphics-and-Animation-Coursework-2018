@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-namespace Utils
+namespace math
 {
     glm::quat FromToRotation(glm::vec3 from, glm::vec3 to) noexcept;
 }

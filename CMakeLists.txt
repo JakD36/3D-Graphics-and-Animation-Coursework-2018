@@ -45,7 +45,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
 
         src/Profiling/ProfilerService.cpp
         src/Profiling/ProfilerService.h
-        src/Utils/VectorUtils.hpp
+        src/Utils/MathUtils.hpp
 
         src/Rendering/Views/camera.cpp
         src/Rendering/Views/camera.hpp
@@ -57,7 +57,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Rendering/Shaders/ShaderManager.h
         src/Rendering/Shaders/ShaderUtils.h
         src/Rendering/Shaders/ShaderUtils.cpp
-        src/Utils/VectorUtils.cpp
+        src/Utils/MathUtils.cpp
         src/Rendering/Lights/Lights.cpp
         src/FSM/FSM.cpp
         src/FSM/FSM.h

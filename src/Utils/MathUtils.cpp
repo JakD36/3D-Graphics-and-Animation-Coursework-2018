@@ -2,9 +2,9 @@
 // Created by Jack Davidson on 23/02/2020.
 //
 
-#include "VectorUtils.hpp"
+#include "MathUtils.hpp"
 
-namespace Utils {
+namespace math {
     glm::quat FromToRotation(glm::vec3 from, glm::vec3 to) noexcept
     {
         glm::vec3 normFrom = glm::normalize(from), normTo = glm::normalize(to);
