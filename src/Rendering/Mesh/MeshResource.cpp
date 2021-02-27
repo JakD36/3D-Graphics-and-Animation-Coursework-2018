@@ -26,7 +26,7 @@ MeshResource::MeshResource(string metadataFilepath) noexcept  : Resource(metadat
 
     nlohmann::json js;
     std::fstream file(metadataFilepath);
-    assertm(file.is_open(),("RenderPass Json file did not open. "));
+    ASSERT(file.is_open(),("RenderPass Json file did not open. "));
     file >> js;
 
     auto attribStrs = js["vertexAttributes"];
@@ -45,7 +45,7 @@ MeshResource::MeshResource(string metadataFilepath) noexcept  : Resource(metadat
         else if(attribStrs[i] == "COLOUR")
             m_attributeFlags |= (int)VertexAttrib::COLOUR;
         else
-            assertm(false,"Undefined attribute string found!");
+        ASSERT(false,"Undefined attribute string found!");
     }
 
     glGenVertexArrays(1,&m_vao);

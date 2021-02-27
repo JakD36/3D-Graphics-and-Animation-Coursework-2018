@@ -6,9 +6,17 @@
 #define INC_3D_GRAPHICS_AND_ANIMATION_COURSEWORK_2018_DEBUGUTILS_H
 
 //#define NDEBUG // Uncomment to disable assert, or leave it to CMAKE to do when in release mode
-#include <cassert>
+#include <filesystem>
 #include <cstdio>
-#define assertm(e,msg) assert(((void)msg,e));
+
+#if !defined(NDEBUG)
+#include <csignal>
+#define DEBUGBREAK() raise(SIGTRAP)
+#else
+#define DEBUGBREAK()
+#endif
+
+#define ASSERT(check,msg) {if(check == 0) {printf("Assert Failed: %s, in file: %s at line %d.\nError: %s",#check,std::filesystem::path(__FILE__).filename().string().c_str(),__LINE__,static_cast<std::string>(msg).c_str())/*todo: Had to cast to string to avoid complex object issues, need to create proper logger that will handle this easier.*/; DEBUGBREAK();}}
 
 #ifndef NDEBUG
 #define DEBUGLOG(msg) printf msg

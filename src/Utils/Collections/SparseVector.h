@@ -72,7 +72,7 @@ public:
     }
 
     void Remove(int n){
-        assertm(m_length != 0,("Cannot remove from empty sparse vector!"));
+        ASSERT(m_length != 0,("Cannot remove from empty sparse vector!"));
 
         int index = m_keyToIndex[n];
         int lastIndex = m_length-1;

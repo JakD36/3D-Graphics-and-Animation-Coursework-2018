@@ -32,7 +32,7 @@ RenderTarget::RenderTarget(Type type, glm::ivec2 size)
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, size.x, size.y);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthAttachment);
 
-        assertm(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE,"Framebuffer failed to be created.");
+        ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE,"Framebuffer failed to be created.");
 
         glBindFramebuffer(GL_FRAMEBUFFER,0);
     }

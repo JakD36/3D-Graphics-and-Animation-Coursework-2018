@@ -8,7 +8,7 @@
 
 #include "SceneGraph.hpp"
 #include "../GameObject/GameObject.hpp"
-#include "../Utils/VectorUtils.hpp"
+#include "../Utils/MathUtils.hpp"
 #include "../Profiling/ProfilerService.h"
 #include "../Rendering/Views/Camera.hpp"
 #include <json.hpp>

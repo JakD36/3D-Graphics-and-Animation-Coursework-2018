@@ -16,7 +16,7 @@ MaterialResource::MaterialResource(string materialName) : Resource(materialName)
 
     pfile = fopen(materialName.c_str(),"r");    // open the file with read access
 
-    assertm(pfile != nullptr,("Could not find file " + materialName));
+    ASSERT(pfile != nullptr,"Could not find file " + materialName);
 
     if(pfile == nullptr){ // if the file doesnt open when using fopen
         cout<<"Could not find file >> "<<materialName<<endl; // print error and name of file that failed to open

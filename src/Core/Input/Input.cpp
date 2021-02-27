@@ -70,7 +70,7 @@ void Input::OnEvent(WindowEvent& event)
             break;
         }
         default:
-            assertm(false,"Unrecognised Input Event");
+            ASSERT(false,"Unrecognised Input Event");
     }
 }
 

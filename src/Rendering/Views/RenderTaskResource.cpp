@@ -15,7 +15,7 @@ void RenderTaskResource::Reset(std::string filepath)
 
     nlohmann::json js;
     std::fstream file(filepath);
-    assertm(file.is_open(),"RenderPass Json file did not open.");
+    ASSERT(file.is_open(),"RenderPass Json file did not open.");
     file >> js;
 
     m_name = js["name"];

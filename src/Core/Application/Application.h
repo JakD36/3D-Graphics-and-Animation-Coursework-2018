@@ -18,7 +18,7 @@ protected:
     std::unique_ptr<Window> m_window;
 
     Application() {
-        assertm(s_instance == nullptr,"Application already exists")
+        ASSERT(s_instance == nullptr,"Application already exists")
         s_instance = this;
     };
     virtual ~Application() {};

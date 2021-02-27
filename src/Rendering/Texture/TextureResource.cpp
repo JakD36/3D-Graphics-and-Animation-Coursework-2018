@@ -18,7 +18,7 @@ TextureResource::TextureResource(string texturePath) noexcept  : Resource(textur
     glGenTextures(1, m_texture);
     gli::texture tex = gli::load(texturePath);
 
-    assertm(!tex.empty(),("Could not find file " + texturePath));
+    ASSERT(!tex.empty(),"Could not find file " + texturePath);
     if(tex.empty()){
         cout<<"Unable to load file "+texturePath <<endl;
     }

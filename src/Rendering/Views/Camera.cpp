@@ -8,7 +8,7 @@
 
 #include "Camera.hpp"
 #include <glm/gtx/transform.hpp>
-#include "../../Utils/VectorUtils.hpp"
+#include "../../Utils/MathUtils.hpp"
 #include "../../Utils/DebugUtils.h"
 
 // Constructors
@@ -27,7 +27,7 @@ Camera::Camera() noexcept{
 }
 
 Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept{
-    assertm(upVec!=glm::vec3(),"Camera Up was provided a zero vector.");
+    ASSERT(upVec!=glm::vec3(),"Camera Up was provided a zero vector.");
     m_position = position;
     m_rotation = rotation;
     m_up = upVec;
@@ -44,7 +44,7 @@ Camera::Camera(glm::vec3 position, glm::quat rotation, glm::vec3 upVec) noexcept
 
 Camera::Camera(glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 upVec) noexcept
 {
-    assertm(upVec!=glm::vec3(),"Camera Up was provided a zero vector.");
+    ASSERT(upVec!=glm::vec3(),"Camera Up was provided a zero vector.");
     m_position = position;
     m_rotation = glm::quat(eulerAngles);
     m_up = upVec;
@@ -90,7 +90,7 @@ void Camera::LookAt(glm::vec3 target) noexcept // TODO: Fix the calculation of t
 {
     m_forward = glm::normalize(target - m_position);
     const glm::vec3 fd = glm::vec3(0.0f,0.0f,1.0f);
-    m_rotation = Utils::FromToRotation(fd, m_forward);
+    m_rotation = math::FromToRotation(fd, m_forward);
     m_forward = fd * m_rotation;
 }
 

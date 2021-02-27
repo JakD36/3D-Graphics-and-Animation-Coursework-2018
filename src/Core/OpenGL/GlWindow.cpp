@@ -18,7 +18,7 @@ GlWindow::GlWindow(std::string title, int width, int height)
     if(s_windowCount == 0)
     {
         bool success = glfwInit();
-        assertm(success,"Glfw could not be initialised!")
+        ASSERT(success,"Glfw could not be initialised!")
     }
 
     glfwSetErrorCallback([](int error, const char* description){
@@ -36,7 +36,7 @@ GlWindow::GlWindow(std::string title, int width, int height)
 #endif
 
     m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
-    assertm(m_window,"Could not create window")
+    ASSERT(m_window,"Could not create window")
 
     glfwMakeContextCurrent(m_window);
 
@@ -44,7 +44,7 @@ GlWindow::GlWindow(std::string title, int width, int height)
     {
         glewExperimental = GL_TRUE; // hack: catching them all - forcing newest debug callback (glDebugMessageCallback)
         GLenum glewStatus = glewInit();
-        assertm(GLEW_OK == glewStatus,"Could not initialise GLEW")
+        ASSERT(GLEW_OK == glewStatus,"Could not initialise GLEW")
 
         SetupOpenGLDebug();
     }
