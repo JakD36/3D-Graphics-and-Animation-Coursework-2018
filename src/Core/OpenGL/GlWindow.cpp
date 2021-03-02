@@ -185,9 +185,9 @@ void SetupOpenGLDebug()
     // Enable Opengl Debug
     if(glDebugMessageCallback)
     {
-        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-        glDebugMessageCallback(OpenGLDebugCallback, nullptr);
-        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
+//        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // TODO: Probably want to funnel this through a central logging system so we can turn off channels
+//        glDebugMessageCallback(OpenGLDebugCallback, nullptr);
+//        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
     }
     else
     {
@@ -197,9 +197,7 @@ void SetupOpenGLDebug()
 
 void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam)
 {
-
     printf("---------------------opengl-callback------------\n");
-    printf("Message: %s",message);
     printf("type: ");
     switch (type) {
         case GL_DEBUG_TYPE_ERROR:
@@ -239,5 +237,6 @@ void APIENTRY OpenGLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum 
             printf("NOTIFICATION");
     }
     printf("\n");
-    printf("-----------------------------------------\n");
+    printf("Message: %s",message);
+    printf("\n-----------------------------------------\n");
 }
