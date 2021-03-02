@@ -5,7 +5,7 @@
 #include "MathUtils.hpp"
 
 namespace math {
-    glm::quat FromToRotation(glm::vec3 from, glm::vec3 to) noexcept
+    glm::quat FromToRotation(glm::vec3 from, glm::vec3 to) noexcept // todo: update the implementation based on more recent learnings
     {
         glm::vec3 normFrom = glm::normalize(from), normTo = glm::normalize(to);
         float dot = glm::dot(normFrom, normTo);
