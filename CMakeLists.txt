@@ -22,13 +22,6 @@ include_directories(
 add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Core/Imgui.cpp
 
-        Resources/Shaders/fs.glsl
-        Resources/Shaders/fs_display.glsl
-        Resources/Shaders/fs_light.glsl
-        Resources/Shaders/vs.glsl
-        Resources/Shaders/vs_display.glsl
-        Resources/Shaders/vs_light.glsl
-
         src/GameObject/GameObject.cpp
         src/GameObject/GameObject.hpp
 
@@ -64,10 +57,6 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Rendering/Shaders/ShaderUtils.cpp
         src/Utils/MathUtils.cpp
         src/Rendering/Lights/Lights.cpp
-        src/FSM/FSM.cpp
-        src/FSM/FSM.h
-        src/FSM/Flowstate.cpp
-        src/FSM/Flowstate.h
         src/Profiling/ProfileTag.cpp
         src/Profiling/ProfileTag.h
         src/GameObject/Transform.cpp
@@ -106,7 +95,28 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Core/Input/KeyCodes.h
         src/Core/Input/MouseCodes.h
         src/Core/Input/Input.cpp
-        src/Core/EnumBitmask.h src/Rendering/RenderCommands/RenderCommand.cpp src/Rendering/RenderCommands/RenderCommand.h src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginRenderCommand.h src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp src/Rendering/RenderCommands/Commands/EndRenderCommand.h src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp src/Rendering/RenderCommands/Commands/BlitRenderCommand.h src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h src/Rendering/RenderCommands/RenderCommands.h src/Rendering/RenderCommands/Commands/DrawMeshCommand.h src/Rendering/RenderCommands/Commands/DrawRenderers.h src/Rendering/RenderTarget.cpp src/Rendering/RenderTarget.h src/Core/Imgui.cpp)
+        src/Core/EnumBitmask.h
+        src/Rendering/RenderCommands/RenderCommand.cpp
+        src/Rendering/RenderCommands/RenderCommand.h
+        src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp
+        src/Rendering/RenderCommands/Commands/BeginRenderCommand.h
+        src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp
+        src/Rendering/RenderCommands/Commands/EndRenderCommand.h
+        src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp
+        src/Rendering/RenderCommands/Commands/BlitRenderCommand.h
+        src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp
+        src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h
+        src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp
+        src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h
+        src/Rendering/RenderCommands/RenderCommands.h
+        src/Rendering/RenderCommands/Commands/DrawMeshCommand.h
+        src/Rendering/RenderCommands/Commands/DrawRenderers.h
+        src/Rendering/RenderTarget.cpp
+        src/Rendering/RenderTarget.h
+        src/Core/Imgui.cpp
+        src/Rendering/ImGui/ImGuiStyle.h
+
+        src/Rendering/RenderCommands/RenderCommandProcessor.cpp src/Rendering/RenderCommands/RenderCommandProcessor.h src/Rendering/RenderCommands/GLRenderCommandProcessor.cpp src/Rendering/RenderCommands/GLRenderCommandProcessor.h)
 
 if(APPLE)
     SET (CMAKE_CXX_FLAGS "-fsized-deallocation")

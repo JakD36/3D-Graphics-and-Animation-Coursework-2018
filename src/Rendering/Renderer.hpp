@@ -9,13 +9,13 @@
 #ifndef Renderer_hpp
 #define Renderer_hpp
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <memory>
 #include "Lights/Lights.hpp"
 
 class SceneGraph;
+class RenderCommandProcessor;
+class Window;
 
 ///
 /// Renderer class
@@ -23,17 +23,16 @@ class SceneGraph;
 ///
 class Renderer{
 private:
-    GLFWwindow*       p_window; // The window the viewport is rendering to
     LightUniformBuffer m_lightUbo;
     int m_windowWidth, m_windowHeight; // The current windows width and height
-    
+
+    std::unique_ptr<RenderCommandProcessor> m_cmdProc;
+
 public:
-    Renderer(GLFWwindow* window) noexcept;
+    Renderer(Window* window) noexcept;
     ~Renderer() noexcept;
 
-    void SetViewport(float x, float y, float width, float height) noexcept;
-
-    void Render(GLFWwindow* window,SceneGraph* scene) noexcept;
+    void Render(Window* window, SceneGraph* scene) noexcept;
 };
 
 #endif /* Renderer_hpp */
