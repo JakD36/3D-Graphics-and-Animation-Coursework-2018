@@ -16,3 +16,6 @@
 [submodule "extern/glm"]
 	path = extern/glm
 	url = git@github.com:g-truc/glm.git
+[submodule "extern/gsl"]
+	path = extern/gsl
+	url = git@github.com:microsoft/GSL.git

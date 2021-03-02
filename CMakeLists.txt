@@ -5,10 +5,18 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory (extern EXCLUDE_FROM_ALL)
 
+set(extern_libs
+        assimp
+        libglew_static
+        glfw
+        glm
+        gli
+        GSL
+        )
+
 include_directories(
         Include
         extern/imgui
-#        extern/gli
 )
 
 add_executable(3D_Graphics_and_Animation_Coursework_2018
@@ -116,11 +124,7 @@ if(APPLE)
             ${COREFOUNDATION_FW}
             ${COREVIDEO_FW}
 
-            assimp
-            glfw
-            libglew_static
-            glm
-            gli
+            ${extern_libs}
             )
 
 elseif(WIN32)
@@ -129,12 +133,7 @@ elseif(WIN32)
 
     target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
             ${OPENGL_LIBRARIES}
-
-            assimp
-            libglew_static
-            glfw
-            glm
-            gli
+            ${extern_libs}
             )
 endif()
 
