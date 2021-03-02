@@ -12,10 +12,10 @@ set(extern_libs
         glm
         gli
         GSL
+        nlohmann_json
         )
 
 include_directories(
-        Include
         extern/imgui
 )
 
@@ -156,7 +156,7 @@ target_precompile_headers(3D_Graphics_and_Animation_Coursework_2018
         <memory>
         [["glm/glm.hpp"]]
         [["gli/gli.hpp"]]
-        [["json.hpp"]]
+        [["nlohmann/json.hpp"]]
         [["imgui.h"]]
         [["GL/glew.h"]]
         [["GLFW/glfw3.h"]]

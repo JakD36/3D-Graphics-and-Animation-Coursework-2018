@@ -19,3 +19,6 @@
 [submodule "extern/gsl"]
 	path = extern/gsl
 	url = git@github.com:microsoft/GSL.git
+[submodule "extern/nlohmann_json"]
+	path = extern/nlohmann_json
+	url = git@github.com:nlohmann/json.git

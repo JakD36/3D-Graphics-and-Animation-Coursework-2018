@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include "../Texture/Texture.hpp"
 
 class GameObject;

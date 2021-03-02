@@ -11,7 +11,7 @@
 #include "../Utils/MathUtils.hpp"
 #include "../Profiling/ProfilerService.h"
 #include "../Rendering/Views/Camera.hpp"
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <fstream>
 #include <cstdio>
 #include "../Rendering/Shaders/ShaderManager.h"
