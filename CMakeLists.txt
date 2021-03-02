@@ -8,11 +8,10 @@ add_subdirectory (extern EXCLUDE_FROM_ALL)
 include_directories(
         Include
         extern/imgui
+#        extern/gli
 )
 
 add_executable(3D_Graphics_and_Animation_Coursework_2018
-        Include/glm/detail/glm.cpp
-
         src/Core/Imgui.cpp
 
         Resources/Shaders/fs.glsl
@@ -120,6 +119,8 @@ if(APPLE)
             assimp
             glfw
             libglew_static
+            glm
+            gli
             )
 
 elseif(WIN32)
@@ -132,6 +133,8 @@ elseif(WIN32)
             assimp
             libglew_static
             glfw
+            glm
+            gli
             )
 endif()
 
