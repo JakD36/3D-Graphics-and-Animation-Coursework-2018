@@ -4,7 +4,7 @@
 
 #include "ProfilerWindow.h"
 
-#include "DearImgui/imgui.h"
+#include <imgui.h>
 #include "ProfilerService.h"
 #include "MemoryProfiler.h"
 

@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <vector>
-#include <DearImgui/imgui.h>
+#include <imgui.h>
 #include "Views/Camera.hpp"
 #include "../Profiling/ProfilerService.h"
 #include "Shaders/ShaderManager.h"

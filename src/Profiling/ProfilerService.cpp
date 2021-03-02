@@ -1,7 +1,7 @@
 #include "ProfilerService.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "DearImgui/imgui.h"
+#include <imgui.h>
 
 using namespace std;
 
@@ -102,7 +102,7 @@ void ProfilerService::Draw() noexcept{
 
 
     if(m_canvasWidth >= 0)
-        ImGui::SetNextWindowContentWidth(m_canvasWidth);
+        ImGui::SetNextWindowContentSize(ImVec2(m_canvasWidth,0.f));
     ImGui::BeginChild("scrollWindow",ImVec2(0,0),false,ImGuiWindowFlags_AlwaysHorizontalScrollbar);
 
     ImDrawList* drawList = ImGui::GetWindowDrawList();

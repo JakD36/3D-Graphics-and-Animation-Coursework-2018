@@ -4,7 +4,7 @@
 
 #include "ShaderEditorWindow.h"
 
-#include "DearImgui/imgui.h"
+#include <imgui.h>
 #include "imgui_impl_glm.h"
 
 void ShaderEditorWindow()

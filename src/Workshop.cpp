@@ -8,9 +8,11 @@
 #include "Core/Input/Input.h"
 #include <cstdio>
 
-#include "../Include/DearImgui/imgui.h"
-#include "../Include/DearImgui/imgui_impl_opengl3.h"
-#include "../Include/DearImgui/imgui_impl_glfw.h"
+
+#include <imgui.h>
+#include <backends/imgui_impl_opengl3.h>
+#include <backends/imgui_impl_glfw.h>
+
 
 #include "Scenes/Scene1.hpp"
 #include "Rendering/Renderer.hpp"

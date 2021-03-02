@@ -2,7 +2,7 @@
 // Created by Jack Davidson on 20/07/2020.
 //
 
-#include <DearImgui/imgui.h>
+#include <imgui.h>
 #include "MemoryProfiler.h"
 #include <algorithm>
 

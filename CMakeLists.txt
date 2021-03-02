@@ -3,19 +3,17 @@ project(3D_Graphics_and_Animation_Coursework_2018)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(Include)
+add_subdirectory (extern EXCLUDE_FROM_ALL)
 
-SET (CMAKE_CXX_FLAGS "-fsized-deallocation")
+include_directories(
+        Include
+        extern/imgui
+)
 
 add_executable(3D_Graphics_and_Animation_Coursework_2018
-        Include/DearImgui/imgui.cpp
-        Include/DearImgui/imgui_demo.cpp
-        Include/DearImgui/imgui_draw.cpp
-        Include/DearImgui/imgui_impl_glfw.cpp
-        Include/DearImgui/imgui_impl_opengl3.cpp
-        Include/DearImgui/imgui_widgets.cpp
-
         Include/glm/detail/glm.cpp
+
+        src/Core/Imgui.cpp
 
         Resources/Shaders/fs.glsl
         Resources/Shaders/fs_display.glsl
@@ -101,38 +99,39 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Core/Input/KeyCodes.h
         src/Core/Input/MouseCodes.h
         src/Core/Input/Input.cpp
-        src/Core/EnumBitmask.h src/Rendering/RenderCommands/RenderCommand.cpp src/Rendering/RenderCommands/RenderCommand.h src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginRenderCommand.h src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp src/Rendering/RenderCommands/Commands/EndRenderCommand.h src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp src/Rendering/RenderCommands/Commands/BlitRenderCommand.h src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h src/Rendering/RenderCommands/RenderCommands.h src/Rendering/RenderCommands/Commands/DrawMeshCommand.h src/Rendering/RenderCommands/Commands/DrawRenderers.h src/Rendering/RenderTarget.cpp src/Rendering/RenderTarget.h)
+        src/Core/EnumBitmask.h src/Rendering/RenderCommands/RenderCommand.cpp src/Rendering/RenderCommands/RenderCommand.h src/Rendering/RenderCommands/Commands/BeginRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginRenderCommand.h src/Rendering/RenderCommands/Commands/EndRenderCommand.cpp src/Rendering/RenderCommands/Commands/EndRenderCommand.h src/Rendering/RenderCommands/Commands/BlitRenderCommand.cpp src/Rendering/RenderCommands/Commands/BlitRenderCommand.h src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.cpp src/Rendering/RenderCommands/Commands/SetRenderTargetRenderCommand.h src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h src/Rendering/RenderCommands/RenderCommands.h src/Rendering/RenderCommands/Commands/DrawMeshCommand.h src/Rendering/RenderCommands/Commands/DrawRenderers.h src/Rendering/RenderTarget.cpp src/Rendering/RenderTarget.h src/Core/Imgui.cpp)
 
 if(APPLE)
+    SET (CMAKE_CXX_FLAGS "-fsized-deallocation")
+
     find_library( COCOA_FW Cocoa )
     find_library( OPENGL_FW OpenGL )
     find_library( IOKIT_FW IOKit )
     find_library( COREFOUNDATION_FW CoreFoundation )
     find_library( COREVIDEO_FW CoreVideo )
-    find_library( GLEW GLEW Libraries)
-    find_library( GLFW glfw3 Libraries)
-    find_library( ASSIMP assimp Libraries)
 
     target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
-            ${GLFW}
-            ${GLEW}
-            ${ASSIMP}
             ${COCOA_FW}
             ${OPENGL_FW}
             ${IOKIT_FW}
             ${COREFOUNDATION_FW}
-            ${COREVIDEO_FW})
-endif()
+            ${COREVIDEO_FW}
 
-if(WIN32)
-    find_library( GLEW_S glew32s Libraries)
-    find_library( GLFW glfw3 Libraries)
-    find_package(OpenGL REQUIRED)
+            assimp
+            glfw
+            libglew_static
+            )
+
+elseif(WIN32)
+
+    find_package( OpenGL REQUIRED )
 
     target_link_libraries(3D_Graphics_and_Animation_Coursework_2018
-            ${GLFW}
-            ${GLEW_S}
             ${OPENGL_LIBRARIES}
+
+            assimp
+            libglew_static
+            glfw
             )
 endif()
 
@@ -153,12 +152,10 @@ target_precompile_headers(3D_Graphics_and_Animation_Coursework_2018
         <unordered_map>
         <vector>
         <memory>
-        [["GL/glew.h"]]
         [["glm/glm.hpp"]]
-        [["GLFW/glfw3.h"]]
         [["gli/gli.hpp"]]
         [["json.hpp"]]
-        [["assimp/Importer.hpp"]]
-        [["assimp/scene.h"]]
-        [["DearImgui/imgui.h"]]
+        [["imgui.h"]]
+        [["GL/glew.h"]]
+        [["GLFW/glfw3.h"]]
         )

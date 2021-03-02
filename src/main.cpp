@@ -1,5 +1,5 @@
-#if(WIN32)
-#define GLEW_STATIC
+#if defined(_WIN32)
+    #define GLEW_STATIC
 #endif
 
 // OpenGL - glew, glfw and glm

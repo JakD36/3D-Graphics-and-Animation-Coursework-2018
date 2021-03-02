@@ -12,7 +12,7 @@ class SetRenderTargetRenderCommand : public RenderCommand
 {
 public:
     RenderTarget m_rt;
-    SetRenderTargetRenderCommand(RenderTarget rt, unsigned long sortKey);
+    SetRenderTargetRenderCommand(RenderTarget rt, unsigned long long sortKey);
 };
 
 

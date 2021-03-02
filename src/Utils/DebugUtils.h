@@ -10,10 +10,14 @@
 #include <cstdio>
 
 #if !defined(NDEBUG)
-#include <csignal>
-#define DEBUGBREAK() raise(SIGTRAP)
+    #if defined(_WIN32)
+        #define DEBUGBREAK() __debugbreak()
+    #elif defined(APPLE)
+        #include <csignal>
+        #define DEBUGBREAK() raise(SIGTRAP)
+    #endif
 #else
-#define DEBUGBREAK()
+    #define DEBUGBREAK()
 #endif
 
 #define ASSERT(check,msg) {if(check == 0) {printf("Assert Failed: %s, in file: %s at line %d.\nError: %s",#check,std::filesystem::path(__FILE__).filename().string().c_str(),__LINE__,static_cast<std::string>(msg).c_str())/*todo: Had to cast to string to avoid complex object issues, need to create proper logger that will handle this easier.*/; DEBUGBREAK();}}

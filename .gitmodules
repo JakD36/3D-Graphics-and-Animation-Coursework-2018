@@ -1,0 +1,12 @@
+[submodule "extern/glew"]
+	path = extern/glew
+	url = git@github.com:Perlmint/glew-cmake.git
+[submodule "extern/glfw"]
+	path = extern/glfw
+	url = git@github.com:glfw/glfw.git
+[submodule "extern/assimp"]
+	path = extern/assimp
+	url = git@github.com:assimp/assimp.git
+[submodule "extern/imgui"]
+	path = extern/imgui
+	url = git@github.com:ocornut/imgui.git

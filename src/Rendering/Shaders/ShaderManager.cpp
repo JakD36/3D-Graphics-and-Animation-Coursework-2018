@@ -34,7 +34,7 @@ int ShaderManager::FindShader(string id)
 int ShaderManager::FindProgram(string id)
 {
     PROFILE(p,"Find Program");
-    int count = m_shaderInfo.size();
+    int count = m_programs.size();
     for(int i = 0; i < count; ++i)
     {
         if(m_programs[i].path == id)

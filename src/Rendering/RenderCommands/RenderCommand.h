@@ -17,15 +17,15 @@ MSB [ 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ] 
 |- 2 bits - Unused
  */
 
-enum class SortKey_Order : unsigned long
+enum class SortKey_Order : unsigned long long
 {
-    UNUSED = 1lu << 62lu,
-    LAYERS = 1lu << 55lu,
-    SHADER_SYSTEM_DEFERRED = 1lu << 52lu,
-    USER = 1lu << 20lu,
-    INSTANCE = 1lu << 19lu,
-    DEPTH = 1lu << 3lu,
-    SHADER_SYSTEM_IMMEDIATE = 1lu << 0
+    UNUSED = 1llu << 62llu,
+    LAYERS = 1llu << 55llu,
+    SHADER_SYSTEM_DEFERRED = 1llu << 52llu,
+    USER = 1llu << 20llu,
+    INSTANCE = 1llu << 19llu,
+    DEPTH = 1llu << 3llu,
+    SHADER_SYSTEM_IMMEDIATE = 1llu << 0
 };
 
 class RenderCommand
@@ -50,11 +50,11 @@ public:
     };
 
     Type GetType() const noexcept;
-    unsigned long GetSortKey() const noexcept;
+    unsigned long long GetSortKey() const noexcept;
 
     virtual ~RenderCommand() noexcept {}
 protected:
-    RenderCommand(Type type, unsigned long m_sortKey) noexcept;
+    RenderCommand(Type type, unsigned long long m_sortKey) noexcept;
 private:
     Type m_type;
     unsigned long m_sortKey; // 64 bit key for sorting all the commands

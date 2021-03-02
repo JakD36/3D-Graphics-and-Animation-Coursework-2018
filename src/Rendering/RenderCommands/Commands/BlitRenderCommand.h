@@ -13,7 +13,7 @@ class BlitRenderCommand final: public RenderCommand
 public:
     RenderTarget m_src; // TODO: Change these to some generic
     RenderTarget m_dest;
-    BlitRenderCommand(const RenderTarget &src, const RenderTarget& dest, unsigned long sortKey) noexcept;
+    BlitRenderCommand(const RenderTarget &src, const RenderTarget& dest, unsigned long long sortKey) noexcept;
 };
 
 

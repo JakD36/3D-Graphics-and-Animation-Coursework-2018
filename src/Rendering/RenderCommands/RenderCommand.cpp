@@ -4,14 +4,14 @@
 
 #include "RenderCommand.h"
 
-RenderCommand::RenderCommand(Type type, unsigned long sortKey) noexcept : m_type(type), m_sortKey(sortKey) {}
+RenderCommand::RenderCommand(Type type, unsigned long long sortKey) noexcept : m_type(type), m_sortKey(sortKey) {}
 
 RenderCommand::Type RenderCommand::GetType() const noexcept
 {
     return m_type;
 }
 
-unsigned long RenderCommand::GetSortKey() const noexcept
+unsigned long long RenderCommand::GetSortKey() const noexcept
 {
     return m_sortKey;
 }
