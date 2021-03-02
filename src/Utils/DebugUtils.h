@@ -12,7 +12,7 @@
 #if !defined(NDEBUG)
     #if defined(_WIN32)
         #define DEBUGBREAK() __debugbreak()
-    #elif defined(APPLE)
+    #elif defined(__APPLE__)
         #include <csignal>
         #define DEBUGBREAK() raise(SIGTRAP)
     #endif
