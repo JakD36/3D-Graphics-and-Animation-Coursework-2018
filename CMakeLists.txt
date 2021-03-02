@@ -116,7 +116,7 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Core/Imgui.cpp
         src/Rendering/ImGui/ImGuiStyle.h
 
-        src/Rendering/RenderCommands/RenderCommandProcessor.cpp src/Rendering/RenderCommands/RenderCommandProcessor.h src/Rendering/RenderCommands/GLRenderCommandProcessor.cpp src/Rendering/RenderCommands/GLRenderCommandProcessor.h)
+        src/Rendering/RenderCommands/RenderCommandProcessor.cpp src/Rendering/RenderCommands/RenderCommandProcessor.h src/Rendering/RenderCommands/GLRenderCommandProcessor.cpp src/Rendering/RenderCommands/GLRenderCommandProcessor.h src/Rendering/RenderCommands/Commands/ClearRenderTargetCmd.cpp src/Rendering/RenderCommands/Commands/ClearRenderTargetCmd.h)
 
 if(APPLE)
     SET (CMAKE_CXX_FLAGS "-fsized-deallocation")

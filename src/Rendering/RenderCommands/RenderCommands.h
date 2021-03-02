@@ -8,10 +8,13 @@
 #include "RenderCommand.h"
 #include "Commands/BeginRenderCommand.h"
 #include "Commands/BeginWithRtRenderCommand.h"
-#include "Commands/BlitRenderCommand.h"
 #include "Commands/EndRenderCommand.h"
-#include "Commands/SetRenderTargetRenderCommand.h"
+#include "Commands/BlitRenderCommand.h"
+#include "Commands/ClearRenderTargetCmd.h"
+
 #include "Commands/DrawMeshCommand.h"
+
+#include "Commands/SetRenderTargetRenderCommand.h"
 #include "Commands/DrawRenderers.h"
 
 

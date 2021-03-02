@@ -25,9 +25,11 @@ void GLRenderCommandProcessor::Process(Window *window, vector<unique_ptr<RenderC
     auto testProg = shaderManager->RequestProgram("Shaders/dvert.glsl","Shaders/dfrag.glsl");
 
     auto* glWindow = (GLFWwindow*)window->GetNativeWindow();
-    glfwMakeContextCurrent(glWindow);
+
+    glfwMakeContextCurrent(nullptr);
 
     thread render([=](GLFWwindow* window, vector<unique_ptr<RenderCommand>> renderQueue){
+        glfwMakeContextCurrent(glWindow);
         RenderTarget tmpRT;
 
         for(const auto& cmd : renderQueue)
@@ -141,7 +143,14 @@ void GLRenderCommandProcessor::Process(Window *window, vector<unique_ptr<RenderC
                     break;
 
                 case RenderCommand::Type::CLEAR_RENDER_TARGET:
-                    ASSERT(false,"Render Command not implemented.");
+                {
+                    auto clearCmd = static_cast<const ClearRenderTargetCmd*>(cmd.get());
+                    if(clearCmd->m_clearDepth)
+                        glClearDepth(clearCmd->m_depth);
+
+                    if(clearCmd->m_clearColour)
+                        glClearBufferfv(GL_COLOR, 0, &clearCmd->m_colour[0]);
+                }
                     break;
 
                 case RenderCommand::Type::COPY_TEXTURE:

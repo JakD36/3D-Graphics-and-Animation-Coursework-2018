@@ -48,6 +48,13 @@ Renderer::~Renderer() noexcept
 void Renderer::Render(Window* window, SceneGraph* scene) noexcept{
     PROFILE(profiler,"Render");
 
+    const glm::vec4 black = {0,0,0,1};
+    glClearBufferfv(GL_COLOR, 0, &black[0]);
+    static const GLfloat one = 1.0f;
+
+    glEnable(GL_DEPTH_TEST);
+    glClearBufferfv(GL_DEPTH, 0, &one);
+
     int frameWidth, frameHeight;
     glfwGetFramebufferSize((GLFWwindow*)window->GetNativeWindow(), &frameWidth, &frameHeight);
 
@@ -86,16 +93,17 @@ void Renderer::Render(Window* window, SceneGraph* scene) noexcept{
 //    renderQueue.push_back(std::move(std::unique_ptr<BeginRenderCommand>(new BeginRenderCommand({0,0},{frameWidth,frameHeight},{1,1,0,1}))));
 //    renderQueue.push_back(std::move(std::unique_ptr<SetRenderTargetRenderCommand>(new SetRenderTargetRenderCommand(rt,1))));
     renderQueue.push_back(std::move(std::make_unique<BeginWithRtRenderCommand>(rt)));
+    renderQueue.push_back(std::move(std::make_unique<ClearRenderTargetCmd>(false,true,glm::vec4(0.3,0.7,0.7,1),0)));
 //    renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCommand>(new DrawMeshCommand())));
     renderQueue.push_back(std::move(std::make_unique<DrawRenderers>(scene, camera)));
-//    renderQueue.push_back(std::move(std::unique_ptr<BlitRenderCommand>(new BlitRenderCommand(rt,bkBuffer,1))));
+//    renderQueue.push_back(std::move(std::make_unique<BlitRenderCommand>(rt,bkBuffer,1)));
     renderQueue.push_back(std::move(std::make_unique<EndRenderCommand>()));
 
     // Execute Commands on a different thread!
     m_cmdProc->Process(window,std::move(renderQueue));
 
     // Set the framebuffer to the imgui window
-    ImGui::Begin("Viewport",NULL);
+    ImGui::Begin("Viewport",nullptr);
     ImGui::Image((void*)rt.m_colourAttachment, ImVec2(rt.m_resolution.x * 0.25f, rt.m_resolution.y * 0.25f), ImVec2(0,1), ImVec2(1,0), ImVec4(1.0f,1.0f,1.0f,1.0f), ImVec4(1.0f,1.0f,1.0f,0.5f));
     ImGui::End();
 
