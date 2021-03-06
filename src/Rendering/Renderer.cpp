@@ -94,7 +94,7 @@ void Renderer::Render(Window* window, SceneGraph* scene) noexcept{
 //    renderQueue.push_back(std::move(std::unique_ptr<SetRenderTargetRenderCommand>(new SetRenderTargetRenderCommand(rt,1))));
     renderQueue.push_back(std::move(std::make_unique<BeginWithRtRenderCommand>(rt)));
     renderQueue.push_back(std::move(std::make_unique<ClearRenderTargetCmd>(false,true,glm::vec4(0.3,0.7,0.7,1),0)));
-//    renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCommand>(new DrawMeshCommand())));
+//    renderQueue.push_back(std::move(std::unique_ptr<DrawMeshCmd>(new DrawMeshCmd())));
     renderQueue.push_back(std::move(std::make_unique<DrawRenderers>(scene, camera)));
 //    renderQueue.push_back(std::move(std::make_unique<BlitRenderCommand>(rt,bkBuffer,1)));
     renderQueue.push_back(std::move(std::make_unique<EndRenderCommand>()));

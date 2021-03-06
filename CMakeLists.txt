@@ -109,14 +109,14 @@ add_executable(3D_Graphics_and_Animation_Coursework_2018
         src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.cpp
         src/Rendering/RenderCommands/Commands/BeginWithRtRenderCommand.h
         src/Rendering/RenderCommands/RenderCommands.h
-        src/Rendering/RenderCommands/Commands/DrawMeshCommand.h
+        src/Rendering/RenderCommands/Commands/DrawMeshCmd.h
         src/Rendering/RenderCommands/Commands/DrawRenderers.h
         src/Rendering/RenderTarget.cpp
         src/Rendering/RenderTarget.h
         src/Core/Imgui.cpp
         src/Rendering/ImGui/ImGuiStyle.h
 
-        src/Rendering/RenderCommands/RenderCommandProcessor.cpp src/Rendering/RenderCommands/RenderCommandProcessor.h src/Rendering/RenderCommands/GLRenderCommandProcessor.cpp src/Rendering/RenderCommands/GLRenderCommandProcessor.h src/Rendering/RenderCommands/Commands/ClearRenderTargetCmd.cpp src/Rendering/RenderCommands/Commands/ClearRenderTargetCmd.h)
+        src/Rendering/RenderCommands/RenderCommandProcessor.h src/Rendering/RenderCommands/GLRenderCommandProcessor.cpp src/Rendering/RenderCommands/GLRenderCommandProcessor.h src/Rendering/RenderCommands/Commands/ClearRenderTargetCmd.cpp src/Rendering/RenderCommands/Commands/ClearRenderTargetCmd.h src/Rendering/RenderCommands/Commands/DrawMeshCmd.cpp src/Rendering/RenderCommands/Commands/EnableScissorRectCmd.cpp src/Rendering/RenderCommands/Commands/EnableScissorRectCmd.h src/Rendering/RenderCommands/Commands/DisableScissorRectCmd.cpp src/Rendering/RenderCommands/Commands/DisableScissorRectCmd.h)
 
 if(APPLE)
     SET (CMAKE_CXX_FLAGS "-fsized-deallocation")

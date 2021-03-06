@@ -159,6 +159,7 @@ void GLRenderCommandProcessor::Process(Window *window, vector<unique_ptr<RenderC
 
                 case RenderCommand::Type::DRAW_MESH: // todo implement actual pass in mesh shit
                 {
+                    ASSERT(false,"Render Command not implemented.");
                     glUseProgram(testProg);
 
                     const glm::vec2 m_displayCoords[12] = { // Interleaved coordinates for displaying to a Quad
@@ -206,10 +207,16 @@ void GLRenderCommandProcessor::Process(Window *window, vector<unique_ptr<RenderC
                         break;
 
                 case RenderCommand::Type::ENABLE_SCISSOR_RECT:
+                {
+                    auto scissorCmd = static_cast<const EnableScissorRectCmd*>(cmd.get());
+                    auto& rect = scissorCmd->m_rect;
+                    glEnable(GL_SCISSOR_TEST);
+                    glScissor(rect.x,rect.y,rect.z,rect.w);
+                }
                     break;
 
                 case RenderCommand::Type::DISABLE_SCISSOR_RECT:
-                    ASSERT(false,"Render Command not implemented.");
+                    glDisable(GL_SCISSOR_TEST);
                     break;
 
                 case RenderCommand::Type::GENERATE_RT_MIPS:

@@ -12,7 +12,9 @@
 #include "Commands/BlitRenderCommand.h"
 #include "Commands/ClearRenderTargetCmd.h"
 
-#include "Commands/DrawMeshCommand.h"
+#include "Commands/DrawMeshCmd.h"
+#include "Commands/EnableScissorRectCmd.h"
+#include "Commands/DisableScissorRectCmd.h"
 
 #include "Commands/SetRenderTargetRenderCommand.h"
 #include "Commands/DrawRenderers.h"
